@@ -1,26 +1,17 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    role: {
-        type: String,
-        enum: ['Admin','Student', 'Tutor'],
-        default: 'Student'
-    }
-}, {
-    timestamps: true
-});
+  name: String,
+  email: { type: String, unique: true },
+  password: String,
+  role: {
+    type: String,
+    enum: ['student', 'tutor', 'admin'],
+    default: 'student',
+  },
+  enrolledClasses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Class' }]
+}, { timestamps: true });
+
 
 const User = mongoose.model('User', userSchema);
 

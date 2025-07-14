@@ -1,0 +1,77 @@
+✅ Project Setup Done
+Initialized Node.js backend (npm init)
+
+Installed key packages:
+
+express, mongoose, dotenv, cors, bcryptjs, jsonwebtoken
+
+Setup folder structure:
+
+/controllers, /models, /routes, /middleware
+
+Connected to local MongoDB successfully (mongodb://localhost:27017/tuitionApp)
+
+✅ Authentication System (Users)
+🔹 Routes
+POST /api/users/register — register with name, email, password, role (admin, tutor, student)
+
+POST /api/users/login — returns JWT token
+
+GET /api/users/profile — returns user info for logged-in users
+
+🔹 Features
+Passwords hashed with bcryptjs
+
+JWT-based login system
+
+Middleware protect checks for valid token
+
+✅ Role-Based Design
+Allowed user roles: admin, tutor, student
+
+JWT token includes both id and role
+
+You (as admin) used token to create classes
+
+✅ Class Management (for Admin)
+🔹 Routes
+POST /api/classes/create — admin-only route to create a class
+
+GET /api/classes — public route to view all classes
+
+🔹 Features
+Class model with fields: name, subject, schedule, tutor
+
+Classes are linked to tutors using their MongoDB _id
+
+Implemented .populate("tutor", "name email") (you can confirm this later)
+
+🛠️ Remaining Setup (to do next)
+Here’s what you can do next based on your needs:
+
+🧑‍🎓 Student Features
+Register/login students (already possible)
+
+Let students enroll into classes
+
+View “My Classes” for logged-in students
+
+👨‍🏫 Tutor Features
+View “My Classes”
+
+Update class timings (optional)
+
+🗂️ Admin Panel (API-level for now)
+List all users
+
+Manage classes
+
+Assign tutors
+
+📡 Real-time Features (later)
+Chat between tutor-student (Socket.io)
+
+Online class features (video call integration)
+
+Notifications/reminders
+

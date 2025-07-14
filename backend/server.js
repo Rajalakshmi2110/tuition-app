@@ -2,9 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+
 require('dotenv').config();
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
-
 
 const userRoutes = require('./routes/userRoutes');
 
@@ -13,6 +13,13 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
+
+const classRoutes = require('./routes/classRoutes');
+app.use("/api/classes", classRoutes);
+
+const studentRoutes = require('./routes/studentRoutes');
+app.use("/api/students", studentRoutes);
+
 
 // app.get("/", (req,res) => res.send("API is running.."));
 
