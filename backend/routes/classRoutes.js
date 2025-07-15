@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createClass, getAllClasses, getClassById  } = require("../controllers/classController");
+const { createClass, getAllClasses, getClassById, updateClass   } = require("../controllers/classController");
 const protect = require("../middleware/authMiddleware");
 const authorizeRoles = require("../middleware/authorizeRoles");
 
@@ -16,6 +16,7 @@ router.get("/", getAllClasses);
 
 // by ID
 router.get("/:id", getClassById);
+router.put("/:id", protect, updateClass);
 
 
 module.exports = router;

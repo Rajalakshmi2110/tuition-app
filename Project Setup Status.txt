@@ -1,77 +1,87 @@
-✅ Project Setup Done
-Initialized Node.js backend (npm init)
+✅ Tuition App Backend – Completed Modules Summary
+🔧 Project Setup
+Initialized Node.js project: npm init
 
-Installed key packages:
+Installed dependencies:
 
 express, mongoose, dotenv, cors, bcryptjs, jsonwebtoken
 
-Setup folder structure:
+Set up backend structure:
 
-/controllers, /models, /routes, /middleware
 
-Connected to local MongoDB successfully (mongodb://localhost:27017/tuitionApp)
+/controllers
+/models
+/routes
+/middleware
+Connected to MongoDB locally via:
+mongodb://localhost:27017/tuitionApp
 
-✅ Authentication System (Users)
-🔹 Routes
-POST /api/users/register — register with name, email, password, role (admin, tutor, student)
+🔐 Authentication System
+✅ User Routes:
+POST /api/users/register – Register user with name, email, password, and role (admin, tutor, student)
 
-POST /api/users/login — returns JWT token
+POST /api/users/login – Authenticates and returns JWT token
 
-GET /api/users/profile — returns user info for logged-in users
+GET /api/users/profile – Protected route, returns logged-in user's info
 
-🔹 Features
-Passwords hashed with bcryptjs
+🔐 Features:
+Passwords hashed using bcryptjs
 
-JWT-based login system
+JWT token issued on login
 
-Middleware protect checks for valid token
+Auth middleware (protect) validates token and attaches user info
 
-✅ Role-Based Design
-Allowed user roles: admin, tutor, student
+Role-based access control using JWT (id + role)
 
-JWT token includes both id and role
+👤 Users Created So Far
+✅ admin user (Raji) — token obtained & tested
 
-You (as admin) used token to create classes
+✅ student user — token obtained & tested
 
-✅ Class Management (for Admin)
-🔹 Routes
-POST /api/classes/create — admin-only route to create a class
+🚧 Tutors (created as users with role: tutor)
 
-GET /api/classes — public route to view all classes
+🏫 Class Management (Admin)
+✅ Admin Routes:
+POST /api/classes/create — Create a class (admin only)
 
-🔹 Features
+GET /api/classes — Publicly list all classes
+
+Features:
 Class model with fields: name, subject, schedule, tutor
 
-Classes are linked to tutors using their MongoDB _id
+Tutor assigned using tutorId (MongoDB ObjectId)
 
-Implemented .populate("tutor", "name email") (you can confirm this later)
+Currently working on populating tutor details for clarity
 
-🛠️ Remaining Setup (to do next)
-Here’s what you can do next based on your needs:
+👩‍🎓 Student Features
+✅ Implemented:
+POST /api/students/enroll — Student enrolls into class
 
-🧑‍🎓 Student Features
-Register/login students (already possible)
+GET /api/students/my-classes — View enrolled classes
 
-Let students enroll into classes
+GET /api/students/available-classes — List of classes not yet enrolled
 
-View “My Classes” for logged-in students
+🔎 Behavior:
+Only unassigned classes are shown as "available"
 
-👨‍🏫 Tutor Features
-View “My Classes”
+Enrolled class list fetched for logged-in student using their token
 
-Update class timings (optional)
+🚫 Pending / To-Do Next
+🧑‍🏫 Tutor Features (Upcoming):
+View assigned classes
 
-🗂️ Admin Panel (API-level for now)
-List all users
+Update class schedule (optional)
 
-Manage classes
+🗂️ Admin Control Panel (API):
+View/manage all users
 
-Assign tutors
+Assign/unassign tutors to classes
 
-📡 Real-time Features (later)
-Chat between tutor-student (Socket.io)
+Delete or update class info
 
-Online class features (video call integration)
+📡 Real-Time Features (Later Phase):
+Chat rooms: Tutor ↔ Student (via Socket.io)
 
-Notifications/reminders
+Online class integration (Zoom/Jitsi)
 
+Reminders & notifications system

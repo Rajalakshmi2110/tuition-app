@@ -20,6 +20,8 @@ app.use("/api/classes", classRoutes);
 const studentRoutes = require('./routes/studentRoutes');
 app.use("/api/students", studentRoutes);
 
+const tutorRoutes = require('./routes/tutorRoutes');
+app.use('/api/tutors', tutorRoutes);
 
 // app.get("/", (req,res) => res.send("API is running.."));
 

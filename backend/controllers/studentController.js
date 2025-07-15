@@ -42,13 +42,18 @@ const getMyClasses = async (req, res) => {
   }
 };
 
-
 const getAvailableClasses = async (req, res) => {
   try {
-    const student = await User.findById(req.user.id);
+    const student = await User.findById(req.user.id).lean();
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
+
+    // const enrolledClassIds = Array.isArray(student.enrolledClasses) ? student.enrolledClasses : [];
+
+    // const availableClasses = await Class.find({
+    //   _id: { $nin: enrolledClassIds }
+    // }).populate('tutor', 'name email');
 
     const enrolledClassIds = student.enrolledClasses || [];
 
@@ -56,11 +61,13 @@ const getAvailableClasses = async (req, res) => {
       _id: { $nin: enrolledClassIds }
     }).populate('tutor', 'name email');
 
+
     res.json({ availableClasses });
   } catch (err) {
     console.error('Error getting available classes:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 module.exports = { enrollInClass, getMyClasses, getAvailableClasses };
