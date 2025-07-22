@@ -3,6 +3,7 @@ const router = express.Router();
 const { registerUser, loginUser } = require('../controllers/authController');
 const protect = require("../Middleware/authMiddleware");
 const authorizeRoles = require("../middleware/authorizeRoles");
+const { getAllTutors } = require('../controllers/userController');
 
 router.get("/", (req, res) => {
     res.json({message: "user route is working!"})
@@ -25,5 +26,6 @@ router.get('/profile', protect, (req, res)=>{
     })
 })
 
+router.get('/tutors', protect, getAllTutors);
 
 module.exports = router;

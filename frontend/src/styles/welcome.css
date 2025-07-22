@@ -1,0 +1,41 @@
+/* Container setup */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Heading */
+.welcome-container h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 20px;
+}
+
+/* Buttons */
+.welcome-btn {
+  padding: 10px 25px;
+  font-size: 1rem;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.welcome-btn:hover {
+  background-color: #1a252f;
+}

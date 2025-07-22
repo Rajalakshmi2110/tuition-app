@@ -8,13 +8,10 @@ const authorizeRoles = require("../middleware/authorizeRoles");
 
 // router.get("/", protect, authorizeRoles('admin', 'tutor'), getAllClasses);
 
-//Create class - by admin nly
 router.post("/create", protect, createClass);
 
-//All classes
 router.get("/", getAllClasses);
 
-// by ID
 router.get("/:id", getClassById);
 router.put("/:id", protect, updateClass);
 
