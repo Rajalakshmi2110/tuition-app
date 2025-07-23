@@ -1,17 +1,22 @@
-// src/pages/WelcomePortal.jsx
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/welcome.css'; // <-- add this import
+import '../styles/welcome.css';
+import Header from '../components/Header';
 
 const WelcomePortal = () => {
   return (
-    <div className="welcome-container">
-      <div className="welcome-box">
-        <h2>Welcome to Tuition Login Portal</h2>
+    <div className="welcome-portal">
+      <Header />
+      <div className="welcome-container">
+      <main className="welcome-box">
+        <h1>Welcome to MyTuition</h1>
+        <p>Please log in or register to continue</p>
         <div className="button-group">
           <Link to="/login" className="btn">Login</Link>
           <Link to="/register" className="btn">Register</Link>
         </div>
+      </main>
       </div>
     </div>
   );

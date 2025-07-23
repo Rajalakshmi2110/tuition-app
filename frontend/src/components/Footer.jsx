@@ -3,8 +3,11 @@ import '../styles/footer.css';
 
 const Footer = () => {
   return (
-    <footer className="app-footer">
-      <p>© 2025 Tuition Web App. All rights reserved.</p>
+    <footer id="footer" className="app-footer">
+      <div className="footer-content">
+        <p>📧 contact@mytuition.com</p>
+        <p>© 2025 MyTuition. All rights reserved.</p>
+      </div>
     </footer>
   );
 };

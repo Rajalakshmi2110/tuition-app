@@ -1,10 +1,14 @@
+
+
 .app-header {
-  background-color: #283593;
-  color: white;
-  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 2rem;
+  background-color: #20205c;
+  color: white;
+  position: relative;
+  z-index: 10; 
 }
 
 .logo {
@@ -12,17 +16,18 @@
   font-weight: bold;
 }
 
-.nav-links a {
-  color: white;
-  margin-left: 20px;
-  font-weight: 500;
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
 }
 
-.nav-links .logout-btn {
-  margin-left: 20px;
-  padding: 6px 12px;
-  background-color: #e53935;
-  border: none;
+.nav-links a {
   color: white;
-  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffcc00; 
 }

@@ -1,9 +1,15 @@
-// src/pages/Register.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import Header from '../components/Header';
+import '../styles/register.css';
 
 const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'student' });
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'student'
+  });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,45 +26,44 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">Register</h2>
-        <input
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border border-gray-300 rounded"
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border border-gray-300 rounded"
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={handleChange}
-          className="w-full p-2 mb-3 border border-gray-300 rounded"
-        />
-        <select
-          name="role"
-          onChange={handleChange}
-          value={formData.role}
-          className="w-full p-2 mb-4 border border-gray-300 rounded"
-        >
-          <option value="student">Student</option>
-          <option value="tutor">Tutor</option>
-        </select>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          Register
-        </button>
-      </form>
+    <div>
+      <Header />
+
+      <div className="register-container">
+        <div className="register-box">
+          <h2>Create an Account</h2>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+            <select name="role" value={formData.role} onChange={handleChange}>
+              <option value="student">Student</option>
+              <option value="tutor">Tutor</option>
+            </select>
+
+            <button type="submit">Register</button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

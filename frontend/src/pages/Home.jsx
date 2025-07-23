@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/home.css';
 import booksImage from '../assets/book.png';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,17 +14,8 @@ const Home = () => {
 
   return (
     <div className="hero-section">
-      <div className="wave-background"></div>
-
-      <nav className="navbar">
-        <h2 className="logo">MyTuition</h2>
-        <div className="nav-links">
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
-        </div>
-      </nav>
-
+      <div>
+      <Header />
       <main className="hero-content">
         <section className="text-content">
           <h1>Learn Smarter, Learn Better!</h1>
@@ -39,9 +32,10 @@ const Home = () => {
           <img src={booksImage} alt="Books representing learning" />
         </aside>
       </main>
-    
-
-
+      <div className="wave-background"></div>
+      </div>
+     {/* <Footer />  */}
+     
     </div>
   );
 };
