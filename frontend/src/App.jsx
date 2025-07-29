@@ -12,6 +12,8 @@ import TutorDashboard from './pages/TutorDashboard';
 import StudentDashboard from './pages/StudentDashboard';
 import StudentEnrollClass from './pages/StudentEnrollClass';
 import AdminCreateClass from './pages/AdminCreateClass';
+import ClassManagePage from './pages/ClassManagePage';
+
 
 const App = () => {
   return (
@@ -31,6 +33,9 @@ const App = () => {
           <Route path="/student" element={<StudentDashboard />} />
           <Route path="/student/enroll" element={<StudentEnrollClass />} />
           <Route path="/admin/create-class" element={<AdminCreateClass />} />
+          <Route path="/tutor/class/:id" element={<ClassManagePage />} />
+
+
         </Route>
 
       </Routes>

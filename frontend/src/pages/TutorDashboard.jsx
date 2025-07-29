@@ -1,9 +1,12 @@
 // src/pages/TutorDashboard.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../styles/TutorDashboard.css';
 
 const TutorDashboard = () => {
   const [classes, setClasses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTutorClasses = async () => {
@@ -21,17 +24,21 @@ const TutorDashboard = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">My Classes</h2>
+    <div className="tutor-dashboard">
+      <h2 className="dashboard-title">My Classes</h2>
       {classes.length === 0 ? (
         <p>No classes assigned.</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="class-list">
           {classes.map((cls) => (
-            <li key={cls._id} className="border p-4 rounded shadow">
-              <h3 className="text-lg font-semibold">{cls.name}</h3>
-              <p>Subject: {cls.subject}</p>
-              <p>Schedule: {cls.schedule}</p>
+            <li
+              key={cls._id}
+              className="class-card"
+              onClick={() => navigate(`/tutor/class/${cls._id}`)}
+            >
+              <h3>{cls.name}</h3>
+              <p><strong>Subject:</strong> {cls.subject}</p>
+              <p><strong>Schedule:</strong> {cls.schedule}</p>
             </li>
           ))}
         </ul>
