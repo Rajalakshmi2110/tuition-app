@@ -1,6 +1,5 @@
 # Tuition Web App
 
-🚧 **This project is currently in progress.**  
 Features like student registration, fee reminders, chat, and class updates are being built step-by-step. Stay tuned!
 
 ---
