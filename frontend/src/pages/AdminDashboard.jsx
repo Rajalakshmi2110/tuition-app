@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const BASE_URL = "http://localhost:5000"; 
+  const BASE_URL = "http://localhost:5000";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -43,20 +43,36 @@ const AdminDashboard = () => {
         Admin Dashboard
       </h2>
 
-      <Link
-        to="/admin/create-class"
-        style={{
-          display: "inline-block",
-          padding: "8px 16px",
-          backgroundColor: "#2563eb",
-          color: "white",
-          borderRadius: "4px",
-          textDecoration: "none",
-          marginBottom: "24px",
-        }}
-      >
-        Create New Class
-      </Link>
+      <div style={{ marginBottom: "24px" }}>
+        <Link
+          to="/admin/upload"
+          style={{
+            display: "inline-block",
+            padding: "8px 16px",
+            backgroundColor: "#10b981", // green button
+            color: "white",
+            borderRadius: "4px",
+            textDecoration: "none",
+            marginRight: "16px",
+          }}
+        >
+          Upload Study Materials
+        </Link>
+
+        <Link
+          to="/admin/create-class"
+          style={{
+            display: "inline-block",
+            padding: "8px 16px",
+            backgroundColor: "#2563eb",
+            color: "white",
+            borderRadius: "4px",
+            textDecoration: "none",
+          }}
+        >
+          Create New Class
+        </Link>
+      </div>
 
       {loading && <p>Loading student and tutor data...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -71,26 +87,10 @@ const AdminDashboard = () => {
               <table style={{ borderCollapse: "collapse", width: "100%" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#f3f4f6" }}>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Name
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Email
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Phone
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Enrolled Classes
-                    </th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Name</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Email</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Phone</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Enrolled Classes</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,26 +117,10 @@ const AdminDashboard = () => {
               <table style={{ borderCollapse: "collapse", width: "100%" }}>
                 <thead>
                   <tr style={{ backgroundColor: "#f3f4f6" }}>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Name
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Email
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Phone
-                    </th>
-                    <th
-                      style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}
-                    >
-                      Subjects
-                    </th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Name</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Email</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Phone</th>
+                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>Subjects</th>
                   </tr>
                 </thead>
                 <tbody>

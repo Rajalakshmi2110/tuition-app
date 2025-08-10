@@ -1,39 +1,36 @@
-const Material = require("../models/Material");
+const Material = require('../models/materialModel'); // create a Mongoose model for materials
 
+// Upload file controller
 const uploadMaterial = async (req, res) => {
   try {
-    const { title } = req.body;
-    const file = req.file;
-
-    if (!file) {
-      return res.status(400).json({ message: "No file uploaded!" });
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
     }
 
     const newMaterial = new Material({
-      title,
-      fileUrl: file.path,
-      uploadedBy: req.user._id,
-      role: req.user.role,
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      path: req.file.path,
+      uploadedBy: req.user._id, // from auth middleware
+      uploadDate: Date.now(),
     });
 
     await newMaterial.save();
 
-    res.status(201).json({ message: "File uploaded!", material: newMaterial });
+    res.status(201).json({ message: 'File uploaded successfully', material: newMaterial });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error });
   }
 };
 
+// Get all materials
 const getAllMaterials = async (req, res) => {
   try {
-    const materials = await Material.find().populate("uploadedBy", "name role");
+    const materials = await Material.find().sort({ uploadDate: -1 });
     res.json(materials);
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error });
   }
 };
 
-module.exports = {
-  uploadMaterial,
-  getAllMaterials,
-};
+module.exports = { uploadMaterial, getAllMaterials };

@@ -13,8 +13,8 @@ import StudentDashboard from './pages/StudentDashboard';
 import StudentEnrollClass from './pages/StudentEnrollClass';
 import AdminCreateClass from './pages/AdminCreateClass';
 import ClassManagePage from './pages/ClassManagePage';
-
-
+import FileUpload from './features/FileUpload/FileUpload';
+import StudentFiles from './pages/StudentFiles';
 const App = () => {
   return (
     <Router>
@@ -34,7 +34,12 @@ const App = () => {
           <Route path="/student/enroll" element={<StudentEnrollClass />} />
           <Route path="/admin/create-class" element={<AdminCreateClass />} />
           <Route path="/tutor/class/:id" element={<ClassManagePage />} />
-
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/upload" element={<FileUpload />} />
+          <Route path="/tutor" element={<TutorDashboard />} />
+          <Route path="/tutor/upload" element={<FileUpload />} />
+          <Route path="/student/upload" element={<FileUpload />} />
+          <Route path="/student/files" element={<StudentFiles />} />
 
         </Route>
 

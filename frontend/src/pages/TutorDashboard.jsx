@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
+import { useNavigate, Link } from 'react-router-dom';
 import "../styles/TutorDashboard.css";
-import { useNavigate } from 'react-router-dom';
 
 const TutorDashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -12,19 +12,14 @@ const TutorDashboard = () => {
     const fetchTutorClasses = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("No token found");
-          return;
-        }
+        if (!token) return;
 
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
 
         const res = await axios.get(
           `http://localhost:5000/api/classes/tutor/${userId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setClasses(res.data);
       } catch (err) {
@@ -49,16 +44,18 @@ const TutorDashboard = () => {
               onClick={() => navigate(`/tutor/class/${cls._id}`)}
             >
               <h3>{cls.name}</h3>
-              <p>
-                <strong>Subject:</strong> {cls.subject}
-              </p>
-              <p>
-                <strong>Schedule:</strong> {cls.schedule}
-              </p>
+              <p><strong>Subject:</strong> {cls.subject}</p>
+              <p><strong>Schedule:</strong> {cls.schedule}</p>
             </li>
           ))}
         </ul>
       )}
+
+      <div style={{ marginTop: "20px" }}>
+        <Link to="/tutor/upload" className="upload-link">
+          Upload Study Materials
+        </Link>
+      </div>
     </div>
   );
 };

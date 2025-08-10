@@ -29,7 +29,7 @@ app.use('/api/tutors', tutorRoutes);
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const classAssignmentRoutes = require("./routes/classAssignmentRoutes");
+const classAssignmentRoutes 5= require("./routes/classAssignmentRoutes");
 app.use("/api/class", classAssignmentRoutes);
 
 const studentClassRoutes = require("./routes/studentClassRoutes");
@@ -38,8 +38,9 @@ app.use("/api/student-classes", studentClassRoutes);
 const tutorClassRoutes = require("./routes/tutorClassRoutes");
 app.use("/api/tutor-classes", tutorClassRoutes);
 
-const fileRoutes = require("./routes/fileRoutes");
-app.use("/api/files", fileRoutes);
+const fileRoutes = require('./routes/fileRoutes');
+app.use('/api/files', fileRoutes);
+
 
 // app.get("/", (req,res) => res.send("API is running.."));
 

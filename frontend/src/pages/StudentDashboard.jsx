@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 const StudentDashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -48,6 +49,12 @@ const StudentDashboard = () => {
           ))}
         </ul>
       )}
+      <div>
+      <h2>Student Dashboard</h2>
+      <Link to="/student/files" style={{ marginTop: '20px', display: 'inline-block' }}>
+        View Study Materials
+      </Link>
+      </div>
     </div>
   );
 };
