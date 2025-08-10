@@ -9,7 +9,7 @@ const Layout = () => {
     <>
       <Header />
       <main>
-        <Outlet /> {/* This is where the page content loads */}
+        <Outlet /> 
       </main>
       <Footer />
     </>

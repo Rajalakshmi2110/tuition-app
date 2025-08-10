@@ -1,6 +1,6 @@
-
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
 
 const StudentDashboard = () => {
   const [classes, setClasses] = useState([]);
@@ -8,15 +8,27 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchMyClasses = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/students/my-classes', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setClasses(res.data.enrolledClasses);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found");
+          return;
+        }
+
+        const decoded = jwtDecode(token);
+        const userId = decoded.id || decoded._id; 
+
+        const res = await axios.get(
+          `http://localhost:5000/api/classes/student/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setClasses(res.data);
       } catch (err) {
-        console.error('Failed to fetch classes', err);
+        console.error("Failed to fetch classes", err);
       }
     };
+
     fetchMyClasses();
   }, []);
 

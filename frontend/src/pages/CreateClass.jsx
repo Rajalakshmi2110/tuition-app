@@ -11,7 +11,6 @@ const CreateClass = () => {
   });
   const [tutors, setTutors] = useState([]);
 
-  // Fetch all tutors on mount
   useEffect(() => {
     const fetchTutors = async () => {
       try {

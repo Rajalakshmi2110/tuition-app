@@ -1,7 +1,6 @@
 
 const User = require('../models/User');
 
-// GET /api/users/tutors
 const getAllTutors = async (req, res) => {
   try {
     const tutors = await User.find({ role: 'tutor' }).select('-password');

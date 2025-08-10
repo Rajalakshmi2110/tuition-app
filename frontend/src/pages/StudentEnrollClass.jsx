@@ -25,7 +25,7 @@ const StudentEnrollClass = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert('Enrolled successfully!');
-      fetchClasses(); // refresh after enrollment
+      fetchClasses(); 
     } catch (err) {
       alert('Enrollment failed');
     }
