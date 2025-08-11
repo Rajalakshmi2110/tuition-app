@@ -39,8 +39,8 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       role,
       specialization: role === 'tutor' ? specialization : undefined,
-      classId: role === 'student' ? classId : undefined,
-      status: role === 'tutor' ? 'pending' : 'active'
+      enrolledClasses: role === 'student' ? [classId] : [],
+      status: role === 'tutor' ? 'pending' : 'approved'
     });
 
     await user.save();
@@ -52,8 +52,8 @@ const registerUser = async (req, res) => {
         : undefined
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Register User Error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
 

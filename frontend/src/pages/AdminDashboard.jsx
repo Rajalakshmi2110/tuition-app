@@ -52,21 +52,22 @@ const AdminDashboard = () => {
     }
   };
 
+  
   const declineTutor = async (id) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.patch(
-        `http://localhost:5000/api/admin/tutors/${id}/decline`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Tutor declined!');
-      fetchTutors();
-    } catch (err) {
-      console.error(err);
-      alert('Failed to decline tutor');
-    }
-  };
+  try {
+    const token = localStorage.getItem('token');
+    await axios.patch(
+      `http://localhost:5000/api/admin/tutors/${id}/decline`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    alert('Tutor declined!');
+    fetchData(); // refresh list after declining
+  } catch (err) {
+    console.error(err);
+    alert('Failed to decline tutor');
+  }
+};
 
 
 

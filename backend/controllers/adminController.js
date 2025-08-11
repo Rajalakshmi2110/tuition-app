@@ -1,5 +1,19 @@
 const User = require('../models/User');
 
+const getUsersByRole = async (req, res, role, status) => {
+  try {
+    const query = { role };
+    if (status) {
+      query.status = status;
+    }
+    const users = await User.find(query).select('-password'); // exclude sensitive info like password
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // Approve tutor
 const approveTutor = async (req, res) => {
   try {
@@ -36,4 +50,4 @@ const declineTutor = async (req, res) => {
   }
 };
 
-module.exports = { approveTutor, declineTutor, getUsersByRole };
+module.exports = { approveTutor, declineTutor, getUsersByRole  };

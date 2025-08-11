@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,15 +39,18 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting form data:", formData);
     try {
       await axios.post('http://localhost:5000/api/users/register', formData);
       alert('Registration successful!');
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', classId: '' });
+      navigate('/login');
     } catch (err) {
       console.error('Registration failed', err);
       alert('Failed to register');
     }
   };
+
 
   return (
     <div style={{ maxWidth: '500px', margin: '20px auto', padding: '20px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px' }}>
