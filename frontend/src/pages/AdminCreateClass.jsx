@@ -31,32 +31,44 @@ const AdminCreateClass = () => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/classes', formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      alert('Class created successfully!');
-      setFormData({ name: '', subject: '', schedule: '', tutorId: '' });
-    } catch (err) {
-      console.error('Class creation failed', err);
-      alert('Failed to create class');
-    }
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem('token');
+
+    const payload = {
+      name: formData.name,
+      subject: formData.subject,
+      description: `Advanced ${formData.subject} class for ${formData.name}`,
+      schedule: formData.schedule,
+      tutor: formData.tutorId,
+      students: []
+    };
+
+    await axios.post('http://localhost:5000/api/classes/create', payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    alert('Class created successfully!');
+    setFormData({ name: '', subject: '', schedule: '', tutorId: '' });
+  } catch (err) {
+    console.error('Class creation failed', err);
+    alert('Failed to create class');
+  }
+};
+
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow rounded mt-8">
-      <h2 className="text-2xl font-bold mb-4">Create a New Class</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div style={{ maxWidth: '500px', margin: '20px auto', padding: '20px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '8px' }}>
+      <h2 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '15px' }}>Create a New Class</h2>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           placeholder="Class Name"
           value={formData.name}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           required
         />
         <input
@@ -65,7 +77,7 @@ const AdminCreateClass = () => {
           placeholder="Subject"
           value={formData.subject}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           required
         />
         <input
@@ -74,14 +86,14 @@ const AdminCreateClass = () => {
           placeholder="Schedule (e.g., Mon-Fri 6PM)"
           value={formData.schedule}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          style={{ width: '100%', padding: '8px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
           required
         />
         <select
           name="tutorId"
           value={formData.tutorId}
           onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
+          style={{ width: '100%', padding: '8px', marginBottom: '15px', borderRadius: '4px', border: '1px solid #ccc' }}
           required
         >
           <option value="">Select a Tutor</option>
@@ -91,7 +103,17 @@ const AdminCreateClass = () => {
             </option>
           ))}
         </select>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button
+          type="submit"
+          style={{
+            backgroundColor: '#007bff',
+            color: '#fff',
+            padding: '10px 15px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
           Create Class
         </button>
       </form>

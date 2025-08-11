@@ -9,9 +9,21 @@ const userSchema = new mongoose.Schema({
     enum: ['student', 'tutor', 'admin'],
     default: 'student',
   },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'declined'],
+    default: function () {
+      return this.role === 'tutor' ? 'pending' : 'approved';
+    }
+  },
+  specialization: {
+    type: String,
+    default: function () {
+      return this.role === 'tutor' ? '' : null;
+    }
+  },
   enrolledClasses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Class' }]
 }, { timestamps: true });
-
 
 const User = mongoose.model('User', userSchema);
 

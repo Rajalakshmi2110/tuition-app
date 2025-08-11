@@ -1,12 +1,39 @@
-const User = require("../models/User");
+const User = require('../models/User');
 
-const getUsersByRole = async (req, res, role) => {
+// Approve tutor
+const approveTutor = async (req, res) => {
   try {
-    const users = await User.find({ role }).select("-password");
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching users", error: error.message });
+    const updatedTutor = await User.findByIdAndUpdate(
+      req.params.id,
+      { status: 'active' },
+      { new: true }
+    );
+    if (!updatedTutor) {
+      return res.status(404).json({ message: 'Tutor not found' });
+    }
+    res.json({ message: 'Tutor approved successfully', tutor: updatedTutor });
+  } catch (err) {
+    console.error('Error approving tutor:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
-module.exports = { getUsersByRole };
+// Decline tutor
+const declineTutor = async (req, res) => {
+  try {
+    const updatedTutor = await User.findByIdAndUpdate(
+      req.params.id,
+      { status: 'declined' },
+      { new: true }
+    );
+    if (!updatedTutor) {
+      return res.status(404).json({ message: 'Tutor not found' });
+    }
+    res.json({ message: 'Tutor declined successfully', tutor: updatedTutor });
+  } catch (err) {
+    console.error('Error declining tutor:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { approveTutor, declineTutor, getUsersByRole };

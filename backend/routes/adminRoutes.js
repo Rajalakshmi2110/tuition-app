@@ -2,16 +2,27 @@ const express = require("express");
 const router = express.Router();
 
 const { protect, adminOnly } = require("../middleware/authMiddleware");
-const { getUsersByRole } = require("../controllers/adminController");
-// console.log("protect:", protect);
-// console.log("adminOnly:", adminOnly);
-// console.log("getUsersByRole:", getUsersByRole);
+const { getUsersByRole, approveTutor, declineTutor } = require("../controllers/adminController");
 
+// Get all tutors
+router.get("/tutors", protect, adminOnly, (req, res) =>
+  getUsersByRole(req, res, "tutor")
+);
 
+// Get all pending tutors
+router.get("/tutors/pending", protect, adminOnly, (req, res) =>
+  getUsersByRole(req, res, "tutor", "pending")
+);
 
-console.log("getUsersByRole is:", getUsersByRole);
+// Approve tutor
+router.patch("/tutors/:id/approve", protect, adminOnly, approveTutor);
 
-router.get("/tutors", protect, adminOnly, (req, res) => getUsersByRole(req, res, "tutor"));
-router.get("/students", protect, adminOnly, (req, res) => getUsersByRole(req, res, "student"));
+// Decline tutor
+router.patch("/tutors/:id/decline", protect, adminOnly, declineTutor);
+
+// Get all students
+router.get("/students", protect, adminOnly, (req, res) =>
+  getUsersByRole(req, res, "student")
+);
 
 module.exports = router;

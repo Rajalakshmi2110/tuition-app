@@ -27,7 +27,11 @@ const Login = () => {
       else if (user.role === 'tutor') navigate('/tutor');
       else navigate('/student');
     } catch (error) {
-      alert('Login failed');
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('Login failed');
+      }
     }
   };
 

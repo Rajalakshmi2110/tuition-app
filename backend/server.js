@@ -29,7 +29,7 @@ app.use('/api/tutors', tutorRoutes);
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-const classAssignmentRoutes 5= require("./routes/classAssignmentRoutes");
+const classAssignmentRoutes = require("./routes/classAssignmentRoutes");
 app.use("/api/class", classAssignmentRoutes);
 
 const studentClassRoutes = require("./routes/studentClassRoutes");
