@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const AdminDashboard = () => {
+  const [activeTab, setActiveTab] = useState("student");
   const [students, setStudents] = useState([]);
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const AdminDashboard = () => {
       setStudents(studentsRes.data);
       setTutors(tutorsRes.data);
     } catch (err) {
-      setError("Failed to load student and tutor data.");
+      setError("Failed to load data.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -37,188 +38,209 @@ const AdminDashboard = () => {
   }, []);
 
   const approveTutor = async (id) => {
+    const token = localStorage.getItem("token");
     try {
-      const token = localStorage.getItem("token");
       await axios.patch(
         `${BASE_URL}/api/admin/tutors/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Tutor approved!");
-      fetchData(); // refresh list
+      fetchData();
     } catch (err) {
       console.error(err);
-      alert("Failed to approve tutor");
     }
   };
 
-  
   const declineTutor = async (id) => {
-  try {
-    const token = localStorage.getItem('token');
-    await axios.patch(
-      `http://localhost:5000/api/admin/tutors/${id}/decline`,
-      {},
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    alert('Tutor declined!');
-    fetchData(); // refresh list after declining
-  } catch (err) {
-    console.error(err);
-    alert('Failed to decline tutor');
-  }
-};
+    const token = localStorage.getItem("token");
+    try {
+      await axios.patch(
+        `${BASE_URL}/api/admin/tutors/${id}/decline`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-
+  const data = activeTab === "student" ? students : tutors;
+  const type = activeTab;
 
   return (
     <div style={{ padding: "24px" }}>
+      <style>{`
+.tab-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  transition: all 0.3s;
+}
+.tab.active {
+  background: #2563eb;
+  color: white;
+  border-radius: 6px 6px 0 0;
+}
+
+        .admin-table {
+          border-collapse: collapse;
+          width: 100%;
+          max-width: 800px;
+          margin: auto;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .admin-table th, .admin-table td {
+          padding: 12px 16px;
+          text-align: left;
+        }
+        .admin-table thead {
+          background: #f9fafb;
+        }
+        .admin-table tbody tr:nth-child(even) {
+          background: #f3f4f6;
+        }
+        .btn {
+          padding: 6px 12px;
+          font-size: 0.85rem;
+          border: none;
+          border-radius: 4px;
+          margin-right: 6px;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .btn.view { background: #2563eb; color: white; }
+        .btn.approve { background: #10b981; color: white; }
+        .btn.decline { background: #ef4444; color: white; }
+        .btn:hover { opacity: 0.9; }
+      `}</style>
+
       <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>
         Admin Dashboard
       </h2>
 
-      <div style={{ marginBottom: "24px" }}>
+      <div style={{ marginBottom: "20px" }}>
         <Link
           to="/admin/upload"
           style={{
-            display: "inline-block",
-            padding: "8px 16px",
+            padding: "8px 14px",
             backgroundColor: "#10b981",
             color: "white",
-            borderRadius: "4px",
+            borderRadius: "6px",
             textDecoration: "none",
-            marginRight: "16px",
+            marginRight: "10px",
+            fontWeight: 500
           }}
         >
-          Upload Study Materials
+          📁 Upload Study Materials
         </Link>
 
         <Link
           to="/admin/create-class"
           style={{
-            display: "inline-block",
-            padding: "8px 16px",
+            padding: "8px 14px",
             backgroundColor: "#2563eb",
             color: "white",
-            borderRadius: "4px",
+            borderRadius: "6px",
             textDecoration: "none",
+            fontWeight: 500
           }}
         >
-          Create New Class
+          ➕ Create New Class
         </Link>
+      </div>
+
+      <div className="tab-container">
+        <button
+          className={`tab ${activeTab === "student" ? "active" : ""}`}
+          onClick={() => setActiveTab("student")}
+        >
+          Students
+        </button>
+        <button
+          className={`tab ${activeTab === "tutor" ? "active" : ""}`}
+          onClick={() => setActiveTab("tutor")}
+        >
+          Tutors
+        </button>
       </div>
 
       {loading && <p>Loading student and tutor data...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {!loading && !error && (
-        <>
-          {/* Students Table */}
-          <section style={{ marginBottom: "32px" }}>
-            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>Students</h3>
-            {students.length === 0 ? (
-              <p>No students found.</p>
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              {type === "student" ? <th>Class</th> : <th>Specialization</th>}
+              {type === "student" ? <th>Subject</th> : <th>Status</th>}
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan="4" style={{ textAlign: "center" }}>
+                  No {type}s found.
+                </td>
+              </tr>
             ) : (
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                <thead>
-                  <tr style={{ backgroundColor: "#f3f4f6" }}>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Name
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Email
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Phone
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Enrolled Classes
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((stu) => (
-                    <tr key={stu._id} style={{ borderBottom: "1px solid #ddd" }}>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{stu.name}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{stu.email}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{stu.phone}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {stu.enrolledClasses?.join(", ") || "None"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              data.map((item) => (
+                <tr key={item._id}>
+                  <td>{item.name}</td>
+                  {type === "student" ? (
+                    <>
+                      <td>{item.className || "—"}</td>
+                      <td>{item.subject || "—"}</td>
+                    </>
+                  ) : (
+                    <>
+                      <td>{item.specialization || "—"}</td>
+                      <td>{item.status}</td>
+                    </>
+                  )}
+                  <td>
+                    <button className="btn view">View</button>
+                    {type === "tutor" && item.status === "pending" && (
+                      <>
+                        <button
+                          className="btn approve"
+                          onClick={() => approveTutor(item._id)}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="btn decline"
+                          onClick={() => declineTutor(item._id)}
+                        >
+                          Decline
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))
             )}
-          </section>
-
-          {/* Tutors Table */}
-          <section>
-            <h3 style={{ fontSize: "20px", marginBottom: "8px" }}>Tutors</h3>
-            {tutors.length === 0 ? (
-              <p>No tutors found.</p>
-            ) : (
-              <table style={{ borderCollapse: "collapse", width: "100%" }}>
-                <thead>
-                  <tr style={{ backgroundColor: "#f3f4f6" }}>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Name
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Email
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Phone
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Specialization
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Status
-                    </th>
-                    <th style={{ border: "1px solid #ddd", padding: "8px", textAlign: "left" }}>
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tutors.map((tut) => (
-                    <tr key={tut._id} style={{ borderBottom: "1px solid #ddd" }}>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{tut.name}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{tut.email}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{tut.phone}</td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {tut.specialization || "—"}
-                      </td>
-                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                        {tut.status}
-                      </td>
-                      <td>
-                        {tut.status === "pending" && (
-                          <>
-                            <button
-                              style={{ backgroundColor: "#10b981", color: "white", padding: "4px 8px", marginRight: "8px" }}
-                              onClick={() => approveTutor(tut._id)}
-                            >
-                              Approve
-                            </button>
-                            <button
-                              style={{ backgroundColor: "#ef4444", color: "white", padding: "4px 8px" }}
-                              onClick={() => declineTutor(tut._id)}
-                            >
-                              Decline
-                            </button>
-                          </>
-                        )}
-                      </td>
-
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </section>
-        </>
+          </tbody>
+        </table>
       )}
     </div>
   );
