@@ -1,29 +1,24 @@
-const Material = require('../models/materialModel'); // create a Mongoose model for materials
+const Material = require('../models/materialModel'); 
 
-// Upload file controller
 const uploadMaterial = async (req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
+    if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 
     const newMaterial = new Material({
       filename: req.file.filename,
       originalName: req.file.originalname,
       path: req.file.path,
-      uploadedBy: req.user._id, // from auth middleware
+      uploadedBy: req.user._id,
       uploadDate: Date.now(),
     });
 
     await newMaterial.save();
-
     res.status(201).json({ message: 'File uploaded successfully', material: newMaterial });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error });
   }
 };
 
-// Get all materials
 const getAllMaterials = async (req, res) => {
   try {
     const materials = await Material.find().sort({ uploadDate: -1 });

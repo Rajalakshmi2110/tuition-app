@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login.css';
+// import '../styles/login.css';
 import Header from '../components/Header';
 
 const Login = () => {

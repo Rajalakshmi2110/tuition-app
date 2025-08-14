@@ -15,18 +15,19 @@ const classSchema = new mongoose.Schema({
   },
   tutor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true
   },
-//   announcements: [
-//   {
-//     text: String,
-//     postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-//     postedAt: { type: Date, default: Date.now }
-//   }
-// ],
-// announcements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Announcement' }]
-
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ],
+  classLevel: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Class", classSchema);

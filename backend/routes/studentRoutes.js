@@ -1,29 +1,16 @@
+// routes/studentRoutes.js
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../middleware/authMiddleware");  // fixed here
+const { protect } = require("../Middleware/authMiddleware");
 const { enrollInClass, getMyClasses, getAvailableClasses } = require("../controllers/studentController");
-const StudentClass = require("../models/StudentClass");
 
+// Enroll student in a class
 router.post("/enroll", protect, enrollInClass);
 
+// Get all classes the student is enrolled in
 router.get("/my-classes", protect, getMyClasses);
 
-router.get('/available-classes', protect, getAvailableClasses);
-
-router.post("/", async (req, res) => {
-  try {
-    const { studentId, classId } = req.body;
-
-    if (!studentId || !classId) {
-      return res.status(400).json({ message: "studentId and classId are required" });
-    }
-
-    const newLink = await StudentClass.create({ studentId, classId });
-    res.status(201).json(newLink);
-  } catch (err) {
-    console.error("Error creating student-class link:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
+// Get available classes for the student
+router.get("/available-classes", protect, getAvailableClasses);
 
 module.exports = router;

@@ -3,10 +3,8 @@ const User = require('../models/User');
 const getUsersByRole = async (req, res, role, status) => {
   try {
     const query = { role };
-    if (status) {
-      query.status = status;
-    }
-    const users = await User.find(query).select('-password'); // exclude sensitive info like password
+    if (status) query.status = status;
+    const users = await User.find(query).select('-password');
     res.json(users);
   } catch (err) {
     console.error('Error fetching users:', err);
@@ -14,7 +12,6 @@ const getUsersByRole = async (req, res, role, status) => {
   }
 };
 
-// Approve tutor
 const approveTutor = async (req, res) => {
   try {
     const updatedTutor = await User.findByIdAndUpdate(
@@ -22,9 +19,7 @@ const approveTutor = async (req, res) => {
       { status: 'active' },
       { new: true }
     );
-    if (!updatedTutor) {
-      return res.status(404).json({ message: 'Tutor not found' });
-    }
+    if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
     res.json({ message: 'Tutor approved successfully', tutor: updatedTutor });
   } catch (err) {
     console.error('Error approving tutor:', err);
@@ -32,7 +27,6 @@ const approveTutor = async (req, res) => {
   }
 };
 
-// Decline tutor
 const declineTutor = async (req, res) => {
   try {
     const updatedTutor = await User.findByIdAndUpdate(
@@ -40,9 +34,7 @@ const declineTutor = async (req, res) => {
       { status: 'declined' },
       { new: true }
     );
-    if (!updatedTutor) {
-      return res.status(404).json({ message: 'Tutor not found' });
-    }
+    if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
     res.json({ message: 'Tutor declined successfully', tutor: updatedTutor });
   } catch (err) {
     console.error('Error declining tutor:', err);
@@ -50,4 +42,4 @@ const declineTutor = async (req, res) => {
   }
 };
 
-module.exports = { approveTutor, declineTutor, getUsersByRole  };
+module.exports = { approveTutor, declineTutor, getUsersByRole };

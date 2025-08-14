@@ -1,13 +1,13 @@
-
+// routes/tutorClassRoutes.js
 const express = require("express");
 const router = express.Router();
 const TutorClass = require("../models/TutorClass");
 
+// Admin/manual endpoint to create tutor-class link
 router.post("/", async (req, res) => {
   try {
     const { tutorId, classId } = req.body;
-    const newTutorClass = new TutorClass({ tutorId, classId });
-    await newTutorClass.save();
+    const newTutorClass = await TutorClass.create({ tutorId, classId });
     res.status(201).json(newTutorClass);
   } catch (err) {
     console.error("Error creating tutor-class link:", err);
@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get all classes assigned to a tutor with enrolled students
 router.get("/:tutorId", async (req, res) => {
   try {
     const tutorLinks = await TutorClass.find({ tutorId: req.params.tutorId })

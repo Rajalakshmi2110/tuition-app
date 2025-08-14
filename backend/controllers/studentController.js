@@ -2,9 +2,7 @@ const User = require("../models/User");
 const Class = require("../models/Class");
 
 const enrollInClass = async (req, res) => {
-  if (req.user.role !== "student") {
-    return res.status(403).json({ message: "Only students can enroll." });
-  }
+  if (req.user.role !== "student") return res.status(403).json({ message: "Only students can enroll." });
 
   const { classId } = req.body;
 
@@ -27,9 +25,7 @@ const enrollInClass = async (req, res) => {
 };
 
 const getMyClasses = async (req, res) => {
-  if (req.user.role !== "student") {
-    return res.status(403).json({ message: "Only students can view their classes" });
-  }
+  if (req.user.role !== "student") return res.status(403).json({ message: "Only students can view their classes" });
 
   try {
     const student = await User.findById(req.user.id).populate("enrolledClasses");
@@ -45,15 +41,7 @@ const getMyClasses = async (req, res) => {
 const getAvailableClasses = async (req, res) => {
   try {
     const student = await User.findById(req.user.id).lean();
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
-    // const enrolledClassIds = Array.isArray(student.enrolledClasses) ? student.enrolledClasses : [];
-
-    // const availableClasses = await Class.find({
-    //   _id: { $nin: enrolledClassIds }
-    // }).populate('tutor', 'name email');
+    if (!student) return res.status(404).json({ message: 'Student not found' });
 
     const enrolledClassIds = student.enrolledClasses || [];
 
@@ -61,13 +49,11 @@ const getAvailableClasses = async (req, res) => {
       _id: { $nin: enrolledClassIds }
     }).populate('tutor', 'name email');
 
-
     res.json({ availableClasses });
   } catch (err) {
     console.error('Error getting available classes:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 
 module.exports = { enrollInClass, getMyClasses, getAvailableClasses };

@@ -5,9 +5,8 @@ exports.assignTutorToClass = async (req, res) => {
   try {
     const { tutorId, classId } = req.body;
     const exists = await TutorClass.findOne({ tutorId, classId });
-    if (exists) {
-      return res.status(400).json({ message: "Tutor already assigned to this class" });
-    }
+    if (exists) return res.status(400).json({ message: "Tutor already assigned to this class" });
+
     const tutorClass = new TutorClass({ tutorId, classId });
     await tutorClass.save();
     res.status(201).json(tutorClass);
@@ -20,9 +19,8 @@ exports.enrollStudentInClass = async (req, res) => {
   try {
     const { studentId, classId } = req.body;
     const exists = await StudentClass.findOne({ studentId, classId });
-    if (exists) {
-      return res.status(400).json({ message: "Student already enrolled in this class" });
-    }
+    if (exists) return res.status(400).json({ message: "Student already enrolled in this class" });
+
     const studentClass = new StudentClass({ studentId, classId });
     await studentClass.save();
     res.status(201).json(studentClass);

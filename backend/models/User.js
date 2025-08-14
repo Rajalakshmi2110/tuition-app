@@ -25,6 +25,4 @@ const userSchema = new mongoose.Schema({
   enrolledClasses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Class' }]
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.model('User', userSchema);

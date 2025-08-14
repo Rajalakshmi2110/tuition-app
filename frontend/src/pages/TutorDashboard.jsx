@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {jwtDecode} from 'jwt-decode';
-import { useNavigate, Link } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/TutorDashboard.css";
 
 const TutorDashboard = () => {
@@ -17,10 +17,12 @@ const TutorDashboard = () => {
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
 
+        // Fetch classes along with enrolled students
         const res = await axios.get(
           `http://localhost:5000/api/classes/tutor/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
         setClasses(res.data);
       } catch (err) {
         console.error("Failed to fetch tutor classes", err);
@@ -33,19 +35,38 @@ const TutorDashboard = () => {
   return (
     <div className="tutor-dashboard">
       <h2 className="dashboard-title">My Classes</h2>
+
       {classes.length === 0 ? (
         <p>No classes assigned.</p>
       ) : (
         <ul className="class-list">
           {classes.map((cls) => (
-            <li
-              key={cls._id}
-              className="class-card"
-              onClick={() => navigate(`/tutor/class/${cls._id}`)}
-            >
+            <li key={cls._id} className="class-card">
               <h3>{cls.name}</h3>
               <p><strong>Subject:</strong> {cls.subject}</p>
               <p><strong>Schedule:</strong> {cls.schedule}</p>
+
+              <div className="enrolled-students">
+                <strong>Enrolled Students:</strong>
+                {cls.students && cls.students.length > 0 ? (
+                  <ul>
+                    {cls.students.map(student => (
+                      <li key={student._id}>
+                        {student.name} ({student.email})
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>No students enrolled yet.</p>
+                )}
+              </div>
+
+              <button
+                onClick={() => navigate(`/tutor/class/${cls._id}`)}
+                className="view-class-btn"
+              >
+                View Class Details
+              </button>
             </li>
           ))}
         </ul>
