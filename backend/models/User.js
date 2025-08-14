@@ -22,7 +22,12 @@ const userSchema = new mongoose.Schema({
       return this.role === 'tutor' ? '' : null;
     }
   },
-  enrolledClasses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Class' }]
+  className: {
+    type: String,
+    required: function () {
+      return this.role === 'student';
+    }
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

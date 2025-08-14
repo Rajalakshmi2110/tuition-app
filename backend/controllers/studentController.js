@@ -56,4 +56,24 @@ const getAvailableClasses = async (req, res) => {
   }
 };
 
-module.exports = { enrollInClass, getMyClasses, getAvailableClasses };
+const getTutorsForStudent = async (req, res) => {
+  try {
+    const student = await User.findById(req.user.id);
+    if (!student || student.role !== 'student') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    // Find all tutors teaching the same className
+    const tutors = await User.find({
+      role: 'tutor',
+      className: student.className
+    });
+
+    res.json(tutors);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+module.exports = { enrollInClass, getMyClasses, getAvailableClasses, getTutorsForStudent  };

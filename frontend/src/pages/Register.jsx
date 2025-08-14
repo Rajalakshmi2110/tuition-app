@@ -12,7 +12,7 @@ const Register = () => {
     password: '',
     role: '',
     specialization: '',
-    classId: ''
+    className: ''
   });
 
   const studentClasses = ["8", "9", "10", "11", "12"];
@@ -97,19 +97,28 @@ const Register = () => {
             )}
             
             {formData.role === 'student' && (
-              <select
-                name="classId"
-                value={formData.classId}
-                onChange={handleChange}
-                required
-                style={{ width: '100%', padding: '12px 15px', marginBottom: '20px', fontSize: '14px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}
-              >
-                <option value="">Select Class</option>
-                {studentClasses.map(cls => (
-                  <option key={cls} value={cls}>{cls}</option>
-                ))}
-              </select>
-            )}
+            <select
+              name="className"
+              value={formData.className}
+              onChange={handleChange}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 15px',
+                marginBottom: '15px',
+                fontSize: '14px',
+                borderRadius: '5px',
+                border: '1px solid #ccc',
+                backgroundColor: '#fff'
+              }}
+            >
+              <option value="">Select Class</option>
+              {studentClasses.map(cls => (
+                <option key={cls} value={cls}>{cls}</option>
+              ))}
+            </select>
+          )}
+
 
             <button
               type="submit"
