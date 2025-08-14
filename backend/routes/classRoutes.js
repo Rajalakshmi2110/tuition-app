@@ -7,8 +7,9 @@ const Class = require("../models/Class");
 const StudentClass = require("../models/StudentClass");
 const Student = require("../models/User");
 
-// ----- CLASS CRUD -----
+// ------------------ ADMIN ROUTES ------------------
 
+// Create a new class
 router.post("/create", protect, authorizeRoles("admin"), async (req, res) => {
   try {
     const { name, subject, schedule, tutor, classLevel } = req.body;
@@ -23,7 +24,8 @@ router.post("/create", protect, authorizeRoles("admin"), async (req, res) => {
   }
 });
 
-router.get("/", protect, async (req, res) => {
+// Get all classes (admin view)
+router.get("/", protect, authorizeRoles("admin"), async (req, res) => {
   try {
     const classes = await Class.find().populate("tutor", "name email");
     res.json(classes);
@@ -33,6 +35,7 @@ router.get("/", protect, async (req, res) => {
   }
 });
 
+// Get class by ID
 router.get("/:id", protect, async (req, res) => {
   try {
     const classItem = await Class.findById(req.params.id).populate("tutor", "name email");
@@ -44,6 +47,7 @@ router.get("/:id", protect, async (req, res) => {
   }
 });
 
+// Update class (admin)
 router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
   try {
     const updatedClass = await Class.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -55,8 +59,9 @@ router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
   }
 });
 
-// ----- STUDENT CLASSES -----
+// ------------------ STUDENT ROUTES ------------------
 
+// Get classes enrolled by a student
 router.get("/student/:studentId", protect, async (req, res) => {
   try {
     const studentLinks = await StudentClass.find({ studentId: req.params.studentId }).populate({
@@ -64,17 +69,15 @@ router.get("/student/:studentId", protect, async (req, res) => {
       populate: { path: "tutor", select: "name email" },
     });
 
-    if (!studentLinks.length)
-      return res.status(404).json({ message: "No classes found for this student" });
-
-    const classes = studentLinks.map((link) => link.classId);
+    const classes = studentLinks.map(link => link.classId);
     res.json(classes);
   } catch (err) {
-    console.error("Error fetching student classes:", err);
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
+// Get available classes for a student (not enrolled yet)
 router.get("/available-for-student/:studentId", protect, async (req, res) => {
   try {
     const student = await Student.findById(req.params.studentId);
@@ -82,11 +85,9 @@ router.get("/available-for-student/:studentId", protect, async (req, res) => {
 
     const availableClasses = await Class.find({ classLevel: student.classLevel });
     const enrolledLinks = await StudentClass.find({ studentId: student._id });
-    const enrolledClassIds = enrolledLinks.map((link) => link.classId.toString());
+    const enrolledClassIds = enrolledLinks.map(link => link.classId.toString());
 
-    const filteredClasses = availableClasses.filter(
-      (c) => !enrolledClassIds.includes(c._id.toString())
-    );
+    const filteredClasses = availableClasses.filter(c => !enrolledClassIds.includes(c._id.toString()));
 
     res.json(filteredClasses);
   } catch (err) {
@@ -95,6 +96,7 @@ router.get("/available-for-student/:studentId", protect, async (req, res) => {
   }
 });
 
+// Enroll student to class
 router.post("/enroll", protect, async (req, res) => {
   const { studentId, classId } = req.body;
   try {
@@ -109,16 +111,16 @@ router.post("/enroll", protect, async (req, res) => {
   }
 });
 
+// ------------------ TUTOR ROUTES ------------------
+
+// Get classes assigned to a tutor
 router.get("/tutor/:tutorId", protect, async (req, res) => {
   try {
     const tutorId = req.params.tutorId;
 
-    const tutorLinks = await TutorClass.find({ tutorId }).populate({
-      path: "classId",
-      populate: { path: "students", select: "name email" }
-    });
-
-    const classes = tutorLinks.map(link => link.classId);
+    // Fetch classes where tutor matches
+    const classes = await Class.find({ tutor: tutorId })
+      .populate("students", "name email"); // include enrolled students
 
     res.json(classes);
   } catch (err) {
@@ -126,6 +128,5 @@ router.get("/tutor/:tutorId", protect, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 module.exports = router;

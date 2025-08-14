@@ -69,84 +69,22 @@ const AdminDashboard = () => {
   const type = activeTab;
 
   return (
-    <div style={{ padding: "24px" }}>
-      <style>{`
-.tab-container {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  margin-bottom: 20px;
-  border-bottom: 2px solid #e5e7eb;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.tab {
-  flex: 1;
-  text-align: center;
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  background: #f3f4f6;
-  color: #374151;
-  border: none;
-  transition: all 0.3s;
-}
-.tab.active {
-  background: #2563eb;
-  color: white;
-  border-radius: 6px 6px 0 0;
-}
-
-        .admin-table {
-          border-collapse: collapse;
-          width: 100%;
-          max-width: 800px;
-          margin: auto;
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .admin-table th, .admin-table td {
-          padding: 12px 16px;
-          text-align: left;
-        }
-        .admin-table thead {
-          background: #f9fafb;
-        }
-        .admin-table tbody tr:nth-child(even) {
-          background: #f3f4f6;
-        }
-        .btn {
-          padding: 6px 12px;
-          font-size: 0.85rem;
-          border: none;
-          border-radius: 4px;
-          margin-right: 6px;
-          cursor: pointer;
-          transition: background 0.2s;
-        }
-        .btn.view { background: #2563eb; color: white; }
-        .btn.approve { background: #10b981; color: white; }
-        .btn.decline { background: #ef4444; color: white; }
-        .btn:hover { opacity: 0.9; }
-      `}</style>
-
+    <div style={{ padding: "24px", maxWidth: "900px", margin: "auto" }}>
       <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "16px" }}>
         Admin Dashboard
       </h2>
 
-      <div style={{ marginBottom: "20px" }}>
+      {/* Action Links */}
+      <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <Link
           to="/admin/upload"
           style={{
-            padding: "8px 14px",
-            backgroundColor: "#10b981",
-            color: "white",
+            padding: "10px 16px",
+            backgroundColor: "#007bff",
+            color: "#fff",
             borderRadius: "6px",
             textDecoration: "none",
-            marginRight: "10px",
-            fontWeight: 500
+            fontWeight: 500,
           }}
         >
           📁 Upload Study Materials
@@ -155,41 +93,58 @@ const AdminDashboard = () => {
         <Link
           to="/admin/create-class"
           style={{
-            padding: "8px 14px",
-            backgroundColor: "#2563eb",
-            color: "white",
+            padding: "10px 16px",
+            backgroundColor: "#10b981",
+            color: "#fff",
             borderRadius: "6px",
             textDecoration: "none",
-            fontWeight: 500
+            fontWeight: 500,
           }}
         >
           ➕ Create New Class
         </Link>
       </div>
 
-      <div className="tab-container">
+      {/* Tabs */}
+      <div style={{ display: "flex", marginBottom: "16px", gap: "10px" }}>
         <button
-          className={`tab ${activeTab === "student" ? "active" : ""}`}
           onClick={() => setActiveTab("student")}
+          style={{
+            flex: 1,
+            padding: "10px",
+            backgroundColor: activeTab === "student" ? "#007bff" : "#f3f4f6",
+            color: activeTab === "student" ? "#fff" : "#000",
+            borderRadius: "6px",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
         >
           Students
         </button>
         <button
-          className={`tab ${activeTab === "tutor" ? "active" : ""}`}
           onClick={() => setActiveTab("tutor")}
+          style={{
+            flex: 1,
+            padding: "10px",
+            backgroundColor: activeTab === "tutor" ? "#007bff" : "#f3f4f6",
+            color: activeTab === "tutor" ? "#fff" : "#000",
+            borderRadius: "6px",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
         >
           Tutors
         </button>
       </div>
 
-      {loading && <p>Loading student and tutor data...</p>}
+      {loading && <p>Loading {type} data...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
       {!loading && !error && (
-        <table className="admin-table">
-          <thead>
+        <table style={{ width: "100%", borderCollapse: "collapse", background: "#fff", borderRadius: "8px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.05)" }}>
+          <thead style={{ backgroundColor: "#f9fafb" }}>
             <tr>
-              <th>Name</th>
+              <th style={{ padding: "12px", textAlign: "left" }}>Name</th>
               {type === "student" ? <th>Class</th> : <th>Specialization</th>}
               {type === "student" ? <th>Subject</th> : <th>Status</th>}
               <th>Action</th>
@@ -198,41 +153,32 @@ const AdminDashboard = () => {
           <tbody>
             {data.length === 0 ? (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
+                <td colSpan="4" style={{ textAlign: "center", padding: "12px" }}>
                   No {type}s found.
                 </td>
               </tr>
             ) : (
               data.map((item) => (
-                <tr key={item._id}>
-                  <td>{item.name}</td>
+                <tr key={item._id} style={{ backgroundColor: "#fff" }}>
+                  <td style={{ padding: "12px" }}>{item.name}</td>
                   {type === "student" ? (
                     <>
-                      <td>{item.className || "—"}</td>
-                      <td>{item.subject || "—"}</td>
+                      <td style={{ padding: "12px" }}>{item.className || "—"}</td>
+                      <td style={{ padding: "12px" }}>{item.subject || "—"}</td>
                     </>
                   ) : (
                     <>
-                      <td>{item.specialization || "—"}</td>
-                      <td>{item.status}</td>
+                      <td style={{ padding: "12px" }}>{item.specialization || "—"}</td>
+                      <td style={{ padding: "12px" }}>{item.status}</td>
                     </>
                   )}
-                  <td>
-                    <button className="btn view">View</button>
-                    {type === "tutor" && item.status === "pending" && (
+                  <td style={{ padding: "12px", display: "flex", gap: "6px" }}>
+                    <button style={{ padding: "6px 12px", background: "#007bff", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }}>View</button>
+
+                    {type === "tutor" && item.status?.trim().toLowerCase() === "pending" && (
                       <>
-                        <button
-                          className="btn approve"
-                          onClick={() => approveTutor(item._id)}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className="btn decline"
-                          onClick={() => declineTutor(item._id)}
-                        >
-                          Decline
-                        </button>
+                        <button style={{ padding: "6px 12px", background: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => approveTutor(item._id)}>Approve</button>
+                        <button style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => declineTutor(item._id)}>Decline</button>
                       </>
                     )}
                   </td>
