@@ -9,10 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);
-
 
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
@@ -38,6 +36,7 @@ app.use("/api/student-classes", studentClassRoutes);
 const tutorClassRoutes = require("./routes/tutorClassRoutes");
 app.use("/api/tutor-classes", tutorClassRoutes);
 
+app.use("/uploads", express.static("uploads"));
 const fileRoutes = require('./routes/fileRoutes');
 app.use('/api/files', fileRoutes);
 

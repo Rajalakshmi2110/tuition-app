@@ -1,10 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const upload = require('../Middleware/uploadMiddleware');
-const { protect } = require('../Middleware/authMiddleware');
-const { uploadMaterial, getAllMaterials } = require('../controllers/fileController');
+const upload = require("../middleware/uploadMiddleware");
+const { uploadFile, getFiles, deleteFile } = require("../controllers/fileController");
+const protect = require("../middleware/authMiddleware");
+const authorizeRoles = require("../middleware/authorizeRoles");
 
-router.post('/', protect, upload.single('file'), uploadMaterial);
-router.get('/', protect, getAllMaterials);
+router.post("/upload", protect, authorizeRoles("tutor", "admin"), upload.single("file"), uploadFile);
+
+router.get("/", protect, getFiles);
+
+router.delete("/:id", protect, authorizeRoles("tutor", "admin"), deleteFile);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 // routes/studentRoutes.js
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../Middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 const { enrollInClass, getMyClasses, getAvailableClasses } = require("../controllers/studentController");
 
 // Enroll student in a class

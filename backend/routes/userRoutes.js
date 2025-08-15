@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { registerUser, loginUser } = require('../controllers/authController');
-// const protect = require("../Middleware/authMiddleware");
-const { protect } = require("../Middleware/authMiddleware");
+// const protect = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
-const authorizeRoles = require("../Middleware/authorizeRoles");
+const authorizeRoles = require("../middleware/authorizeRoles");
 const { getAllTutors } = require('../controllers/userController');
 
 router.get("/", (req, res) => {
