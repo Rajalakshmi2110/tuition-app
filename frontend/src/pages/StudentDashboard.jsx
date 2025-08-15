@@ -10,7 +10,7 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const decoded = jwtDecode(token);
-      const studentClassName = decoded.className; // directly from token payload
+      const studentClassName = decoded.className;
 
       const res = await axios.get(
         `http://localhost:5000/api/classes/by-classname/${encodeURIComponent(studentClassName)}`,

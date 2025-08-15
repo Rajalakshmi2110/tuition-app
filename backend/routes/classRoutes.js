@@ -16,13 +16,31 @@ router.post("/create", protect, authorizeRoles("admin"), async (req, res) => {
     if (!name || !subject || !schedule || !tutor || !classLevel)
       return res.status(400).json({ message: "All fields are required" });
 
+    // Create the class
     const newClass = await Class.create({ name, subject, schedule, tutor, classLevel });
-    res.status(201).json(newClass);
+
+    // Find all students in the same classLevel
+    const matchedStudents = await Student.find({ role: "student", classLevel });
+
+    // Create StudentClass links
+    if (matchedStudents.length > 0) {
+      const studentLinks = matchedStudents.map(s => ({
+        studentId: s._id,
+        classId: newClass._id
+      }));
+      await StudentClass.insertMany(studentLinks);
+    }
+
+    res.status(201).json({
+      message: `Class created successfully and linked to ${matchedStudents.length} students.`,
+      class: newClass
+    });
   } catch (err) {
-    console.error(err);
+    console.error("Error creating class:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // Get all classes (admin view)
 router.get("/", protect, authorizeRoles("admin"), async (req, res) => {
@@ -64,18 +82,45 @@ router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
 // Get classes enrolled by a student
 router.get("/student/:studentId", protect, async (req, res) => {
   try {
-    const studentLinks = await StudentClass.find({ studentId: req.params.studentId }).populate({
-      path: "classId",
-      populate: { path: "tutor", select: "name email" },
+    const studentId = req.params.studentId;
+
+    // Get the student info to check their classLevel
+    const student = await Student.findById(studentId);
+    if (!student) return res.status(404).json({ message: "Student not found" });
+
+    // 1️⃣ Find all classes for the student's classLevel (auto-assigned by level)
+    const autoAssignedClasses = await Class.find({ classLevel: student.classLevel })
+      .populate("tutor", "name email");
+
+    // 2️⃣ Find all classes the student is explicitly enrolled in
+    const enrolledLinks = await StudentClass.find({ studentId })
+      .populate({
+        path: "classId",
+        populate: { path: "tutor", select: "name email" }
+      });
+
+    const manuallyEnrolledClasses = enrolledLinks.map(link => link.classId);
+
+    // 3️⃣ Merge without duplicates (in case a class appears in both lists)
+    const allClassesMap = new Map();
+
+    autoAssignedClasses.forEach(cls => {
+      allClassesMap.set(cls._id.toString(), cls);
     });
 
-    const classes = studentLinks.map(link => link.classId);
-    res.json(classes);
+    manuallyEnrolledClasses.forEach(cls => {
+      allClassesMap.set(cls._id.toString(), cls);
+    });
+
+    const allClasses = Array.from(allClassesMap.values());
+
+    res.json(allClasses);
   } catch (err) {
-    console.error(err);
+    console.error("Error fetching student classes:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // Get available classes for a student (not enrolled yet)
 router.get("/available-for-student/:studentId", protect, async (req, res) => {

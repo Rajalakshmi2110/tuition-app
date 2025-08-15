@@ -1,22 +1,35 @@
 const Class = require("../models/Class");
 const TutorClass = require("../models/TutorClass");
 const StudentClass = require("../models/StudentClass");
+const User = require("../models/User");
+const Class = require("../models/Class");
+const TutorClass = require("../models/TutorClass");
+const StudentClass = require("../models/StudentClass");
 
 const createClass = async (req, res) => {
   try {
-    const { name, subject, description, schedule, tutor, students = [] } = req.body;
+    const { name, subject, description, schedule, tutor, classLevel, students = [] } = req.body;
 
-    if (!name || !subject || !schedule || !tutor) {
-      return res.status(400).json({ message: "Name, subject, schedule, and tutor are required" });
+    if (!name || !subject || !schedule || !tutor || !classLevel) {
+      return res.status(400).json({ message: "Name, subject, schedule, tutor, and classLevel are required" });
     }
 
-    const newClass = new Class({ name, subject, description, schedule, tutor });
+    const newClass = new Class({ name, subject, description, schedule, tutor, classLevel });
     await newClass.save();
 
     await TutorClass.create({ tutorId: tutor, classId: newClass._id });
 
-    if (students.length > 0) {
-      const studentLinks = students.map(sId => ({ studentId: sId, classId: newClass._id }));
+    const autoStudents = await User.find({ role: 'student', className: classLevel });
+
+    const allStudentIds = [
+      ...students,
+      ...autoStudents.map(s => s._id)
+    ];
+
+    const uniqueStudentIds = [...new Set(allStudentIds.map(id => id.toString()))];
+
+    if (uniqueStudentIds.length > 0) {
+      const studentLinks = uniqueStudentIds.map(sId => ({ studentId: sId, classId: newClass._id }));
       await StudentClass.insertMany(studentLinks);
     }
 
@@ -27,6 +40,7 @@ const createClass = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+
 
 const getAllClasses = async (req, res) => {
   try {
