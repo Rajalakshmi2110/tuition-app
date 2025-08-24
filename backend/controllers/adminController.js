@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { sendTutorApprovalEmail, sendTutorDeclineEmail } = require('../services/emailService');
 
 const getUsersByRole = async (req, res, role, status) => {
   try {
@@ -16,10 +17,14 @@ const approveTutor = async (req, res) => {
   try {
     const updatedTutor = await User.findByIdAndUpdate(
       req.params.id,
-      { status: 'active' },
+      { status: 'approved' },
       { new: true }
     );
     if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
+    
+    // Send approval email
+    await sendTutorApprovalEmail(updatedTutor.email, updatedTutor.name);
+    
     res.json({ message: 'Tutor approved successfully', tutor: updatedTutor });
   } catch (err) {
     console.error('Error approving tutor:', err);
@@ -35,6 +40,10 @@ const declineTutor = async (req, res) => {
       { new: true }
     );
     if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
+    
+    // Send decline email
+    await sendTutorDeclineEmail(updatedTutor.email, updatedTutor.name);
+    
     res.json({ message: 'Tutor declined successfully', tutor: updatedTutor });
   } catch (err) {
     console.error('Error declining tutor:', err);

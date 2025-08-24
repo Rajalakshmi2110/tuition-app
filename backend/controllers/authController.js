@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const { sendStudentRegistrationEmail, sendTutorPendingEmail } = require('../services/emailService');
 
 // REGISTER
 const registerUser = async (req, res) => {
@@ -47,6 +48,13 @@ const registerUser = async (req, res) => {
     });
 
     await user.save();
+
+    // Send email notifications
+    if (role === 'student') {
+      await sendStudentRegistrationEmail(user.email, user.name);
+    } else if (role === 'tutor') {
+      await sendTutorPendingEmail(user.email, user.name);
+    }
 
     res.status(201).json({
       message: 'User registered successfully',
