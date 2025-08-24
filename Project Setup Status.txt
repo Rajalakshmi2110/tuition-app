@@ -1,0 +1,78 @@
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzA2OTcyNzJmYTg4YTIzNDk5ZGJmZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1NDc2MTY1MywiZXhwIjoxNzU0NzY1MjUzfQ.m4b6ENb6N1EPEdXDpA6rFehHdBGcdxC6baH-OtOsRDQ
+
+
+MONGO_URI=mongodb://localhost:27017/tuitionApp
+
+JWT_SECRET=supersecretjwtkey
+PORT=5000
+
+CLOUDINARY_CLOUD_NAME=dilxiyizn
+CLOUDINARY_API_KEY=339969121424286
+CLOUDINARY_API_SECRET=rW-hUFasc8FRIvVHNP-KPHd3Ksg
+
+
+
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzQ1NDE2NTQyNjI4OWEzZDc3MDZiNCIsInJvbGUiOiJ0dXRvciIsImlhdCI6MTc1NTQ1NjI1NiwiZXhwIjoxNzU1NDU5ODU2fQ.jqqhE_iiJXgJY5SEsAqBCaUEr4odSXKftm7Iyblv2P0",
+    "user": {
+        "id": "687454165426289a3d7706b4",
+        "name": "Kumar",
+        "email": "kumar@tuition.com",
+        "role": "tutor",
+        "status": "active"
+    }
+}
+
+
+
+
+
+Updated Tuition App Scope (Simplified + Dynamic)
+👤 User Roles:
+
+Admin
+
+Student
+
+Tutor
+
+📦 Key Features:
+
+Authentication (Role-based: Admin, Student, Tutor)
+
+Dynamic File Upload
+
+Tutors can upload study materials
+
+Admin can upload announcements or general files
+
+Students can view/download
+
+Assignment Module
+
+Tutors can upload assignments
+
+Students can submit responses (file upload)
+
+Tutors can review + optionally grade
+
+Class Management
+
+Admin or tutors can assign classes (like subjects or batches)
+
+Students can see their class schedules and resources
+
+Student Performance Tracking
+
+Tutors can update performance records (test scores, remarks)
+
+Admin/Students can view performance dashboards
+
+Fee Reminder & Payment
+
+Admin can generate fee reminders (due date, amount, etc.)
+
+Students can see pending payments, and pay online (start with dummy payment / UPI screenshot for now)
+
+Optional: Integrate Razorpay/Stripe for real payments
