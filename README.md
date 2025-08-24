@@ -127,7 +127,7 @@ tuition-app/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
-│   ├── middleware/
+│   ├── Middleware/
 │   └── config/
 ├── frontend/
 │   ├── src/
