@@ -1,0 +1,125 @@
+curl -X POST http://localhost:5000/api/users/register \
+-H "Content-Type: application/json" \
+-d '{"name":"Raji","email":"raji@tuition.com","password":"secret123","role":"admin"}'
+
+curl -X POST http://localhost:5000/api/users/login \
+-H "Content-Type: application/json" \
+-d '{"email":"raji@tuition.com","password":"secret123"}'
+
+curl -X GET http://localhost:5000/api/users/profile \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzA2OTcyNzJmYTg4YTIzNDk5ZGJmZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjQ1MjE2NCwiZXhwIjoxNzUyNDU1NzY0fQ.SRjFq7dpkC3OlXOugePgSqY6ISuI3Meef6Foob00-TA"
+
+curl -X GET http://localhost:5000/api/users/dashboard \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzA2OTcyNzJmYTg4YTIzNDk5ZGJmZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjQ1MjE2NCwiZXhwIjoxNzUyNDU1NzY0fQ.SRjFq7dpkC3OlXOugePgSqY6ISuI3Meef6Foob00-TA"
+
+curl -X POST http://localhost:5000/api/classes/create \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzA2OTcyNzJmYTg4YTIzNDk5ZGJmZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjQ1MjE2NCwiZXhwIjoxNzUyNDU1NzY0fQ.SRjFq7dpkC3OlXOugePgSqY6ISuI3Meef6Foob00-TA" \
+-d '{"name":"Class 10 - Physics","subject":"Physics","schedule":"Mon-Wed 5PM","tutorId":"PUT_TUTOR_OBJECT_ID_HERE"}'
+
+curl -X POST http://localhost:5000/api/users/register \
+-H "Content-Type: application/json" \
+-d '{"name":"Kumar","email":"kumar@tuition.com","password":"tutor123","role":"tutor"}'
+
+curl -X POST http://localhost:5000/api/users/login \
+-H "Content-Type: application/json" \
+-d '{"email":"kumar@tuition.com","password":"tutor123"}'
+
+
+curl -X POST http://localhost:5000/api/classes/create \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzA2OTcyNzJmYTg4YTIzNDk5ZGJmZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MjQ1MjE2NCwiZXhwIjoxNzUyNDU1NzY0fQ.SRjFq7dpkC3OlXOugePgSqY6ISuI3Meef6Foob00-TA" \
+-d '{"name":"Class 10 - Physics","subject":"Physics","schedule":"Mon-Wed 5PM","tutorId":"6870a1b2c3d4e5f678901234"}'
+
+
+
+Get All Classes
+
+curl http://localhost:5000/api/classes
+
+Get Single Class (replace CLASS_ID)
+
+curl http://localhost:5000/api/classes/687454a35426289a3d7706b8
+
+
+
+1. **Create/Register a Real Tutor**
+
+   ```bash
+   curl -X POST http://localhost:5000/api/users/register \
+   -H "Content-Type: application/json" \
+   -d '{"name":"Ramesh","email":"ramesh@tuition.com","password":"pass123","role":"tutor"}'
+   ```
+
+2. Copy the returned `_id` (e.g. `687456f3b4a2b7c5f6e12345`).
+
+3. **Create class again** using real tutor ID:
+
+   ```bash
+   curl -X POST http://localhost:5000/api/classes/create \
+   -H "Content-Type: application/json" \
+   -H "Authorization: Bearer 68745e531a1689d51bc9d378" \
+   -d '{"name":"Class 12 - Chemistry","subject":"Chemistry","schedule":"Tue-Thu 6PM","tutorId":"687456f3b4a2b7c5f6e12345"}'
+   ```
+
+4. Then run:
+
+   ```bash
+   curl http://localhost:5000/api/classes
+   ```
+
+
+
+ 1. Register the User 
+
+```bash
+curl -X POST http://localhost:5000/api/users/register \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Student One",
+  "email": "student1@tuition.com",
+  "password": "secret123",
+  "role": "student"
+}'
+```
+
+
+2. Login to Get Token
+
+```bash
+curl -X POST http://localhost:5000/api/users/login \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "student1@tuition.com",
+  "password": "secret123"
+}'
+```
+🔐 Response:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "6870...",
+    "name": "Student One",
+    "email": "student1@tuition.com",
+    "role": "student"
+  }
+}
+```
+
+3. Use This Token for Auth-Protected Requests
+
+Pass the token in the header like this:
+
+```bash
+curl -X GET http://localhost:5000/api/students/my-classes \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzQ2MTg0ZjZkYjA0N2M5MzU5YmU0ZCIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzUyNDU3NzkwLCJleHAiOjE3NTI0NjEzOTB9.PXDCWHtjXJ617tZEULKKUZIlfnc2x7xb3uUXy1nH9kk"
+
+```
+
+Enroll the Student in a Class
+curl -X POST http://localhost:5000/api/students/enroll \
+-H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NzQ2MTg0ZjZkYjA0N2M5MzU5YmU0ZCIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzUyNDU3NzkwLCJleHAiOjE3NTI0NjEzOTB9.PXDCWHtjXJ617tZEULKKUZIlfnc2x7xb3uUXy1nH9kk" \
+-H "Content-Type: application/json" \
+-d '{"classId": "687454a35426289a3d7706b8"}'

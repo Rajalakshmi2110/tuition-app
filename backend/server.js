@@ -1,0 +1,121 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const path = require('path');
+
+require('dotenv').config();
+console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Serve uploaded files with proper MIME types
+app.get('/uploads/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', filename);
+  
+  // Set proper content type based on file extension
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes = {
+    '.pdf': 'application/pdf',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.txt': 'text/plain',
+    '.doc': 'application/msword',
+    '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    '.xls': 'application/vnd.ms-excel',
+    '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    '.ppt': 'application/vnd.ms-powerpoint',
+    '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  };
+  
+  const contentType = mimeTypes[ext] || 'application/octet-stream';
+  res.setHeader('Content-Type', contentType);
+  
+  // For viewing in browser (not forcing download)
+  if (req.query.download === 'true') {
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  } else {
+    res.setHeader('Content-Disposition', 'inline');
+  }
+  
+  res.sendFile(filePath);
+});
+
+// Serve gallery images
+app.get('/uploads/gallery/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', 'gallery', filename);
+  
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.webp': 'image/webp'
+  };
+  
+  const contentType = mimeTypes[ext] || 'image/jpeg';
+  res.setHeader('Content-Type', contentType);
+  res.setHeader('Content-Disposition', 'inline');
+  
+  res.sendFile(filePath);
+});
+
+const adminRoutes = require("./routes/adminRoutes");
+app.use("/api/admin", adminRoutes);
+
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
+
+const classRoutes = require('./routes/classRoutes');
+app.use("/api/classes", classRoutes);
+
+const studentRoutes = require('./routes/studentRoutes');
+app.use("/api/students", studentRoutes);
+
+const tutorRoutes = require('./routes/tutorRoutes');
+app.use('/api/tutors', tutorRoutes);
+
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+const classAssignmentRoutes = require("./routes/classAssignmentRoutes");
+app.use("/api/class", classAssignmentRoutes);
+
+const studentClassRoutes = require("./routes/studentClassRoutes");
+app.use("/api/student-classes", studentClassRoutes);
+
+const tutorClassRoutes = require("./routes/tutorClassRoutes");
+app.use("/api/tutor-classes", tutorClassRoutes);
+
+const fileRoutes = require("./routes/fileRoutes");
+app.use("/api/files", fileRoutes);
+
+const assignmentRoutes = require("./routes/assignmentRoutes");
+app.use("/api/assignments", assignmentRoutes);
+
+const announcementRoutes = require("./routes/announcementRoutes");
+app.use("/api/announcements", announcementRoutes);
+
+const publicRoutes = require("./routes/publicRoutes");
+app.use("/api/public", publicRoutes);
+
+const feedbackRoutes = require("./routes/feedbackRoutes");
+app.use("/api/feedback", feedbackRoutes);
+
+const galleryRoutes = require("./routes/galleryRoutes");
+app.use("/api/gallery", galleryRoutes);
+
+// app.get("/", (req,res) => res.send("API is running.."));
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB connected!"))
+.catch(err => console.log(err));
+
+const port =  process.env.PORT || 5000;
+app.listen(port, () => console.log( `server running in the port ${port}`));

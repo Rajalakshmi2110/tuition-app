@@ -1,0 +1,48 @@
+.app-footer {
+  background-color: #20205c;
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.footer-content h2 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 90%;
+  max-width: 400px;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.contact-form button {
+  background-color: #ffbf00;
+  color: #20205c;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #ffcc33;
+}
+
+.copyright {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
