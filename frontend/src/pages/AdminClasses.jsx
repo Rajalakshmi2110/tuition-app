@@ -6,6 +6,24 @@ const AdminClasses = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const handleDeleteClass = async (classId) => {
+    if (!window.confirm('Are you sure you want to delete this session? This will also remove all student enrollments.')) {
+      return;
+    }
+    
+    const token = localStorage.getItem('token');
+    try {
+      await axios.delete(`http://localhost:5000/api/classes/${classId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setClasses(classes.filter(cls => cls._id !== classId));
+      alert('Session deleted successfully!');
+    } catch (err) {
+      console.error('Error deleting session:', err);
+      alert('Failed to delete session');
+    }
+  };
+
   useEffect(() => {
     const fetchClasses = async () => {
       const token = localStorage.getItem('token');
@@ -93,15 +111,32 @@ const AdminClasses = () => {
                       </span>
                     </div>
                   </div>
-                  <div style={{ 
-                    backgroundColor: cls.status === 'completed' ? '#fee2e2' : '#fef3c7',
-                    color: cls.status === 'completed' ? '#dc2626' : '#92400e',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '20px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600'
-                  }}>
-                    {cls.status === 'completed' ? '✅ Completed' : '📋 Scheduled'}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div style={{ 
+                      backgroundColor: cls.status === 'completed' ? '#fee2e2' : '#fef3c7',
+                      color: cls.status === 'completed' ? '#dc2626' : '#92400e',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600'
+                    }}>
+                      {cls.status === 'completed' ? '✅ Completed' : '📋 Scheduled'}
+                    </div>
+                    <button
+                      onClick={() => handleDeleteClass(cls._id)}
+                      style={{
+                        backgroundColor: '#ef4444',
+                        color: 'white',
+                        border: 'none',
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '0.9rem',
+                        fontWeight: '600'
+                      }}
+                    >
+                      🗑️ Delete
+                    </button>
                   </div>
                 </div>
 

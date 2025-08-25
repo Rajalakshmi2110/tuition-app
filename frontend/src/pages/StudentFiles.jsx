@@ -15,27 +15,17 @@ const StudentFiles = () => {
     async function fetchSessions() {
       try {
         const decoded = jwtDecode(token);
-        console.log('Current user ID:', decoded.id);
+        const userId = decoded.id || decoded._id;
+        console.log('Current user ID:', userId);
         
-        // Get all sessions and filter by student enrollment
-        const res = await axios.get('http://localhost:5000/api/classes', {
+        // Use the student-specific endpoint to get enrolled sessions
+        const res = await axios.get(`http://localhost:5000/api/classes/student/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
-        console.log('All sessions:', res.data);
-        
-        // Filter sessions where this student is enrolled
-        const studentSessions = res.data.filter(session => {
-          console.log('Checking session:', session.name, 'Students:', session.students);
-          return session.students && session.students.some(student => {
-            console.log('Comparing student ID:', student._id, 'with user ID:', decoded.id);
-            return student._id === decoded.id;
-          });
-        });
-        
-        console.log('Student enrolled sessions:', studentSessions);
-        setEnrolledSessions(studentSessions);
-        if (studentSessions.length > 0) setSelectedSessionId(studentSessions[0]._id);
+        console.log('Student enrolled sessions:', res.data);
+        setEnrolledSessions(res.data);
+        if (res.data.length > 0) setSelectedSessionId(res.data[0]._id);
       } catch (err) {
         console.error('Error fetching sessions:', err);
         setError("Failed to load sessions");

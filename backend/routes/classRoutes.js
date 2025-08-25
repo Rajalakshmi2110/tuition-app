@@ -130,6 +130,25 @@ router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
   }
 });
 
+// Delete class (admin)
+router.delete("/:id", protect, authorizeRoles("admin"), async (req, res) => {
+  try {
+    const classItem = await Class.findById(req.params.id);
+    if (!classItem) return res.status(404).json({ message: "Class not found" });
+    
+    // Delete associated student enrollments
+    await StudentClass.deleteMany({ classId: req.params.id });
+    
+    // Delete the class
+    await Class.findByIdAndDelete(req.params.id);
+    
+    res.json({ message: "Class deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // ------------------ STUDENT ROUTES ------------------
 
 // Get classes enrolled by a student
@@ -225,9 +244,46 @@ router.get("/tutor/:tutorId", protect, async (req, res) => {
         { status: 'scheduled' },
         { status: { $exists: false } }
       ]
-    }).populate("students", "name email"); // include enrolled students
+    });
 
-    res.json(classes);
+    // For each class, get enrolled students
+    const classesWithStudents = await Promise.all(
+      classes.map(async (classItem) => {
+        // Get students enrolled in this class
+        const enrollments = await StudentClass.find({ classId: classItem._id })
+          .populate('studentId', 'name email className');
+        
+        // Also get students auto-assigned by classLevel
+        const autoStudents = await Student.find({ 
+          role: 'student', 
+          className: classItem.classLevel 
+        }, 'name email className');
+        
+        // Merge students without duplicates
+        const allStudentsMap = new Map();
+        
+        // Add enrolled students
+        enrollments.forEach(enrollment => {
+          if (enrollment.studentId) {
+            allStudentsMap.set(enrollment.studentId._id.toString(), enrollment.studentId);
+          }
+        });
+        
+        // Add auto-assigned students
+        autoStudents.forEach(student => {
+          allStudentsMap.set(student._id.toString(), student);
+        });
+        
+        const students = Array.from(allStudentsMap.values());
+        
+        return {
+          ...classItem.toObject(),
+          students
+        };
+      })
+    );
+
+    res.json(classesWithStudents);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
