@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 import "./FileUpload.css"; // make sure this path matches your actual CSS file location
 
 const FileUpload = () => {
@@ -10,10 +11,13 @@ const FileUpload = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // Fetch classes for this user (tutor/admin)
+    // Fetch classes for this tutor
     const fetchClasses = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/classes/my-classes", {
+        const decoded = jwtDecode(token);
+        const userId = decoded.id || decoded._id;
+        
+        const res = await axios.get(`http://localhost:5000/api/classes/tutor/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClasses(res.data);

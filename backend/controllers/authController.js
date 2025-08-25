@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const { sendStudentRegistrationEmail, sendTutorPendingEmail } = require('../services/emailService');
+const passport = require('passport');
 
 // REGISTER
 const registerUser = async (req, res) => {
@@ -209,4 +210,21 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, forgotPassword, resetPassword };
+// GOOGLE OAUTH SUCCESS
+const googleAuthSuccess = async (req, res) => {
+  try {
+    const token = jwt.sign(
+      { id: req.user._id, role: req.user.role, className: req.user.className },
+      process.env.JWT_SECRET || 'mysecretkey',
+      { expiresIn: '1h' }
+    );
+
+    // Redirect to frontend with token
+    res.redirect(`http://localhost:3000/auth/success?token=${token}&role=${req.user.role}`);
+  } catch (err) {
+    console.error('Google Auth Success Error:', err);
+    res.redirect('http://localhost:3000/login?error=auth_failed');
+  }
+};
+
+module.exports = { registerUser, loginUser, forgotPassword, resetPassword, googleAuthSuccess };

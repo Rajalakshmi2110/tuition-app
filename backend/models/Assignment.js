@@ -1,22 +1,53 @@
-// models/Assignment.js
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const assignmentSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: String,
-  fileUrl: String, // Tutor uploaded file (PDF, doc, etc.)
-  tutor: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  classId: { type: mongoose.Schema.Types.ObjectId, ref: "Class", required: true },
-  deadline: Date,
-  submissions: [
-    {
-      student: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      fileUrl: String,
-      submittedAt: { type: Date, default: Date.now },
-      grade: { type: String, default: "Not Graded" },
-      feedback: String,
-    },
-  ],
-});
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  subject: {
+    type: String,
+    required: true,
+    enum: ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German']
+  },
+  className: {
+    type: String,
+    required: true,
+    enum: ['8', '9', '10', '11', '12']
+  },
+  tutorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  totalPoints: {
+    type: Number,
+    required: true,
+    default: 100
+  },
+  difficulty: {
+    type: String,
+    enum: ['Easy', 'Medium', 'Hard'],
+    default: 'Medium'
+  },
+  dueDate: {
+    type: Date,
+    required: true
+  },
+  attachments: [{
+    filename: String,
+    url: String,
+    uploadDate: { type: Date, default: Date.now }
+  }],
+  instructions: String,
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, { timestamps: true });
 
-module.exports = mongoose.model("Assignment", assignmentSchema);
+module.exports = mongoose.model('Assignment', assignmentSchema);

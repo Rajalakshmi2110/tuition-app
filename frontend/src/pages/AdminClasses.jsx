@@ -15,7 +15,7 @@ const AdminClasses = () => {
         });
         setClasses(res.data);
       } catch (err) {
-        console.error('Error fetching classes:', err);
+        console.error('Error fetching sessions:', err);
       } finally {
         setLoading(false);
       }
@@ -26,7 +26,7 @@ const AdminClasses = () => {
 
   if (loading) return (
     <AdminLayout>
-      <div style={{ textAlign: 'center', padding: '2rem' }}>Loading classes...</div>
+      <div style={{ textAlign: 'center', padding: '2rem' }}>Loading sessions...</div>
     </AdminLayout>
   );
 
@@ -34,7 +34,7 @@ const AdminClasses = () => {
     <AdminLayout>
       <div>
         <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem' }}>
-          All Classes
+          All Tuition Sessions
         </h1>
 
         {classes.length === 0 ? (
@@ -45,7 +45,7 @@ const AdminClasses = () => {
             textAlign: 'center',
             boxShadow: '0 6px 20px rgba(0,0,0,0.1)'
           }}>
-            <p style={{ color: '#666', fontSize: '1.2rem' }}>No classes created yet.</p>
+            <p style={{ color: '#666', fontSize: '1.2rem' }}>No sessions created yet.</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '1.5rem' }}>

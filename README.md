@@ -11,6 +11,11 @@ A comprehensive tuition management platform designed to streamline educational a
   - Role-based Authentication (Admin, Tutor, Student)
   - Secure Password Reset with Email Verification
 
+- **Email Notification System**
+  - Student registration confirmation emails
+  - Tutor application pending notifications
+  - Tutor approval/decline notifications
+
 - **Class Management**
   - Class Schedule Updates
   - Class Creation & Assignment
@@ -28,11 +33,7 @@ A comprehensive tuition management platform designed to streamline educational a
 
 ## 🚀 Development Roadmap
 
-### Phase 1: Enhanced Communication & Notifications
-- **Email Notification System**
-  - Tutor approval/decline notifications
-  - Student registration confirmation emails
-  - Tutor application pending notifications
+### Phase 1: Enhanced Authentication
 - **Authentication Enhancements**
   - OAuth Google Integration
   - Google Two-Factor Authentication (2FA)
@@ -153,4 +154,4 @@ MIT License
 
 ---
 
-**Current Status:** Phase 1 Development - Password Reset System Completed ✅
+**Current Status:** Phase 1 Development - Email Notification System Completed ✅

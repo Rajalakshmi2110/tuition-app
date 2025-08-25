@@ -75,7 +75,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             transition: "all 0.3s ease",
             justifyContent: isMinimized ? "center" : "flex-start"
           }}>
-            📋 {!isMinimized && <span>View Classes</span>}
+            📋 {!isMinimized && <span>View Sessions</span>}
           </Link>
           
           <Link to="/admin/create-class" style={{
@@ -90,7 +90,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             transition: "all 0.3s ease",
             justifyContent: isMinimized ? "center" : "flex-start"
           }}>
-            ➕ {!isMinimized && <span>Create Class</span>}
+            ➕ {!isMinimized && <span>Create Session</span>}
           </Link>
           
           <Link to="/admin/feedback" style={{

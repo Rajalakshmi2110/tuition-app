@@ -48,11 +48,11 @@ const AdminCreateClass = () => {
       }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert('Class created successfully!');
+      alert('Session created successfully!');
       setFormData({ name: '', subject: '', schedule: '', scheduledDate: '', tutorId: '', classLevel: '' });
     } catch (err) {
-      console.error('Class creation failed', err);
-      alert('Failed to create class');
+      console.error('Session creation failed', err);
+      alert('Failed to create session');
     }
   };
 
@@ -62,9 +62,9 @@ const AdminCreateClass = () => {
         maxWidth: '500px', margin: '0 auto', padding: '30px',
         backgroundColor: '#fff', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
       }}>
-      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>Create a New Class</h2>
+      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>Create a New Session</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Class Name" value={formData.name} onChange={handleChange} required />
+        <input type="text" name="name" placeholder="Session Name (e.g., Math Session)" value={formData.name} onChange={handleChange} required />
         <input type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} required />
         <input type="text" name="schedule" placeholder="Time (e.g., 6:00 PM - 7:00 PM)" value={formData.schedule} onChange={handleChange} required />
         <input type="date" name="scheduledDate" value={formData.scheduledDate} onChange={handleChange} required />
@@ -77,13 +77,13 @@ const AdminCreateClass = () => {
         </select>
 
         <select name="classLevel" value={formData.classLevel} onChange={handleChange} required>
-          <option value="">Select Class Level</option>
+          <option value="">Select Academic Class Level</option>
           {classLevels.map(level => (
-            <option key={level} value={level}>{level}</option>
+            <option key={level} value={level}>Class {level}</option>
           ))}
         </select>
 
-        <button type="submit" className="btn-primary">Create Class</button>
+        <button type="submit" className="btn-primary">Create Session</button>
       </form>
 
       <style>{`

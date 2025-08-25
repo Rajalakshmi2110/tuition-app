@@ -11,35 +11,59 @@ const StudentDashboard = () => {
   const [showAllClasses, setShowAllClasses] = useState(false);
   const token = localStorage.getItem("token");
 
-  // Fetch student's classes
+  // Fetch student's sessions
   const fetchClasses = useCallback(async () => {
     if (!token) return;
     try {
       const decoded = jwtDecode(token);
       const studentClassName = decoded.className;
+      console.log('Student className:', studentClassName);
 
+      // Get all classes and filter by student enrollment
       const res = await axios.get(
-        `http://localhost:5000/api/classes/by-classname/${encodeURIComponent(studentClassName)}`,
+        'http://localhost:5000/api/classes',
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setMyClasses(res.data);
+      
+      // Filter classes where this student is enrolled
+      const studentClasses = res.data.filter(cls => 
+        cls.students && cls.students.some(student => student._id === decoded.id)
+      );
+      
+      console.log('Student enrolled sessions:', studentClasses);
+      setMyClasses(studentClasses);
     } catch (err) {
-      console.error("Failed to fetch classes:", err);
+      console.error("Failed to fetch sessions:", err);
     }
   }, [token]);
 
-  // Fetch files for student's class
+  // Fetch files for student's enrolled sessions
   const fetchFiles = useCallback(async () => {
     if (!token) return;
     try {
-      const decoded = jwtDecode(token);
-      const studentClassName = decoded.className;
-
       const res = await axios.get(
-        `http://localhost:5000/api/files/by-classname/${encodeURIComponent(studentClassName)}`,
+        'http://localhost:5000/api/files',
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setFiles(res.data);
+      
+      // Get student's enrolled class IDs first
+      const decoded = jwtDecode(token);
+      const classRes = await axios.get(
+        'http://localhost:5000/api/classes',
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      const studentClassIds = classRes.data
+        .filter(cls => cls.students && cls.students.some(student => student._id === decoded.id))
+        .map(cls => cls._id);
+      
+      // Filter files that belong to student's enrolled sessions
+      const studentFiles = res.data.filter(file => 
+        studentClassIds.includes(file.classId?._id)
+      );
+      
+      console.log('Student files:', studentFiles);
+      setFiles(studentFiles);
     } catch (err) {
       console.error("Failed to fetch files:", err);
     }
@@ -66,8 +90,7 @@ const StudentDashboard = () => {
   }, [fetchClasses, fetchFiles, fetchAnnouncements]);
 
   return (
-    <main style={{ padding: '2rem', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
         {/* Global Announcements */}
         {announcements.length > 0 && (
@@ -89,11 +112,13 @@ const StudentDashboard = () => {
             </div>
           </div>
         )}
-        <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>My Classes</h2>
+
+
+        <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>My Sessions</h2>
 
         {myClasses.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-            <p style={{ fontSize: '1.2rem', color: '#666' }}>No classes assigned yet.</p>
+            <p style={{ fontSize: '1.2rem', color: '#666' }}>No sessions enrolled yet.</p>
           </div>
         ) : (
           <div>
@@ -146,7 +171,7 @@ const StudentDashboard = () => {
                     e.target.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
                   }}
                 >
-                  {showAllClasses ? 'Show Less' : `Show All (${myClasses.length} classes)`}
+                  {showAllClasses ? 'Show Less' : `Show All (${myClasses.length} sessions)`}
                 </button>
               </div>
             )}
@@ -157,7 +182,7 @@ const StudentDashboard = () => {
         
         <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
           {files.length === 0 ? (
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#666' }}>No files uploaded for your classes yet.</p>
+            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#666' }}>No study materials available for your sessions yet.</p>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
               {files.map((file) => (
@@ -173,7 +198,7 @@ const StudentDashboard = () => {
                      style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
                     📄 {file.title}
                   </a>
-                  <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>Class: {file.classId?.name}</p>
+                  <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>Session: {file.classId?.name}</p>
                   <p style={{ fontSize: '0.8rem', color: '#999' }}>Uploaded by: {file.uploadedBy?.name}</p>
                 </div>
               ))}
@@ -265,8 +290,7 @@ const StudentDashboard = () => {
             </div>
           </div>
         )}
-      </div>
-    </main>
+    </div>
   );
 };
 

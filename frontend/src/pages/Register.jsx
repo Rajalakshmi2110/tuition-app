@@ -127,11 +127,38 @@ const Register = () => {
             >
               Register
             </button>
-
-            <p style={{ textAlign: 'center', fontSize: '14px' }}>
-              Already have an account? <span style={{ color: '#007bff', cursor: 'pointer' }} onClick={() => navigate('/login')}>Login</span>
-            </p>
           </form>
+          
+          <div style={{ textAlign: 'center', margin: '20px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
+              <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ccc' }} />
+              <span style={{ margin: '0 15px', color: '#666' }}>OR</span>
+              <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ccc' }} />
+            </div>
+            
+            <a 
+              href="http://localhost:5000/api/auth/google"
+              style={{
+                display: 'inline-block',
+                background: '#4285f4',
+                color: 'white',
+                padding: '12px 20px',
+                textDecoration: 'none',
+                borderRadius: '5px',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                width: '100%',
+                textAlign: 'center',
+                boxSizing: 'border-box'
+              }}
+            >
+              🔍 Sign up with Google
+            </a>
+          </div>
+          
+          <p style={{ textAlign: 'center', fontSize: '14px' }}>
+            Already have an account? <span style={{ color: '#007bff', cursor: 'pointer' }} onClick={() => navigate('/login')}>Login</span>
+          </p>
         </div>
       </div>
     </div>

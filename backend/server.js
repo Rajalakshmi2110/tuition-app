@@ -2,13 +2,29 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const session = require('express-session');
 
+// Load environment variables first
 require('dotenv').config();
+
+// Then load passport config (which needs env vars)
+const passport = require('./config/passport');
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Session middleware for Passport
+app.use(session({
+  secret: process.env.JWT_SECRET || 'mysecretkey',
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve uploaded files with proper MIME types
 app.get('/uploads/:filename', (req, res) => {
@@ -96,9 +112,6 @@ app.use("/api/tutor-classes", tutorClassRoutes);
 const fileRoutes = require("./routes/fileRoutes");
 app.use("/api/files", fileRoutes);
 
-const assignmentRoutes = require("./routes/assignmentRoutes");
-app.use("/api/assignments", assignmentRoutes);
-
 const announcementRoutes = require("./routes/announcementRoutes");
 app.use("/api/announcements", announcementRoutes);
 
@@ -110,6 +123,12 @@ app.use("/api/feedback", feedbackRoutes);
 
 const galleryRoutes = require("./routes/galleryRoutes");
 app.use("/api/gallery", galleryRoutes);
+
+const performanceRoutes = require("./routes/performanceRoutes");
+app.use("/api/performance", performanceRoutes);
+
+const assignmentRoutes2 = require("./routes/assignmentRoutes2");
+app.use("/api/assignments", assignmentRoutes2);
 
 // app.get("/", (req,res) => res.send("API is running.."));
 

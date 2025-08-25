@@ -60,6 +60,34 @@ const Login = () => {
           />
           <button type="submit" className="login-btn">Login</button>
         </form>
+        
+        <div style={{ textAlign: 'center', margin: '20px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
+            <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ccc' }} />
+            <span style={{ margin: '0 15px', color: '#666' }}>OR</span>
+            <hr style={{ flex: 1, border: 'none', borderTop: '1px solid #ccc' }} />
+          </div>
+          
+          <a 
+            href="http://localhost:5000/api/auth/google"
+            style={{
+              display: 'inline-block',
+              background: '#4285f4',
+              color: 'white',
+              padding: '12px 20px',
+              textDecoration: 'none',
+              borderRadius: '5px',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              width: '100%',
+              textAlign: 'center',
+              boxSizing: 'border-box'
+            }}
+          >
+            🔍 Sign in with Google
+          </a>
+        </div>
+        
         <div style={{ textAlign: 'center', marginTop: '15px' }}>
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
