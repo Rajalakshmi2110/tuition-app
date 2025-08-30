@@ -116,14 +116,39 @@ const submitAssignment = async (req, res) => {
     });
 
     if (existingSubmission) {
-      return res.status(400).json({ message: 'Assignment already submitted' });
+      // Allow resubmission if not graded and not overdue
+      if (existingSubmission.status === 'Graded' || new Date() > assignment.dueDate) {
+        return res.status(400).json({ message: 'Cannot update submission - assignment is graded or overdue' });
+      }
+      
+      // Update existing submission
+      existingSubmission.content = content;
+      if (req.file) {
+        existingSubmission.attachments.push({
+          filename: req.file.originalname,
+          url: req.file.path
+        });
+      }
+      existingSubmission.submittedAt = new Date();
+      await existingSubmission.save();
+      
+      return res.json({ message: 'Assignment updated successfully', submission: existingSubmission });
     }
 
-    const submission = new AssignmentSubmission({
+    const submissionData = {
       assignmentId,
       studentId: req.user.id,
       content
-    });
+    };
+    
+    if (req.file) {
+      submissionData.attachments = [{
+        filename: req.file.originalname,
+        url: req.file.path
+      }];
+    }
+
+    const submission = new AssignmentSubmission(submissionData);
 
     await submission.save();
     res.status(201).json({ message: 'Assignment submitted successfully', submission });

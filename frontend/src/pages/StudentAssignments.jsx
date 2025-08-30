@@ -7,6 +7,7 @@ const StudentAssignments = () => {
   const [activeTab, setActiveTab] = useState('assignments');
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [submissionContent, setSubmissionContent] = useState('');
+  const [submissionFile, setSubmissionFile] = useState(null);
 
   useEffect(() => {
     fetchAssignments();
@@ -41,14 +42,26 @@ const StudentAssignments = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('content', submissionContent);
+      if (submissionFile) {
+        formData.append('file', submissionFile);
+      }
+      
       await axios.post(`http://localhost:5000/api/assignments/${selectedAssignment._id}/submit`, 
-        { content: submissionContent },
-        { headers: { Authorization: `Bearer ${token}` } }
+        formData,
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          } 
+        }
       );
       
-      alert('Assignment submitted successfully!');
+      alert(selectedAssignment.isSubmitted ? 'Assignment updated successfully!' : 'Assignment submitted successfully!');
       setSelectedAssignment(null);
       setSubmissionContent('');
+      setSubmissionFile(null);
       fetchAssignments();
       fetchSubmissions();
     } catch (error) {
@@ -133,6 +146,17 @@ const StudentAssignments = () => {
                         Submit Assignment
                       </button>
                     )}
+                    {assignment.isSubmitted && assignment.submissionStatus === 'Submitted' && !assignment.isOverdue && (
+                      <button 
+                        onClick={() => setSelectedAssignment(assignment)}
+                        style={{
+                          background: '#ffc107', color: 'white', padding: '8px 16px',
+                          border: 'none', borderRadius: '4px', cursor: 'pointer'
+                        }}
+                      >
+                        Update Submission
+                      </button>
+                    )}
                     {assignment.isOverdue && !assignment.isSubmitted && (
                       <span style={{ color: '#dc3545', fontSize: '12px', fontWeight: 'bold' }}>OVERDUE</span>
                     )}
@@ -211,18 +235,33 @@ const StudentAssignments = () => {
               background: 'white', padding: '30px', borderRadius: '8px',
               maxWidth: '600px', width: '90%', maxHeight: '80vh', overflow: 'auto'
             }}>
-              <h3>Submit Assignment: {selectedAssignment.title}</h3>
+              <h3>{selectedAssignment.isSubmitted ? 'Update' : 'Submit'} Assignment: {selectedAssignment.title}</h3>
               <form onSubmit={handleSubmit}>
-                <textarea
-                  value={submissionContent}
-                  onChange={(e) => setSubmissionContent(e.target.value)}
-                  placeholder="Enter your assignment solution here..."
-                  required
-                  style={{
-                    width: '100%', height: '200px', padding: '10px',
-                    border: '1px solid #ccc', borderRadius: '4px', resize: 'vertical'
-                  }}
-                />
+                <div style={{ marginBottom: '15px' }}>
+                  <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Text Submission:</label>
+                  <textarea
+                    value={submissionContent}
+                    onChange={(e) => setSubmissionContent(e.target.value)}
+                    placeholder="Enter your assignment solution here..."
+                    style={{
+                      width: '100%', height: '150px', padding: '10px',
+                      border: '1px solid #ccc', borderRadius: '4px', resize: 'vertical'
+                    }}
+                  />
+                </div>
+                <div style={{ marginBottom: '15px' }}>
+                  <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>File Upload (Optional):</label>
+                  <input
+                    type="file"
+                    onChange={(e) => setSubmissionFile(e.target.files[0])}
+                    accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                    style={{
+                      width: '100%', padding: '8px',
+                      border: '1px solid #ccc', borderRadius: '4px'
+                    }}
+                  />
+                  <small style={{ color: '#666', fontSize: '12px' }}>Supported formats: PDF, DOC, DOCX, TXT, JPG, PNG</small>
+                </div>
                 <div style={{ marginTop: '20px', display: 'flex', gap: '10px', justifyContent: 'end' }}>
                   <button 
                     type="button"
@@ -241,7 +280,7 @@ const StudentAssignments = () => {
                       border: 'none', borderRadius: '4px', cursor: 'pointer'
                     }}
                   >
-                    Submit Assignment
+                    {selectedAssignment.isSubmitted ? 'Update Assignment' : 'Submit Assignment'}
                   </button>
                 </div>
               </form>

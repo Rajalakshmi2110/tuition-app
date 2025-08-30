@@ -75,21 +75,6 @@ router.get("/stats", protect, adminOnly, async (req, res) => {
     const expertTutors = await User.countDocuments({ role: 'tutor', status: 'approved' });
     console.log('Expert tutors (approved):', expertTutors);
     
-    // Check for active tutors (approved by admin)
-    const approvedTutors = await User.find({ 
-      role: 'tutor', 
-      status: 'active' 
-    });
-    console.log('Found active (approved) tutors:', approvedTutors.length, approvedTutors.map(t => t.name));
-    
-    // Also check the raw status values
-    const allTutorDetails = await User.find({ role: 'tutor' }, 'name status');
-    console.log('All tutor status details:', allTutorDetails.map(t => ({ name: t.name, status: `'${t.status}'`, length: t.status?.length })));
-    
-    // Check what statuses tutors have
-    const tutorStatuses = await User.find({ role: 'tutor' }, 'name status');
-    console.log('Tutor statuses:', tutorStatuses);
-    
     const completedClasses = await Class.countDocuments({ status: 'completed' });
     console.log('Completed classes:', completedClasses);
     
@@ -98,7 +83,7 @@ router.get("/stats", protect, adminOnly, async (req, res) => {
     
     const stats = {
       activeStudents,
-      expertTutors: approvedTutors.length, // Use the actual count of approved tutors
+      expertTutors, // Use the count of approved tutors
       completedClasses,
       studyMaterials
     };

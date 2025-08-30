@@ -32,9 +32,9 @@ const addPerformance = async (req, res) => {
 // Get student's performance records
 const getStudentPerformance = async (req, res) => {
   try {
-    const studentId = (req.user.role === 'student' || req.user.role === 'tutor') ? req.user._id : req.params.studentId;
+    const studentId = req.params.studentId || req.user._id;
     
-    console.log('Fetching performances for user:', studentId, req.user.name);
+    console.log('Fetching performances for student:', studentId, 'requested by:', req.user.name);
     
     const performances = await StudentPerformance.find({ studentId })
       .sort({ examDate: -1 })
@@ -51,7 +51,7 @@ const getStudentPerformance = async (req, res) => {
 // Get performance analytics
 const getPerformanceAnalytics = async (req, res) => {
   try {
-    const studentId = (req.user.role === 'student' || req.user.role === 'tutor') ? req.user._id : req.params.studentId;
+    const studentId = req.params.studentId || req.user._id;
     
     // Subject-wise average
     const subjectAnalytics = await StudentPerformance.aggregate([
@@ -128,10 +128,42 @@ const deletePerformance = async (req, res) => {
   }
 };
 
+// Get all students' performance for a tutor
+const getTutorStudentsPerformance = async (req, res) => {
+  try {
+    // Get all classes taught by this tutor
+    const Class = require('../models/Class');
+    const tutorClasses = await Class.find({ tutor: req.user._id }).populate('students', 'name email');
+    
+    // Get all student IDs from tutor's classes
+    const studentIds = [];
+    tutorClasses.forEach(cls => {
+      cls.students.forEach(student => {
+        if (!studentIds.includes(student._id.toString())) {
+          studentIds.push(student._id);
+        }
+      });
+    });
+    
+    // Get performance records for all these students
+    const performances = await StudentPerformance.find({ 
+      studentId: { $in: studentIds } 
+    })
+    .sort({ examDate: -1 })
+    .populate('studentId', 'name email');
+    
+    res.json(performances);
+  } catch (error) {
+    console.error('Get Tutor Students Performance Error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   addPerformance,
   getStudentPerformance,
   getPerformanceAnalytics,
   updatePerformance,
-  deletePerformance
+  deletePerformance,
+  getTutorStudentsPerformance
 };

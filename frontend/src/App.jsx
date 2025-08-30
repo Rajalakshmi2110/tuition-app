@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AuthSuccess from './pages/AuthSuccess';
+import GoogleRoleSelection from './pages/GoogleRoleSelection';
 import StudentPerformance from './pages/StudentPerformance';
 import StudentAssignments from './pages/StudentAssignments';
 import TutorAssignments from './pages/TutorAssignments';
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/auth/success" element={<AuthSuccess />} />
+        <Route path="/google-role-selection" element={<GoogleRoleSelection />} />
 
         {/* Routes with Layout */}
         <Route element={<Layout />}>

@@ -22,18 +22,15 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       return done(null, user);
     }
     
-    // Create new user
-    user = new User({
+    // For new users, don't auto-create - redirect to role selection
+    const tempUserData = {
       googleId: profile.id,
       name: profile.displayName,
       email: profile.emails[0].value,
-      role: 'student', // Default role for Google OAuth users
-      className: '10', // Default class for Google OAuth students
-      status: 'approved'
-    });
+      needsRoleSelection: true
+    };
     
-    await user.save();
-    done(null, user);
+    done(null, tempUserData);
   } catch (error) {
     done(error, null);
   }
@@ -43,13 +40,23 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  // Handle temporary user data for role selection
+  if (user.needsRoleSelection) {
+    done(null, { needsRoleSelection: true, userData: user });
+  } else {
+    done(null, user.id || user._id);
+  }
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (data, done) => {
   try {
-    const user = await User.findById(id);
-    done(null, user);
+    // Handle temporary user data
+    if (typeof data === 'object' && data.needsRoleSelection) {
+      done(null, data.userData);
+    } else {
+      const user = await User.findById(data);
+      done(null, user);
+    }
   } catch (error) {
     done(error, null);
   }

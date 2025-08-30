@@ -41,6 +41,10 @@ router.get('/', async (req, res) => {
 // Upload new gallery image (admin only)
 router.post('/', protect, adminOnly, upload.single('image'), async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No image file uploaded' });
+    }
+    
     const { title, description, category } = req.body;
     
     const gallery = new Gallery({
@@ -53,8 +57,8 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
     await gallery.save();
     res.status(201).json(gallery);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Gallery upload error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 

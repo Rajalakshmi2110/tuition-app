@@ -6,7 +6,8 @@ const {
   getStudentPerformance,
   getPerformanceAnalytics,
   updatePerformance,
-  deletePerformance
+  deletePerformance,
+  getTutorStudentsPerformance
 } = require('../controllers/performanceController');
 
 // Student routes
@@ -19,5 +20,6 @@ router.delete('/:id', protect, deletePerformance);
 // Tutor/Admin routes to view student performance
 router.get('/student/:studentId', protect, getStudentPerformance);
 router.get('/student/:studentId/analytics', protect, getPerformanceAnalytics);
+router.get('/tutor/students', protect, getTutorStudentsPerformance);
 
 module.exports = router;

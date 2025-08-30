@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
+const fs = require('fs');
 
 // Load environment variables first
 require('dotenv').config();
@@ -14,6 +15,12 @@ console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Create uploads directories if they don't exist
+const uploadsDir = path.join(__dirname, 'uploads');
+const galleryDir = path.join(__dirname, 'uploads', 'gallery');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
+if (!fs.existsSync(galleryDir)) fs.mkdirSync(galleryDir);
 
 // Session middleware for Passport
 app.use(session({
@@ -129,6 +136,11 @@ app.use("/api/performance", performanceRoutes);
 
 const assignmentRoutes2 = require("./routes/assignmentRoutes2");
 app.use("/api/assignments", assignmentRoutes2);
+
+// Catch-all for OAuth redirects
+app.get('/login', (req, res) => {
+  res.redirect('http://localhost:3000/login?error=oauth_cancelled');
+});
 
 // app.get("/", (req,res) => res.send("API is running.."));
 

@@ -21,7 +21,31 @@ router.get('/test', (req, res) => {
   res.json({ message: 'File routes working' });
 });
 
-// Upload route with multer
+// Upload route with multer (both /upload and / for compatibility)
+router.post('/', protect, upload.single('file'), async (req, res) => {
+  try {
+    console.log('Upload route hit');
+    console.log('Body:', req.body);
+    console.log('File:', req.file);
+    
+    if (!req.body.classId) {
+      return res.status(400).json({ message: 'classId is required' });
+    }
+    
+    const newFile = await File.create({
+      title: req.body.title || 'Test File',
+      url: req.file ? req.file.path : 'https://example.com/test.pdf',
+      uploadedBy: req.user._id,
+      classId: req.body.classId,
+    });
+    
+    res.json(newFile);
+  } catch (error) {
+    console.error('Upload error:', error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post('/upload', protect, upload.single('file'), async (req, res) => {
   try {
     console.log('Upload route hit');

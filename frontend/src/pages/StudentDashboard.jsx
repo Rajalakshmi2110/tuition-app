@@ -114,13 +114,9 @@ const StudentDashboard = () => {
         )}
 
 
-        <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>My Sessions</h2>
-
-        {myClasses.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-            <p style={{ fontSize: '1.2rem', color: '#666' }}>No sessions enrolled yet.</p>
-          </div>
-        ) : (
+        {myClasses.length > 0 && (
+          <>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>My Sessions</h2>
           <div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem', marginBottom: '1rem' }}>
               {(showAllClasses ? myClasses : myClasses.slice(0, 4)).map((cls) => (
@@ -176,35 +172,36 @@ const StudentDashboard = () => {
               </div>
             )}
           </div>
+          </>
         )}
 
-        <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>Study Materials</h2>
-        
-        <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-          {files.length === 0 ? (
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#666' }}>No study materials available for your sessions yet.</p>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-              {files.map((file) => (
-                <div key={file._id} style={{
-                  padding: '1rem',
-                  border: '1px solid #e0e0e0',
-                  borderRadius: '8px',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9ff'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}>
-                  <a href={`http://localhost:5000/${file.url}`} target="_blank" rel="noopener noreferrer" 
-                     style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
-                    📄 {file.title}
-                  </a>
-                  <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>Session: {file.classId?.name}</p>
-                  <p style={{ fontSize: '0.8rem', color: '#999' }}>Uploaded by: {file.uploadedBy?.name}</p>
-                </div>
-              ))}
+        {files.length > 0 && (
+          <>
+            <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>Study Materials</h2>
+            
+            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+                {files.map((file) => (
+                  <div key={file._id} style={{
+                    padding: '1rem',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9ff'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}>
+                    <a href={`http://localhost:5000/${file.url}`} target="_blank" rel="noopener noreferrer" 
+                       style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
+                      📄 {file.title}
+                    </a>
+                    <p style={{ fontSize: '0.9rem', color: '#666', marginTop: '0.5rem' }}>Session: {file.classId?.name}</p>
+                    <p style={{ fontSize: '0.8rem', color: '#999' }}>Uploaded by: {file.uploadedBy?.name}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          )}
-        </div>
+          </>
+        )}
         
         {/* Class Details Modal */}
         {selectedClass && (

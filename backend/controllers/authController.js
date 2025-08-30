@@ -73,8 +73,16 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid email or password' });
+
+    if (!user.password) {
+      return res.status(400).json({ message: 'Account created via Google OAuth. Please use Google Sign-In.' });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
@@ -213,6 +221,17 @@ const resetPassword = async (req, res) => {
 // GOOGLE OAUTH SUCCESS
 const googleAuthSuccess = async (req, res) => {
   try {
+    // Check if user needs role selection
+    if (req.user.needsRoleSelection) {
+      // Store user data in session and redirect to role selection
+      const userData = encodeURIComponent(JSON.stringify({
+        googleId: req.user.googleId,
+        name: req.user.name,
+        email: req.user.email
+      }));
+      return res.redirect(`http://localhost:3000/google-role-selection?userData=${userData}`);
+    }
+
     const token = jwt.sign(
       { id: req.user._id, role: req.user.role, className: req.user.className },
       process.env.JWT_SECRET || 'mysecretkey',
@@ -227,4 +246,79 @@ const googleAuthSuccess = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, forgotPassword, resetPassword, googleAuthSuccess };
+// COMPLETE GOOGLE OAUTH REGISTRATION
+const completeGoogleRegistration = async (req, res) => {
+  try {
+    const { googleId, name, email, role, specialization, className } = req.body;
+
+    // Prevent admin registration via Google OAuth
+    if (role === 'admin') {
+      return res.status(403).json({ message: 'Admin accounts cannot be registered via Google OAuth' });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    // Validate student class
+    if (role === 'student') {
+      if (!className || !["8", "9", "10", "11", "12"].includes(className)) {
+        return res.status(400).json({ message: 'Valid class (8-12) is required for students' });
+      }
+    }
+
+    // Create user
+    const user = new User({
+      googleId,
+      name,
+      email,
+      role,
+      specialization: role === 'tutor' ? specialization : undefined,
+      className: role === 'student' ? className : undefined,
+      status: role === 'tutor' ? 'pending' : 'approved'
+    });
+
+    await user.save();
+
+    // Send email notifications
+    if (role === 'student') {
+      await sendStudentRegistrationEmail(user.email, user.name);
+    } else if (role === 'tutor') {
+      await sendTutorPendingEmail(user.email, user.name);
+    }
+
+    // Generate token for immediate login (except pending tutors)
+    if (role === 'student' || (role === 'tutor' && user.status === 'approved')) {
+      const token = jwt.sign(
+        { id: user._id, role: user.role, className: user.className },
+        process.env.JWT_SECRET || 'mysecretkey',
+        { expiresIn: '1h' }
+      );
+
+      return res.status(201).json({
+        message: 'Registration completed successfully',
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          status: user.status
+        }
+      });
+    }
+
+    res.status(201).json({
+      message: 'Registration completed successfully',
+      note: 'Your tutor account is pending admin approval.'
+    });
+
+  } catch (err) {
+    console.error('Complete Google Registration Error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, forgotPassword, resetPassword, googleAuthSuccess, completeGoogleRegistration };
