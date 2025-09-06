@@ -141,6 +141,62 @@ const verifyPayment = async (req, res) => {
   }
 };
 
+// Cancel payment (Student)
+const cancelPayment = async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+    const studentId = req.user._id;
+
+    const payment = await Payment.findOne({ _id: paymentId, studentId, status: 'pending' });
+    if (!payment) {
+      return res.status(404).json({ message: 'Payment not found or cannot be cancelled' });
+    }
+
+    await Payment.findByIdAndDelete(paymentId);
+    res.json({ message: 'Payment cancelled successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Resubmit payment (Student)
+const resubmitPayment = async (req, res) => {
+  try {
+    const { paymentId } = req.params;
+    const { transactionId, notes } = req.body;
+    const studentId = req.user._id;
+
+    const payment = await Payment.findOne({ _id: paymentId, studentId, status: 'rejected' });
+    if (!payment) {
+      return res.status(404).json({ message: 'Payment not found or cannot be resubmitted' });
+    }
+
+    // Handle new screenshot if provided
+    let paymentScreenshot = payment.paymentScreenshot;
+    if (req.file) {
+      const paymentsDir = path.join(__dirname, '../uploads/payments');
+      const fileName = `payment_${Date.now()}_${req.file.originalname}`;
+      const filePath = path.join(paymentsDir, fileName);
+      fs.renameSync(req.file.path, filePath);
+      paymentScreenshot = `/uploads/payments/${fileName}`;
+    }
+
+    payment.status = 'pending';
+    payment.transactionId = transactionId || payment.transactionId;
+    payment.notes = notes || payment.notes;
+    payment.paymentScreenshot = paymentScreenshot;
+    payment.submittedAt = new Date();
+    payment.rejectionReason = undefined;
+    payment.verifiedAt = undefined;
+    payment.verifiedBy = undefined;
+
+    await payment.save();
+    res.json({ message: 'Payment resubmitted successfully', payment });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
 // Get payment statistics (Admin)
 const getPaymentStats = async (req, res) => {
   try {
@@ -310,5 +366,7 @@ module.exports = {
   getPendingPayments,
   verifyPayment,
   getPaymentStats,
-  sendPaymentReminders
+  sendPaymentReminders,
+  cancelPayment,
+  resubmitPayment
 };

@@ -187,7 +187,7 @@ const AdminPayments = () => {
                 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <a 
-                    href={payment.paymentScreenshot} 
+                    href={`http://localhost:5000${payment.paymentScreenshot}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{

@@ -14,6 +14,7 @@ const StudentPayments = () => {
     notes: '',
     paymentScreenshot: null
   });
+  const [resubmitPayment, setResubmitPayment] = useState(null);
 
   const token = localStorage.getItem('token');
 
@@ -55,7 +56,7 @@ const StudentPayments = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.paymentScreenshot) {
+    if (!formData.paymentScreenshot && !resubmitPayment) {
       alert('Please upload payment screenshot');
       return;
     }
@@ -67,17 +68,26 @@ const StudentPayments = () => {
       submitData.append('month', formData.month);
       submitData.append('transactionId', formData.transactionId);
       submitData.append('notes', formData.notes);
-      submitData.append('paymentScreenshot', formData.paymentScreenshot);
+      if (formData.paymentScreenshot) {
+        submitData.append('paymentScreenshot', formData.paymentScreenshot);
+      }
 
-      await axios.post('http://localhost:5000/api/payments/submit', submitData, {
+      const url = resubmitPayment 
+        ? `http://localhost:5000/api/payments/resubmit/${resubmitPayment._id}`
+        : 'http://localhost:5000/api/payments/submit';
+      
+      const method = resubmitPayment ? 'patch' : 'post';
+
+      await axios[method](url, submitData, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      alert('Payment submitted successfully! Awaiting admin verification.');
+      alert(resubmitPayment ? 'Payment resubmitted successfully!' : 'Payment submitted successfully! Awaiting admin verification.');
       setShowPaymentForm(false);
+      setResubmitPayment(null);
       setFormData({
         amount: '',
         month: new Date().toISOString().slice(0, 7),
@@ -91,6 +101,32 @@ const StudentPayments = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancelPayment = async (paymentId) => {
+    if (!window.confirm('Are you sure you want to cancel this payment?')) return;
+    
+    try {
+      await axios.delete(`http://localhost:5000/api/payments/cancel/${paymentId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      alert('Payment cancelled successfully');
+      fetchPayments();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error cancelling payment');
+    }
+  };
+
+  const handleResubmitPayment = (payment) => {
+    setResubmitPayment(payment);
+    setFormData({
+      amount: payment.amount,
+      month: payment.month,
+      transactionId: payment.transactionId || '',
+      notes: payment.notes || '',
+      paymentScreenshot: null
+    });
+    setShowPaymentForm(true);
   };
 
   const getStatusColor = (status) => {
@@ -172,7 +208,15 @@ const StudentPayments = () => {
       {/* Payment Form */}
       {showPaymentForm && (
         <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem' }}>
-          <h3 style={{ color: '#20205c', marginBottom: '1.5rem' }}>📤 Submit Payment</h3>
+          <h3 style={{ color: '#20205c', marginBottom: '1.5rem' }}>
+            {resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment'}
+          </h3>
+          {resubmitPayment && (
+            <div style={{ padding: '1rem', backgroundColor: '#fef3c7', border: '1px solid #f59e0b', borderRadius: '6px', marginBottom: '1rem' }}>
+              <strong>Resubmitting payment for:</strong> {resubmitPayment.month}<br/>
+              <strong>Previous rejection reason:</strong> {resubmitPayment.rejectionReason}
+            </div>
+          )}
           <form onSubmit={handleSubmit}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
               <div>
@@ -217,10 +261,12 @@ const StudentPayments = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                required
+                required={!resubmitPayment}
                 style={{ width: '100%', padding: '0.75rem', borderRadius: '6px', border: '1px solid #d1d5db' }}
               />
-              <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.25rem' }}>Upload screenshot of your GPay payment confirmation</p>
+              <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.25rem' }}>
+                {resubmitPayment ? 'Upload new screenshot (optional - leave empty to keep existing)' : 'Upload screenshot of your GPay payment confirmation'}
+              </p>
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
@@ -250,7 +296,7 @@ const StudentPayments = () => {
                 cursor: loading ? 'not-allowed' : 'pointer'
               }}
             >
-              {loading ? 'Submitting...' : '📤 Submit Payment'}
+              {loading ? (resubmitPayment ? 'Resubmitting...' : 'Submitting...') : (resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment')}
             </button>
           </form>
         </div>
@@ -305,18 +351,52 @@ const StudentPayments = () => {
                   </div>
                 )}
                 
-                {payment.paymentScreenshot && (
-                  <div style={{ marginTop: '1rem' }}>
+                <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  {payment.paymentScreenshot && (
                     <a 
-                      href={payment.paymentScreenshot} 
+                      href={`http://localhost:5000${payment.paymentScreenshot}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '0.9rem' }}
                     >
-                      📷 View Payment Screenshot
+                      📷 View Screenshot
                     </a>
-                  </div>
-                )}
+                  )}
+                  
+                  {payment.status === 'pending' && (
+                    <button
+                      onClick={() => handleCancelPayment(payment._id)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        backgroundColor: '#ef4444',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem'
+                      }}
+                    >
+                      ❌ Cancel Payment
+                    </button>
+                  )}
+                  
+                  {payment.status === 'rejected' && (
+                    <button
+                      onClick={() => handleResubmitPayment(payment)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        backgroundColor: '#f59e0b',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem'
+                      }}
+                    >
+                      🔄 Resubmit Payment
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>

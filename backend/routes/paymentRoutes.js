@@ -9,7 +9,9 @@ const {
   getPendingPayments,
   verifyPayment,
   getPaymentStats,
-  sendPaymentReminders
+  sendPaymentReminders,
+  cancelPayment,
+  resubmitPayment
 } = require('../controllers/paymentController');
 
 // Configure multer for file uploads
@@ -31,6 +33,8 @@ const upload = multer({
 router.get('/qr-code', protect, getPaymentQR);
 router.post('/submit', protect, upload.single('paymentScreenshot'), submitPayment);
 router.get('/my-payments', protect, getStudentPayments);
+router.delete('/cancel/:paymentId', protect, cancelPayment);
+router.patch('/resubmit/:paymentId', protect, upload.single('paymentScreenshot'), resubmitPayment);
 
 // Admin routes
 router.get('/pending', protect, adminOnly, getPendingPayments);
