@@ -9,7 +9,26 @@ const StudentDashboard = () => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const [showAllClasses, setShowAllClasses] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
+
+  // Clock Effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatClock = (date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour12: true, 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+  };
 
   // Fetch student's sessions
   const fetchClasses = useCallback(async () => {
@@ -84,13 +103,53 @@ const StudentDashboard = () => {
   }, [token]);
 
   useEffect(() => {
-    fetchClasses();
-    fetchFiles();
-    fetchAnnouncements();
+    const loadData = async () => {
+      setLoading(true);
+      await Promise.all([
+        fetchClasses(),
+        fetchFiles(),
+        fetchAnnouncements()
+      ]);
+      setLoading(false);
+    };
+    loadData();
   }, [fetchClasses, fetchFiles, fetchAnnouncements]);
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      
+      {/* Clock Widget */}
+      <div className="fade-in hover-lift" style={{ 
+        backgroundColor: 'white', 
+        padding: '1.5rem', 
+        borderRadius: '12px', 
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)', 
+        textAlign: 'center',
+        marginBottom: '2rem',
+        border: '2px solid #3b82f6',
+        transition: 'all 0.3s ease'
+      }}>
+        <div style={{ 
+          fontSize: '2.5rem', 
+          fontWeight: 'bold', 
+          color: '#3b82f6',
+          fontFamily: 'monospace',
+          marginBottom: '0.5rem'
+        }}>
+          🕐 {formatClock(currentTime)}
+        </div>
+        <div style={{ 
+          fontSize: '1rem', 
+          color: '#6b7280'
+        }}>
+          {currentTime.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </div>
+      </div>
         
         {/* Global Announcements */}
         {announcements.length > 0 && (

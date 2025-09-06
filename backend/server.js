@@ -137,6 +137,9 @@ app.use("/api/performance", performanceRoutes);
 const assignmentRoutes2 = require("./routes/assignmentRoutes2");
 app.use("/api/assignments", assignmentRoutes2);
 
+const gamificationRoutes = require("./routes/gamificationRoutes");
+app.use("/api/gamification", gamificationRoutes);
+
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {
   res.redirect('http://localhost:3000/login?error=oauth_cancelled');

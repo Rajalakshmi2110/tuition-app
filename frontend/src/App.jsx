@@ -31,6 +31,8 @@ import StudentDashboard from './pages/StudentDashboard';
 import StudentEnrollClass from './pages/StudentEnrollClass';
 import StudentFiles from './pages/StudentFiles';
 import AdminFiles from './pages/AdminFiles';
+import StudentGamification from './pages/StudentGamification';
+import StudentTimer from './pages/StudentTimer';
 
 const App = () => {
   return (
@@ -80,6 +82,8 @@ const App = () => {
           <Route path="files" element={<StudentFiles />} />
           <Route path="performance" element={<StudentPerformance />} />
           <Route path="assignments" element={<StudentAssignments />} />
+          <Route path="achievements" element={<StudentGamification />} />
+          <Route path="timer" element={<StudentTimer />} />
         </Route>
 
         {/* Admin Routes with existing Layout */}
