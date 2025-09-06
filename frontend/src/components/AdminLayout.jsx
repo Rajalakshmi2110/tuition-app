@@ -123,6 +123,21 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             🖼️ {!isMinimized && <span>Gallery</span>}
           </Link>
           
+          <Link to="/admin/payments" style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            padding: "1rem",
+            backgroundColor: "rgba(255,255,255,0.1)",
+            color: "white",
+            textDecoration: "none",
+            borderRadius: "8px",
+            transition: "all 0.3s ease",
+            justifyContent: isMinimized ? "center" : "flex-start"
+          }}>
+            💰 {!isMinimized && <span>Payment Management</span>}
+          </Link>
+          
           <button onClick={() => {
             if (setShowAnnouncementForm) {
               setShowAnnouncementForm(true);

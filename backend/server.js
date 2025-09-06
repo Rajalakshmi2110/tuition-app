@@ -33,6 +33,27 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Serve payment screenshots
+app.get('/uploads/payments/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, 'uploads', 'payments', filename);
+  
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.webp': 'image/webp'
+  };
+  
+  const contentType = mimeTypes[ext] || 'image/jpeg';
+  res.setHeader('Content-Type', contentType);
+  res.setHeader('Content-Disposition', 'inline');
+  
+  res.sendFile(filePath);
+});
+
 // Serve uploaded files with proper MIME types
 app.get('/uploads/:filename', (req, res) => {
   const filename = req.params.filename;
@@ -139,6 +160,9 @@ app.use("/api/assignments", assignmentRoutes2);
 
 const gamificationRoutes = require("./routes/gamificationRoutes");
 app.use("/api/gamification", gamificationRoutes);
+
+const paymentRoutes = require("./routes/paymentRoutes");
+app.use("/api/payments", paymentRoutes);
 
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {

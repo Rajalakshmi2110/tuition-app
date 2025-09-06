@@ -20,7 +20,8 @@ const RoleSidebar = ({ role, onWidthChange }) => {
     { path: '/student/files', icon: '📚', label: 'Study Materials' },
     { path: '/student/enroll', icon: '🎓', label: 'Enrolled Sessions' },
     { path: '/student/achievements', icon: '🏆', label: 'Achievements' },
-    { path: '/student/timer', icon: '⏲️', label: 'Timer & Stopwatch' }
+    { path: '/student/timer', icon: '⏲️', label: 'Timer & Stopwatch' },
+    { path: '/student/payments', icon: '💳', label: 'Fee Payments' }
   ];
 
   const tutorMenuItems = [

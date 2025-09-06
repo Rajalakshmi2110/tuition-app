@@ -33,6 +33,8 @@ import StudentFiles from './pages/StudentFiles';
 import AdminFiles from './pages/AdminFiles';
 import StudentGamification from './pages/StudentGamification';
 import StudentTimer from './pages/StudentTimer';
+import StudentPayments from './pages/StudentPayments';
+import AdminPayments from './pages/AdminPayments';
 
 const App = () => {
   return (
@@ -61,6 +63,7 @@ const App = () => {
             <Route path="feedback" element={<AdminFeedback />} />
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="files" element={<AdminFiles />} />
+            <Route path="payments" element={<AdminPayments />} />
           </Route>
 
         </Route>
@@ -84,6 +87,7 @@ const App = () => {
           <Route path="assignments" element={<StudentAssignments />} />
           <Route path="achievements" element={<StudentGamification />} />
           <Route path="timer" element={<StudentTimer />} />
+          <Route path="payments" element={<StudentPayments />} />
         </Route>
 
         {/* Admin Routes with existing Layout */}
