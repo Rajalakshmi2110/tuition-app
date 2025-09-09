@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { protect, tutorOnly } = require('../middleware/authMiddleware');
+const { protect, tutorOnly } = require('../Middleware/authMiddleware');
 const {
   createAssignment,
   getAssignmentsForStudent,

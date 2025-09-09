@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const Assignment = require("../models/Assignment");
 const upload = require("../middleware/upload");
-const { verifyTutor, verifyStudent } = require("../middleware/authMiddleware");
+const { verifyTutor, verifyStudent } = require("../Middleware/authMiddleware");
 
 router.post("/create", verifyTutor, upload.single("file"), async (req, res) => {
       console.log('req.file:', req.file);

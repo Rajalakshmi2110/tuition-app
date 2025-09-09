@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const File = require('../models/File');
 const Class = require('../models/Class');
-const { protect } = require('../middleware/authMiddleware');
+const { protect } = require('../Middleware/authMiddleware');
 
 // Multer setup with file extension preservation
 const storage = multer.diskStorage({
