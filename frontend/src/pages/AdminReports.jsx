@@ -123,13 +123,7 @@ const AdminReports = () => {
       {/* Dashboard Tab */}
       {activeTab === 'dashboard' && dashboardData && (
         <div>
-          {/* Debug Info */}
-          <div style={{ backgroundColor: '#f0f9ff', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', fontSize: '0.9rem' }}>
-            <strong>Debug Info:</strong> Students: {dashboardData?.totalStudents || 0}, Tutors: {dashboardData?.totalTutors || 0}, 
-            Performance Records: {performanceByClass?.length || 0}, Revenue Records: {revenueTrends?.length || 0}
-          </div>
-
-          {/* Key Metrics Cards */}
+              {/* Key Metrics Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
             <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👥</div>
