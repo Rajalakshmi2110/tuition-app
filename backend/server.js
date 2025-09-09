@@ -15,7 +15,15 @@ console.log("All env vars:", Object.keys(process.env).filter(key => key.includes
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://polite-sherbet-5c9e31.netlify.app'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
 // Create uploads directories if they don't exist
@@ -28,7 +36,12 @@ if (!fs.existsSync(galleryDir)) fs.mkdirSync(galleryDir);
 app.use(session({
   secret: process.env.JWT_SECRET || 'mysecretkey',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
 }));
 
 // Passport middleware
