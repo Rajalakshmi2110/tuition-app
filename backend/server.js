@@ -11,6 +11,8 @@ require('dotenv').config();
 // Then load passport config (which needs env vars)
 const passport = require('./config/passport');
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+console.log("All env vars:", Object.keys(process.env).filter(key => key.includes('MONGO')));
+console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
 app.use(cors());
@@ -178,9 +180,11 @@ app.get('/login', (req, res) => {
   res.redirect('http://localhost:3000/login?error=oauth_cancelled');
 });
 
-// app.get("/", (req,res) => res.send("API is running.."));
+app.get("/", (req,res) => res.json({ message: "Tuition Management API is running!", status: "success" }));
 
-mongoose.connect(process.env.MONGO_URI)
+app.get("/api/health", (req,res) => res.json({ status: "healthy", timestamp: new Date() }));
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/tuitionApp')
 .then(() => console.log("MongoDB connected!"))
 .catch(err => console.log(err));
 
