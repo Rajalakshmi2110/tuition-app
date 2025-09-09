@@ -16,7 +16,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/users/login', formData);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/users/login`, formData);
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('role', user.role);
@@ -69,7 +69,7 @@ const Login = () => {
           </div>
           
           <a 
-            href="http://localhost:5000/api/auth/google"
+            href={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/google`}
             style={{
               display: 'inline-block',
               background: '#4285f4',

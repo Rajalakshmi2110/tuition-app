@@ -24,7 +24,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', formData);
+      await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/register`, formData);
       alert('Registration successful!');
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', classId: '' });
       navigate('/login');
@@ -137,7 +137,7 @@ const Register = () => {
             </div>
             
             <a 
-              href="http://localhost:5000/api/auth/google"
+              href={`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/google`}
               style={{
                 display: 'inline-block',
                 background: '#4285f4',
