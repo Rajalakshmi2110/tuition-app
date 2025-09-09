@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Class = require('../models/Class');
 const File = require('../models/File');
 
-const { protect, adminOnly } = require("../middleware/authMiddleware");
+const { protect, adminOnly } = require("../Middleware/authMiddleware");
 const { getUsersByRole, approveTutor, declineTutor } = require("../controllers/adminController");
 
 router.get("/tutors", protect, adminOnly, (req, res) =>
