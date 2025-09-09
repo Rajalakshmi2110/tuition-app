@@ -35,6 +35,9 @@ import StudentGamification from './pages/StudentGamification';
 import StudentTimer from './pages/StudentTimer';
 import StudentPayments from './pages/StudentPayments';
 import AdminPayments from './pages/AdminPayments';
+import PerformancePrediction from './components/PerformancePrediction';
+import TutorPerformanceAnalytics from './pages/TutorPerformanceAnalytics';
+import AdminReports from './pages/AdminReports';
 
 const App = () => {
   return (
@@ -64,6 +67,7 @@ const App = () => {
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="files" element={<AdminFiles />} />
             <Route path="payments" element={<AdminPayments />} />
+            <Route path="reports" element={<AdminReports />} />
           </Route>
 
         </Route>
@@ -76,6 +80,7 @@ const App = () => {
           <Route path="session/:id" element={<ClassManagePage />} />
           <Route path="files" element={<TutorFiles />} />
           <Route path="student-progress" element={<TutorStudentProgress />} />
+          <Route path="analytics" element={<TutorPerformanceAnalytics />} />
         </Route>
 
         {/* Student Routes with Sidebar */}
@@ -88,20 +93,10 @@ const App = () => {
           <Route path="achievements" element={<StudentGamification />} />
           <Route path="timer" element={<StudentTimer />} />
           <Route path="payments" element={<StudentPayments />} />
+          <Route path="ai-prediction" element={<PerformancePrediction />} />
         </Route>
 
-        {/* Admin Routes with existing Layout */}
-        <Route element={<Layout />}>
-          <Route path="/admin">
-            <Route index element={<AdminDashboard />} />
-            <Route path="classes" element={<AdminClasses />} />
-            <Route path="create-class" element={<AdminCreateClass />} />
-            <Route path="feedback" element={<AdminFeedback />} />
-            <Route path="gallery" element={<AdminGallery />} />
-            <Route path="files" element={<AdminFiles />} />
-          </Route>
 
-        </Route>
       </Routes>
     </Router>
   );

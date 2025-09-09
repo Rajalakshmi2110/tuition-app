@@ -164,6 +164,15 @@ app.use("/api/gamification", gamificationRoutes);
 const paymentRoutes = require("./routes/paymentRoutes");
 app.use("/api/payments", paymentRoutes);
 
+const mlRoutes = require("./routes/mlRoutes");
+app.use("/api/ml", mlRoutes);
+
+const tutorAnalyticsRoutes = require("./routes/tutorAnalyticsRoutes");
+app.use("/api/tutor-analytics", tutorAnalyticsRoutes);
+
+const reportsRoutes = require("./routes/reportsRoutes");
+app.use("/api/reports", reportsRoutes);
+
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {
   res.redirect('http://localhost:3000/login?error=oauth_cancelled');

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AdminLayout from '../components/AdminLayout';
 
 const AdminPayments = () => {
   const [pendingPayments, setPendingPayments] = useState([]);
@@ -85,7 +86,8 @@ const AdminPayments = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+    <AdminLayout>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#20205c', marginBottom: '2rem', textAlign: 'center' }}>
         💰 Payment Management
       </h2>
@@ -313,7 +315,8 @@ const AdminPayments = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </AdminLayout>
   );
 };
 

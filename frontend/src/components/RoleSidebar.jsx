@@ -16,6 +16,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
   const studentMenuItems = [
     { path: '/student', icon: '📊', label: 'Dashboard' },
     { path: '/student/performance', icon: '📈', label: 'My Performance' },
+    { path: '/student/ai-prediction', icon: '🤖', label: 'AI Prediction' },
     { path: '/student/assignments', icon: '📝', label: 'My Assignments' },
     { path: '/student/files', icon: '📚', label: 'Study Materials' },
     { path: '/student/enroll', icon: '🎓', label: 'Enrolled Sessions' },
@@ -29,7 +30,8 @@ const RoleSidebar = ({ role, onWidthChange }) => {
     { path: '/tutor/assignments', icon: '📝', label: 'Manage Assignments' },
     { path: '/tutor/sessions', icon: '👥', label: 'My Sessions' },
     { path: '/tutor/files', icon: '📁', label: 'File Management' },
-    { path: '/tutor/student-progress', icon: '📊', label: 'Student Progress' }
+    { path: '/tutor/student-progress', icon: '📊', label: 'Student Progress' },
+    { path: '/tutor/analytics', icon: '📈', label: 'Performance Analytics' }
   ];
 
   const menuItems = role === 'student' ? studentMenuItems : tutorMenuItems;
