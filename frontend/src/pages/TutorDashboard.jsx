@@ -17,7 +17,7 @@ const TutorDashboard = () => {
     const fetchAnnouncements = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/announcements", {
+        const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/announcements", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAnnouncements(res.data);

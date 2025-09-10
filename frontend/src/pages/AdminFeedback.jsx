@@ -13,7 +13,7 @@ const AdminFeedback = () => {
   const fetchFeedback = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/feedback', {
+      const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/admin/feedback', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFeedback(res.data);
@@ -27,7 +27,7 @@ const AdminFeedback = () => {
   const approveFeedback = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.patch(`http://localhost:5000/api/admin/feedback/${id}/approve`, {}, {
+      await axios.patch(`https://tuitionapp-yq06.onrender.com/api/admin/feedback/${id}/approve`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchFeedback();
@@ -41,7 +41,7 @@ const AdminFeedback = () => {
     
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/admin/feedback/${id}`, {
+      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/admin/feedback/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchFeedback();

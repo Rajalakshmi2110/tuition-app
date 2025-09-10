@@ -17,7 +17,7 @@ const TutorClasses = () => {
         const userId = decoded.id || decoded._id;
 
         const res = await axios.get(
-          `http://localhost:5000/api/classes/tutor/${userId}`,
+          `https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
 

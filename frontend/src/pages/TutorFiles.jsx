@@ -25,7 +25,7 @@ const TutorFiles = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
       
-      const res = await axios.get("http://localhost:5000/api/files", {
+      const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/files", {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -41,7 +41,7 @@ const TutorFiles = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
       
-      const res = await axios.get(`http://localhost:5000/api/classes/tutor/${userId}`, {
+      const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data);
@@ -63,7 +63,7 @@ const TutorFiles = () => {
     if (uploadData.title) formData.append("title", uploadData.title);
 
     try {
-      await axios.post("http://localhost:5000/api/files", formData, {
+      await axios.post("https://tuitionapp-yq06.onrender.com/api/files", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

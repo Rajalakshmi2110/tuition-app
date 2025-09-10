@@ -16,7 +16,7 @@ const PerformancePrediction = () => {
   const fetchPredictions = async () => {
     try {
       const decoded = jwtDecode(token);
-      const response = await axios.get(`http://localhost:5000/api/ml/predict/${decoded.id}`, {
+      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/ml/predict/${decoded.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

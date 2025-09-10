@@ -441,7 +441,7 @@ const updateAllPredictions = async (req, res) => {
     for (const student of students) {
       try {
         // Trigger prediction for each student
-        await axios.get(`http://localhost:5000/api/ml/predict/${student._id}`, {
+        await axios.get(`https://tuitionapp-yq06.onrender.com/api/ml/predict/${student._id}`, {
           headers: { Authorization: req.headers.authorization }
         });
         updated++;

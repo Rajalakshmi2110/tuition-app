@@ -22,7 +22,7 @@ const AdminDashboard = () => {
   });
   const [classes, setClasses] = useState([]);
 
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://tuitionapp-yq06.onrender.com";
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");

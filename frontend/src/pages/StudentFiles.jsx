@@ -19,7 +19,7 @@ const StudentFiles = () => {
         console.log('Current user ID:', userId);
         
         // Use the student-specific endpoint to get enrolled sessions
-        const res = await axios.get(`http://localhost:5000/api/classes/student/${userId}`, {
+        const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/student/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         
@@ -42,7 +42,7 @@ const StudentFiles = () => {
       setError(null);
       try {
         // Get all files and filter by selected session
-        const res = await axios.get('http://localhost:5000/api/files', {
+        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/files', {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -139,7 +139,7 @@ const StudentFiles = () => {
                       <div style={{ fontSize: '2rem' }}>📄</div>
                       <div style={{ flex: 1 }}>
                         <a
-                          href={`http://localhost:5000/${file.url}`}
+                          href={`https://tuitionapp-yq06.onrender.com/${file.url}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           style={{

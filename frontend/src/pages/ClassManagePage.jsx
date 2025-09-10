@@ -13,7 +13,7 @@ const ClassManagePage = () => {
     const fetchClassInfo = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`http://localhost:5000/api/classes/${id}`, {
+        const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClassInfo(res.data);
@@ -28,7 +28,7 @@ const ClassManagePage = () => {
   const handleScheduleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/classes/tutor/class/${id}`, { schedule }, {
+      await axios.put(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}`, { schedule }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Schedule updated successfully!');
@@ -43,7 +43,7 @@ const ClassManagePage = () => {
   const handleResourceUpload = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:5000/api/classes/tutor/class/${id}/resource`, { link: resourceLink }, {
+      await axios.post(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/resource`, { link: resourceLink }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Resource uploaded!');
@@ -57,7 +57,7 @@ const ClassManagePage = () => {
   const handleAnnouncement = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`http://localhost:5000/api/classes/tutor/class/${id}/announcement`, { text: announcement }, {
+      await axios.post(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/announcement`, { text: announcement }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Announcement sent!');
@@ -73,7 +73,7 @@ const ClassManagePage = () => {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/classes/tutor/class/${id}/complete`, {}, {
+      await axios.put(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/complete`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Class marked as completed!');

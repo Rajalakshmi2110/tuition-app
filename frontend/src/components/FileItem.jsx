@@ -21,7 +21,7 @@ const FileItem = ({ file, onDelete }) => {
       <p>Uploaded by: {file.uploadedBy.name}</p>
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <button 
-          onClick={() => window.open(`http://localhost:5000/${file.url.startsWith('/') ? file.url.slice(1) : file.url}`, '_blank', 'noopener,noreferrer')}
+          onClick={() => window.open(`https://tuitionapp-yq06.onrender.com/${file.url.startsWith('/') ? file.url.slice(1) : file.url}`, '_blank', 'noopener,noreferrer')}
           style={{
             backgroundColor: '#2563eb',
             color: 'white',
@@ -35,7 +35,7 @@ const FileItem = ({ file, onDelete }) => {
           👁️ View
         </button>
         <button 
-          onClick={() => window.open(`http://localhost:5000/${file.url.startsWith('/') ? file.url.slice(1) : file.url}?download=true`, '_blank', 'noopener,noreferrer')}
+          onClick={() => window.open(`https://tuitionapp-yq06.onrender.com/${file.url.startsWith('/') ? file.url.slice(1) : file.url}?download=true`, '_blank', 'noopener,noreferrer')}
           style={{
             backgroundColor: '#10b981',
             color: 'white',

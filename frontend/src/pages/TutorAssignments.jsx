@@ -22,7 +22,7 @@ const TutorAssignments = () => {
   const fetchAssignments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/assignments/tutor', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/assignments/tutor', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignments(response.data);
@@ -34,7 +34,7 @@ const TutorAssignments = () => {
   const fetchSubmissions = async (assignmentId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/api/assignments/${assignmentId}/submissions`, {
+      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/assignments/${assignmentId}/submissions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSubmissions(response.data.submissions);
@@ -47,7 +47,7 @@ const TutorAssignments = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/assignments', formData, {
+      await axios.post('https://tuitionapp-yq06.onrender.com/api/assignments', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -67,7 +67,7 @@ const TutorAssignments = () => {
   const handleGrade = async (submissionId, pointsEarned, feedback) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/assignments/submissions/${submissionId}/grade`, 
+      await axios.put(`https://tuitionapp-yq06.onrender.com/api/assignments/submissions/${submissionId}/grade`, 
         { pointsEarned, feedback },
         { headers: { Authorization: `Bearer ${token}` } }
       );

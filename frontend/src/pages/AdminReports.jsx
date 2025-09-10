@@ -21,19 +21,19 @@ const AdminReports = () => {
     try {
       console.log('Fetching all reports...');
       const [dashboard, revenue, performance, subjects, payments] = await Promise.all([
-        axios.get('http://localhost:5000/api/reports/dashboard', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/dashboard', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/reports/revenue-trends', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/revenue-trends', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/reports/performance-by-class', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/performance-by-class', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/reports/subject-performance', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/subject-performance', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/reports/payment-distribution', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/payment-distribution', {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);

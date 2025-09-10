@@ -19,7 +19,7 @@ const AdminCreateClass = () => {
     const fetchTutors = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/users/tutors', {
+        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/users/tutors', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTutors(res.data.tutors);
@@ -38,7 +38,7 @@ const AdminCreateClass = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/classes/create', {
+      await axios.post('https://tuitionapp-yq06.onrender.com/api/classes/create', {
         name: formData.name,
         subject: formData.subject,
         schedule: formData.schedule,

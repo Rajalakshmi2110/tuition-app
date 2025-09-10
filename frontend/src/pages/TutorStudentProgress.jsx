@@ -19,7 +19,7 @@ const TutorStudentProgress = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
 
-      const classRes = await axios.get(`http://localhost:5000/api/classes/tutor/${userId}`, {
+      const classRes = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -58,7 +58,7 @@ const TutorStudentProgress = () => {
   const fetchStudentPerformance = async (studentId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/api/performance/student/${studentId}`, {
+      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/performance/student/${studentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPerformances(response.data);

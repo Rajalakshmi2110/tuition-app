@@ -16,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     const fetchGalleryImages = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/gallery');
+        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery');
         setGalleryImages(res.data.slice(0, 3)); // Show only first 3 images
       } catch (err) {
         console.error('Error fetching gallery:', err);
@@ -188,7 +188,7 @@ const Home = () => {
               {galleryImages.map((image) => (
                 <div key={image._id} style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 8px 25px rgba(0,0,0,0.1)' }}>
                   <img 
-                    src={`http://localhost:5000${image.imageUrl}`}
+                    src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
                     alt={image.title}
                     style={{ 
                       width: '100%', 

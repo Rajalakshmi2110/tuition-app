@@ -21,7 +21,7 @@ const AdminPayments = () => {
 
   const fetchPendingPayments = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/payments/pending', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/pending', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPendingPayments(response.data);
@@ -32,7 +32,7 @@ const AdminPayments = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/payments/stats', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/stats', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStats(response.data);
@@ -44,7 +44,7 @@ const AdminPayments = () => {
   const handleVerifyPayment = async (paymentId, status, rejectionReason = '') => {
     setLoading(true);
     try {
-      await axios.patch(`http://localhost:5000/api/payments/verify/${paymentId}`, {
+      await axios.patch(`https://tuitionapp-yq06.onrender.com/api/payments/verify/${paymentId}`, {
         status,
         rejectionReason
       }, {
@@ -65,7 +65,7 @@ const AdminPayments = () => {
   const sendReminders = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/payments/send-reminders', {}, {
+      const response = await axios.post('https://tuitionapp-yq06.onrender.com/api/payments/send-reminders', {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert(response.data.message);
@@ -189,7 +189,7 @@ const AdminPayments = () => {
                 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <a 
-                    href={`http://localhost:5000${payment.paymentScreenshot}`} 
+                    href={`https://tuitionapp-yq06.onrender.com${payment.paymentScreenshot}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{

@@ -13,7 +13,7 @@ const AdminClasses = () => {
     
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/classes/${classId}`, {
+      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/classes/${classId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(classes.filter(cls => cls._id !== classId));
@@ -28,7 +28,7 @@ const AdminClasses = () => {
     const fetchClasses = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get('http://localhost:5000/api/classes', {
+        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/classes', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClasses(res.data);

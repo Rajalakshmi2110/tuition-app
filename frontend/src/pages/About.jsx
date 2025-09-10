@@ -9,7 +9,7 @@ const About = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/feedback/approved');
+        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/feedback/approved');
         setTestimonials(res.data);
       } catch (err) {
         console.error('Error fetching testimonials:', err);

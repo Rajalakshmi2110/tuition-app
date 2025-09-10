@@ -17,7 +17,7 @@ const TutorPerformanceAnalytics = () => {
 
   const fetchAllClassesAnalytics = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tutor-analytics/classes', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/tutor-analytics/classes', {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('API Response:', response.data);
@@ -32,7 +32,7 @@ const TutorPerformanceAnalytics = () => {
   const fetchClassDetails = async (classId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/tutor-analytics/class/${classId}`, {
+      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/tutor-analytics/class/${classId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setClassDetails(response.data);

@@ -22,13 +22,13 @@ const StudentGamification = () => {
       const userId = decoded.id || decoded._id;
 
       const [statsRes, leaderboardRes, badgesRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/gamification/stats/${userId}`, {
+        axios.get(`https://tuitionapp-yq06.onrender.com/api/gamification/stats/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/gamification/leaderboard', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/gamification/leaderboard', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/gamification/badges', {
+        axios.get('https://tuitionapp-yq06.onrender.com/api/gamification/badges', {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);

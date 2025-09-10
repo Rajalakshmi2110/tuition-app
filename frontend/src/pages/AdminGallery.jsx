@@ -20,7 +20,7 @@ const AdminGallery = () => {
   const fetchImages = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('http://localhost:5000/api/gallery', {
+      const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setImages(res.data);
@@ -42,7 +42,7 @@ const AdminGallery = () => {
     uploadData.append('category', formData.category);
 
     try {
-      await axios.post('http://localhost:5000/api/gallery', uploadData, {
+      await axios.post('https://tuitionapp-yq06.onrender.com/api/gallery', uploadData, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -66,7 +66,7 @@ const AdminGallery = () => {
     
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`http://localhost:5000/api/gallery/${id}`, {
+      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/gallery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchImages();
@@ -117,7 +117,7 @@ const AdminGallery = () => {
                 boxShadow: '0 6px 20px rgba(0,0,0,0.1)'
               }}>
                 <img 
-                  src={`http://localhost:5000${image.imageUrl}`}
+                  src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
                   alt={image.title}
                   style={{ 
                     width: '100%', 

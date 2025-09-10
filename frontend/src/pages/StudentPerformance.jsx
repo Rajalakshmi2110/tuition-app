@@ -27,7 +27,7 @@ const StudentPerformance = () => {
       const token = localStorage.getItem('token');
       console.log('Fetching performances with token:', token ? 'Token exists' : 'No token');
       
-      const response = await axios.get('http://localhost:5000/api/performance', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/performance', {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -45,7 +45,7 @@ const StudentPerformance = () => {
       const token = localStorage.getItem('token');
       console.log('Submitting performance data:', formData);
       
-      const response = await axios.post('http://localhost:5000/api/performance', formData, {
+      const response = await axios.post('https://tuitionapp-yq06.onrender.com/api/performance', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

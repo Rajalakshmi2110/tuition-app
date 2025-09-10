@@ -16,8 +16,8 @@ const FeedbackForm = ({ onClose }) => {
     
     try {
       console.log('Submitting feedback:', formData);
-      console.log('Posting to:', 'http://localhost:5000/api/feedback');
-      const response = await axios.post('http://localhost:5000/api/feedback', formData);
+      console.log('Posting to:', 'https://tuitionapp-yq06.onrender.com/api/feedback');
+      const response = await axios.post('https://tuitionapp-yq06.onrender.com/api/feedback', formData);
       console.log('Response:', response.data);
       alert('Thank you for your feedback! It will be reviewed and published soon.');
       onClose();

@@ -12,7 +12,7 @@ const AdminFiles = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/files", {
+        const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/files", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFiles(res.data);
@@ -31,7 +31,7 @@ const AdminFiles = () => {
     if (!window.confirm("Are you sure you want to delete this file?")) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/files/${fileId}`, {
+      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/files/${fileId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFiles(files.filter(f => f._id !== fileId));
@@ -67,7 +67,7 @@ const AdminFiles = () => {
             {files.map((file) => (
               <tr key={file._id}>
                 <td style={{ padding: "10px", border: "1px solid #ddd" }}>
-                  <a href={`http://localhost:5000/${file.url}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`https://tuitionapp-yq06.onrender.com/${file.url}`} target="_blank" rel="noopener noreferrer">
                     {file.title}
                   </a>
                 </td>

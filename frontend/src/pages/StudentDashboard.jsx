@@ -40,7 +40,7 @@ const StudentDashboard = () => {
 
       // Get all classes and filter by student enrollment
       const res = await axios.get(
-        'http://localhost:5000/api/classes',
+        'https://tuitionapp-yq06.onrender.com/api/classes',
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
@@ -61,14 +61,14 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const res = await axios.get(
-        'http://localhost:5000/api/files',
+        'https://tuitionapp-yq06.onrender.com/api/files',
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
       // Get student's enrolled class IDs first
       const decoded = jwtDecode(token);
       const classRes = await axios.get(
-        'http://localhost:5000/api/classes',
+        'https://tuitionapp-yq06.onrender.com/api/classes',
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
@@ -93,7 +93,7 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/announcements",
+        "https://tuitionapp-yq06.onrender.com/api/announcements",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAnnouncements(res.data);
@@ -249,7 +249,7 @@ const StudentDashboard = () => {
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9ff'}
                   onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}>
-                    <a href={`http://localhost:5000/${file.url}`} target="_blank" rel="noopener noreferrer" 
+                    <a href={`https://tuitionapp-yq06.onrender.com/${file.url}`} target="_blank" rel="noopener noreferrer" 
                        style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '600' }}>
                       📄 {file.title}
                     </a>

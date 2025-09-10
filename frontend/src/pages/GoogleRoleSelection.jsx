@@ -45,7 +45,7 @@ const GoogleRoleSelection = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/complete-google-registration', {
+      const response = await axios.post('https://tuitionapp-yq06.onrender.com/api/auth/complete-google-registration', {
         googleId: userData.googleId,
         name: userData.name,
         email: userData.email,

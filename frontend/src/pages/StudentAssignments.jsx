@@ -17,7 +17,7 @@ const StudentAssignments = () => {
   const fetchAssignments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/assignments/student', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/assignments/student', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignments(response.data);
@@ -29,7 +29,7 @@ const StudentAssignments = () => {
   const fetchSubmissions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/assignments/submissions', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/assignments/submissions', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSubmissions(response.data);
@@ -48,7 +48,7 @@ const StudentAssignments = () => {
         formData.append('file', submissionFile);
       }
       
-      await axios.post(`http://localhost:5000/api/assignments/${selectedAssignment._id}/submit`, 
+      await axios.post(`https://tuitionapp-yq06.onrender.com/api/assignments/${selectedAssignment._id}/submit`, 
         formData,
         { 
           headers: { 

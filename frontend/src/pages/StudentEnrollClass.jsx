@@ -16,7 +16,7 @@ const StudentEnrollClass = () => {
       const userId = decoded.id || decoded._id;
 
       // Get all sessions
-      const allSessionsRes = await axios.get('http://localhost:5000/api/classes', {
+      const allSessionsRes = await axios.get('https://tuitionapp-yq06.onrender.com/api/classes', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

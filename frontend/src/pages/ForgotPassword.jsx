@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      await axios.post('https://tuitionapp-yq06.onrender.com/api/auth/forgot-password', { email });
       setMessage('Password reset email sent. Check your inbox.');
     } catch (error) {
       setMessage(error.response?.data?.message || 'Error sending reset email');

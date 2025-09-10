@@ -25,7 +25,7 @@ const StudentPayments = () => {
 
   const fetchQRCode = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/payments/qr-code', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/qr-code', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setQrCode(response.data.qrCodeUrl);
@@ -36,7 +36,7 @@ const StudentPayments = () => {
 
   const fetchPayments = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/payments/my-payments', {
+      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/my-payments', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPayments(response.data);
@@ -73,8 +73,8 @@ const StudentPayments = () => {
       }
 
       const url = resubmitPayment 
-        ? `http://localhost:5000/api/payments/resubmit/${resubmitPayment._id}`
-        : 'http://localhost:5000/api/payments/submit';
+        ? `https://tuitionapp-yq06.onrender.com/api/payments/resubmit/${resubmitPayment._id}`
+        : 'https://tuitionapp-yq06.onrender.com/api/payments/submit';
       
       const method = resubmitPayment ? 'patch' : 'post';
 
@@ -107,7 +107,7 @@ const StudentPayments = () => {
     if (!window.confirm('Are you sure you want to cancel this payment?')) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/payments/cancel/${paymentId}`, {
+      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/payments/cancel/${paymentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert('Payment cancelled successfully');
@@ -354,7 +354,7 @@ const StudentPayments = () => {
                 <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   {payment.paymentScreenshot && (
                     <a 
-                      href={`http://localhost:5000${payment.paymentScreenshot}`} 
+                      href={`https://tuitionapp-yq06.onrender.com${payment.paymentScreenshot}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       style={{ color: '#3b82f6', textDecoration: 'none', fontSize: '0.9rem' }}
