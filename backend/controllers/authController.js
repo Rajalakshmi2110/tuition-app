@@ -75,9 +75,11 @@ const registerUser = async (req, res) => {
 // LOGIN
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+  console.log('LoginUser - Email:', email, 'Password exists:', !!password);
 
   try {
     if (!email || !password) {
+      console.log('Missing credentials - Email:', !!email, 'Password:', !!password);
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
