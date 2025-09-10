@@ -9,11 +9,6 @@ router.get("/", (req, res) => {
     res.json({message: "user route is working!"})
 });
 
-router.post('/test', (req, res) => {
-  console.log('Test endpoint hit - Body:', req.body);
-  res.json({ message: 'Test successful', body: req.body });
-});
-
 router.post('/login', async (req, res) => {
   console.log('Login request body:', req.body);
   console.log('Content-Type:', req.headers['content-type']);
