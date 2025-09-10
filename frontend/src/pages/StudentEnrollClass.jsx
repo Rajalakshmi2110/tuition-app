@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 
@@ -8,7 +8,7 @@ const StudentEnrollClass = () => {
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
 
-  const fetchSessions = async () => {
+  const fetchSessions = useCallback(async () => {
     if (!token) return;
 
     try {
@@ -40,13 +40,13 @@ const StudentEnrollClass = () => {
       console.error("Failed to fetch sessions:", err);
       setLoading(false);
     }
-  };
+  }, [token]);
 
 
 
   useEffect(() => {
     fetchSessions();
-  }, [token]);
+  }, [fetchSessions]);
 
   if (loading) {
     return (

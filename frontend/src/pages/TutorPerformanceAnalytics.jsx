@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const TutorPerformanceAnalytics = () => {
@@ -9,13 +9,7 @@ const TutorPerformanceAnalytics = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchAllClassesAnalytics();
-  }, []);
-
-  console.log('Class analytics data:', classAnalytics);
-
-  const fetchAllClassesAnalytics = async () => {
+  const fetchAllClassesAnalytics = useCallback(async () => {
     try {
       const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/tutor-analytics/classes', {
         headers: { Authorization: `Bearer ${token}` }
@@ -27,7 +21,13 @@ const TutorPerformanceAnalytics = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchAllClassesAnalytics();
+  }, [fetchAllClassesAnalytics]);
+
+  console.log('Class analytics data:', classAnalytics);
 
   const fetchClassDetails = async (classId) => {
     try {

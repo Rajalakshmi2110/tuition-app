@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode"; // removed braces
-import { useNavigate, Link } from "react-router-dom";
+
 import "../styles/TutorDashboard.css";
 
 const TutorDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
-  const navigate = useNavigate();
+
 
 
 

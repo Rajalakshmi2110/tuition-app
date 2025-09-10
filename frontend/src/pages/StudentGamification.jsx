@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
@@ -12,11 +12,7 @@ const StudentGamification = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchGamificationData();
-  }, []);
-
-  const fetchGamificationData = async () => {
+  const fetchGamificationData = useCallback(async () => {
     try {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
@@ -42,7 +38,11 @@ const StudentGamification = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchGamificationData();
+  }, [fetchGamificationData]);
 
   const getRarityColor = (rarity) => {
     const colors = {

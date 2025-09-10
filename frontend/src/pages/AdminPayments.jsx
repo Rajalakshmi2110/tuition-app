@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 
@@ -14,12 +14,7 @@ const AdminPayments = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchPendingPayments();
-    fetchStats();
-  }, []);
-
-  const fetchPendingPayments = async () => {
+  const fetchPendingPayments = useCallback(async () => {
     try {
       const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/pending', {
         headers: { Authorization: `Bearer ${token}` }
@@ -28,9 +23,9 @@ const AdminPayments = () => {
     } catch (error) {
       console.error('Error fetching pending payments:', error);
     }
-  };
+  }, [token]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/stats', {
         headers: { Authorization: `Bearer ${token}` }
@@ -39,7 +34,12 @@ const AdminPayments = () => {
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchPendingPayments();
+    fetchStats();
+  }, [fetchPendingPayments, fetchStats]);
 
   const handleVerifyPayment = async (paymentId, status, rejectionReason = '') => {
     setLoading(true);
@@ -76,14 +76,7 @@ const AdminPayments = () => {
     }
   };
 
-  const getStatusColor = (status) => {
-    const colors = {
-      pending: '#f59e0b',
-      verified: '#10b981',
-      rejected: '#ef4444'
-    };
-    return colors[status] || '#6b7280';
-  };
+
 
   return (
     <AdminLayout>

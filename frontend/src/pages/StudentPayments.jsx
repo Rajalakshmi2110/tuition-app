@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+
 
 const StudentPayments = () => {
   const [qrCode, setQrCode] = useState('');
@@ -18,12 +18,7 @@ const StudentPayments = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchQRCode();
-    fetchPayments();
-  }, []);
-
-  const fetchQRCode = async () => {
+  const fetchQRCode = useCallback(async () => {
     try {
       const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/qr-code', {
         headers: { Authorization: `Bearer ${token}` }
@@ -32,9 +27,9 @@ const StudentPayments = () => {
     } catch (error) {
       console.error('Error fetching QR code:', error);
     }
-  };
+  }, [token]);
 
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     try {
       const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/my-payments', {
         headers: { Authorization: `Bearer ${token}` }
@@ -43,7 +38,12 @@ const StudentPayments = () => {
     } catch (error) {
       console.error('Error fetching payments:', error);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchQRCode();
+    fetchPayments();
+  }, [fetchQRCode, fetchPayments]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

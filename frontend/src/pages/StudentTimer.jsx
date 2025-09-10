@@ -12,9 +12,6 @@ const StudentTimer = () => {
   // Stopwatch State
   const [stopwatchTime, setStopwatchTime] = useState(0);
   const [stopwatchActive, setStopwatchActive] = useState(false);
-  
-  // Clock State
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   // Timer Effect
   useEffect(() => {
@@ -41,13 +38,7 @@ const StudentTimer = () => {
     return () => clearInterval(interval);
   }, [stopwatchActive]);
 
-  // Clock Effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -55,14 +46,7 @@ const StudentTimer = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const formatClock = (date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour12: true, 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit' 
-    });
-  };
+
 
   const startTimer = () => {
     setTimerTime(timerMinutes * 60 + timerSeconds);

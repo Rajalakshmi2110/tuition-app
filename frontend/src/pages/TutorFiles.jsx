@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import FileList from "../components/FileList";
@@ -15,12 +15,7 @@ const TutorFiles = () => {
   const [message, setMessage] = useState('');
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    fetchFiles();
-    fetchClasses();
-  }, []);
-
-  const fetchFiles = async () => {
+  const fetchFiles = useCallback(async () => {
     try {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
@@ -34,9 +29,9 @@ const TutorFiles = () => {
     } catch (err) {
       console.error("Failed to fetch files", err);
     }
-  };
+  }, [token]);
 
-  const fetchClasses = async () => {
+  const fetchClasses = useCallback(async () => {
     try {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
@@ -48,7 +43,12 @@ const TutorFiles = () => {
     } catch (err) {
       console.error("Failed to load classes", err);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchFiles();
+    fetchClasses();
+  }, [fetchFiles, fetchClasses]);
 
   const handleUpload = async (e) => {
     e.preventDefault();

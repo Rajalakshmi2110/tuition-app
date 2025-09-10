@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode"; // removed braces
-import FileList from "../components/FileList";
+
 
 const StudentDashboard = () => {
   const [myClasses, setMyClasses] = useState([]);
@@ -10,7 +10,7 @@ const StudentDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [showAllClasses, setShowAllClasses] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [loading, setLoading] = useState(true);
+
   const token = localStorage.getItem("token");
 
   // Clock Effect
@@ -104,13 +104,11 @@ const StudentDashboard = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true);
       await Promise.all([
         fetchClasses(),
         fetchFiles(),
         fetchAnnouncements()
       ]);
-      setLoading(false);
     };
     loadData();
   }, [fetchClasses, fetchFiles, fetchAnnouncements]);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+
 import axios from "axios";
 import AdminLayout from '../components/AdminLayout';
 
@@ -20,7 +20,7 @@ const AdminDashboard = () => {
     completedClasses: 0,
     studyMaterials: 0
   });
-  const [classes, setClasses] = useState([]);
+
 
   const BASE_URL = "https://tuitionapp-yq06.onrender.com";
 
@@ -72,17 +72,7 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchClasses = async () => {
-    const token = localStorage.getItem("token");
-    try {
-      const res = await axios.get(`${BASE_URL}/api/classes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setClasses(res.data);
-    } catch (err) {
-      console.error('Error fetching classes:', err);
-    }
-  };
+
 
   const deleteAnnouncement = async (id) => {
     const token = localStorage.getItem("token");
@@ -100,7 +90,6 @@ const AdminDashboard = () => {
     fetchData();
     fetchAnnouncements();
     fetchStats();
-    fetchClasses();
   }, []);
 
   const approveTutor = async (id) => {

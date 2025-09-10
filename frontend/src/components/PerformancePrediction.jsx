@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
@@ -9,11 +9,7 @@ const PerformancePrediction = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchPredictions();
-  }, []);
-
-  const fetchPredictions = async () => {
+  const fetchPredictions = useCallback(async () => {
     try {
       const decoded = jwtDecode(token);
       const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/ml/predict/${decoded.id}`, {
@@ -28,7 +24,11 @@ const PerformancePrediction = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchPredictions();
+  }, [fetchPredictions]);
 
   const getTrendIcon = (trend) => {
     const icons = {

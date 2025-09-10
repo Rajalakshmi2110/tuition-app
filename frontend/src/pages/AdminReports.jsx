@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 
@@ -13,11 +13,7 @@ const AdminReports = () => {
 
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchAllReports();
-  }, []);
-
-  const fetchAllReports = async () => {
+  const fetchAllReports = useCallback(async () => {
     try {
       console.log('Fetching all reports...');
       const [dashboard, revenue, performance, subjects, payments] = await Promise.all([
@@ -52,7 +48,11 @@ const AdminReports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    fetchAllReports();
+  }, [fetchAllReports]);
 
   const getStatusColor = (status) => {
     const colors = {

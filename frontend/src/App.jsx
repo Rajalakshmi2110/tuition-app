@@ -26,7 +26,7 @@ import AdminFeedback from './pages/AdminFeedback';
 import AdminGallery from './pages/AdminGallery';
 import TutorDashboard from './pages/TutorDashboard';
 import ClassManagePage from './pages/ClassManagePage';
-import FileUpload from './features/FileUpload/FileUpload';
+
 import StudentDashboard from './pages/StudentDashboard';
 import StudentEnrollClass from './pages/StudentEnrollClass';
 import StudentFiles from './pages/StudentFiles';
