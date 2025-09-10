@@ -50,11 +50,15 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    // Send email notifications
-    if (role === 'student') {
-      await sendStudentRegistrationEmail(user.email, user.name);
-    } else if (role === 'tutor') {
-      await sendTutorPendingEmail(user.email, user.name);
+    // Send email notifications (don't let email failures break registration)
+    try {
+      if (role === 'student') {
+        await sendStudentRegistrationEmail(user.email, user.name);
+      } else if (role === 'tutor') {
+        await sendTutorPendingEmail(user.email, user.name);
+      }
+    } catch (emailError) {
+      console.error('Email sending failed, but registration successful:', emailError.message);
     }
 
     res.status(201).json({

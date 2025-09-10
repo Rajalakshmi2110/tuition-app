@@ -11,7 +11,8 @@ require('dotenv').config();
 // Then load passport config (which needs env vars)
 const passport = require('./config/passport');
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
-console.log("All env vars:", Object.keys(process.env).filter(key => key.includes('MONGO')));
+console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
+console.log("EMAIL_USER exists:", !!process.env.EMAIL_USER);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
