@@ -19,7 +19,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://polite-sherbet-5c9e31.netlify.app'
+    'https://rajituitionapp.netlify.app/'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
