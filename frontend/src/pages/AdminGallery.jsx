@@ -4,6 +4,7 @@ import AdminLayout from '../components/AdminLayout';
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showUploadForm, setShowUploadForm] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
@@ -26,6 +27,8 @@ const AdminGallery = () => {
       setImages(res.data);
     } catch (err) {
       console.error('Error fetching images:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,14 +51,12 @@ const AdminGallery = () => {
           'Content-Type': 'multipart/form-data'
         },
       });
-      alert('Image uploaded successfully!');
       setShowUploadForm(false);
       setFormData({ title: '', description: '', category: 'classroom' });
       setSelectedFile(null);
       fetchImages();
     } catch (err) {
-      alert('Failed to upload image');
-      console.error(err);
+      console.error('Failed to upload image:', err);
     } finally {
       setUploading(false);
     }
@@ -74,6 +75,25 @@ const AdminGallery = () => {
       console.error('Error deleting image:', err);
     }
   };
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div style={{ textAlign: 'center', padding: '4rem' }}>
+          <div style={{ backgroundColor: 'white', padding: '3rem', borderRadius: '16px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
+            <div style={{ 
+              width: '50px', height: '50px', border: '4px solid #f3f4f6', 
+              borderTop: '4px solid #3b82f6', borderRadius: '50%', 
+              animation: 'spin 1s linear infinite', margin: '0 auto 1.5rem'
+            }}></div>
+            <h3 style={{ fontSize: '1.5rem', color: '#20205c', marginBottom: '0.5rem' }}>Loading Gallery</h3>
+            <p style={{ color: '#666', margin: 0 }}>Please wait while we fetch gallery images...</p>
+          </div>
+          <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>

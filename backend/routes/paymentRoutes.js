@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
+const cloudinary = require('../config/cloudinary');
 const { protect, adminOnly } = require('../Middleware/authMiddleware');
 const {
   getPaymentQR,
@@ -14,9 +16,17 @@ const {
   resubmitPayment
 } = require('../controllers/paymentController');
 
-// Configure multer for file uploads
+// Configure Cloudinary storage for payment screenshots
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'tuition_app_payments',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+  },
+});
+
 const upload = multer({
-  dest: 'uploads/',
+  storage,
   limits: {
     fileSize: 10 * 1024 * 1024 // 10MB limit
   },

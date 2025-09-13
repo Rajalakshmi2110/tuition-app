@@ -48,11 +48,9 @@ const AdminCreateClass = () => {
       }, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert('Session created successfully!');
       setFormData({ name: '', subject: '', schedule: '', scheduledDate: '', tutorId: '', classLevel: '' });
     } catch (err) {
       console.error('Session creation failed', err);
-      alert('Failed to create session');
     }
   };
 

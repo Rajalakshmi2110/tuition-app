@@ -41,7 +41,7 @@ const FileUpload = ({ onUpload }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file || !title || !classId) return alert('All fields are required');
+    if (!file || !title || !classId) return;
 
     const formData = new FormData();
     formData.append('file', file);
@@ -58,7 +58,6 @@ const FileUpload = ({ onUpload }) => {
       });
 
       console.log('Upload successful:', res.data);
-      alert('File uploaded successfully!');
       setFile(null);
       setTitle('');
       setClassId('');
@@ -73,7 +72,7 @@ const FileUpload = ({ onUpload }) => {
           errorMsg = err.response.data;
         }
       }
-      alert('Upload failed: ' + errorMsg);
+      console.error('Upload failed:', errorMsg);
     }
   };
 

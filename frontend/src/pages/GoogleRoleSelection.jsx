@@ -28,18 +28,7 @@ const GoogleRoleSelection = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!role) {
-      alert('Please select a role');
-      return;
-    }
-
-    if (role === 'student' && !className) {
-      alert('Please select a class');
-      return;
-    }
-
-    if (role === 'tutor' && !specialization) {
-      alert('Please enter your specialization');
+    if (!role || (role === 'student' && !className) || (role === 'tutor' && !specialization)) {
       return;
     }
 
@@ -59,12 +48,10 @@ const GoogleRoleSelection = () => {
         localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate(`/${role}`);
       } else {
-        alert(response.data.message);
         navigate('/login');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      alert(error.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }

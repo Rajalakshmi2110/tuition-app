@@ -8,8 +8,7 @@ const FileItem = ({ file, onDelete }) => {
         await API.delete(`/${file._id}`);
         onDelete(file._id);
       } catch (err) {
-        console.error(err);
-        alert('Delete failed');
+        console.error('Delete failed:', err);
       }
     }
   };

@@ -57,7 +57,6 @@ const StudentPayments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.paymentScreenshot && !resubmitPayment) {
-      alert('Please upload payment screenshot');
       return;
     }
 
@@ -85,7 +84,6 @@ const StudentPayments = () => {
         }
       });
 
-      alert(resubmitPayment ? 'Payment resubmitted successfully!' : 'Payment submitted successfully! Awaiting admin verification.');
       setShowPaymentForm(false);
       setResubmitPayment(null);
       setFormData({
@@ -97,7 +95,7 @@ const StudentPayments = () => {
       });
       fetchPayments();
     } catch (error) {
-      alert(error.response?.data?.message || 'Error submitting payment');
+      console.error('Error submitting payment:', error);
     } finally {
       setLoading(false);
     }
@@ -110,10 +108,9 @@ const StudentPayments = () => {
       await axios.delete(`https://tuitionapp-yq06.onrender.com/api/payments/cancel/${paymentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      alert('Payment cancelled successfully');
       fetchPayments();
     } catch (error) {
-      alert(error.response?.data?.message || 'Error cancelling payment');
+      console.error('Error cancelling payment:', error);
     }
   };
 
@@ -174,8 +171,14 @@ const StudentPayments = () => {
                 style={{ maxWidth: '200px', border: '2px solid #3b82f6', borderRadius: '8px' }}
               />
             ) : (
-              <div style={{ width: '200px', height: '200px', backgroundColor: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}>
-                Loading QR Code...
+              <div style={{ width: '200px', height: '200px', backgroundColor: '#f3f4f6', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', borderRadius: '8px' }}>
+                <div style={{ 
+                  width: '30px', height: '30px', border: '3px solid #e5e7eb', 
+                  borderTop: '3px solid #3b82f6', borderRadius: '50%', 
+                  animation: 'spin 1s linear infinite', marginBottom: '0.5rem'
+                }}></div>
+                <span style={{ fontSize: '0.9rem', color: '#666' }}>Loading QR Code...</span>
+                <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
               </div>
             )}
             <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#666' }}>Scan with GPay</p>

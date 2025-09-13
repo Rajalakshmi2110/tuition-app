@@ -69,9 +69,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3rem 5rem;
+  padding: 3rem 1rem;
   position: relative;
   z-index: 1;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .text-content {
