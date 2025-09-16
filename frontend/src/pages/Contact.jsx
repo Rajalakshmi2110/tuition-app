@@ -29,7 +29,21 @@ const Contact = () => {
       <Header />
       
       {/* Hero Section */}
-      <section style={{ padding: '4rem 1rem', backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
+      <section style={{ 
+        padding: '4rem 1rem', 
+        background: 'linear-gradient(-45deg, #1e293b, #20205c, #3b82f6, #10b981)', 
+        backgroundSize: '400% 400%',
+        animation: 'gradientShift 15s ease infinite',
+        color: 'white', 
+        textAlign: 'center' 
+      }}>
+        <style>{`
+          @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+          }
+        `}</style>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>Contact Us</h1>
           <p style={{ fontSize: '1.2rem', opacity: '0.9', lineHeight: '1.6' }}>

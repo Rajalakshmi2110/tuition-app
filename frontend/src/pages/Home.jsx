@@ -26,12 +26,25 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="hero-section">
+    <div style={{ 
+        background: 'linear-gradient(-45deg, #1e293b, #20205c, #3b82f6, #10b981)', 
+        backgroundSize: '400% 400%',
+        animation: 'gradientShift 15s ease infinite',
+        minHeight: '100vh', 
+        position: 'relative' 
+      }}>
+      <style>{`
+        @keyframes gradientShift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
       <Header />
       <main className="hero-content">
         <section className="text-content">
-          <h1>Learn Smarter, Learn Better!</h1>
-          <p>
+          <h1 style={{ color: 'white' }}>Learn Smarter, Learn Better!</h1>
+          <p style={{ color: 'rgba(255,255,255,0.9)' }}>
             Join our real-time tuition platform with the best tutors and
             personalized learning tools.
           </p>

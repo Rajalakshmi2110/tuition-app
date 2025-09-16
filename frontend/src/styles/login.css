@@ -30,10 +30,8 @@
   margin-bottom: 2rem;
   font-size: 1.8rem;
   font-weight: 700;
-  white-space: nowrap;
   text-align: center;
   margin-top: 0;
-  position: relative;
 }
 
 .login-form input, .login-form select {
