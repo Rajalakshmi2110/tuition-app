@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
+import Loader from '../components/Loader';
 
 const StudentFiles = () => {
   const [enrolledSessions, setEnrolledSessions] = useState([]);
@@ -92,15 +93,8 @@ const StudentFiles = () => {
       )}
 
       {loading && (
-        <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
-          <div style={{ 
-            width: '40px', height: '40px', border: '3px solid #f3f4f6', 
-            borderTop: '3px solid #3b82f6', borderRadius: '50%', 
-            animation: 'spin 1s linear infinite', margin: '0 auto 1rem'
-          }}></div>
-          <h4 style={{ fontSize: '1.2rem', color: '#20205c', marginBottom: '0.5rem' }}>Loading Files</h4>
-          <p style={{ color: '#666', margin: 0, fontSize: '0.9rem' }}>Fetching study materials...</p>
-          <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+        <div style={{ backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
+          <Loader message="Loading Files" size="small" />
         </div>
       )}
       
