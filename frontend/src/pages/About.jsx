@@ -43,6 +43,12 @@ const About = () => {
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
           }
+          @media (max-width: 768px) {
+            section { padding: 2rem 1rem !important; }
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 2rem !important; }
+            .grid { grid-template-columns: 1fr !important; }
+          }
         `}</style>
       </section>
 
