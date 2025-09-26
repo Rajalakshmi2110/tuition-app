@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 import Header from '../components/Header';
+import API_BASE_URL from '../config';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/auth/register`, formData);
+      await axios.post(`${API_BASE_URL}/api/auth/register`, formData);
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', classId: '' });
       navigate('/login');
     } catch (err) {
@@ -120,7 +121,7 @@ const Register = () => {
             </div>
             
             <a 
-              href={`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/auth/google`}
+              href={`${API_BASE_URL}/api/auth/google`}
               style={{
                 display: 'inline-block',
                 background: '#4285f4',

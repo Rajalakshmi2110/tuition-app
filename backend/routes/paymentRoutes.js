@@ -13,7 +13,11 @@ const {
   getPaymentStats,
   sendPaymentReminders,
   cancelPayment,
-  resubmitPayment
+  resubmitPayment,
+  getUnpaidStudents,
+  getPaidStudents,
+  sendIndividualReminder,
+  recordCashPayment
 } = require('../controllers/paymentController');
 
 // Configure Cloudinary storage for payment screenshots
@@ -51,5 +55,9 @@ router.get('/pending', protect, adminOnly, getPendingPayments);
 router.patch('/verify/:paymentId', protect, adminOnly, verifyPayment);
 router.get('/stats', protect, adminOnly, getPaymentStats);
 router.post('/send-reminders', protect, adminOnly, sendPaymentReminders);
+router.get('/unpaid-students', protect, adminOnly, getUnpaidStudents);
+router.get('/paid-students', protect, adminOnly, getPaidStudents);
+router.post('/send-individual-reminder', protect, adminOnly, sendIndividualReminder);
+router.post('/cash-payment', protect, adminOnly, recordCashPayment);
 
 module.exports = router;

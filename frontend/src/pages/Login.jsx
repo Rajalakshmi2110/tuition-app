@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/login.css';
 import Header from '../components/Header';
+import API_BASE_URL from '../config';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -16,7 +17,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/users/login`, formData);
+      const res = await axios.post(`${API_BASE_URL}/api/users/login`, formData);
       console.log("login working");
       const { token, user } = res.data;
       localStorage.setItem('token', token);
@@ -66,7 +67,7 @@ const Login = () => {
           </div>
           
           <a 
-            href={`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/auth/google`}
+            href={`${API_BASE_URL}/api/auth/google`}
             style={{
               display: 'inline-block',
               background: '#4285f4',
