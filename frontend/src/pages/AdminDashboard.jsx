@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import axios from "axios";
 import AdminLayout from '../components/AdminLayout';
-import API_BASE_URL from '../config';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("student");
@@ -23,17 +23,17 @@ const AdminDashboard = () => {
   const [selectedUser, setSelectedUser] = useState(null);
 
 
-
+  const BASE_URL = "https://tuitionapp-yq06.onrender.com";
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const [studentsRes, tutorsRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/admin/students`, {
+        axios.get(`${BASE_URL}/api/admin/students`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${API_BASE_URL}/api/admin/tutors`, {
+        axios.get(`${BASE_URL}/api/admin/tutors`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
   const fetchAnnouncements = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/announcements`, {
+      const res = await axios.get(`${BASE_URL}/api/announcements`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnnouncements(res.data);
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     try {
       console.log('Fetching stats from frontend...');
-      const res = await axios.get(`${API_BASE_URL}/api/admin/stats`, {
+      const res = await axios.get(`${BASE_URL}/api/admin/stats`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log('Stats response:', res.data);
@@ -78,7 +78,7 @@ const AdminDashboard = () => {
   const deleteAnnouncement = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`${API_BASE_URL}/api/announcements/${id}`, {
+      await axios.delete(`${BASE_URL}/api/announcements/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchAnnouncements();
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.patch(
-        `${API_BASE_URL}/api/admin/tutors/${id}/approve`,
+        `${BASE_URL}/api/admin/tutors/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -111,7 +111,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.patch(
-        `${API_BASE_URL}/api/admin/tutors/${id}/decline`,
+        `${BASE_URL}/api/admin/tutors/${id}/decline`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -129,25 +129,7 @@ const AdminDashboard = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.patch(
-        `${API_BASE_URL}/api/admin/tutors/${id}/disable`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const reApproveTutor = async (id) => {
-    if (!window.confirm('Re-approve this tutor? They will regain full access to the platform.')) {
-      return;
-    }
-    
-    const token = localStorage.getItem("token");
-    try {
-      await axios.patch(
-        `${API_BASE_URL}/api/admin/tutors/${id}/approve`,
+        `${BASE_URL}/api/admin/tutors/${id}/disable`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -164,7 +146,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      await axios.post(`${API_BASE_URL}/api/announcements`, {
+      await axios.post(`${BASE_URL}/api/announcements`, {
         title: announcementTitle,
         message: announcementMessage,
         type: announcementType
@@ -279,7 +261,7 @@ const AdminDashboard = () => {
                   ) : (
                     <>
                       <td style={{ padding: "12px" }}>{item.specialization || "—"}</td>
-                      <td style={{ padding: "12px" }}>{item.status} {console.log('Status:', item.status, 'Type:', typeof item.status)}</td>
+                      <td style={{ padding: "12px" }}>{item.status}</td>
                     </>
                   )}
                   <td style={{ padding: "12px", display: "flex", gap: "6px" }}>
@@ -290,21 +272,14 @@ const AdminDashboard = () => {
                       View
                     </button>
 
-                    {type === "tutor" && (
+                    {type === "tutor" && item.status?.trim().toLowerCase() === "pending" && (
                       <>
-                        {item.status?.trim().toLowerCase() === "pending" && (
-                          <>
-                            <button style={{ padding: "6px 12px", background: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => approveTutor(item._id)}>Approve</button>
-                            <button style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => declineTutor(item._id)}>Decline</button>
-                          </>
-                        )}
-                        {item.status?.trim().toLowerCase() === "approved" && (
-                          <button style={{ padding: "6px 12px", background: "#f59e0b", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => disableTutor(item._id)}>Disable</button>
-                        )}
-                        {item.status?.trim().toLowerCase() === "disabled" && (
-                          <button style={{ padding: "6px 12px", background: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => reApproveTutor(item._id)}>Re-approve</button>
-                        )}
+                        <button style={{ padding: "6px 12px", background: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => approveTutor(item._id)}>Approve</button>
+                        <button style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => declineTutor(item._id)}>Decline</button>
                       </>
+                    )}
+                    {type === "tutor" && item.status?.trim().toLowerCase() === "approved" && (
+                      <button style={{ padding: "6px 12px", background: "#f59e0b", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => disableTutor(item._id)}>Disable</button>
                     )}
                   </td>
                 </tr>

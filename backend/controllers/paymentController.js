@@ -359,101 +359,6 @@ const sendPaymentReminderEmail = async (email, name, month) => {
   });
 };
 
-// Get unpaid students (Admin)
-const getUnpaidStudents = async (req, res) => {
-  try {
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    
-    const paidStudentIds = await Payment.find({ 
-      month: currentMonth, 
-      status: { $in: ['verified', 'pending'] } 
-    }).distinct('studentId');
-
-    const unpaidStudents = await User.find({
-      role: 'student',
-      _id: { $nin: paidStudentIds }
-    }).select('name email className');
-
-    res.json(unpaidStudents);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-// Get paid students (Admin)
-const getPaidStudents = async (req, res) => {
-  try {
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    
-    const paidStudentIds = await Payment.find({ 
-      month: currentMonth, 
-      status: 'verified' 
-    }).distinct('studentId');
-
-    const paidStudents = await User.find({
-      role: 'student',
-      _id: { $in: paidStudentIds }
-    }).select('name email className');
-
-    res.json(paidStudents);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-// Send individual reminder (Admin)
-const sendIndividualReminder = async (req, res) => {
-  try {
-    const { studentEmail } = req.body;
-    const currentMonth = new Date().toISOString().slice(0, 7);
-    
-    const student = await User.findOne({ email: studentEmail, role: 'student' });
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
-    await sendPaymentReminderEmail(student.email, student.name, currentMonth);
-    res.json({ message: `Reminder sent to ${student.name}` });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
-// Record cash payment (Admin)
-const recordCashPayment = async (req, res) => {
-  try {
-    const { studentEmail, amount, month, notes } = req.body;
-    const adminId = req.user._id;
-    
-    const student = await User.findOne({ email: studentEmail, role: 'student' });
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
-    const existingPayment = await Payment.findOne({ studentId: student._id, month });
-    if (existingPayment) {
-      return res.status(400).json({ message: 'Payment already exists for this month' });
-    }
-
-    const payment = new Payment({
-      studentId: student._id,
-      amount,
-      month,
-      paymentScreenshot: null,
-      transactionId: 'CASH_PAYMENT',
-      notes: notes || 'Cash payment recorded by admin',
-      status: 'verified',
-      verifiedAt: new Date(),
-      verifiedBy: adminId
-    });
-
-    await payment.save();
-    res.json({ message: 'Cash payment recorded successfully', payment });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-};
-
 module.exports = {
   getPaymentQR,
   submitPayment,
@@ -463,9 +368,5 @@ module.exports = {
   getPaymentStats,
   sendPaymentReminders,
   cancelPayment,
-  resubmitPayment,
-  getUnpaidStudents,
-  getPaidStudents,
-  sendIndividualReminder,
-  recordCashPayment
+  resubmitPayment
 };
