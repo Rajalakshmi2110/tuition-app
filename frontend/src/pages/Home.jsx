@@ -309,11 +309,6 @@ const Home = () => {
         .btn-primary:hover {
           background-color: #1e40af;
         }
-        @media (max-width: 768px) {
-          .hero-content { flex-direction: column; padding: 2rem 1rem; }
-          .text-content h1 { font-size: 2rem; }
-          .text-content p { font-size: 1rem; }
-        }
       `}</style>
       
       <Footer />

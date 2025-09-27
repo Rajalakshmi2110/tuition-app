@@ -43,11 +43,6 @@ const Contact = () => {
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
           }
-          @media (max-width: 768px) {
-            section { padding: 2rem 1rem !important; }
-            h1, h2 { font-size: 2rem !important; }
-            .grid { grid-template-columns: 1fr !important; }
-          }
         `}</style>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>Contact Us</h1>

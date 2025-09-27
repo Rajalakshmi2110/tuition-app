@@ -3,31 +3,9 @@ import { Link } from 'react-router-dom';
 
 const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }) => {
   const [isMinimized, setIsMinimized] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f5f5f5", position: "relative" }}>
-      {/* Mobile Menu Button */}
-      <button 
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        style={{
-          display: "none",
-          position: "fixed",
-          top: "1rem",
-          left: "1rem",
-          zIndex: 1001,
-          backgroundColor: "#20205c",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          padding: "0.75rem",
-          cursor: "pointer",
-          fontSize: "1.2rem"
-        }}
-        className="mobile-menu-btn"
-      >
-        ☰
-      </button>
+    <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
       {/* Sidebar */}
       <div style={{
         width: isMinimized ? "80px" : "280px",
@@ -35,7 +13,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
         padding: isMinimized ? "1rem 0.5rem" : "2rem 1rem",
         boxShadow: "2px 0 10px rgba(0,0,0,0.1)",
         transition: "all 0.3s ease"
-      }} className={`admin-sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+      }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2rem" }}>
           {!isMinimized && <h2 style={{ color: "white", fontSize: "1.5rem", margin: 0 }}>Admin Panel</h2>}
           <button 
@@ -200,30 +178,9 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
       </div>
       
       {/* Main Content */}
-      <div style={{ flex: 1, padding: "2rem" }} className="admin-content">
+      <div style={{ flex: 1, padding: "2rem" }}>
         {children}
       </div>
-      
-      <style>{`
-        @media (max-width: 768px) {
-          .mobile-menu-btn { display: block !important; }
-          .admin-sidebar {
-            position: fixed !important;
-            top: 0;
-            left: -280px;
-            height: 100vh;
-            z-index: 1000;
-            transition: left 0.3s ease;
-          }
-          .admin-sidebar.mobile-open {
-            left: 0;
-          }
-          .admin-content {
-            padding: 4rem 1rem 1rem 1rem !important;
-            margin-left: 0 !important;
-          }
-        }
-      `}</style>
     </div>
   );
 };
