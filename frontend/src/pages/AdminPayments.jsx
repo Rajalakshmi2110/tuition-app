@@ -51,11 +51,12 @@ const AdminPayments = () => {
         headers: { Authorization: `Bearer ${token}` }
       });
 
+      alert(`Payment ${status} successfully!`);
       fetchPendingPayments();
       fetchStats();
       setSelectedPayment(null);
     } catch (error) {
-      console.error('Error verifying payment:', error);
+      alert(error.response?.data?.message || 'Error verifying payment');
     } finally {
       setLoading(false);
     }
@@ -64,11 +65,12 @@ const AdminPayments = () => {
   const sendReminders = async () => {
     setLoading(true);
     try {
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/payments/send-reminders', {}, {
+      const response = await axios.post('https://tuitionapp-yq06.onrender.com/api/payments/send-reminders', {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      alert(response.data.message);
     } catch (error) {
-      console.error('Error sending reminders:', error);
+      alert(error.response?.data?.message || 'Error sending reminders');
     } finally {
       setLoading(false);
     }

@@ -1,19 +1,19 @@
 const express = require('express');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
-const cloudinary = require('../config/cloudinary');
+const path = require('path');
 const Gallery = require('../models/Gallery');
 const { protect, adminOnly } = require('../Middleware/authMiddleware');
 
 const router = express.Router();
 
-// Configure Cloudinary storage for gallery images
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'tuition_app_gallery',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+// Configure multer for image uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/gallery/');
   },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname));
+  }
 });
 
 const upload = multer({ 
@@ -51,7 +51,7 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
       title,
       description,
       category,
-      imageUrl: req.file.path // Cloudinary URL
+      imageUrl: `/uploads/gallery/${req.file.filename}`
     });
     
     await gallery.save();

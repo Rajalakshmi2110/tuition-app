@@ -88,11 +88,21 @@ const Header = () => {
       `}</style>
 
       <header className="app-header">
-        <div className="logo">Tuitix</div>
+        <div className="logo">MyTuition</div>
         <nav className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+          <Link
+            to="/"
+            onClick={(e) => {
+              e.preventDefault();
+              setTimeout(() => {
+                document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            }}
+          >
+            Contact
+          </Link>
           {token ? (
             <div className="my-account-link">
               <button 

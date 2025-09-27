@@ -13,8 +13,6 @@ const passport = require('./config/passport');
 console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
 console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
 console.log("EMAIL_USER exists:", !!process.env.EMAIL_USER);
-console.log("GOOGLE_CLIENT_ID exists:", !!process.env.GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET exists:", !!process.env.GOOGLE_CLIENT_SECRET);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();

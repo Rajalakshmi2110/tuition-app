@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import '../styles/login.css';
+// import '../styles/login.css';
 import Header from '../components/Header';
 
 const Login = () => {
@@ -22,11 +22,17 @@ const Login = () => {
       localStorage.setItem('token', token);
       localStorage.setItem('role', user.role);
       localStorage.setItem('userId', user.id);
+      alert('Login successful');
+
       if (user.role === 'admin') navigate('/admin');
       else if (user.role === 'tutor') navigate('/tutor');
       else navigate('/student');
     } catch (error) {
-      console.error('Login failed:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('Login failed');
+      }
     }
   };
 

@@ -10,7 +10,7 @@ const WelcomePortal = () => {
       <Header />
       <div className="welcome-container">
       <main className="welcome-box">
-        <h1>Welcome to Tuitix</h1>
+        <h1>Welcome to MyTuition</h1>
         <p>Please log in or register to continue</p>
         <div className="button-group">
           <Link to="/login" className="btn">Login</Link>

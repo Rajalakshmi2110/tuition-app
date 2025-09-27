@@ -47,8 +47,8 @@ const Home = () => {
       <div className="wave-background"></div>
       
       {/* Features Section */}
-      <section style={{ padding: '4rem 1rem', backgroundColor: '#f8fafc' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ padding: '4rem 2rem', backgroundColor: '#f8fafc' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>Why Choose Tuitix?</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
             <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
@@ -71,8 +71,8 @@ const Home = () => {
       </section>
       
       {/* How It Works Section */}
-      <section style={{ padding: '4rem 1rem', backgroundColor: 'white' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ padding: '4rem 2rem', backgroundColor: 'white' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>How It Works</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
             <div style={{ padding: '1.5rem' }}>
@@ -131,8 +131,8 @@ const Home = () => {
       </section>
       
       {/* Gallery Section */}
-      <section style={{ padding: '4rem 1rem', backgroundColor: '#f1f5f9' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ padding: '4rem 2rem', backgroundColor: '#f1f5f9' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1e293b', marginBottom: '3rem' }}>Our Learning Environment</h2>
           {galleryImages.length === 0 ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
@@ -210,8 +210,8 @@ const Home = () => {
       </section>
       
       {/* CTA Section */}
-      <section style={{ padding: '4rem 1rem', backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <section style={{ padding: '4rem 2rem', backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>Ready to Start Your Learning Journey?</h2>
           <p style={{ fontSize: '1.2rem', marginBottom: '2rem', opacity: '0.9' }}>Join thousands of students and tutors who are already part of our learning community.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>

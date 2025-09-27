@@ -47,9 +47,11 @@ const CreateClass = () => {
       await axios.post('https://tuitionapp-yq06.onrender.com/api/classes/create', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      alert('Class created successfully!');
       setFormData({ name: '', subject: '', schedule: '', tutorId: '', classLevel: '' });
     } catch (err) {
       console.error('Error creating class:', err);
+      alert('Failed to create class');
     }
   };
 
