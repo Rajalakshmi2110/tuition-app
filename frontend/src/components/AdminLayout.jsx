@@ -50,7 +50,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
               fontSize: "1rem"
             }}
           >
-            ☰
+            {isMinimized ? "→" : "←"}
           </button>
         </div>
         

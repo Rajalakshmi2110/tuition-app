@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 import FileList from "../components/FileList";
-import Loader from '../components/Loader';
 
 const TutorFiles = () => {
   const [files, setFiles] = useState([]);
@@ -87,7 +86,20 @@ const TutorFiles = () => {
   const handleDelete = (id) => setFiles(files.filter((f) => f._id !== id));
 
   if (loading) {
-    return <Loader message="Loading Files" />;
+    return (
+      <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center', padding: '4rem' }}>
+        <div style={{ backgroundColor: 'white', padding: '3rem', borderRadius: '16px', boxShadow: '0 6px 20px rgba(0,0,0,0.1)' }}>
+          <div style={{ 
+            width: '50px', height: '50px', border: '4px solid #f3f4f6', 
+            borderTop: '4px solid #3b82f6', borderRadius: '50%', 
+            animation: 'spin 1s linear infinite', margin: '0 auto 1.5rem'
+          }}></div>
+          <h3 style={{ fontSize: '1.5rem', color: '#20205c', marginBottom: '0.5rem' }}>Loading Files</h3>
+          <p style={{ color: '#666', margin: 0 }}>Please wait while we fetch your files and classes...</p>
+        </div>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
   }
 
   return (

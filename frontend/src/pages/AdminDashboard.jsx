@@ -20,7 +20,6 @@ const AdminDashboard = () => {
     completedClasses: 0,
     studyMaterials: 0
   });
-  const [selectedUser, setSelectedUser] = useState(null);
 
 
   const BASE_URL = "https://tuitionapp-yq06.onrender.com";
@@ -112,24 +111,6 @@ const AdminDashboard = () => {
     try {
       await axios.patch(
         `${BASE_URL}/api/admin/tutors/${id}/decline`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const disableTutor = async (id) => {
-    if (!window.confirm('Are you sure you want to disable this tutor? This will revoke their access to the platform permanently.')) {
-      return;
-    }
-    
-    const token = localStorage.getItem("token");
-    try {
-      await axios.patch(
-        `${BASE_URL}/api/admin/tutors/${id}/disable`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -265,21 +246,13 @@ const AdminDashboard = () => {
                     </>
                   )}
                   <td style={{ padding: "12px", display: "flex", gap: "6px" }}>
-                    <button 
-                      onClick={() => setSelectedUser(item)}
-                      style={{ padding: "6px 12px", background: "#007bff", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }}
-                    >
-                      View
-                    </button>
+                    <button style={{ padding: "6px 12px", background: "#007bff", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }}>View</button>
 
                     {type === "tutor" && item.status?.trim().toLowerCase() === "pending" && (
                       <>
                         <button style={{ padding: "6px 12px", background: "#10b981", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => approveTutor(item._id)}>Approve</button>
                         <button style={{ padding: "6px 12px", background: "#ef4444", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => declineTutor(item._id)}>Decline</button>
                       </>
-                    )}
-                    {type === "tutor" && item.status?.trim().toLowerCase() === "approved" && (
-                      <button style={{ padding: "6px 12px", background: "#f59e0b", color: "#fff", borderRadius: "4px", border: "none", cursor: "pointer" }} onClick={() => disableTutor(item._id)}>Disable</button>
                     )}
                   </td>
                 </tr>
@@ -378,66 +351,6 @@ const AdminDashboard = () => {
                 }}>Cancel</button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-      
-      {/* User Details Modal */}
-      {selectedUser && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '2rem',
-            borderRadius: '12px',
-            width: '500px',
-            maxWidth: '90%'
-          }}>
-            <h3 style={{ marginBottom: '1.5rem', color: '#20205c' }}>
-              {activeTab === 'student' ? 'Student' : 'Tutor'} Details
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div><strong>Name:</strong> {selectedUser.name}</div>
-              <div><strong>Email:</strong> {selectedUser.email}</div>
-              {activeTab === 'student' ? (
-                <>
-                  <div><strong>Class:</strong> {selectedUser.className || 'Not specified'}</div>
-                  <div><strong>Subject:</strong> {selectedUser.subject || 'Not specified'}</div>
-                </>
-              ) : (
-                <>
-                  <div><strong>Specialization:</strong> {selectedUser.specialization || 'Not specified'}</div>
-                  <div><strong>Status:</strong> {selectedUser.status}</div>
-                </>
-              )}
-              <div><strong>Joined:</strong> {new Date(selectedUser.createdAt).toLocaleDateString()}</div>
-            </div>
-            <button 
-              onClick={() => setSelectedUser(null)}
-              style={{ 
-                marginTop: '1.5rem',
-                width: '100%',
-                padding: '0.75rem', 
-                backgroundColor: '#6b7280', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '8px', 
-                cursor: 'pointer',
-                fontWeight: '600'
-              }}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

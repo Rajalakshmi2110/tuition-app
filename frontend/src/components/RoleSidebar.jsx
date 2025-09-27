@@ -38,7 +38,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
 
   const sidebarStyle = {
     width: isCollapsed ? '70px' : '250px',
-    backgroundColor: '#20205c',
+    backgroundColor: '#1f2937',
     minHeight: '100vh',
     padding: '1rem 0',
     position: 'fixed',
@@ -87,7 +87,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
             onMouseEnter={(e) => e.target.style.backgroundColor = '#374151'}
             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
           >
-            ☰
+            {isCollapsed ? '→' : '←'}
           </button>
         </div>
       </div>
