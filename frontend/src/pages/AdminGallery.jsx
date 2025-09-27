@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import Loader from '../components/Loader';
+import API_BASE_URL from '../config';
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
@@ -22,7 +23,7 @@ const AdminGallery = () => {
   const fetchImages = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery', {
+      const res = await axios.get(`${API_BASE_URL}/api/gallery`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setImages(res.data);
@@ -35,7 +36,10 @@ const AdminGallery = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!selectedFile) return;
+    if (!selectedFile) {
+      console.error('No file selected');
+      return;
+    }
 
     setUploading(true);
     const token = localStorage.getItem('token');
@@ -46,18 +50,22 @@ const AdminGallery = () => {
     uploadData.append('category', formData.category);
 
     try {
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/gallery', uploadData, {
+      console.log('Uploading to:', `${API_BASE_URL}/api/gallery`);
+      console.log('Form data:', { title: formData.title, category: formData.category, file: selectedFile.name });
+      
+      const response = await axios.post(`${API_BASE_URL}/api/gallery`, uploadData, {
         headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          Authorization: `Bearer ${token}`
         },
       });
+      
+      console.log('Upload successful:', response.data);
       setShowUploadForm(false);
       setFormData({ title: '', description: '', category: 'classroom' });
       setSelectedFile(null);
       fetchImages();
     } catch (err) {
-      console.error('Failed to upload image:', err);
+      console.error('Failed to upload image:', err.response?.data || err.message);
     } finally {
       setUploading(false);
     }
@@ -68,7 +76,7 @@ const AdminGallery = () => {
     
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/gallery/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/gallery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchImages();
@@ -127,7 +135,7 @@ const AdminGallery = () => {
                 boxShadow: '0 6px 20px rgba(0,0,0,0.1)'
               }}>
                 <img 
-                  src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
+                  src={image.imageUrl}
                   alt={image.title}
                   style={{ 
                     width: '100%', 
