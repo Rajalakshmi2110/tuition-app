@@ -81,15 +81,18 @@ const RoleLayout = ({ role }) => {
                 position: 'relative'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#f1f5f9';
-                e.target.style.borderColor = '#cbd5e1';
+                e.currentTarget.style.background = '#f1f5f9';
+                e.currentTarget.style.borderColor = '#cbd5e1';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = '#f8fafc';
-                e.target.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.background = '#f8fafc';
+                e.currentTarget.style.borderColor = '#e2e8f0';
               }}
             >
-              🔔
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
               <span style={{
                 position: 'absolute',
                 top: '6px',
@@ -119,12 +122,21 @@ const RoleLayout = ({ role }) => {
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 700,
-                fontSize: '0.9rem'
+                justifyContent: 'center'
               }}>
-                {role === 'student' ? '○' : '◇'}
+                {role === 'student' ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="8.5" cy="7" r="4"></circle>
+                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                  </svg>
+                )}
               </div>
               <div>
                 <p style={{
@@ -163,15 +175,19 @@ const RoleLayout = ({ role }) => {
                 gap: '0.5rem'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#fef2f2';
-                e.target.style.borderColor = '#fecaca';
+                e.currentTarget.style.background = '#fef2f2';
+                e.currentTarget.style.borderColor = '#fecaca';
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = 'white';
-                e.target.style.borderColor = '#fee2e2';
+                e.currentTarget.style.background = 'white';
+                e.currentTarget.style.borderColor = '#fee2e2';
               }}
             >
-              <span>🚪</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
               Logout
             </button>
           </div>
