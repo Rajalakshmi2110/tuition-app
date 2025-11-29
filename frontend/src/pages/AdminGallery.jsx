@@ -119,7 +119,12 @@ const AdminGallery = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              🖼️ Gallery Management
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Gallery Management
             </h1>
             <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               Manage photos for your tuition center
@@ -136,10 +141,17 @@ const AdminGallery = () => {
               cursor: 'pointer',
               fontWeight: 600,
               fontSize: '0.95rem',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
             }}
           >
-            📸 Upload Image
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            Upload Image
           </button>
         </div>
 
@@ -152,7 +164,21 @@ const AdminGallery = () => {
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
             border: '1px solid #e2e8f0'
           }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📸</div>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem'
+            }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Images Yet
             </h3>
@@ -291,7 +317,13 @@ const AdminGallery = () => {
                 alignItems: 'center',
                 marginBottom: '1.5rem'
               }}>
-                <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>📸 Upload New Image</h3>
+                <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                  Upload New Image
+                </h3>
                 <button
                   onClick={() => setShowUploadForm(false)}
                   style={{
@@ -395,10 +427,23 @@ const AdminGallery = () => {
                       color: 'white',
                       cursor: uploading ? 'not-allowed' : 'pointer',
                       fontWeight: 600,
-                      boxShadow: uploading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)'
+                      boxShadow: uploading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem'
                     }}
                   >
-                    {uploading ? 'Uploading...' : '📸 Upload Image'}
+                    {uploading ? 'Uploading...' : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                          <polyline points="17 8 12 3 7 8"></polyline>
+                          <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Upload Image
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

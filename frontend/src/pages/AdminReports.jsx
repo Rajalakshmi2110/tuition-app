@@ -87,6 +87,11 @@ const AdminReports = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
               Reports & Analytics
             </h2>
             <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -134,12 +139,76 @@ const AdminReports = () => {
   ];
 
   const dashboardCards = dashboardData ? [
-    { value: dashboardData.totalStudents, label: 'Total Students', color: '#3b82f6' },
-    { value: dashboardData.totalTutors, label: 'Total Tutors', color: '#10b981' },
-    { value: formatCurrency(dashboardData.currentRevenue), label: 'This Month', color: '#fbbf24', growth: dashboardData.revenueGrowth },
-    { value: `${dashboardData.avgPerformance}%`, label: 'Avg Performance', color: '#8b5cf6' },
-    { value: `${dashboardData.collectionRate}%`, label: 'Collection Rate', color: '#06b6d4' },
-    { value: dashboardData.studentsAtRisk, label: 'At Risk', color: '#ef4444' }
+    { 
+      value: dashboardData.totalStudents, 
+      label: 'Total Students', 
+      color: '#3b82f6',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      )
+    },
+    { 
+      value: dashboardData.totalTutors, 
+      label: 'Total Tutors', 
+      color: '#10b981',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      )
+    },
+    { 
+      value: formatCurrency(dashboardData.currentRevenue), 
+      label: 'This Month', 
+      color: '#fbbf24', 
+      growth: dashboardData.revenueGrowth,
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      )
+    },
+    { 
+      value: `${dashboardData.avgPerformance}%`, 
+      label: 'Avg Performance', 
+      color: '#8b5cf6',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      )
+    },
+    { 
+      value: `${dashboardData.collectionRate}%`, 
+      label: 'Collection Rate', 
+      color: '#06b6d4',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+      )
+    },
+    { 
+      value: dashboardData.studentsAtRisk, 
+      label: 'At Risk', 
+      color: '#ef4444',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      )
+    }
   ] : [];
 
   return (
@@ -156,6 +225,11 @@ const AdminReports = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
             Reports & Analytics
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -251,12 +325,7 @@ const AdminReports = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    <div style={{
-                      width: '20px',
-                      height: '20px',
-                      borderRadius: '4px',
-                      background: card.color
-                    }} />
+                    {card.icon}
                   </div>
                 </div>
               </div>
@@ -503,7 +572,40 @@ const AdminReports = () => {
                 gap: '1.5rem'
               }}>
                 {paymentDistribution.map((payment, index) => {
-                  const icons = { verified: '✓', pending: '○', rejected: '✕' };
+                  const getStatusIcon = (status) => {
+                    switch(status) {
+                      case 'verified':
+                        return (
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                          </svg>
+                        );
+                      case 'pending':
+                        return (
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                          </svg>
+                        );
+                      case 'rejected':
+                        return (
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                          </svg>
+                        );
+                      default:
+                        return (
+                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                          </svg>
+                        );
+                    }
+                  };
                   return (
                     <div
                       key={index}
@@ -516,8 +618,8 @@ const AdminReports = () => {
                         transition: 'all 0.3s ease'
                       }}
                     >
-                      <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-                        {icons[payment.status] || '◈'}
+                      <div style={{ marginBottom: '0.5rem', display: 'flex', justifyContent: 'center' }}>
+                        {getStatusIcon(payment.status)}
                       </div>
                       <h4 style={{
                         fontSize: '1.75rem',

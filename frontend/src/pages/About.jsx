@@ -19,18 +19,108 @@ const About = () => {
   }, []);
 
   const features = [
-    { title: 'Smart Technology', desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', color: '#10b981' },
-    { title: 'Verified Tutors', desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', color: '#fbbf24' },
-    { title: 'Real-time Platform', desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', color: '#3b82f6' },
-    { title: 'Personalized Learning', desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', color: '#8b5cf6' },
-    { title: 'Trust & Safety', desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', color: '#ef4444' },
-    { title: 'Progress Tracking', desc: 'Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.', color: '#06b6d4' }
+    { 
+      title: 'Smart Technology', 
+      desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', 
+      color: '#10b981',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+          <path d="M2 17l10 5 10-5"></path>
+          <path d="M2 12l10 5 10-5"></path>
+        </svg>
+      )
+    },
+    { 
+      title: 'Verified Tutors', 
+      desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', 
+      color: '#fbbf24',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      )
+    },
+    { 
+      title: 'Real-time Platform', 
+      desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', 
+      color: '#3b82f6',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+      )
+    },
+    { 
+      title: 'Personalized Learning', 
+      desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', 
+      color: '#8b5cf6',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+      )
+    },
+    { 
+      title: 'Trust & Safety', 
+      desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', 
+      color: '#ef4444',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          <path d="M9 12l2 2 4-4"></path>
+        </svg>
+      )
+    },
+    { 
+      title: 'Progress Tracking', 
+      desc: 'Comprehensive analytics and reporting to monitor learning progress and identify areas for improvement.', 
+      color: '#06b6d4',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      )
+    }
   ];
 
   const values = [
-    { title: 'Quality Education', desc: 'Committed to providing the highest standard of educational support through verified, experienced tutors.' },
-    { title: 'Accessibility', desc: 'Making quality education accessible to students from all backgrounds and locations.' },
-    { title: 'Innovation', desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.' }
+    { 
+      title: 'Quality Education', 
+      desc: 'Committed to providing the highest standard of educational support through verified, experienced tutors.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+        </svg>
+      )
+    },
+    { 
+      title: 'Accessibility', 
+      desc: 'Making quality education accessible to students from all backgrounds and locations.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      )
+    },
+    { 
+      title: 'Innovation', 
+      desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="9" y1="18" x2="15" y2="18"></line>
+          <line x1="10" y1="22" x2="14" y2="22"></line>
+          <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+        </svg>
+      )
+    }
   ];
 
   return (
@@ -178,12 +268,7 @@ const About = () => {
                   margin: '0 auto 1rem',
                   boxShadow: '0 8px 20px rgba(16, 185, 129, 0.3)'
                 }}>
-                  <div style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '6px',
-                    background: 'rgba(255,255,255,0.3)'
-                  }} />
+                  {value.icon}
                 </div>
                 <h3 style={{
                   fontSize: '1.3rem',
@@ -264,12 +349,7 @@ const About = () => {
                   justifyContent: 'center',
                   marginBottom: '1rem'
                 }}>
-                  <div style={{
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '4px',
-                    background: feature.color
-                  }} />
+                  {feature.icon}
                 </div>
                 <h3 style={{
                   fontSize: '1.25rem',

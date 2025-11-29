@@ -79,11 +79,64 @@ const AdminPayments = () => {
   };
 
   const statCards = [
-    { value: stats.totalStudents || 0, label: 'Total Students', color: '#3b82f6' },
-    { value: stats.paidStudents || 0, label: 'Paid Students', color: '#10b981' },
-    { value: stats.pendingStudents || 0, label: 'Pending Verification', color: '#fbbf24' },
-    { value: stats.unpaidStudents || 0, label: 'Unpaid Students', color: '#ef4444' },
-    { value: `₹${stats.totalRevenue || 0}`, label: 'Total Revenue', color: '#10b981' }
+    { 
+      value: stats.totalStudents || 0, 
+      label: 'Total Students', 
+      color: '#3b82f6',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      )
+    },
+    { 
+      value: stats.paidStudents || 0, 
+      label: 'Paid Students', 
+      color: '#10b981',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      )
+    },
+    { 
+      value: stats.pendingStudents || 0, 
+      label: 'Pending Verification', 
+      color: '#fbbf24',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      )
+    },
+    { 
+      value: stats.unpaidStudents || 0, 
+      label: 'Unpaid Students', 
+      color: '#ef4444',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="15" y1="9" x2="9" y2="15"></line>
+          <line x1="9" y1="9" x2="15" y2="15"></line>
+        </svg>
+      )
+    },
+    { 
+      value: `₹${stats.totalRevenue || 0}`, 
+      label: 'Total Revenue', 
+      color: '#10b981',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"></line>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      )
+    }
   ];
 
   return (
@@ -100,6 +153,10 @@ const AdminPayments = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
             Payment Management
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -152,8 +209,7 @@ const AdminPayments = () => {
                   borderRadius: '10px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.25rem'
+                  justifyContent: 'center'
                 }}>
                   {stat.icon}
                 </div>
@@ -205,7 +261,21 @@ const AdminPayments = () => {
 
           {pendingPayments.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>✓</div>
+              <div style={{
+                width: '80px',
+                height: '80px',
+                background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1rem'
+              }}>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
               <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
                 All Caught Up!
               </h3>
@@ -277,10 +347,18 @@ const AdminPayments = () => {
                         textDecoration: 'none',
                         borderRadius: '8px',
                         fontSize: '0.85rem',
-                        fontWeight: 500
+                        fontWeight: 500,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem'
                       }}
                     >
-                      📷 View Screenshot
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                      </svg>
+                      View Screenshot
                     </a>
 
                     <button
