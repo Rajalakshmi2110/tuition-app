@@ -119,6 +119,9 @@ const TutorFiles = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
             File Management
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -143,6 +146,11 @@ const TutorFiles = () => {
             gap: '0.5rem'
           }}
         >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
           Upload New File
         </button>
       </div>
@@ -157,7 +165,20 @@ const TutorFiles = () => {
       }}>
         {files.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem'
+            }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Files Uploaded
             </h3>
@@ -174,8 +195,11 @@ const TutorFiles = () => {
               borderRadius: '10px',
               border: '1px solid #bbf7d0'
             }}>
-              <h3 style={{ margin: '0 0 0.25rem 0', color: '#166534', fontSize: '1rem' }}>
-                📂 My Uploaded Files ({files.length})
+              <h3 style={{ margin: '0 0 0.25rem 0', color: '#166534', fontSize: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#166534" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+                My Uploaded Files ({files.length})
               </h3>
               <p style={{ margin: 0, color: '#16a34a', fontSize: '0.85rem' }}>
                 Manage your study materials and resources
@@ -218,7 +242,12 @@ const TutorFiles = () => {
               alignItems: 'center',
               marginBottom: '1.5rem'
             }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>
+              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
                 Upload Study Material
               </h3>
               <button
@@ -323,9 +352,18 @@ const TutorFiles = () => {
                     background: 'white',
                     color: '#64748b',
                     cursor: 'pointer',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem',
+                    transition: 'all 0.2s ease'
                   }}
                 >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
                   Cancel
                 </button>
                 <button
@@ -340,9 +378,18 @@ const TutorFiles = () => {
                     color: 'white',
                     cursor: uploading ? 'not-allowed' : 'pointer',
                     fontWeight: 600,
-                    boxShadow: uploading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)'
+                    boxShadow: uploading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
                   }}
                 >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
                   {uploading ? 'Uploading...' : 'Upload File'}
                 </button>
               </div>
