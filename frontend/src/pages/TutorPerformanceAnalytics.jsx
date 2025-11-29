@@ -52,8 +52,28 @@ const TutorPerformanceAnalytics = () => {
   };
 
   const getTrendIcon = (trend) => {
-    const icons = { improving: '↗', stable: '→', declining: '↘' };
-    return icons[trend] || '○';
+    if (trend === 'improving') {
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      );
+    } else if (trend === 'declining') {
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="7" y1="7" x2="17" y2="17"></line>
+          <polyline points="17 7 17 17 7 17"></polyline>
+        </svg>
+      );
+    } else {
+      return (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      );
+    }
   };
 
   if (loading && !classDetails) {
@@ -80,14 +100,43 @@ const TutorPerformanceAnalytics = () => {
   }
 
   const overviewCards = [
-    { value: classAnalytics.length, label: 'Total Classes', color: '#3b82f6' },
-    { value: classAnalytics.reduce((sum, cls) => sum + cls.totalStudents, 0), label: 'Total Students', color: '#10b981' },
+    { 
+      value: classAnalytics.length, 
+      label: 'Total Classes', 
+      color: '#3b82f6',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+      )
+    },
+    { 
+      value: classAnalytics.reduce((sum, cls) => sum + cls.totalStudents, 0), 
+      label: 'Total Students', 
+      color: '#10b981',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      )
+    },
     {
       value: classAnalytics.length > 0
         ? `${Math.round((classAnalytics.reduce((sum, cls) => sum + cls.classAverage, 0) / classAnalytics.length) * 100) / 100}%`
         : '0%',
       label: 'Overall Average',
-      color: '#fbbf24'
+      color: '#fbbf24',
+      icon: (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      )
     }
   ];
 
@@ -104,6 +153,11 @@ const TutorPerformanceAnalytics = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
           Class Performance Analytics
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -154,12 +208,11 @@ const TutorPerformanceAnalytics = () => {
                   <div style={{
                     width: '50px',
                     height: '50px',
-                    background: `${card.color}15`,
+                    background: `${card.color}20`,
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1.5rem'
+                    justifyContent: 'center'
                   }}>
                     {card.icon}
                   </div>
@@ -199,7 +252,23 @@ const TutorPerformanceAnalytics = () => {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{classData.className}</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                      </svg>
+                    </div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{classData.className}</h3>
+                  </div>
                   <span style={{
                     fontSize: '0.8rem',
                     color: '#64748b',
@@ -213,11 +282,26 @@ const TutorPerformanceAnalytics = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
                   <div style={{ textAlign: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#3b82f6' }}>{classData.totalStudents}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                      </svg>
+                      <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#3b82f6' }}>{classData.totalStudents}</span>
+                    </div>
                     <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Students</div>
                   </div>
                   <div style={{ textAlign: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
-                    <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>{classData.classAverage}%</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                      </svg>
+                      <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>{classData.classAverage}%</span>
+                    </div>
                     <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Average</div>
                   </div>
                 </div>
@@ -249,8 +333,13 @@ const TutorPerformanceAnalytics = () => {
                     border: '1px solid #fecaca',
                     marginBottom: '1rem'
                   }}>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#dc2626', marginBottom: '0.25rem' }}>
-                      ⚠️ Needs Attention:
+                    <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#dc2626', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                      </svg>
+                      Needs Attention:
                     </div>
                     {classData.subjectsNeedingAttention.slice(0, 2).map((subj, idx) => (
                       <div key={idx} style={{ fontSize: '0.75rem', color: '#991b1b' }}>
@@ -260,8 +349,21 @@ const TutorPerformanceAnalytics = () => {
                   </div>
                 )}
 
-                <div style={{ textAlign: 'center', color: '#10b981', fontSize: '0.85rem', fontWeight: 600 }}>
-                  Click for detailed analysis →
+                <div style={{ 
+                  textAlign: 'center', 
+                  color: '#10b981', 
+                  fontSize: '0.85rem', 
+                  fontWeight: 600,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.375rem'
+                }}>
+                  Click for detailed analysis
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </div>
               </div>
             ))}
@@ -273,17 +375,33 @@ const TutorPerformanceAnalytics = () => {
           <button
             onClick={() => { setSelectedClass(null); setClassDetails(null); }}
             style={{
-              padding: '0.5rem 1rem',
-              backgroundColor: '#f1f5f9',
+              padding: '0.625rem 1.25rem',
+              backgroundColor: 'transparent',
               color: '#64748b',
-              border: 'none',
-              borderRadius: '8px',
+              border: '2px solid #e2e8f0',
+              borderRadius: '10px',
               cursor: 'pointer',
               marginBottom: '2rem',
-              fontWeight: 600
+              fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#10b981';
+              e.currentTarget.style.color = '#10b981';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.color = '#64748b';
             }}
           >
-            ← Back to All Classes
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to All Classes
           </button>
 
           {classDetails && (
@@ -364,8 +482,10 @@ const TutorPerformanceAnalytics = () => {
                           <td style={{ padding: '1rem', textAlign: 'center', color: '#475569' }}>{student.totalExams}</td>
                           <td style={{ padding: '1rem', textAlign: 'center', color: '#475569' }}>{student.totalAssignments}</td>
                           <td style={{ padding: '1rem', textAlign: 'center' }}>
-                            <span style={{ fontSize: '1.2rem' }}>{getTrendIcon(student.trend)}</span>
-                            <div style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'capitalize' }}>{student.trend}</div>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
+                              {getTrendIcon(student.trend)}
+                              <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'capitalize' }}>{student.trend}</span>
+                            </div>
                           </td>
                           <td style={{ padding: '1rem', textAlign: 'center' }}>
                             <span style={{
