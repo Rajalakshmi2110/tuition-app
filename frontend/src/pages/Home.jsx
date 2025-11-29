@@ -68,9 +68,51 @@ const Home = () => {
   ];
 
   const steps = [
-    { number: '01', title: 'Register & Get Verified', description: 'Sign up as a student or tutor and get verified by our admin team.', color: '#10b981' },
-    { number: '02', title: 'Join or Create Classes', description: 'Browse available classes to enroll or create your own to teach.', color: '#fbbf24' },
-    { number: '03', title: 'Learn & Track Progress', description: 'Access materials, attend classes, and monitor your progress.', color: '#3b82f6' }
+    { number: '01', title: 'Enquire & Register', description: 'Reach out to us, discuss your learning needs, and get registered for your preferred program.', color: '#10b981' },
+    { number: '02', title: 'Choose Your Mode', description: 'Pick what suits you best - institution classes, online sessions, or home tuition.', color: '#fbbf24' },
+    { number: '03', title: 'Start Learning', description: 'Begin your personalized learning journey with expert tutors and track your progress.', color: '#3b82f6' }
+  ];
+
+  const services = [
+    {
+      title: 'Institution Classes',
+      description: 'Join our well-equipped classrooms with small batch sizes for personalized attention. Experience interactive learning with peers in a focused academic environment.',
+      gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+      ),
+      highlights: ['Small batch sizes', 'Modern facilities', 'Peer learning']
+    },
+    {
+      title: 'Online Classes',
+      description: 'One-on-one live sessions via Zoom, Google Meet, or any platform of your choice. Get personalized attention from expert tutors without leaving your home.',
+      gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+          <path d="M10 9l4 2-4 2V9z"></path>
+        </svg>
+      ),
+      highlights: ['1-on-1 live sessions', 'Any platform', 'Learn from home']
+    },
+    {
+      title: 'Home Tuition',
+      description: 'Get personalized one-on-one attention with our home tuition services. Our verified tutors come to your home, providing customized learning tailored to your pace.',
+      gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+      icon: (
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      ),
+      highlights: ['1-on-1 attention', 'Home convenience', 'Custom pace']
+    }
   ];
 
 
@@ -177,8 +219,8 @@ const Home = () => {
                 marginBottom: '2rem',
                 maxWidth: '500px'
               }}>
-                Join our real-time tuition platform connecting students with expert tutors. 
-                Personalized learning, progress tracking, and gamified achievements.
+                Premium tuition services offering institution classes, online sessions, and home tuition. 
+                Personalized learning with expert tutors, progress tracking, and gamified achievements.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -208,7 +250,7 @@ const Home = () => {
                     e.target.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.4)';
                   }}
                 >
-                  Get Started Free
+                  Join Kalvi
                   <span>→</span>
                 </button>
 
@@ -366,6 +408,196 @@ const Home = () => {
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section style={{ 
+        padding: '5rem 2rem', 
+        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        {/* Background decorative elements */}
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          right: '5%',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%',
+          pointerEvents: 'none'
+        }} />
+        <div style={{
+          position: 'absolute',
+          bottom: '10%',
+          left: '5%',
+          width: '250px',
+          height: '250px',
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%',
+          pointerEvents: 'none'
+        }} />
+
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'rgba(16, 185, 129, 0.2)',
+              color: '#10b981',
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              marginBottom: '1rem',
+              border: '1px solid rgba(16, 185, 129, 0.3)'
+            }}>
+              Our Services
+            </span>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: 800,
+              color: 'white',
+              marginBottom: '1rem',
+              letterSpacing: '-0.02em'
+            }}>
+              Choose Your Learning Mode
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+              We offer flexible learning options to suit your preferences. Pick the mode that works best for you.
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: '2rem'
+          }}>
+            {services.map((service, index) => (
+              <div
+                key={index}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(10px)',
+                  borderRadius: '24px',
+                  padding: '2rem',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  transition: 'all 0.4s ease',
+                  cursor: 'default',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                }}
+              >
+                <div style={{
+                  width: '70px',
+                  height: '70px',
+                  background: service.gradient,
+                  borderRadius: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.5rem',
+                  boxShadow: `0 10px 30px ${service.gradient.includes('10b981') ? 'rgba(16, 185, 129, 0.3)' : service.gradient.includes('3b82f6') ? 'rgba(59, 130, 246, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`
+                }}>
+                  {service.icon}
+                </div>
+                <h3 style={{
+                  fontSize: '1.4rem',
+                  fontWeight: 700,
+                  color: 'white',
+                  marginBottom: '1rem'
+                }}>
+                  {service.title}
+                </h3>
+                <p style={{
+                  color: '#94a3b8',
+                  lineHeight: 1.7,
+                  marginBottom: '1.5rem',
+                  fontSize: '0.95rem'
+                }}>
+                  {service.description}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {service.highlights.map((highlight, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.3rem',
+                        background: 'rgba(255, 255, 255, 0.1)',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '9999px',
+                        fontSize: '0.8rem',
+                        color: '#e2e8f0',
+                        fontWeight: 500
+                      }}
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Enquiry CTA */}
+          <div style={{
+            marginTop: '3rem',
+            textAlign: 'center',
+            padding: '2rem',
+            background: 'rgba(16, 185, 129, 0.1)',
+            borderRadius: '16px',
+            border: '1px solid rgba(16, 185, 129, 0.2)'
+          }}>
+            <p style={{ color: '#94a3b8', marginBottom: '1rem', fontSize: '1rem' }}>
+              Not sure which mode is right for you? We're here to help!
+            </p>
+            <button
+              onClick={() => navigate('/about')}
+              style={{
+                padding: '0.8rem 1.5rem',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                background: 'transparent',
+                color: '#10b981',
+                border: '2px solid #10b981',
+                borderRadius: '10px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#10b981';
+                e.target.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent';
+                e.target.style.color = '#10b981';
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Contact Us for Enquiries
+            </button>
           </div>
         </div>
       </section>
