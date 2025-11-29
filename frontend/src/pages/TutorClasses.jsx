@@ -69,6 +69,10 @@ const TutorClasses = () => {
           alignItems: 'center',
           gap: '0.5rem'
         }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
           My Sessions
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -85,7 +89,21 @@ const TutorClasses = () => {
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           border: '1px solid #e2e8f0'
         }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
+          <div style={{
+            width: '80px',
+            height: '80px',
+            background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+            borderRadius: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1rem'
+          }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
             No Sessions Assigned
           </h3>
@@ -136,10 +154,12 @@ const TutorClasses = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
                   flexShrink: 0
                 }}>
-                  📖
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                  </svg>
                 </div>
                 <div style={{ flex: 1 }}>
                   <h3 style={{
@@ -193,9 +213,18 @@ const TutorClasses = () => {
                   margin: '0 0 0.5rem 0',
                   fontWeight: 600,
                   color: '#374151',
-                  fontSize: '0.9rem'
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
                 }}>
-                  👨‍🎓 Enrolled Students ({cls.students?.length || 0})
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                  Enrolled Students ({cls.students?.length || 0})
                 </p>
                 {cls.students && cls.students.length > 0 ? (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -239,10 +268,18 @@ const TutorClasses = () => {
                   fontWeight: 600,
                   fontSize: '0.95rem',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+                  boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
                 }}
               >
-                View Session Details →
+                View Session Details
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </button>
             </div>
           ))}

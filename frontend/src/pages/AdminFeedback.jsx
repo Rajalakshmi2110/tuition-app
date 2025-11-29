@@ -93,6 +93,9 @@ const AdminFeedback = () => {
             alignItems: 'center',
             gap: '0.5rem'
           }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
             Manage Feedback
           </h1>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
@@ -109,7 +112,20 @@ const AdminFeedback = () => {
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
             border: '1px solid #e2e8f0'
           }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>○</div>
+            <div style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+              borderRadius: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem'
+            }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Feedback Yet
             </h3>
@@ -179,8 +195,22 @@ const AdminFeedback = () => {
                     padding: '0.5rem 1rem',
                     borderRadius: '20px',
                     fontSize: '0.85rem',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.35rem'
                   }}>
+                    {item.approved ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                      </svg>
+                    ) : (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                    )}
                     {item.approved ? 'Approved' : 'Pending'}
                   </span>
                 </div>
@@ -207,34 +237,67 @@ const AdminFeedback = () => {
                     <button
                       onClick={() => approveFeedback(item._id)}
                       style={{
-                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                        color: 'white',
-                        padding: '0.75rem 1.5rem',
-                        border: 'none',
+                        background: 'transparent',
+                        color: '#10b981',
+                        padding: '0.6rem 1.25rem',
+                        border: '2px solid #10b981',
                         borderRadius: '10px',
                         cursor: 'pointer',
                         fontWeight: 600,
-                        fontSize: '0.9rem',
-                        boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+                        fontSize: '0.85rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#10b981';
+                        e.currentTarget.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = '#10b981';
                       }}
                     >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
                       Approve
                     </button>
                   )}
                   <button
                     onClick={() => deleteFeedback(item._id)}
                     style={{
-                      background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                      color: 'white',
-                      padding: '0.75rem 1.5rem',
-                      border: 'none',
+                      background: 'transparent',
+                      color: '#94a3b8',
+                      padding: '0.6rem 1.25rem',
+                      border: '2px solid #e2e8f0',
                       borderRadius: '10px',
                       cursor: 'pointer',
                       fontWeight: 600,
-                      fontSize: '0.9rem',
-                      boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+                      fontSize: '0.85rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = '#fef2f2';
+                      e.currentTarget.style.borderColor = '#fecaca';
+                      e.currentTarget.style.color = '#dc2626';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'transparent';
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.color = '#94a3b8';
                     }}
                   >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
                     Delete
                   </button>
                 </div>

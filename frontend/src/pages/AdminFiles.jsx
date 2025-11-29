@@ -6,8 +6,10 @@ const AdminFiles = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedClass, setSelectedClass] = useState('all');
 
   const token = localStorage.getItem("token");
+  const classLevels = ['4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -157,15 +159,16 @@ const AdminFiles = () => {
       <div style={{
         width: '80px',
         height: '80px',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-        borderRadius: '50%',
+        background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
+        borderRadius: '20px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: '1.5rem',
-        fontSize: '2rem'
+        marginBottom: '1.5rem'
       }}>
-        ▣
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+        </svg>
       </div>
       <h3 style={{
         color: '#0f172a',
@@ -195,11 +198,11 @@ const AdminFiles = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '2rem'
+          marginBottom: '1.5rem'
         }}>
           <div>
             <h2 style={{
-              fontSize: '1.75rem',
+              fontSize: '1.5rem',
               fontWeight: 700,
               color: '#0f172a',
               margin: 0,
@@ -207,6 +210,9 @@ const AdminFiles = () => {
               alignItems: 'center',
               gap: '0.5rem'
             }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+              </svg>
               All Uploaded Files
             </h2>
             <p style={{
@@ -231,6 +237,106 @@ const AdminFiles = () => {
           )}
         </div>
 
+        {/* Class Filter Dropdown */}
+        {!loading && !error && files.length > 0 && (
+          <div style={{
+            display: 'flex',
+            gap: '1rem',
+            marginBottom: '1.5rem',
+            alignItems: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              background: 'white',
+              padding: '0.5rem 0.75rem 0.5rem 1rem',
+              borderRadius: '12px',
+              border: '2px solid #e2e8f0',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#64748b' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Filter by Class</span>
+              </div>
+              <select
+                value={selectedClass}
+                onChange={(e) => setSelectedClass(e.target.value)}
+                style={{
+                  padding: '0.6rem 2.5rem 0.6rem 1rem',
+                  background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                  border: '2px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  fontSize: '0.9rem',
+                  color: '#0f172a',
+                  cursor: 'pointer',
+                  outline: 'none',
+                  appearance: 'none',
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 0.75rem center',
+                  minWidth: '160px',
+                  transition: 'all 0.2s ease'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#10b981';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e2e8f0';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                <option value="all">All Classes ({files.length})</option>
+                {classLevels.map(level => {
+                  const count = files.filter(f => f.classId?.classLevel === level).length;
+                  if (count === 0) return null;
+                  return (
+                    <option key={level} value={level}>
+                      Class {level} ({count})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            {selectedClass !== 'all' && (
+              <button
+                onClick={() => setSelectedClass('all')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.5rem 1rem',
+                  background: '#fef2f2',
+                  color: '#dc2626',
+                  border: '2px solid #fecaca',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.85rem',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#fee2e2';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#fef2f2';
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                Clear Filter
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Content */}
         {loading ? (
           <LoadingState />
@@ -238,7 +344,27 @@ const AdminFiles = () => {
           <ErrorState />
         ) : files.length === 0 ? (
           <EmptyState />
-        ) : (
+        ) : (() => {
+          const filteredFiles = selectedClass === 'all' 
+            ? files 
+            : files.filter(f => f.classId?.classLevel === selectedClass);
+          
+          if (filteredFiles.length === 0) {
+            return (
+              <div style={{
+                backgroundColor: 'white',
+                padding: '3rem 2rem',
+                borderRadius: '16px',
+                textAlign: 'center',
+                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+                border: '1px solid #e2e8f0'
+              }}>
+                <p style={{ color: '#64748b', margin: 0 }}>No files found for Class {selectedClass}</p>
+              </div>
+            );
+          }
+          
+          return (
           <div style={{
             background: 'white',
             borderRadius: '16px',
@@ -302,7 +428,7 @@ const AdminFiles = () => {
                 </tr>
               </thead>
               <tbody>
-                {files.map((file, index) => (
+                {filteredFiles.map((file, index) => (
                   <tr
                     key={file._id}
                     style={{
@@ -333,10 +459,12 @@ const AdminFiles = () => {
                           borderRadius: '6px',
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '0.9rem'
+                          justifyContent: 'center'
                         }}>
-                          ▣
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                          </svg>
                         </span>
                         {file.title}
                       </a>
@@ -355,25 +483,33 @@ const AdminFiles = () => {
                         onClick={() => handleDelete(file._id)}
                         style={{
                           padding: '0.5rem 1rem',
-                          background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
-                          color: 'white',
-                          border: 'none',
+                          background: 'transparent',
+                          color: '#94a3b8',
+                          border: '2px solid #e2e8f0',
                           borderRadius: '8px',
                           cursor: 'pointer',
-                          fontWeight: 500,
+                          fontWeight: 600,
                           fontSize: '0.85rem',
                           transition: 'all 0.2s ease',
-                          boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.35rem'
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.4)';
+                          e.currentTarget.style.background = '#fef2f2';
+                          e.currentTarget.style.borderColor = '#fecaca';
+                          e.currentTarget.style.color = '#dc2626';
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 2px 8px rgba(239, 68, 68, 0.3)';
+                          e.currentTarget.style.background = 'transparent';
+                          e.currentTarget.style.borderColor = '#e2e8f0';
+                          e.currentTarget.style.color = '#94a3b8';
                         }}
                       >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
                         Delete
                       </button>
                     </td>
@@ -382,7 +518,8 @@ const AdminFiles = () => {
               </tbody>
             </table>
           </div>
-        )}
+          );
+        })()}
       </div>
     </AdminLayout>
   );
