@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import kalviyagamLogo from '../assets/kalviyagam.png';
+import kalviyagamLogo from '../assets/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

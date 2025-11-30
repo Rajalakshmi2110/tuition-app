@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import kalviyagamLogo from '../assets/kalviyagam.png';
+import kalviyagamLogo from '../assets/logo.png';
 
 const WelcomePortal = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import kalviyagamLogo from '../assets/kalviyagam.png';
+import kalviyagamLogo from '../assets/logo.png';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
