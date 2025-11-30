@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import API_CONFIG from '../config/apiConfig';
 
 const About = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -9,7 +10,7 @@ const About = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/feedback/approved');
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/feedback/approved`);
         setTestimonials(res.data);
       } catch (err) {
         console.error('Error fetching testimonials:', err);
@@ -452,7 +453,7 @@ const About = () => {
                       fontStyle: 'italic',
                       color: '#e2e8f0'
                     }}>
-                      "{testimonial.message}"
+                      "{testimonial.message?.replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')}"
                     </p>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                       <div style={{

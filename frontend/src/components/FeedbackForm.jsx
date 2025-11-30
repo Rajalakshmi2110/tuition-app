@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useToast } from './Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const FeedbackForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ const FeedbackForm = ({ onClose }) => {
     setSubmitting(true);
 
     try {
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/feedback', formData);
+      await axios.post(`${API_CONFIG.BASE_URL}/api/feedback`, formData);
       toast.success('Thank you for your feedback! It will be reviewed soon.');
       onClose();
     } catch (err) {

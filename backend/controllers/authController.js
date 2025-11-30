@@ -86,12 +86,16 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid email or password' });
 
+    // If user has no password (Google OAuth user), set a default password
     if (!user.password) {
-      return res.status(400).json({ message: 'Account created via Google OAuth. Please use Google Sign-In.' });
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+      await user.save();
+    } else {
+      // Check existing password
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
     if (user.role === 'tutor') {
       if (user.status === 'pending') return res.status(403).json({ message: 'Your account is pending approval.' });

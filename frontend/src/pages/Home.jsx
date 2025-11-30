@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeedbackForm from '../components/FeedbackForm';
 import bookImage from '../assets/book.png';
+import API_CONFIG from '../config/apiConfig';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Home = () => {
     setIsVisible(true);
     const fetchGalleryImages = async () => {
       try {
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery');
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/gallery`);
         setGalleryImages(res.data.slice(0, 3));
       } catch (err) {
         console.error('Error fetching gallery:', err);
@@ -741,7 +742,7 @@ const Home = () => {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                   <img
-                    src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
+                    src={`${API_CONFIG.BASE_URL}${image.imageUrl}`}
                     alt={image.title}
                     style={{
                       width: '100%',

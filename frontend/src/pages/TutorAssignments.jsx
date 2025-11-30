@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const TutorAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -25,7 +26,7 @@ const TutorAssignments = () => {
   const fetchAssignments = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/assignments/tutor', {
+      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/assignments/tutor`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAssignments(response.data);
@@ -39,7 +40,7 @@ const TutorAssignments = () => {
   const fetchSubmissions = async (assignmentId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/assignments/${assignmentId}/submissions`, {
+      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/assignments/${assignmentId}/submissions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSubmissions(response.data.submissions);
@@ -52,7 +53,10 @@ const TutorAssignments = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/assignments', formData, {
+      console.log('Token exists:', !!token);
+      console.log('Form data:', formData);
+      
+      await axios.post(`${API_CONFIG.BASE_URL}/api/assignments`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -64,15 +68,15 @@ const TutorAssignments = () => {
       setShowForm(false);
       fetchAssignments();
     } catch (error) {
-      toast.error('Error creating assignment');
-      console.error(error);
+      console.error('Assignment creation error:', error.response?.data || error.message);
+      toast.error(error.response?.data?.message || 'Error creating assignment');
     }
   };
 
   const handleGrade = async (submissionId, pointsEarned, feedback) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`https://tuitionapp-yq06.onrender.com/api/assignments/submissions/${submissionId}/grade`,
+      await axios.put(`${API_CONFIG.BASE_URL}/api/assignments/submissions/${submissionId}/grade`,
         { pointsEarned, feedback },
         { headers: { Authorization: `Bearer ${token}` } }
       );

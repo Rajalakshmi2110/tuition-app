@@ -21,6 +21,16 @@ router.get('/test', (req, res) => {
   res.json({ message: 'File routes working' });
 });
 
+// Test route for admin files (no auth)
+router.get('/admin-test', async (req, res) => {
+  try {
+    const fileCount = await File.countDocuments();
+    res.json({ message: 'Admin files test working', fileCount });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Upload route with multer (both /upload and / for compatibility)
 router.post('/', protect, upload.single('file'), async (req, res) => {
   try {
@@ -75,9 +85,10 @@ router.get('/', protect, async (req, res) => {
   try {
     const files = await File.find()
       .populate('uploadedBy', 'name')
-      .populate('classId', 'name');
+      .populate('classId', 'name classLevel');
     res.json(files);
   } catch (err) {
+    console.error('Error fetching files:', err);
     res.status(500).json({ message: err.message });
   }
 });

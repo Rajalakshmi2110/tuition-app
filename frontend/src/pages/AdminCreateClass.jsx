@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminCreateClass = () => {
   const [formData, setFormData] = useState({
@@ -22,12 +23,16 @@ const AdminCreateClass = () => {
     const fetchTutors = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/users/tutors', {
+        console.log('Fetching tutors from:', `${API_CONFIG.BASE_URL}/api/users/tutors`);
+        console.log('Token exists:', !!token);
+        
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/users/tutors`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setTutors(res.data.tutors);
+        console.log('Tutors response:', res.data);
+        setTutors(res.data.tutors || []);
       } catch (error) {
-        console.error('Failed to fetch tutors', error);
+        console.error('Failed to fetch tutors', error.response?.data || error.message);
       }
     };
     fetchTutors();
@@ -42,7 +47,7 @@ const AdminCreateClass = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/classes/create', {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/create`, {
         name: formData.name,
         subject: formData.subject,
         schedule: formData.schedule,

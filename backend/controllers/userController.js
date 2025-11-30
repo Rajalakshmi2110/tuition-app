@@ -2,7 +2,10 @@ const User = require('../models/User');
 
 const getAllTutors = async (req, res) => {
   try {
-    const tutors = await User.find({ role: 'tutor' }).select('-password');
+    const tutors = await User.find({ 
+      role: 'tutor', 
+      status: 'approved' 
+    }).select('-password');
     res.json({ tutors });
   } catch (err) {
     console.error('Error fetching tutors:', err);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("student");
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
   });
 
   const toast = useToast();
-  const BASE_URL = "https://tuitionapp-yq06.onrender.com";
+  const BASE_URL = API_CONFIG.BASE_URL;
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");

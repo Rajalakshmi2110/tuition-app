@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -18,7 +19,7 @@ const AdminClasses = () => {
 
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/classes/${classId}`, {
+      await axios.delete(`${API_CONFIG.BASE_URL}/api/classes/${classId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(classes.filter(cls => cls._id !== classId));
@@ -33,7 +34,7 @@ const AdminClasses = () => {
     const fetchClasses = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/classes', {
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClasses(res.data);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
@@ -22,7 +23,7 @@ const AdminGallery = () => {
   const fetchImages = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/gallery', {
+      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/gallery`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setImages(res.data);
@@ -44,7 +45,7 @@ const AdminGallery = () => {
     uploadData.append('category', formData.category);
 
     try {
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/gallery', uploadData, {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/gallery`, uploadData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -68,7 +69,7 @@ const AdminGallery = () => {
 
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/gallery/${id}`, {
+      await axios.delete(`${API_CONFIG.BASE_URL}/api/gallery/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Image deleted successfully!');
@@ -219,7 +220,7 @@ const AdminGallery = () => {
                     position: 'relative'
                   }}>
                     <img
-                      src={`https://tuitionapp-yq06.onrender.com${image.imageUrl}`}
+                      src={`${API_CONFIG.BASE_URL}${image.imageUrl}`}
                       alt={image.title}
                       style={{
                         width: '100%',

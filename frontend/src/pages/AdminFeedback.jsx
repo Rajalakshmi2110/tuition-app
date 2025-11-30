@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminFeedback = () => {
   const [feedback, setFeedback] = useState([]);
@@ -15,7 +16,7 @@ const AdminFeedback = () => {
   const fetchFeedback = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/admin/feedback', {
+      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/admin/feedback`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFeedback(res.data);
@@ -29,7 +30,7 @@ const AdminFeedback = () => {
   const approveFeedback = async (id) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.patch(`https://tuitionapp-yq06.onrender.com/api/admin/feedback/${id}/approve`, {}, {
+      await axios.patch(`${API_CONFIG.BASE_URL}/api/admin/feedback/${id}/approve`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Feedback approved successfully!');
@@ -45,7 +46,7 @@ const AdminFeedback = () => {
 
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/admin/feedback/${id}`, {
+      await axios.delete(`${API_CONFIG.BASE_URL}/api/admin/feedback/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Feedback deleted successfully!');
@@ -228,7 +229,7 @@ const AdminFeedback = () => {
                     margin: 0,
                     fontStyle: 'italic'
                   }}>
-                    "{item.message}"
+                    "{item.message?.replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')}"
                   </p>
                 </div>
 

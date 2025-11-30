@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from '../components/AdminLayout';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminFiles = () => {
   const [files, setFiles] = useState([]);
@@ -14,26 +15,35 @@ const AdminFiles = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/files", {
+        console.log('Fetching files from:', `${API_CONFIG.BASE_URL}/api/files`);
+        console.log('Token exists:', !!token);
+        
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/files`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('Files response:', res.data);
         setFiles(res.data);
       } catch (err) {
-        setError("Failed to load files");
-        console.error(err);
+        console.error('Error details:', err.response?.data || err.message);
+        setError(err.response?.data?.message || "Failed to load files");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFiles();
+    if (token) {
+      fetchFiles();
+    } else {
+      setError("No authentication token found");
+      setLoading(false);
+    }
   }, [token]);
 
   const handleDelete = async (fileId) => {
     if (!window.confirm("Are you sure you want to delete this file?")) return;
     
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/files/${fileId}`, {
+      await axios.delete(`${API_CONFIG.BASE_URL}/api/files/${fileId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFiles(files.filter(f => f._id !== fileId));
@@ -440,7 +450,7 @@ const AdminFiles = () => {
                   >
                     <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
                       <a
-                        href={`https://tuitionapp-yq06.onrender.com/${file.url}`}
+                        href={`${API_CONFIG.BASE_URL}/${file.url}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
