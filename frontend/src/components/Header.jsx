@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import kalviLogo from '../assets/logo.png';
+import kalviyagamLogo from '../assets/kalviyagam.png';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -52,8 +52,8 @@ const Header = () => {
           gap: '0.5rem'
         }}>
           <img 
-            src={kalviLogo} 
-            alt="Kalvi Logo" 
+            src={kalviyagamLogo} 
+            alt="Kalviyagam Logo" 
             style={{
               width: '40px',
               height: '40px',
@@ -66,7 +66,7 @@ const Header = () => {
             color: 'white',
             letterSpacing: '-0.02em'
           }}>
-            Kalvi
+            Kalviyagam
           </span>
         </Link>
 

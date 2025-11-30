@@ -167,7 +167,7 @@ const About = () => {
             marginBottom: '1.5rem',
             border: '1px solid rgba(16, 185, 129, 0.3)'
           }}          >
-            About Kalvi
+            About Kalviyagam
           </span>
           <h1 style={{
             fontSize: '3rem',
@@ -308,7 +308,7 @@ const About = () => {
               color: '#0f172a',
               letterSpacing: '-0.02em'
             }}>
-              What Makes Kalvi Different
+              What Makes Kalviyagam Different
             </h2>
           </div>
 

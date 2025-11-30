@@ -251,7 +251,7 @@ const Home = () => {
                     e.target.style.boxShadow = '0 4px 20px rgba(16, 185, 129, 0.4)';
                   }}
                 >
-                  Join Kalvi
+                  Join Kalviyagam
                   <span>→</span>
                 </button>
 

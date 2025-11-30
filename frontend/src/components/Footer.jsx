@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import kalviLogo from '../assets/logo.png';
+import kalviyagamLogo from '../assets/kalviyagam.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -34,8 +34,8 @@ const Footer = () => {
               marginBottom: '0.75rem'
             }}>
               <img 
-                src={kalviLogo} 
-                alt="Kalvi Logo" 
+                src={kalviyagamLogo} 
+                alt="Kalviyagam Logo" 
                 style={{
                   width: '36px',
                   height: '36px',
@@ -47,7 +47,7 @@ const Footer = () => {
                 fontWeight: 700,
                 letterSpacing: '-0.02em'
               }}>
-                Kalvi
+                Kalviyagam
               </span>
             </div>
             <p style={{
@@ -127,7 +127,7 @@ const Footer = () => {
           margin: 0,
           textAlign: 'center'
         }}>
-          © {currentYear} Kalvi. All rights reserved.
+          © {currentYear} Kalviyagam. All rights reserved.
         </p>
       </div>
     </footer>

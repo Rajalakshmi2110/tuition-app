@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import kalviLogo from '../assets/logo.png';
+import kalviyagamLogo from '../assets/kalviyagam.png';
 
 const WelcomePortal = () => {
   return (
@@ -55,8 +55,8 @@ const WelcomePortal = () => {
         }}>
           {/* Logo */}
           <img 
-            src={kalviLogo} 
-            alt="Kalvi Logo" 
+            src={kalviyagamLogo} 
+            alt="Kalviyagam Logo" 
             style={{
               width: '80px',
               height: '80px',
@@ -80,7 +80,7 @@ const WelcomePortal = () => {
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
             }}>
-              Kalvi
+              Kalviyagam
             </span>
           </h1>
           
