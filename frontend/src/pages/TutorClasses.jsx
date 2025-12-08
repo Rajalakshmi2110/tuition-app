@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import API_CONFIG from "../config/apiConfig";
 
 const TutorClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -16,13 +17,39 @@ const TutorClasses = () => {
 
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
+        console.log("TutorClasses - Fetching for tutor ID:", userId);
 
-        const res = await axios.get(
-          `https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        let tutorClasses = [];
 
-        setClasses(res.data);
+        // Try dedicated tutor endpoint first
+        try {
+          const res = await axios.get(
+            `${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          console.log("TutorClasses - Tutor endpoint response:", res.data);
+          tutorClasses = res.data || [];
+        } catch (tutorErr) {
+          console.error("TutorClasses - Tutor endpoint failed:", tutorErr);
+        }
+
+        // Fallback: fetch all classes and filter
+        if (tutorClasses.length === 0) {
+          console.log("TutorClasses - Trying fallback...");
+          const allRes = await axios.get(
+            `${API_CONFIG.BASE_URL}/api/classes`,
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          console.log("TutorClasses - All classes:", allRes.data);
+          
+          tutorClasses = allRes.data.filter(cls => {
+            const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
+            return clsTutorId === userId;
+          });
+          console.log("TutorClasses - Filtered:", tutorClasses);
+        }
+
+        setClasses(tutorClasses);
       } catch (err) {
         console.error("Failed to fetch tutor classes", err);
       } finally {

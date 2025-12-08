@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const ClassManagePage = () => {
   const { id } = useParams();
@@ -17,9 +18,11 @@ const ClassManagePage = () => {
     const fetchClassInfo = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/${id}`, {
+        console.log('Fetching class info for ID:', id);
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log('Class info response:', res.data);
         setClassInfo(res.data);
         setSchedule(res.data.schedule);
       } catch (err) {
@@ -34,7 +37,7 @@ const ClassManagePage = () => {
   const handleScheduleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}`, { schedule }, {
+      await axios.put(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}`, { schedule }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Schedule updated successfully!');
@@ -52,7 +55,7 @@ const ClassManagePage = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/resource`, { link: resourceLink }, {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/resource`, { link: resourceLink }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Resource added successfully!');
@@ -70,7 +73,7 @@ const ClassManagePage = () => {
     }
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/announcement`, { text: announcement }, {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/announcement`, { text: announcement }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Announcement sent successfully!');
@@ -86,7 +89,7 @@ const ClassManagePage = () => {
     
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/class/${id}/complete`, {}, {
+      await axios.put(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/complete`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Class marked as completed!');

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const { protect } = require("../Middleware/authMiddleware");
 const authorizeRoles = require("../Middleware/authorizeRoles");
 
@@ -236,15 +237,25 @@ router.post("/enroll", protect, async (req, res) => {
 router.get("/tutor/:tutorId", protect, async (req, res) => {
   try {
     const tutorId = req.params.tutorId;
+    console.log("Fetching classes for tutor:", tutorId);
 
-    // Fetch scheduled classes and existing classes without status
+    // First, let's see ALL classes for debugging
+    const allClasses = await Class.find({});
+    console.log("Total classes in DB:", allClasses.length);
+    console.log("All classes with tutors:", allClasses.map(c => ({ 
+      name: c.name, 
+      tutorId: c.tutor?.toString(), 
+      status: c.status 
+    })));
+    console.log("Looking for tutor ID:", tutorId);
+
+    // Get all classes for this tutor (no status filter to debug)
     const classes = await Class.find({ 
       tutor: tutorId,
-      $or: [
-        { status: 'scheduled' },
-        { status: { $exists: false } }
-      ]
+      status: { $nin: ['completed', 'cancelled'] }
     });
+    
+    console.log("Classes found for tutor:", classes.length, classes.map(c => ({ name: c.name, status: c.status })));
 
     // For each class, get enrolled students
     const classesWithStudents = await Promise.all(

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import API_CONFIG from "../config/apiConfig";
 
 const TutorDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -15,8 +16,9 @@ const TutorDashboard = () => {
   const token = localStorage.getItem("token");
 
   const fetchAnnouncements = useCallback(async () => {
+    if (!token) return;
     try {
-      const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/announcements", {
+      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/announcements`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAnnouncements(res.data);
@@ -26,18 +28,44 @@ const TutorDashboard = () => {
   }, [token]);
 
   const fetchMySessions = useCallback(async () => {
+    if (!token) return;
     try {
       const decoded = jwtDecode(token);
-      const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/classes", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      console.log("Tutor ID from token:", decoded.id);
+      console.log("Full decoded token:", decoded);
+      console.log("API Base URL:", API_CONFIG.BASE_URL);
       
-      // Filter sessions where this tutor is assigned
-      // Compare as strings to handle both ObjectId objects and string IDs
-      const tutorSessions = res.data.filter(cls => {
-        const tutorId = cls.tutor?._id?.toString() || cls.tutor?.toString();
-        return tutorId === decoded.id;
-      });
+      let tutorSessions = [];
+      
+      // Try the dedicated tutor endpoint first
+      try {
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${decoded.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("Tutor endpoint response:", res.data);
+        tutorSessions = res.data || [];
+      } catch (tutorErr) {
+        console.error("Tutor endpoint failed, trying fallback:", tutorErr);
+      }
+      
+      // Fallback: fetch all classes and filter
+      if (tutorSessions.length === 0) {
+        console.log("Trying fallback: fetching all classes...");
+        const allRes = await axios.get(`${API_CONFIG.BASE_URL}/api/classes`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("All classes:", allRes.data);
+        
+        // Filter by tutor - try multiple matching strategies
+        tutorSessions = allRes.data.filter(cls => {
+          const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
+          const match = clsTutorId === decoded.id;
+          console.log(`Class "${cls.name}" tutor: ${clsTutorId}, match: ${match}`);
+          return match;
+        });
+        console.log("Filtered sessions:", tutorSessions);
+      }
+      
       setMySessions(tutorSessions);
       
       // Calculate stats
@@ -274,29 +302,48 @@ const TutorDashboard = () => {
       )}
 
       {/* My Sessions */}
-      {mySessions.length > 0 && (
-        <div>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 700,
-            color: '#0f172a',
-            marginBottom: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
+      <div>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: 700,
+          color: '#0f172a',
+          marginBottom: '1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          My Sessions ({mySessions.length})
+        </h2>
+        
+        {mySessions.length === 0 ? (
+          <div style={{
+            backgroundColor: 'white',
+            padding: '3rem',
+            borderRadius: '16px',
+            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+            border: '1px solid #e2e8f0',
+            textAlign: 'center'
           }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 1rem' }}>
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
-            My Sessions
-          </h2>
+            <h3 style={{ color: '#64748b', margin: '0 0 0.5rem 0', fontWeight: 600 }}>No Sessions Assigned</h3>
+            <p style={{ color: '#94a3b8', margin: 0, fontSize: '0.9rem' }}>
+              You haven't been assigned to any sessions yet. Please contact the admin.
+            </p>
+          </div>
+        ) : (
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
             gap: '1.5rem'
           }}>
-            {mySessions.slice(0, 4).map((session) => (
+            {mySessions.map((session) => (
               <div
                 key={session._id}
                 style={{
@@ -364,46 +411,17 @@ const TutorDashboard = () => {
                   <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
                     Schedule: {session.schedule}
                   </p>
+                  {session.classLevel && (
+                    <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                      Class: Grade {session.classLevel}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      )}
-
-      {/* Empty State */}
-      {mySessions.length === 0 && announcements.length === 0 && (
-        <div style={{
-          background: 'white',
-          padding: '4rem 2rem',
-          borderRadius: '16px',
-          textAlign: 'center',
-          boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0'
-        }}>
-          <div style={{
-            width: '80px',
-            height: '80px',
-            background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
-            borderRadius: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 1rem'
-          }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-          </div>
-          <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
-            No sessions yet
-          </h3>
-          <p style={{ color: '#64748b', maxWidth: '400px', margin: '0 auto' }}>
-            You haven't been assigned to any sessions yet. Check back later or contact the admin.
-          </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
