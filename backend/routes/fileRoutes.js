@@ -114,4 +114,21 @@ router.get('/by-classname/:className', protect, async (req, res) => {
   }
 });
 
+// Delete a file
+router.delete('/:id', protect, async (req, res) => {
+  try {
+    const file = await File.findById(req.params.id);
+    
+    if (!file) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+    
+    await File.findByIdAndDelete(req.params.id);
+    res.json({ message: 'File deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting file:', err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

@@ -33,7 +33,11 @@ const TutorDashboard = () => {
       });
       
       // Filter sessions where this tutor is assigned
-      const tutorSessions = res.data.filter(cls => cls.tutor?._id === decoded.id);
+      // Compare as strings to handle both ObjectId objects and string IDs
+      const tutorSessions = res.data.filter(cls => {
+        const tutorId = cls.tutor?._id?.toString() || cls.tutor?.toString();
+        return tutorId === decoded.id;
+      });
       setMySessions(tutorSessions);
       
       // Calculate stats
