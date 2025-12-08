@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import API_CONFIG from "../config/apiConfig";
 
 const StudentDashboard = () => {
   const [myClasses, setMyClasses] = useState([]);
@@ -35,13 +36,31 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const decoded = jwtDecode(token);
+      console.log("Student ID from token:", decoded.id);
+      console.log("Student className from token:", decoded.className);
+      
       const res = await axios.get(
-        'https://tuitionapp-yq06.onrender.com/api/classes',
+        `${API_CONFIG.BASE_URL}/api/classes`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      const studentClasses = res.data.filter(cls =>
-        cls.students && cls.students.some(student => student._id === decoded.id)
-      );
+      console.log("All classes:", res.data);
+      
+      // Filter classes where student is enrolled OR class matches student's grade level
+      const studentClasses = res.data.filter(cls => {
+        // Check if student is in the students array
+        const isEnrolled = cls.students && cls.students.some(student => 
+          student._id === decoded.id || student._id?.toString() === decoded.id
+        );
+        
+        // Also check if class level matches student's className (grade)
+        const matchesClassLevel = cls.classLevel === decoded.className;
+        
+        console.log(`Class "${cls.name}" - enrolled: ${isEnrolled}, matchesLevel: ${matchesClassLevel}, classLevel: ${cls.classLevel}`);
+        
+        return isEnrolled || matchesClassLevel;
+      });
+      
+      console.log("Student's classes:", studentClasses);
       setMyClasses(studentClasses);
     } catch (err) {
       console.error("Failed to fetch sessions:", err);
@@ -52,18 +71,27 @@ const StudentDashboard = () => {
   const fetchFiles = useCallback(async () => {
     if (!token) return;
     try {
-      const res = await axios.get(
-        'https://tuitionapp-yq06.onrender.com/api/files',
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
       const decoded = jwtDecode(token);
-      const classRes = await axios.get(
-        'https://tuitionapp-yq06.onrender.com/api/classes',
+      const res = await axios.get(
+        `${API_CONFIG.BASE_URL}/api/files`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      const classRes = await axios.get(
+        `${API_CONFIG.BASE_URL}/api/classes`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      // Get classes where student is enrolled OR matches class level
       const studentClassIds = classRes.data
-        .filter(cls => cls.students && cls.students.some(student => student._id === decoded.id))
+        .filter(cls => {
+          const isEnrolled = cls.students && cls.students.some(student => 
+            student._id === decoded.id || student._id?.toString() === decoded.id
+          );
+          const matchesClassLevel = cls.classLevel === decoded.className;
+          return isEnrolled || matchesClassLevel;
+        })
         .map(cls => cls._id);
+      
       const studentFiles = res.data.filter(file =>
         studentClassIds.includes(file.classId?._id)
       );
@@ -78,7 +106,7 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const res = await axios.get(
-        "https://tuitionapp-yq06.onrender.com/api/announcements",
+        `${API_CONFIG.BASE_URL}/api/announcements`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAnnouncements(res.data);
