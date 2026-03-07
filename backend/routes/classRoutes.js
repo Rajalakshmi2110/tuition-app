@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { protect } = require("../Middleware/authMiddleware");
-const authorizeRoles = require("../Middleware/authorizeRoles");
+const { protect, authorize } = require("../Middleware/authMiddleware");
 
 const Class = require("../models/Class");
 const StudentClass = require("../models/StudentClass");
@@ -11,7 +10,7 @@ const Student = require("../models/User");
 // ------------------ ADMIN ROUTES ------------------
 
 // Create a new class
-router.post("/create", protect, authorizeRoles("admin"), async (req, res) => {
+router.post("/create", protect, authorize("admin"), async (req, res) => {
   try {
     const { name, subject, schedule, scheduledDate, tutor, classLevel } = req.body;
     if (!name || !subject || !schedule || !scheduledDate || !tutor || !classLevel)
@@ -22,8 +21,7 @@ router.post("/create", protect, authorizeRoles("admin"), async (req, res) => {
 
     // Find all students with matching className (User model uses className, not classLevel)
     const matchedStudents = await Student.find({ role: "student", className: classLevel });
-    console.log(`Looking for students with className: ${classLevel}`);
-    console.log(`Found ${matchedStudents.length} students:`, matchedStudents.map(s => s.name));
+
 
     // Create StudentClass links
     if (matchedStudents.length > 0) {
@@ -66,7 +64,6 @@ router.get("/", protect, async (req, res) => {
 router.get("/by-classname/:className", protect, async (req, res) => {
   try {
     const className = decodeURIComponent(req.params.className);
-    console.log("Looking for classes with classLevel:", className);
     
     // Show scheduled classes and classes without status (existing ones)
     const classes = await Class.find({ 
@@ -77,7 +74,6 @@ router.get("/by-classname/:className", protect, async (req, res) => {
       ]
     }).populate("tutor", "name email");
     
-    console.log("Found classes:", classes);
     res.json(classes);
   } catch (err) {
     console.error(err);
@@ -120,7 +116,7 @@ router.get("/:id", protect, async (req, res) => {
 });
 
 // Update class (admin)
-router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
+router.put("/:id", protect, authorize("admin"), async (req, res) => {
   try {
     const updatedClass = await Class.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!updatedClass) return res.status(404).json({ message: "Class not found" });
@@ -132,7 +128,7 @@ router.put("/:id", protect, authorizeRoles("admin"), async (req, res) => {
 });
 
 // Delete class (admin)
-router.delete("/:id", protect, authorizeRoles("admin"), async (req, res) => {
+router.delete("/:id", protect, authorize("admin"), async (req, res) => {
   try {
     const classItem = await Class.findById(req.params.id);
     if (!classItem) return res.status(404).json({ message: "Class not found" });
@@ -237,25 +233,11 @@ router.post("/enroll", protect, async (req, res) => {
 router.get("/tutor/:tutorId", protect, async (req, res) => {
   try {
     const tutorId = req.params.tutorId;
-    console.log("Fetching classes for tutor:", tutorId);
 
-    // First, let's see ALL classes for debugging
-    const allClasses = await Class.find({});
-    console.log("Total classes in DB:", allClasses.length);
-    console.log("All classes with tutors:", allClasses.map(c => ({ 
-      name: c.name, 
-      tutorId: c.tutor?.toString(), 
-      status: c.status 
-    })));
-    console.log("Looking for tutor ID:", tutorId);
-
-    // Get all classes for this tutor (no status filter to debug)
     const classes = await Class.find({ 
       tutor: tutorId,
       status: { $nin: ['completed', 'cancelled'] }
     });
-    
-    console.log("Classes found for tutor:", classes.length, classes.map(c => ({ name: c.name, status: c.status })));
 
     // For each class, get enrolled students
     const classesWithStudents = await Promise.all(

@@ -1,7 +1,7 @@
 const Payment = require('../models/Payment');
 const FeeStructure = require('../models/FeeStructure');
 const User = require('../models/User');
-const nodemailer = require('nodemailer');
+const { sendEmail } = require('../services/emailService');
 const path = require('path');
 const fs = require('fs');
 
@@ -270,93 +270,39 @@ const sendPaymentReminders = async (req, res) => {
   }
 };
 
-// Email functions
+// Email helper functions
 const sendPaymentSubmissionEmail = async (email, name, month, amount) => {
-  if (!process.env.EMAIL_PASS || process.env.EMAIL_PASS === 'your-16-digit-app-password') {
-    console.log(`Payment submission email for ${email}: Payment of ₹${amount} for ${month} submitted`);
-    return;
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: 'Payment Submitted - Tuitix',
-    html: `
-      <h2>Payment Submitted Successfully</h2>
-      <p>Dear ${name},</p>
-      <p>Your payment of <strong>₹${amount}</strong> for <strong>${month}</strong> has been submitted successfully.</p>
-      <p>Your payment is now under review by our admin team. You will receive a confirmation email once verified.</p>
-      <p>Thank you!</p>
-    `
-  });
+  await sendEmail(email, 'Payment Submitted - Tuitix', `
+    <h2>Payment Submitted Successfully</h2>
+    <p>Dear ${name},</p>
+    <p>Your payment of <strong>₹${amount}</strong> for <strong>${month}</strong> has been submitted successfully.</p>
+    <p>Your payment is now under review by our admin team. You will receive a confirmation email once verified.</p>
+    <p>Thank you!</p>
+  `);
 };
 
 const sendPaymentVerificationEmail = async (email, name, month, status, reason = '') => {
-  if (!process.env.EMAIL_PASS || process.env.EMAIL_PASS === 'your-16-digit-app-password') {
-    console.log(`Payment verification email for ${email}: Payment for ${month} ${status}`);
-    return;
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
   const subject = status === 'approved' ? 'Payment Verified - Tuitix' : 'Payment Rejected - Tuitix';
-  const message = status === 'approved' 
+  const message = status === 'approved'
     ? `Your payment for ${month} has been verified and approved.`
     : `Your payment for ${month} has been rejected. Reason: ${reason}. Please resubmit with correct details.`;
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject,
-    html: `
-      <h2>Payment ${status === 'approved' ? 'Verified' : 'Rejected'}</h2>
-      <p>Dear ${name},</p>
-      <p>${message}</p>
-      <p>Thank you!</p>
-    `
-  });
+  await sendEmail(email, subject, `
+    <h2>Payment ${status === 'approved' ? 'Verified' : 'Rejected'}</h2>
+    <p>Dear ${name},</p>
+    <p>${message}</p>
+    <p>Thank you!</p>
+  `);
 };
 
 const sendPaymentReminderEmail = async (email, name, month) => {
-  if (!process.env.EMAIL_PASS || process.env.EMAIL_PASS === 'your-16-digit-app-password') {
-    console.log(`Payment reminder email for ${email}: Reminder for ${month} payment`);
-    return;
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: 'Payment Reminder - Tuitix',
-    html: `
-      <h2>Payment Reminder</h2>
-      <p>Dear ${name},</p>
-      <p>This is a friendly reminder that your payment for <strong>${month}</strong> is still pending.</p>
-      <p>Please log in to your student portal and complete your payment to avoid any interruption in your classes.</p>
-      <p>Thank you!</p>
-    `
-  });
+  await sendEmail(email, 'Payment Reminder - Tuitix', `
+    <h2>Payment Reminder</h2>
+    <p>Dear ${name},</p>
+    <p>This is a friendly reminder that your payment for <strong>${month}</strong> is still pending.</p>
+    <p>Please log in to your student portal and complete your payment to avoid any interruption in your classes.</p>
+    <p>Thank you!</p>
+  `);
 };
 
 module.exports = {

@@ -184,8 +184,8 @@ app.use("/api/gallery", galleryRoutes);
 const performanceRoutes = require("./routes/performanceRoutes");
 app.use("/api/performance", performanceRoutes);
 
-const assignmentRoutes2 = require("./routes/assignmentRoutes2");
-app.use("/api/assignments", assignmentRoutes2);
+const assignmentRoutes = require("./routes/assignmentRoutes");
+app.use("/api/assignments", assignmentRoutes);
 
 const gamificationRoutes = require("./routes/gamificationRoutes");
 app.use("/api/gamification", gamificationRoutes);

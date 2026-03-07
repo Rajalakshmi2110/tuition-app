@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getTutorClasses } = require("../controllers/tutorController");
 const { uploadDocument } = require("../controllers/documentController");
-const { protect } = require("../Middleware/authMiddleware");
-const authorizeRoles = require("../Middleware/authorizeRoles"); 
+const { protect, authorize } = require("../Middleware/authMiddleware");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
@@ -20,12 +19,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
-router.get("/classes", protect, authorizeRoles("tutor"), getTutorClasses);
+router.get("/classes", protect, authorize("tutor"), getTutorClasses);
 
 router.post(
   "/upload/:classId",
   protect,
-  authorizeRoles("tutor"),
+  authorize("tutor"),
   upload.single("file"),
   uploadDocument
 );

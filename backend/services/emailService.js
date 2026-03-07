@@ -89,6 +89,7 @@ const sendTutorPendingEmail = async (tutorEmail, tutorName) => {
 };
 
 module.exports = {
+  sendEmail,
   sendTutorApprovalEmail,
   sendTutorDeclineEmail,
   sendStudentRegistrationEmail,

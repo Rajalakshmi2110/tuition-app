@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../Middleware/authMiddleware");
-const authorizeRoles = require("../Middleware/authorizeRoles");
+const { protect, authorize } = require("../Middleware/authMiddleware");
 const { getAllTutors } = require('../controllers/userController');
 const { loginUser } = require('../controllers/authController');
 
@@ -10,8 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log('Login request body:', req.body);
-  console.log('Content-Type:', req.headers['content-type']);
   try {
     await loginUser(req, res);
   } catch (error) {
@@ -20,7 +17,7 @@ router.post('/login', async (req, res) => {
   }
 }); 
 
-router.get('/dashboard', protect, authorizeRoles('admin', 'tutor'), (req, res) => {
+router.get('/dashboard', protect, authorize('admin', 'tutor'), (req, res) => {
   res.json({
     message: `Welcome ${req.user.role}!`,
     user: req.user
