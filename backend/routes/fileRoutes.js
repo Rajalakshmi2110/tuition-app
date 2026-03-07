@@ -15,36 +15,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Test route
-router.get('/test', (req, res) => {
-  console.log('Test route hit');
-  res.json({ message: 'File routes working' });
-});
-
-// Test route for admin files (no auth)
-router.get('/admin-test', async (req, res) => {
-  try {
-    const fileCount = await File.countDocuments();
-    res.json({ message: 'Admin files test working', fileCount });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Upload route with multer (both /upload and / for compatibility)
+// Upload file
 router.post('/', protect, upload.single('file'), async (req, res) => {
   try {
-    console.log('Upload route hit');
-    console.log('Body:', req.body);
-    console.log('File:', req.file);
-    
     if (!req.body.classId) {
       return res.status(400).json({ message: 'classId is required' });
     }
     
     const newFile = await File.create({
       title: req.body.title || 'Test File',
-      url: req.file ? req.file.path : 'https://example.com/test.pdf',
+      url: req.file ? req.file.path : '',
       uploadedBy: req.user._id,
       classId: req.body.classId,
     });
@@ -58,17 +38,13 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
 
 router.post('/upload', protect, upload.single('file'), async (req, res) => {
   try {
-    console.log('Upload route hit');
-    console.log('Body:', req.body);
-    console.log('File:', req.file);
-    
     if (!req.body.classId) {
       return res.status(400).json({ message: 'classId is required' });
     }
     
     const newFile = await File.create({
       title: req.body.title || 'Test File',
-      url: req.file ? req.file.path : 'https://example.com/test.pdf',
+      url: req.file ? req.file.path : '',
       uploadedBy: req.user._id,
       classId: req.body.classId,
     });

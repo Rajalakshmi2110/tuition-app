@@ -28,7 +28,6 @@ router.get("/feedback", protect, adminOnly, async (req, res) => {
   try {
     const Feedback = require('../models/Feedback');
     const feedback = await Feedback.find().sort({ createdAt: -1 });
-    console.log('Found feedback count:', feedback.length);
     res.json(feedback);
   } catch (err) {
     console.error('Admin feedback fetch error:', err);
@@ -63,32 +62,22 @@ router.delete("/feedback/:id", protect, adminOnly, async (req, res) => {
 // Get dashboard statistics
 router.get("/stats", protect, adminOnly, async (req, res) => {
   try {
-    console.log('Fetching stats...');
     
     const activeStudents = await User.countDocuments({ role: 'student' });
-    console.log('Active students:', activeStudents);
-    
-    // Check all tutors first
-    const allTutors = await User.countDocuments({ role: 'tutor' });
-    console.log('All tutors:', allTutors);
     
     const expertTutors = await User.countDocuments({ role: 'tutor', status: 'approved' });
-    console.log('Expert tutors (approved):', expertTutors);
     
     const completedClasses = await Class.countDocuments({ status: 'completed' });
-    console.log('Completed classes:', completedClasses);
     
     const studyMaterials = await File.countDocuments();
-    console.log('Study materials:', studyMaterials);
     
     const stats = {
       activeStudents,
-      expertTutors, // Use the count of approved tutors
+      expertTutors,
       completedClasses,
       studyMaterials
     };
     
-    console.log('Final stats:', stats);
     res.json(stats);
   } catch (err) {
     console.error('Stats error:', err);

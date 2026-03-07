@@ -13,9 +13,7 @@ const createTransporter = () => {
 const sendEmail = async (to, subject, html) => {
   try {
     if (!process.env.EMAIL_USER || process.env.EMAIL_PASS === 'your-16-digit-app-password') {
-      console.log(`Email would be sent to: ${to}`);
-      console.log(`Subject: ${subject}`);
-      console.log(`Content: ${html}`);
+      console.warn('Email not configured - skipping send to:', to);
       return;
     }
 

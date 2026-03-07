@@ -166,11 +166,8 @@ const forgotPassword = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
       } catch (emailError) {
-        console.log('Email failed, using development mode');
-        console.log('Password Reset URL:', resetUrl);
+        console.error('Email send failed:', emailError.message);
       }
-    } else {
-      console.log('Development mode - Password Reset URL:', resetUrl);
     }
     
     res.status(200).json({ 

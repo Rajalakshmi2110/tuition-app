@@ -110,11 +110,9 @@ const getClassAnalytics = async (req, res) => {
 const getAllClassesAnalytics = async (req, res) => {
   try {
     const tutorId = req.user._id;
-    console.log('Fetching analytics for tutor:', tutorId);
 
     // Get all students grouped by className (10, 11, 12, etc.)
     const students = await User.find({ role: 'student' });
-    console.log('Found total students:', students.length);
 
     // Group students by className
     const classGroups = {};
@@ -215,7 +213,6 @@ const getAllClassesAnalytics = async (req, res) => {
       });
     }
 
-    console.log('Returning analytics for class levels:', Object.keys(classGroups));
     res.json({ 
       classAnalytics,
       totalClasses: classAnalytics.length,

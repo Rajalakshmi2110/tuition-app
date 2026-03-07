@@ -7,8 +7,6 @@ const addPerformance = async (req, res) => {
   try {
     const { subject, examType, totalMarks, obtainedMarks, examDate, academicYear, term } = req.body;
     
-    console.log('Adding performance for user:', req.user._id, req.user.name);
-    
     const performance = new StudentPerformance({
       studentId: req.user._id,
       subject,
@@ -21,7 +19,6 @@ const addPerformance = async (req, res) => {
     });
 
     await performance.save();
-    console.log('Performance saved:', performance._id);
     res.status(201).json({ message: 'Performance record added successfully', performance });
   } catch (error) {
     console.error('Add Performance Error:', error);
@@ -34,13 +31,10 @@ const getStudentPerformance = async (req, res) => {
   try {
     const studentId = req.params.studentId || req.user._id;
     
-    console.log('Fetching performances for student:', studentId, 'requested by:', req.user.name);
-    
     const performances = await StudentPerformance.find({ studentId })
       .sort({ examDate: -1 })
       .populate('studentId', 'name email');
 
-    console.log('Found performances:', performances.length);
     res.json(performances);
   } catch (error) {
     console.error('Get Performance Error:', error);

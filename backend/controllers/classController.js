@@ -77,9 +77,7 @@ const updateClass = async (req, res) => {
 const getTutorClasses = async (req, res) => {
   try {
     const tutorId = req.params.tutorId;
-    console.log("Tutor ID:", tutorId);
     const classes = await Class.find({ tutor: tutorId }).populate('students', 'name email');
-    console.log("Classes found:", classes);
     res.status(200).json(classes);
   } catch (err) {
     console.error('Get tutor classes error:', err);
