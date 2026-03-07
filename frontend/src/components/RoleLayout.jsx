@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import RoleSidebar from './RoleSidebar';
+import ThemeToggle from './ThemeToggle';
 
 const RoleLayout = ({ role }) => {
   const [sidebarWidth, setSidebarWidth] = useState(window.innerWidth <= 768 ? 0 : 260);
@@ -63,6 +64,7 @@ const RoleLayout = ({ role }) => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.5rem' : '1rem' }}>
+            <ThemeToggle />
             {/* Notifications */}
             <button style={{
               width: '40px', height: '40px', borderRadius: '10px',

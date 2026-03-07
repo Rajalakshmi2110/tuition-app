@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastProvider } from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -46,6 +47,7 @@ import NotFound from './pages/NotFound';
 const App = () => {
   return (
     <ErrorBoundary>
+    <ThemeProvider>
     <ToastProvider>
     <Router>
       <Routes>
@@ -105,6 +107,7 @@ const App = () => {
       </Routes>
     </Router>
     </ToastProvider>
+    </ThemeProvider>
     </ErrorBoundary>
   );
 };

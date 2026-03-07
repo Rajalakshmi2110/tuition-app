@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useToast } from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
+import EmptyState from '../components/EmptyState';
 
 const StudentPerformance = () => {
   const [performances, setPerformances] = useState([]);
@@ -82,26 +84,7 @@ const StudentPerformance = () => {
   };
 
   if (loading) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh'
-      }}>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          border: '3px solid #e2e8f0',
-          borderTopColor: '#10b981',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading performance records...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <LoadingSpinner message="Loading performance records..." fullPage />;
   }
 
   return (
@@ -355,29 +338,22 @@ const StudentPerformance = () => {
         </table>
 
         {performances.length === 0 && (
-          <div style={{
-            padding: '4rem 2rem',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              width: '80px',
-              height: '80px',
-              background: 'linear-gradient(135deg, #10b98120 0%, #05966920 100%)',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem'
-            }}>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"></line>
-                <line x1="12" y1="20" x2="12" y2="4"></line>
-                <line x1="6" y1="20" x2="6" y2="14"></line>
+          <EmptyState
+            icon={
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
               </svg>
-            </div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Records Yet</h3>
-            <p style={{ color: '#64748b' }}>Add your first performance record to start tracking!</p>
-          </div>
+            }
+            title="No Records Yet"
+            description="Add your first performance record to start tracking your progress!"
+            action={
+              <button onClick={() => setShowForm(true)} style={{
+                padding: '0.75rem 1.5rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                color: 'white', border: 'none', borderRadius: '10px', fontWeight: 600, cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
+              }}>Add First Record</button>
+            }
+          />
         )}
       </div>
     </div>

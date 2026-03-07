@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const StudentGamification = () => {
   const [stats, setStats] = useState(null);
@@ -139,26 +140,7 @@ const StudentGamification = () => {
   };
 
   if (loading) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh'
-      }}>
-        <div style={{
-          width: '60px',
-          height: '60px',
-          border: '4px solid #e2e8f0',
-          borderTopColor: '#fbbf24',
-          borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', marginTop: '1rem', fontWeight: 500 }}>Loading your achievements...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <LoadingSpinner message="Loading your achievements..." fullPage />;
   }
 
   const statCards = stats ? [

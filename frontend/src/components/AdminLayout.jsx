@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import kalviLogo from '../assets/logo.png';
+import ThemeToggle from './ThemeToggle';
 
 const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }) => {
   const [isMinimized, setIsMinimized] = useState(false);
@@ -294,28 +295,31 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
               <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>Manage your tuition platform</p>
             )}
           </div>
-          {!isMobile && (
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '0.75rem',
-              padding: '0.5rem 1rem', background: '#f8fafc',
-              borderRadius: '12px', border: '1px solid #e2e8f0'
-            }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <ThemeToggle />
+            {!isMobile && (
               <div style={{
-                width: '36px', height: '36px',
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                display: 'flex', alignItems: 'center', gap: '0.75rem',
+                padding: '0.5rem 1rem', background: '#f8fafc',
+                borderRadius: '12px', border: '1px solid #e2e8f0'
               }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  <path d="M9 12l2 2 4-4" />
-                </svg>
+                <div style={{
+                  width: '36px', height: '36px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    <path d="M9 12l2 2 4-4" />
+                  </svg>
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Administrator</p>
+                  <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Full Access</p>
+                </div>
               </div>
-              <div>
-                <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Administrator</p>
-                <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Full Access</p>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </header>
 
         {/* Content Area */}
