@@ -40,6 +40,7 @@ import AdminPayments from './pages/AdminPayments';
 import PerformancePrediction from './components/PerformancePrediction';
 import TutorPerformanceAnalytics from './pages/TutorPerformanceAnalytics';
 import AdminReports from './pages/AdminReports';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -59,10 +60,8 @@ const App = () => {
         <Route path="/auth/success" element={<AuthSuccess />} />
         <Route path="/google-role-selection" element={<GoogleRoleSelection />} />
 
-        {/* Routes with Layout */}
-        <Route element={<Layout />}>
-
-          {/* Admin Routes */}
+        {/* Admin Routes - Protected */}
+        <Route element={<ProtectedRoute allowedRoles={['admin']}><Layout /></ProtectedRoute>}>
           <Route path="/admin">
             <Route index element={<AdminDashboard />} />
             <Route path="classes" element={<AdminClasses />} />
@@ -73,11 +72,10 @@ const App = () => {
             <Route path="payments" element={<AdminPayments />} />
             <Route path="reports" element={<AdminReports />} />
           </Route>
-
         </Route>
 
-        {/* Tutor Routes with Sidebar */}
-        <Route path="/tutor" element={<RoleLayout role="tutor" />}>
+        {/* Tutor Routes - Protected */}
+        <Route path="/tutor" element={<ProtectedRoute allowedRoles={['tutor']}><RoleLayout role="tutor" /></ProtectedRoute>}>
           <Route index element={<TutorDashboard />} />
           <Route path="assignments" element={<TutorAssignments />} />
           <Route path="sessions" element={<TutorClasses />} />
@@ -87,8 +85,8 @@ const App = () => {
           <Route path="analytics" element={<TutorPerformanceAnalytics />} />
         </Route>
 
-        {/* Student Routes with Sidebar */}
-        <Route path="/student" element={<RoleLayout role="student" />}>
+        {/* Student Routes - Protected */}
+        <Route path="/student" element={<ProtectedRoute allowedRoles={['student']}><RoleLayout role="student" /></ProtectedRoute>}>
           <Route index element={<StudentDashboard />} />
           <Route path="enroll" element={<StudentEnrollClass />} />
           <Route path="files" element={<StudentFiles />} />

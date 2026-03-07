@@ -4,6 +4,8 @@ const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 const fs = require('fs');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 
 // Load environment variables first
 require('dotenv').config();
@@ -17,23 +19,39 @@ for (const envVar of requiredEnvVars) {
   }
 }
 
-// Then load passport config (which needs env vars)
 const passport = require('./config/passport');
 const rateLimit = require('express-rate-limit');
-console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
-console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
+
+// Security headers
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+
+// Sanitize request data against NoSQL injection
+app.use(mongoSanitize());
+
+// CORS - only allow known origins
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://rajituitionapp.netlify.app'
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    'https://rajituitionapp.netlify.app'
-  ],
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Create uploads directories if they don't exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -211,7 +229,16 @@ app.get("/", (req,res) => res.json({ message: "Tuition Management API is running
 
 app.get("/api/health", (req,res) => res.json({ status: "healthy", timestamp: new Date() }));
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/tuitionApp')
+// Global error handler - no stack traces in production
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    message: err.message || 'Internal Server Error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+});
+
+mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connected!"))
 .catch(err => console.log(err));
 
