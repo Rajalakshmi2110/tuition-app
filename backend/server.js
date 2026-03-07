@@ -26,7 +26,7 @@ console.log("NODE_ENV:", process.env.NODE_ENV);
 const app = express();
 app.use(cors({
   origin: [
-    'http://localhost:3000',
+    process.env.FRONTEND_URL,
     'https://rajituitionapp.netlify.app'
   ],
   credentials: true,
@@ -204,7 +204,7 @@ app.use("/api/reports", reportsRoutes);
 
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {
-  res.redirect('http://localhost:3000/login?error=oauth_cancelled');
+  res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_cancelled`);
 });
 
 app.get("/", (req,res) => res.json({ message: "Tuition Management API is running!", status: "success" }));

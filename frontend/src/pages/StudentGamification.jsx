@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import API_CONFIG from '../config/apiConfig';
 
 const StudentGamification = () => {
   const [stats, setStats] = useState(null);
@@ -18,13 +19,13 @@ const StudentGamification = () => {
       const userId = decoded.id || decoded._id;
 
       const [statsRes, leaderboardRes, badgesRes] = await Promise.all([
-        axios.get(`https://tuitionapp-yq06.onrender.com/api/gamification/stats/${userId}`, {
+        axios.get(`${API_CONFIG.BASE_URL}/api/gamification/stats/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/gamification/leaderboard', {
+        axios.get('${API_CONFIG.BASE_URL}/api/gamification/leaderboard', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/gamification/badges', {
+        axios.get('${API_CONFIG.BASE_URL}/api/gamification/badges', {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);

@@ -18,7 +18,7 @@ const CreateClass = () => {
     const fetchTutors = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/users/tutors', {
+        const res = await axios.get('${API_CONFIG.BASE_URL}/api/users/tutors', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setTutors(res.data.tutors);
@@ -44,7 +44,7 @@ const CreateClass = () => {
         tutor: formData.tutorId,
         classLevel: formData.classLevel,
       };
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/classes/create', payload, {
+      await axios.post('${API_CONFIG.BASE_URL}/api/classes/create', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Class created successfully!');

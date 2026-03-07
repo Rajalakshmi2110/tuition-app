@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
 import kalviLogo from '../assets/logo.png';
+import API_CONFIG from '../config/apiConfig';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/auth/register`, formData);
+      await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, formData);
       toast.success('Registration successful! Please login to continue.');
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
       setTimeout(() => navigate('/login'), 1500);
@@ -357,7 +358,7 @@ const Register = () => {
 
           {/* Google Sign Up */}
           <a
-            href={`${process.env.REACT_APP_API_URL || 'https://tuitionapp-yq06.onrender.com'}/api/auth/google`}
+            href={`${API_CONFIG.BASE_URL}/api/auth/google`}
             style={{
               display: 'flex',
               alignItems: 'center',

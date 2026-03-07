@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import API_CONFIG from '../config/apiConfig';
 
 const TutorPerformanceAnalytics = () => {
   const [classAnalytics, setClassAnalytics] = useState([]);
@@ -11,7 +12,7 @@ const TutorPerformanceAnalytics = () => {
 
   const fetchAllClassesAnalytics = useCallback(async () => {
     try {
-      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/tutor-analytics/classes', {
+      const response = await axios.get('${API_CONFIG.BASE_URL}/api/tutor-analytics/classes', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setClassAnalytics(response.data.classAnalytics || []);
@@ -29,7 +30,7 @@ const TutorPerformanceAnalytics = () => {
   const fetchClassDetails = async (classId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/tutor-analytics/class/${classId}`, {
+      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/tutor-analytics/class/${classId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setClassDetails(response.data);

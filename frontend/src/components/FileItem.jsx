@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import API from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 
 const FileItem = ({ file, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -18,7 +19,7 @@ const FileItem = ({ file, onDelete }) => {
     }
   };
 
-  const fileUrl = `https://tuitionapp-yq06.onrender.com/${file.url.startsWith('/') ? file.url.slice(1) : file.url}`;
+  const fileUrl = `${API_CONFIG.BASE_URL}/${file.url.startsWith('/') ? file.url.slice(1) : file.url}`;
 
   return (
     <div style={{

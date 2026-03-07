@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const StudentPayments = () => {
   const [qrCode, setQrCode] = useState('');
@@ -21,7 +22,7 @@ const StudentPayments = () => {
 
   const fetchQRCode = useCallback(async () => {
     try {
-      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/qr-code', {
+      const response = await axios.get('${API_CONFIG.BASE_URL}/api/payments/qr-code', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setQrCode(response.data.qrCodeUrl);
@@ -32,7 +33,7 @@ const StudentPayments = () => {
 
   const fetchPayments = useCallback(async () => {
     try {
-      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/payments/my-payments', {
+      const response = await axios.get('${API_CONFIG.BASE_URL}/api/payments/my-payments', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPayments(response.data);
@@ -74,8 +75,8 @@ const StudentPayments = () => {
       }
 
       const url = resubmitPayment
-        ? `https://tuitionapp-yq06.onrender.com/api/payments/resubmit/${resubmitPayment._id}`
-        : 'https://tuitionapp-yq06.onrender.com/api/payments/submit';
+        ? `${API_CONFIG.BASE_URL}/api/payments/resubmit/${resubmitPayment._id}`
+        : '${API_CONFIG.BASE_URL}/api/payments/submit';
 
       const method = resubmitPayment ? 'patch' : 'post';
 
@@ -108,7 +109,7 @@ const StudentPayments = () => {
     if (!window.confirm('Are you sure you want to cancel this payment?')) return;
 
     try {
-      await axios.delete(`https://tuitionapp-yq06.onrender.com/api/payments/cancel/${paymentId}`, {
+      await axios.delete(`${API_CONFIG.BASE_URL}/api/payments/cancel/${paymentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Payment cancelled successfully');
@@ -494,7 +495,7 @@ const StudentPayments = () => {
                   <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     {payment.paymentScreenshot && (
                       <a
-                        href={`https://tuitionapp-yq06.onrender.com${payment.paymentScreenshot}`}
+                        href={`${API_CONFIG.BASE_URL}${payment.paymentScreenshot}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

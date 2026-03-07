@@ -38,7 +38,7 @@ const sendTutorApprovalEmail = async (tutorEmail, tutorName) => {
     <p>Dear ${tutorName},</p>
     <p>We're excited to inform you that your tutor application has been approved!</p>
     <p>You can now log in to your account and start managing classes.</p>
-    <p><a href="http://localhost:3000/login" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login Now</a></p>
+    <p><a href="${process.env.FRONTEND_URL}/login" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login Now</a></p>
     <p>Welcome to the Tuitix family!</p>
     <p>Best regards,<br>Tuitix Team</p>
   `;
@@ -66,7 +66,7 @@ const sendStudentRegistrationEmail = async (studentEmail, studentName) => {
     <p>Dear ${studentName},</p>
     <p>Your registration has been completed successfully!</p>
     <p>You can now access your student dashboard and enroll in classes.</p>
-    <p><a href="http://localhost:3000/login" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login to Dashboard</a></p>
+    <p><a href="${process.env.FRONTEND_URL}/login" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login to Dashboard</a></p>
     <p>Start your learning journey with us!</p>
     <p>Best regards,<br>Tuitix Team</p>
   `;

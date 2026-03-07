@@ -3,6 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import FileList from "../components/FileList";
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const TutorFiles = () => {
   const [files, setFiles] = useState([]);
@@ -23,7 +24,7 @@ const TutorFiles = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
 
-      const res = await axios.get("https://tuitionapp-yq06.onrender.com/api/files", {
+      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/files`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -39,7 +40,7 @@ const TutorFiles = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
 
-      const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`, {
+      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setClasses(res.data);
@@ -67,7 +68,7 @@ const TutorFiles = () => {
     if (uploadData.title) formData.append("title", uploadData.title);
 
     try {
-      await axios.post("https://tuitionapp-yq06.onrender.com/api/files", formData, {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/files`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

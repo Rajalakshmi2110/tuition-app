@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import API_CONFIG from '../config/apiConfig';
 
 const StudentFiles = () => {
   const [enrolledSessions, setEnrolledSessions] = useState([]);
@@ -17,7 +18,7 @@ const StudentFiles = () => {
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
 
-        const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/student/${userId}`, {
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/student/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -38,7 +39,7 @@ const StudentFiles = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get('https://tuitionapp-yq06.onrender.com/api/files', {
+        const res = await axios.get('${API_CONFIG.BASE_URL}/api/files', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -258,7 +259,7 @@ const StudentFiles = () => {
                       </div>
                       <div style={{ flex: 1 }}>
                         <a
-                          href={`https://tuitionapp-yq06.onrender.com/${file.url}`}
+                          href={`${API_CONFIG.BASE_URL}/${file.url}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           style={{

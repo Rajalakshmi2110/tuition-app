@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
-import "./FileUpload.css"; // make sure this path matches your actual CSS file location
+import API_CONFIG from "../../config/apiConfig";
+import "./FileUpload.css";
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -17,7 +18,7 @@ const FileUpload = () => {
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
         
-        const res = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`, {
+        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setClasses(res.data);
@@ -48,7 +49,7 @@ const FileUpload = () => {
     formData.append("classId", selectedClass);
 
     try {
-      await axios.post("https://tuitionapp-yq06.onrender.com/api/files", formData, {
+      await axios.post(`${API_CONFIG.BASE_URL}/api/files`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

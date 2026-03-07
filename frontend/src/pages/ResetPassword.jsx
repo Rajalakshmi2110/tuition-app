@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -29,7 +30,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      await axios.post(`https://tuitionapp-yq06.onrender.com/api/auth/reset-password/${token}`, { password });
+      await axios.post(`${API_CONFIG.BASE_URL}/api/auth/reset-password/${token}`, { password });
       setSuccess(true);
       toast.success('Password reset successful!');
       setTimeout(() => navigate('/login'), 2000);

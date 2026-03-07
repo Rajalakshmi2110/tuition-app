@@ -138,7 +138,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     // Create reset URL pointing to frontend
-    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
     // Try to send email, fallback to console if credentials invalid
     if (process.env.EMAIL_PASS && process.env.EMAIL_PASS !== 'your-16-digit-app-password') {
@@ -228,7 +228,7 @@ const googleAuthSuccess = async (req, res) => {
         name: req.user.name,
         email: req.user.email
       }));
-      return res.redirect(`http://localhost:3000/google-role-selection?userData=${userData}`);
+      return res.redirect(`${process.env.FRONTEND_URL}/google-role-selection?userData=${userData}`);
     }
 
     const token = jwt.sign(
@@ -238,10 +238,10 @@ const googleAuthSuccess = async (req, res) => {
     );
 
     // Redirect to frontend with token
-    res.redirect(`http://localhost:3000/auth/success?token=${token}&role=${req.user.role}`);
+    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}&role=${req.user.role}`);
   } catch (err) {
     console.error('Google Auth Success Error:', err);
-    res.redirect('http://localhost:3000/login?error=auth_failed');
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
   }
 };
 

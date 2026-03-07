@@ -247,7 +247,7 @@ const StudentDashboard = () => {
               {files.map((file) => (
                 <a
                   key={file._id}
-                  href={`https://tuitionapp-yq06.onrender.com/${file.url}`}
+                  href={`${API_CONFIG.BASE_URL}/${file.url}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{

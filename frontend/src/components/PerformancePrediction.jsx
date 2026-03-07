@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import API_CONFIG from '../config/apiConfig';
 
 const PerformancePrediction = () => {
   const [predictions, setPredictions] = useState({});
@@ -12,7 +13,7 @@ const PerformancePrediction = () => {
   const fetchPredictions = useCallback(async () => {
     try {
       const decoded = jwtDecode(token);
-      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/ml/predict/${decoded.id}`, {
+      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/ml/predict/${decoded.id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

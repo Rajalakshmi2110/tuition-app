@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import AdminLayout from '../components/AdminLayout';
+import API_CONFIG from '../config/apiConfig';
 
 const AdminReports = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -16,19 +17,19 @@ const AdminReports = () => {
   const fetchAllReports = useCallback(async () => {
     try {
       const [dashboard, revenue, performance, subjects, payments] = await Promise.all([
-        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/dashboard', {
+        axios.get(`${API_CONFIG.BASE_URL}/api/reports/dashboard`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/revenue-trends', {
+        axios.get(`${API_CONFIG.BASE_URL}/api/reports/revenue-trends`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/performance-by-class', {
+        axios.get(`${API_CONFIG.BASE_URL}/api/reports/performance-by-class`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/subject-performance', {
+        axios.get(`${API_CONFIG.BASE_URL}/api/reports/subject-performance`, {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('https://tuitionapp-yq06.onrender.com/api/reports/payment-distribution', {
+        axios.get(`${API_CONFIG.BASE_URL}/api/reports/payment-distribution`, {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);

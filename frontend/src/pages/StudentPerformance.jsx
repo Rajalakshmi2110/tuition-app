@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useToast } from '../components/Toast';
+import API_CONFIG from '../config/apiConfig';
 
 const StudentPerformance = () => {
   const [performances, setPerformances] = useState([]);
@@ -28,7 +29,7 @@ const StudentPerformance = () => {
   const fetchPerformances = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('https://tuitionapp-yq06.onrender.com/api/performance', {
+      const response = await axios.get('${API_CONFIG.BASE_URL}/api/performance', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPerformances(response.data);
@@ -43,7 +44,7 @@ const StudentPerformance = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('https://tuitionapp-yq06.onrender.com/api/performance', formData, {
+      await axios.post('${API_CONFIG.BASE_URL}/api/performance', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Performance record added successfully!');

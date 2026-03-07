@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import API_CONFIG from '../config/apiConfig';
 
 const TutorStudentProgress = () => {
   const [classesByLevel, setClassesByLevel] = useState({});
@@ -19,7 +20,7 @@ const TutorStudentProgress = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id || decoded._id;
 
-      const classRes = await axios.get(`https://tuitionapp-yq06.onrender.com/api/classes/tutor/${userId}`, {
+      const classRes = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -49,7 +50,7 @@ const TutorStudentProgress = () => {
   const fetchStudentPerformance = async (studentId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://tuitionapp-yq06.onrender.com/api/performance/student/${studentId}`, {
+      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/performance/student/${studentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPerformances(response.data);
