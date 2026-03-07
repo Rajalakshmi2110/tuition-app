@@ -171,8 +171,8 @@ const Home = () => {
         }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '4rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: '3rem',
             alignItems: 'center'
           }}>
             {/* Left Content */}
@@ -195,7 +195,7 @@ const Home = () => {
               </div>
 
               <h1 style={{
-                fontSize: '3.5rem',
+                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                 fontWeight: 800,
                 lineHeight: 1.1,
                 marginBottom: '1.5rem',
@@ -356,8 +356,8 @@ const Home = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.5rem'
           }}>
             {features.map((feature, index) => (
               <div
@@ -473,8 +473,8 @@ const Home = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '2rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.5rem'
           }}>
             {services.map((service, index) => (
               <div
@@ -688,7 +688,7 @@ const Home = () => {
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
             {galleryImages.length === 0 ? (
               // Placeholder cards
               [
@@ -771,7 +771,7 @@ const Home = () => {
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
             fontWeight: 800,
             marginBottom: '1rem',
             letterSpacing: '-0.02em'
@@ -877,17 +877,12 @@ const Home = () => {
           0%, 100% { transform: scale(1); opacity: 0.5; }
           50% { transform: scale(1.1); opacity: 0.8; }
         }
-        
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-15px); }
         }
-        
         @media (max-width: 768px) {
-          .hero-grid {
-            grid-template-columns: 1fr !important;
-            text-align: center;
-          }
+          section { padding-left: 1rem !important; padding-right: 1rem !important; }
         }
       `}</style>
     </div>

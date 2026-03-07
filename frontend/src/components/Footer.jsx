@@ -11,7 +11,7 @@ const Footer = () => {
       style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #064e3b 100%)',
         color: 'white',
-        padding: '3rem 2rem 1.5rem'
+        padding: '3rem 1.5rem 1.5rem'
       }}
     >
       <div style={{
@@ -21,8 +21,8 @@ const Footer = () => {
         {/* Main Content */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '2.5rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: '2rem',
           marginBottom: '2rem'
         }}>
           {/* Brand */}

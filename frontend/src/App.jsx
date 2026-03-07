@@ -41,6 +41,7 @@ import PerformancePrediction from './components/PerformancePrediction';
 import TutorPerformanceAnalytics from './pages/TutorPerformanceAnalytics';
 import AdminReports from './pages/AdminReports';
 import ProtectedRoute from './components/ProtectedRoute';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   return (
@@ -98,6 +99,8 @@ const App = () => {
           <Route path="ai-prediction" element={<PerformancePrediction />} />
         </Route>
 
+        {/* 404 Catch-all */}
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
     </Router>
