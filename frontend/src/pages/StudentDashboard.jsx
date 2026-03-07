@@ -4,11 +4,9 @@ import { jwtDecode } from "jwt-decode";
 import API_CONFIG from "../config/apiConfig";
 
 const StudentDashboard = () => {
-  const [myClasses, setMyClasses] = useState([]);
   const [files, setFiles] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
-  const [showAllClasses, setShowAllClasses] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
 
@@ -36,32 +34,19 @@ const StudentDashboard = () => {
     if (!token) return;
     try {
       const decoded = jwtDecode(token);
-      console.log("Student ID from token:", decoded.id);
-      console.log("Student className from token:", decoded.className);
-      
       const res = await axios.get(
         `${API_CONFIG.BASE_URL}/api/classes`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("All classes:", res.data);
       
-      // Filter classes where student is enrolled OR class matches student's grade level
       const studentClasses = res.data.filter(cls => {
-        // Check if student is in the students array
         const isEnrolled = cls.students && cls.students.some(student => 
           student._id === decoded.id || student._id?.toString() === decoded.id
         );
-        
-        // Also check if class level matches student's className (grade)
         const matchesClassLevel = cls.classLevel === decoded.className;
-        
-        console.log(`Class "${cls.name}" - enrolled: ${isEnrolled}, matchesLevel: ${matchesClassLevel}, classLevel: ${cls.classLevel}`);
-        
         return isEnrolled || matchesClassLevel;
       });
-      
-      console.log("Student's classes:", studentClasses);
-      setMyClasses(studentClasses);
+      // Classes fetched for potential future use
     } catch (err) {
       console.error("Failed to fetch sessions:", err);
     }

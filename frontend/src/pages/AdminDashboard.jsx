@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
@@ -26,7 +26,7 @@ const AdminDashboard = () => {
   const toast = useToast();
   const BASE_URL = API_CONFIG.BASE_URL;
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const token = localStorage.getItem("token");
     try {
       setLoading(true);
@@ -46,9 +46,9 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [BASE_URL, toast]);
 
-  const fetchAnnouncements = async () => {
+  const fetchAnnouncements = useCallback(async () => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.get(`${BASE_URL}/api/announcements`, {
@@ -58,9 +58,9 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [BASE_URL]);
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.get(`${BASE_URL}/api/admin/stats`, {
@@ -70,7 +70,7 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error('Frontend stats error:', err);
     }
-  };
+  }, [BASE_URL]);
 
   const deleteAnnouncement = async (id) => {
     const token = localStorage.getItem("token");
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
     fetchData();
     fetchAnnouncements();
     fetchStats();
-  }, []);
+  }, [fetchData, fetchAnnouncements, fetchStats]);
 
   const approveTutor = async (id) => {
     const token = localStorage.getItem("token");

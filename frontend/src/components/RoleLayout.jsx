@@ -5,7 +5,6 @@ import RoleSidebar from './RoleSidebar';
 const RoleLayout = ({ role }) => {
   const [sidebarWidth, setSidebarWidth] = useState(260);
   const navigate = useNavigate();
-  const userName = localStorage.getItem('userName') || 'User';
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {

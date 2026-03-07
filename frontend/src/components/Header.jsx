@@ -4,7 +4,6 @@ import kalviyagamLogo from '../assets/logo.png';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const token = localStorage.getItem('token');
