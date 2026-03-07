@@ -10,6 +10,9 @@ const {
 
 // Initialize badges (admin only)
 router.post('/init-badges', protect, async (req, res) => {
+  if (req.user?.role !== 'admin') {
+    return res.status(403).json({ message: 'Admin access only' });
+  }
   try {
     await initializeBadges();
     res.json({ message: 'Badges initialized successfully' });

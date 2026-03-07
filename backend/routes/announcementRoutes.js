@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Announcement = require('../models/Announcement');
-const { protect } = require('../Middleware/authMiddleware');
+const { protect, adminOnly } = require('../Middleware/authMiddleware');
 
 // Get all announcements
 router.get('/', protect, async (req, res) => {
@@ -16,12 +16,8 @@ router.get('/', protect, async (req, res) => {
 });
 
 // Create announcement (admin only)
-router.post('/', protect, async (req, res) => {
+router.post('/', protect, adminOnly, async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Only admin can post announcements' });
-    }
-
     const { title, message, type } = req.body;
     const announcement = await Announcement.create({
       title,
@@ -40,12 +36,8 @@ router.post('/', protect, async (req, res) => {
 });
 
 // Delete announcement (admin only)
-router.delete('/:id', protect, async (req, res) => {
+router.delete('/:id', protect, adminOnly, async (req, res) => {
   try {
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ message: 'Only admin can delete announcements' });
-    }
-
     await Announcement.findByIdAndDelete(req.params.id);
     res.json({ message: 'Announcement deleted' });
   } catch (err) {

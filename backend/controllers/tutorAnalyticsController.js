@@ -102,7 +102,7 @@ const getClassAnalytics = async (req, res) => {
 
   } catch (error) {
     console.error('Class analytics error:', error);
-    res.status(500).json({ message: 'Error fetching class analytics', error: error.message });
+    res.status(500).json({ message: 'Error fetching class analytics' });
   }
 };
 
@@ -221,7 +221,7 @@ const getAllClassesAnalytics = async (req, res) => {
 
   } catch (error) {
     console.error('All classes analytics error:', error);
-    res.status(500).json({ message: 'Error fetching analytics', error: error.message });
+    res.status(500).json({ message: 'Error fetching analytics' });
   }
 };
 

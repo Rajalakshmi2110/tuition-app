@@ -67,8 +67,8 @@ const registerUser = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Register User Error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Register User Error:', err.message);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -171,15 +171,11 @@ const forgotPassword = async (req, res) => {
     }
     
     res.status(200).json({ 
-      message: process.env.EMAIL_PASS && process.env.EMAIL_PASS !== 'your-16-digit-app-password' 
-        ? 'Password reset email sent. Check your inbox.' 
-        : 'Password reset link generated. Check server console for URL.',
-      resetUrl: process.env.EMAIL_PASS === 'your-16-digit-app-password' ? resetUrl : undefined
+      message: 'Password reset email sent if account exists.'
     });
   } catch (err) {
     console.error('Forgot Password Error:', err.message);
-    console.error('Full Error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -209,8 +205,7 @@ const resetPassword = async (req, res) => {
     res.status(200).json({ message: 'Password reset successful' });
   } catch (err) {
     console.error('Reset Password Error:', err.message);
-    console.error('Full Error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -312,8 +307,8 @@ const completeGoogleRegistration = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Complete Google Registration Error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    console.error('Complete Google Registration Error:', err.message);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

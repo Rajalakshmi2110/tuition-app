@@ -75,9 +75,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Sanitize filename to prevent path traversal
+const sanitizeFilename = (filename) => path.basename(filename);
+
 // Serve payment screenshots
 app.get('/uploads/payments/:filename', (req, res) => {
-  const filename = req.params.filename;
+  const filename = sanitizeFilename(req.params.filename);
   const filePath = path.join(__dirname, 'uploads', 'payments', filename);
   
   const ext = path.extname(filename).toLowerCase();
@@ -98,7 +101,7 @@ app.get('/uploads/payments/:filename', (req, res) => {
 
 // Serve uploaded files with proper MIME types
 app.get('/uploads/:filename', (req, res) => {
-  const filename = req.params.filename;
+  const filename = sanitizeFilename(req.params.filename);
   const filePath = path.join(__dirname, 'uploads', filename);
   
   // Set proper content type based on file extension
@@ -133,7 +136,7 @@ app.get('/uploads/:filename', (req, res) => {
 
 // Serve gallery images
 app.get('/uploads/gallery/:filename', (req, res) => {
-  const filename = req.params.filename;
+  const filename = sanitizeFilename(req.params.filename);
   const filePath = path.join(__dirname, 'uploads', 'gallery', filename);
   
   const ext = path.extname(filename).toLowerCase();

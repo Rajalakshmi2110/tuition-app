@@ -2,9 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const StudentClass = require("../models/StudentClass");
+const { protect, adminOnly } = require("../Middleware/authMiddleware");
 
-// Admin/manual endpoint to create student-class link
-router.post("/", async (req, res) => {
+// Admin endpoint to create student-class link
+router.post("/", protect, adminOnly, async (req, res) => {
   try {
     const { studentId, classId } = req.body;
     if (!studentId || !classId) {

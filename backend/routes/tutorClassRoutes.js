@@ -2,9 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const TutorClass = require("../models/TutorClass");
+const { protect, adminOnly } = require("../Middleware/authMiddleware");
 
-// Admin/manual endpoint to create tutor-class link
-router.post("/", async (req, res) => {
+// Admin endpoint to create tutor-class link
+router.post("/", protect, adminOnly, async (req, res) => {
   try {
     const { tutorId, classId } = req.body;
     const newTutorClass = await TutorClass.create({ tutorId, classId });
@@ -16,7 +17,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all classes assigned to a tutor with enrolled students
-router.get("/:tutorId", async (req, res) => {
+router.get("/:tutorId", protect, async (req, res) => {
   try {
     const tutorLinks = await TutorClass.find({ tutorId: req.params.tutorId })
       .populate({

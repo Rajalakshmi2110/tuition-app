@@ -5,7 +5,7 @@ const File = require('../models/File');
 const Class = require('../models/Class');
 const { protect } = require('../Middleware/authMiddleware');
 
-// Multer setup with file extension preservation
+// Multer setup with file extension preservation and limits
 const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
@@ -13,7 +13,18 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + Date.now() + '.' + ext);
   }
 });
-const upload = multer({ storage });
+const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif', 'text/plain',
+  'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    if (allowedTypes.includes(file.mimetype)) cb(null, true);
+    else cb(new Error('File type not allowed'), false);
+  }
+});
 
 // Upload file
 router.post('/', protect, upload.single('file'), async (req, res) => {

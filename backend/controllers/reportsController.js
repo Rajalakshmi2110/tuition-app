@@ -72,7 +72,7 @@ const getDashboardAnalytics = async (req, res) => {
 
   } catch (error) {
     console.error('Dashboard analytics error:', error);
-    res.status(500).json({ message: 'Error fetching dashboard analytics', error: error.message });
+    res.status(500).json({ message: 'Error fetching dashboard analytics' });
   }
 };
 
@@ -104,7 +104,7 @@ const getRevenueTrends = async (req, res) => {
     res.json({ trends });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching revenue trends', error: error.message });
+    res.status(500).json({ message: 'Error fetching revenue trends' });
   }
 };
 
@@ -136,7 +136,7 @@ const getPerformanceByClass = async (req, res) => {
     res.json({ performanceByClass: performanceData });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching performance by class', error: error.message });
+    res.status(500).json({ message: 'Error fetching performance by class' });
   }
 };
 
@@ -161,7 +161,7 @@ const getSubjectPerformance = async (req, res) => {
     res.json({ subjectPerformance: subjectData });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching subject performance', error: error.message });
+    res.status(500).json({ message: 'Error fetching subject performance' });
   }
 };
 
@@ -191,7 +191,7 @@ const getPaymentDistribution = async (req, res) => {
     res.json({ paymentDistribution: distribution });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching payment distribution', error: error.message });
+    res.status(500).json({ message: 'Error fetching payment distribution' });
   }
 };
 
@@ -231,7 +231,7 @@ const getTutorPerformance = async (req, res) => {
     res.json({ tutorPerformance: tutorData });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching tutor performance', error: error.message });
+    res.status(500).json({ message: 'Error fetching tutor performance' });
   }
 };
 
@@ -265,7 +265,7 @@ const generateCustomReport = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ message: 'Error generating report', error: error.message });
+    res.status(500).json({ message: 'Error generating report' });
   }
 };
 

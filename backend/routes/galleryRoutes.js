@@ -58,7 +58,7 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
     res.status(201).json(gallery);
   } catch (err) {
     console.error('Gallery upload error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 

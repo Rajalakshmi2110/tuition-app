@@ -12,7 +12,7 @@ const getPaymentQR = async (req, res) => {
     const qrCodeUrl = process.env.GPAY_QR_URL || 'https://via.placeholder.com/300x300?text=GPay+QR+Code';
     res.json({ qrCodeUrl, instructions: 'Scan this QR code to pay your fees, then upload payment screenshot' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -74,7 +74,7 @@ const submitPayment = async (req, res) => {
     });
   } catch (error) {
     console.error('Submit payment error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -88,7 +88,7 @@ const getStudentPayments = async (req, res) => {
 
     res.json(payments);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -101,7 +101,7 @@ const getPendingPayments = async (req, res) => {
 
     res.json(payments);
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -137,7 +137,7 @@ const verifyPayment = async (req, res) => {
     res.json({ message: `Payment ${status} successfully`, payment });
   } catch (error) {
     console.error('Verify payment error:', error);
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -155,7 +155,7 @@ const cancelPayment = async (req, res) => {
     await Payment.findByIdAndDelete(paymentId);
     res.json({ message: 'Payment cancelled successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -193,7 +193,7 @@ const resubmitPayment = async (req, res) => {
     await payment.save();
     res.json({ message: 'Payment resubmitted successfully', payment });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -230,7 +230,7 @@ const getPaymentStats = async (req, res) => {
       stats
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -266,7 +266,7 @@ const sendPaymentReminders = async (req, res) => {
       remindersSent
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

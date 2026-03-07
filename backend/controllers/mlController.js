@@ -404,7 +404,7 @@ const getStudentPrediction = async (req, res) => {
 
   } catch (error) {
     console.error('Prediction error:', error);
-    res.status(500).json({ message: 'Error generating prediction', error: error.message });
+    res.status(500).json({ message: 'Error generating prediction' });
   }
 };
 
@@ -428,7 +428,7 @@ const getAllPredictions = async (req, res) => {
       predictions
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching predictions', error: error.message });
+    res.status(500).json({ message: 'Error fetching predictions' });
   }
 };
 
@@ -464,7 +464,7 @@ const updateAllPredictions = async (req, res) => {
       total: students.length
     });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating predictions', error: error.message });
+    res.status(500).json({ message: 'Error updating predictions' });
   }
 };
 

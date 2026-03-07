@@ -20,7 +20,10 @@ const storage = multer.diskStorage({
     cb(null, 'assignment-' + Date.now() + '.' + ext);
   }
 });
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 }
+});
 
 // Tutor routes
 router.post('/', protect, tutorOnly, createAssignment);
