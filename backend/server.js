@@ -8,11 +8,19 @@ const fs = require('fs');
 // Load environment variables first
 require('dotenv').config();
 
+// Validate required env vars on startup
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET'];
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`FATAL: Missing required environment variable: ${envVar}`);
+    process.exit(1);
+  }
+}
+
 // Then load passport config (which needs env vars)
 const passport = require('./config/passport');
-console.log("Loaded MONGO_URI:", process.env.MONGO_URI);
+const rateLimit = require('express-rate-limit');
 console.log("JWT_SECRET exists:", !!process.env.JWT_SECRET);
-console.log("EMAIL_USER exists:", !!process.env.EMAIL_USER);
 console.log("NODE_ENV:", process.env.NODE_ENV);
 
 const app = express();
@@ -35,7 +43,7 @@ if (!fs.existsSync(galleryDir)) fs.mkdirSync(galleryDir);
 
 // Session middleware for Passport
 app.use(session({
-  secret: process.env.JWT_SECRET || 'mysecretkey',
+  secret: process.env.JWT_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -142,7 +150,12 @@ const tutorRoutes = require('./routes/tutorRoutes');
 app.use('/api/tutors', tutorRoutes);
 
 const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes);
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // 20 attempts per window
+  message: { message: 'Too many attempts, please try again after 15 minutes' }
+});
+app.use('/api/auth', authLimiter, authRoutes);
 
 const classAssignmentRoutes = require("./routes/classAssignmentRoutes");
 app.use("/api/class", classAssignmentRoutes);

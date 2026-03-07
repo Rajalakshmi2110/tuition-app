@@ -9,17 +9,9 @@ const protect = async (req, res, next) => {
     try {
       token = req.headers.authorization.split(" ")[1];
 
-      // 🔹 Debug logs must be INSIDE the function
-      console.log("Authorization header:", req.headers.authorization);
-      console.log("Extracted token:", token);
-      console.log("JWT_SECRET being used:", process.env.JWT_SECRET || "mysecretkey");
-
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || "mysecretkey");
-
-      console.log("Decoded token payload:", decoded);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.id).select("-password");
-      console.log("User from DB:", req.user);
 
       next();
     } catch (err) {
@@ -46,7 +38,6 @@ const tutorOnly = (req, res, next) => {
 
 const authorize = (...roles) => {
   return (req, res, next) => {
-    console.log("User role:", req.user.role);
     if (!roles.includes(req.user?.role)) {
       return res.status(403).json({ message: `Role ${req.user?.role} not authorized` });
     }

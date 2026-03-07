@@ -75,27 +75,22 @@ const registerUser = async (req, res) => {
 // LOGIN
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log('LoginUser - Email:', email, 'Password exists:', !!password);
 
   try {
     if (!email || !password) {
-      console.log('Missing credentials - Email:', !!email, 'Password:', !!password);
       return res.status(400).json({ message: 'Email and password are required' });
     }
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: 'Invalid email or password' });
 
-    // If user has no password (Google OAuth user), set a default password
+    // Google OAuth users must use Google login, not password
     if (!user.password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
-      await user.save();
-    } else {
-      // Check existing password
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ message: 'This account uses Google login. Please sign in with Google.' });
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
     if (user.role === 'tutor') {
       if (user.status === 'pending') return res.status(403).json({ message: 'Your account is pending approval.' });
@@ -104,7 +99,7 @@ const loginUser = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, role: user.role, className: user.className },
-      process.env.JWT_SECRET || 'mysecretkey',
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
@@ -197,20 +192,14 @@ const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
     
-    console.log('Reset token received:', token);
-    console.log('Password provided:', password ? 'Yes' : 'No');
-
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() }
     });
 
     if (!user) {
-      console.log('No user found with token:', token);
       return res.status(400).json({ message: 'Invalid or expired token' });
     }
-    
-    console.log('User found for reset:', user.email);
 
     // Hash new password
     const salt = await bcrypt.genSalt(10);
@@ -244,7 +233,7 @@ const googleAuthSuccess = async (req, res) => {
 
     const token = jwt.sign(
       { id: req.user._id, role: req.user.role, className: req.user.className },
-      process.env.JWT_SECRET || 'mysecretkey',
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
@@ -303,7 +292,7 @@ const completeGoogleRegistration = async (req, res) => {
     if (role === 'student' || (role === 'tutor' && user.status === 'approved')) {
       const token = jwt.sign(
         { id: user._id, role: user.role, className: user.className },
-        process.env.JWT_SECRET || 'mysecretkey',
+        process.env.JWT_SECRET,
         { expiresIn: '1h' }
       );
 
