@@ -2,9 +2,6 @@ const Class = require("../models/Class");
 const TutorClass = require("../models/TutorClass");
 const StudentClass = require("../models/StudentClass");
 const User = require("../models/User");
-const Class = require("../models/Class");
-const TutorClass = require("../models/TutorClass");
-const StudentClass = require("../models/StudentClass");
 
 const createClass = async (req, res) => {
   try {
@@ -85,8 +82,7 @@ const getTutorClasses = async (req, res) => {
     console.log("Classes found:", classes);
     res.status(200).json(classes);
   } catch (err) {
-    console.error(err);
-    console.log("Classes found:", classes);
+    console.error('Get tutor classes error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };

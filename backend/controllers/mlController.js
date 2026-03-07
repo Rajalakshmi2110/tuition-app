@@ -440,10 +440,18 @@ const updateAllPredictions = async (req, res) => {
 
     for (const student of students) {
       try {
-        // Trigger prediction for each student
-        await axios.get(`https://tuitionapp-yq06.onrender.com/api/ml/predict/${student._id}`, {
-          headers: { Authorization: req.headers.authorization }
-        });
+        // Build a mock req/res to reuse getStudentPrediction logic locally
+        const mockReq = {
+          params: { studentId: student._id },
+          query: {},
+          user: req.user,
+          headers: req.headers
+        };
+        const mockRes = {
+          json: () => {},
+          status: () => ({ json: () => {} })
+        };
+        await getStudentPrediction(mockReq, mockRes);
         updated++;
       } catch (error) {
         console.error(`Failed to update prediction for student ${student._id}:`, error.message);
