@@ -22,7 +22,6 @@ const AdminCreateClass = () => {
     const fetchTutors = async () => {
       try {
         const res = await api.get(`/users/tutors`);
-        console.log('Tutors response:', res.data);
         setTutors(res.data.tutors || []);
       } catch (error) {
         console.error('Failed to fetch tutors', error.response?.data || error.message);

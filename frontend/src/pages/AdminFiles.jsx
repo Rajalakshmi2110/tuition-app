@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from '../services/api';
 import API_CONFIG from '../config/apiConfig';
 import AdminLayout from '../components/AdminLayout';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AdminFiles = () => {
   const [files, setFiles] = useState([]);
@@ -14,7 +15,6 @@ const AdminFiles = () => {
     const fetchFiles = async () => {
       try {
         const res = await api.get(`/files`);
-        console.log('Files response:', res.data);
         setFiles(res.data);
       } catch (err) {
         console.error('Error details:', err.response?.data || err.message);
@@ -33,56 +33,14 @@ const AdminFiles = () => {
     try {
       await api.delete(`/files/${fileId}`);
       setFiles(files.filter(f => f._id !== fileId));
-      alert("File deleted successfully");
     } catch (err) {
-      alert("Failed to delete file");
       console.error(err);
     }
   };
 
   // Loading State Component
   const LoadingState = () => (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '4rem 2rem',
-      background: 'white',
-      borderRadius: '16px',
-      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-      border: '1px solid #e2e8f0'
-    }}>
-      <div style={{
-        width: '48px',
-        height: '48px',
-        border: '3px solid #e2e8f0',
-        borderTopColor: '#10b981',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite',
-        marginBottom: '1rem'
-      }} />
-      <p style={{
-        color: '#64748b',
-        fontSize: '1rem',
-        fontWeight: 500,
-        margin: 0
-      }}>
-        Loading files...
-      </p>
-      <p style={{
-        color: '#94a3b8',
-        fontSize: '0.85rem',
-        margin: '0.5rem 0 0 0'
-      }}>
-        Please wait while we fetch your data
-      </p>
-      <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
-    </div>
+    <LoadingSpinner message="Loading files..." fullPage />
   );
 
   // Error State Component
@@ -368,7 +326,8 @@ const AdminFiles = () => {
             border: '1px solid #e2e8f0',
             overflow: 'hidden'
           }}>
-            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", minWidth: '600px' }}>
               <thead>
                 <tr style={{ background: '#f8fafc' }}>
                   <th style={{
@@ -513,6 +472,7 @@ const AdminFiles = () => {
                 ))}
               </tbody>
             </table>
+          </div>
           </div>
           );
         })()}

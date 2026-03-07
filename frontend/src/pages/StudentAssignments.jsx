@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useToast } from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const StudentAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -89,26 +90,7 @@ const StudentAssignments = () => {
   };
 
   if (loading) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh'
-      }}>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          border: '3px solid #e2e8f0',
-          borderTopColor: '#10b981',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading assignments...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <LoadingSpinner message="Loading assignments..." fullPage />;
   }
 
   return (
@@ -335,7 +317,8 @@ const StudentAssignments = () => {
               <p style={{ color: '#64748b' }}>Submit your first assignment to see it here.</p>
             </div>
           ) : (
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '650px' }}>
               <thead>
                 <tr style={{ background: '#f8fafc' }}>
                   <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Assignment</th>
@@ -389,6 +372,7 @@ const StudentAssignments = () => {
                 })}
               </tbody>
             </table>
+            </div>
           )}
         </div>
       )}

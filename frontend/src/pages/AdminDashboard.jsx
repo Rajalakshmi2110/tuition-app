@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("student");
@@ -199,33 +200,8 @@ const AdminDashboard = () => {
     }
   ];
 
-  // Loading State
   const LoadingState = () => (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '4rem 2rem',
-      background: 'white',
-      borderRadius: '16px',
-      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-      border: '1px solid #e2e8f0'
-    }}>
-      <div style={{
-        width: '48px',
-        height: '48px',
-        border: '3px solid #e2e8f0',
-        borderTopColor: '#10b981',
-        borderRadius: '50%',
-        animation: 'spin 1s linear infinite',
-        marginBottom: '1rem'
-      }} />
-      <p style={{ color: '#64748b', fontSize: '1rem', fontWeight: 500, margin: 0 }}>
-        Loading {type} data...
-      </p>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-    </div>
+    <LoadingSpinner message={`Loading ${type} data...`} fullPage />
   );
 
   return (

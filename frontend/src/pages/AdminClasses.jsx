@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AdminClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -42,24 +43,7 @@ const AdminClasses = () => {
 
   if (loading) return (
     <AdminLayout>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh'
-      }}>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          border: '3px solid #e2e8f0',
-          borderTopColor: '#10b981',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading sessions...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
+      <LoadingSpinner message="Loading sessions..." fullPage />
     </AdminLayout>
   );
 

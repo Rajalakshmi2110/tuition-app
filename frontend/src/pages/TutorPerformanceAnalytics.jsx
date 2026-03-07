@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const TutorPerformanceAnalytics = () => {
   const [classAnalytics, setClassAnalytics] = useState([]);
@@ -71,26 +72,7 @@ const TutorPerformanceAnalytics = () => {
   };
 
   if (loading && !classDetails) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '50vh'
-      }}>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          border: '3px solid #e2e8f0',
-          borderTopColor: '#10b981',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading analytics...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <LoadingSpinner message="Loading analytics..." fullPage />;
   }
 
   const overviewCards = [
@@ -218,7 +200,7 @@ const TutorPerformanceAnalytics = () => {
           {/* Classes Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '1.5rem'
           }}>
             {classAnalytics.map((classData) => (

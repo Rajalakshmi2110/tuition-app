@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AdminReports = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -64,7 +65,6 @@ const AdminReports = () => {
     return (
       <AdminLayout>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          {/* Header */}
           <div style={{ marginBottom: '2rem' }}>
             <h2 style={{
               fontSize: '1.5rem',
@@ -86,35 +86,8 @@ const AdminReports = () => {
               Track performance, revenue, and student progress
             </p>
           </div>
-
-          {/* Loading Card */}
-          <div style={{
-            background: 'white',
-            padding: '4rem 2rem',
-            borderRadius: '16px',
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <div style={{
-              width: '48px',
-              height: '48px',
-              border: '3px solid #e2e8f0',
-              borderTopColor: '#10b981',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-              marginBottom: '1rem'
-            }} />
-            <p style={{ color: '#64748b', margin: 0, fontWeight: 500 }}>Loading reports...</p>
-            <p style={{ color: '#94a3b8', margin: '0.5rem 0 0', fontSize: '0.85rem' }}>
-              Please wait while we fetch your analytics data
-            </p>
-          </div>
+          <LoadingSpinner message="Loading reports..." fullPage />
         </div>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </AdminLayout>
     );
   }
@@ -401,7 +374,7 @@ const AdminReports = () => {
         {activeTab === 'performance' && (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '1.5rem'
           }}>
             {/* By Class */}
