@@ -282,7 +282,8 @@ const StudentPerformance = () => {
         border: '1px solid #e2e8f0',
         overflow: 'hidden'
       }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '700px' }}>
           <thead>
             <tr style={{ background: '#f8fafc' }}>
               <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Subject</th>
@@ -336,6 +337,7 @@ const StudentPerformance = () => {
             })}
           </tbody>
         </table>
+        </div>
 
         {performances.length === 0 && (
           <EmptyState

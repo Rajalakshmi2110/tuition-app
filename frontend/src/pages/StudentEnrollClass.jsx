@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const StudentEnrollClass = () => {
   const [availableSessions, setAvailableSessions] = useState([]);
@@ -9,8 +10,6 @@ const StudentEnrollClass = () => {
   const [selectedSession, setSelectedSession] = useState(null);
 
   const fetchSessions = useCallback(async () => {
-    
-
     try {
       const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
@@ -104,27 +103,7 @@ const StudentEnrollClass = () => {
   };
 
   if (loading) {
-    return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '60vh',
-        gap: '1rem'
-      }}>
-        <div style={{
-          width: '48px',
-          height: '48px',
-          border: '3px solid #e2e8f0',
-          borderTopColor: '#10b981',
-          borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite'
-        }} />
-        <p style={{ color: '#64748b', fontWeight: 500 }}>Loading sessions...</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
-    );
+    return <LoadingSpinner message="Loading sessions..." fullPage />;
   }
 
   return (

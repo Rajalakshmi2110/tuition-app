@@ -169,7 +169,7 @@ const About = () => {
             About Kalviyagam
           </span>
           <h1 style={{
-            fontSize: '3rem',
+            fontSize: 'clamp(1.75rem, 5vw, 3rem)',
             fontWeight: 800,
             marginBottom: '1.5rem',
             letterSpacing: '-0.02em',
@@ -313,7 +313,7 @@ const About = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '1.5rem'
           }}>
             {features.map((feature, index) => (
