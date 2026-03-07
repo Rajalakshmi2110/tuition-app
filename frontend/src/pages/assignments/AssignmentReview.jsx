@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import SubmissionCard from "../../components/assignments/SubmissionCard";
 
 const AssignmentReview = ({ assignmentId }) => {
@@ -8,7 +8,7 @@ const AssignmentReview = ({ assignmentId }) => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const res = await axios.get(`/api/assignments/${assignmentId}`);
+        const res = await api.get(`/assignments/${assignmentId}`);
         setSubmissions(res.data.submissions || []);
       } catch (err) {
         console.error("Error fetching submissions:", err);

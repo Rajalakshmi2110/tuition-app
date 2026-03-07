@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import {jwtDecode} from "jwt-decode";
-import API_CONFIG from "../../config/apiConfig";
 import "./FileUpload.css";
 
 const FileUpload = () => {
@@ -9,18 +8,15 @@ const FileUpload = () => {
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState("");
   const [message, setMessage] = useState("");
-  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    // Fetch classes for this tutor
     const fetchClasses = async () => {
       try {
+        const token = localStorage.getItem("token");
         const decoded = jwtDecode(token);
         const userId = decoded.id || decoded._id;
         
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/classes/tutor/${userId}`);
         setClasses(res.data);
         if (res.data.length > 0) setSelectedClass(res.data[0]._id);
       } catch (err) {
@@ -28,7 +24,7 @@ const FileUpload = () => {
       }
     };
     fetchClasses();
-  }, [token]);
+  }, []);
 
   const onFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -49,9 +45,8 @@ const FileUpload = () => {
     formData.append("classId", selectedClass);
 
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/files`, formData, {
+      await api.post(`/files`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });

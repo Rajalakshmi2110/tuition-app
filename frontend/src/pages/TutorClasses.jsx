@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import API_CONFIG from "../config/apiConfig";
 
 const TutorClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -69,7 +68,7 @@ const TutorClasses = () => {
   useEffect(() => {
     const fetchTutorClasses = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
         if (!token) return;
 
         const decoded = jwtDecode(token);
@@ -77,22 +76,18 @@ const TutorClasses = () => {
 
         let tutorClasses = [];
 
-        // Try dedicated tutor endpoint first
         try {
-          const res = await axios.get(
-            `${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`,
-            { headers: { Authorization: `Bearer ${token}` } }
+          const res = await api.get(
+            `/classes/tutor/${userId}`
           );
           tutorClasses = res.data || [];
         } catch (tutorErr) {
           console.error("Tutor endpoint failed:", tutorErr);
         }
 
-        // Fallback: fetch all classes and filter
         if (tutorClasses.length === 0) {
-          const allRes = await axios.get(
-            `${API_CONFIG.BASE_URL}/api/classes`,
-            { headers: { Authorization: `Bearer ${token}` } }
+          const allRes = await api.get(
+            `/classes`
           );
           
           tutorClasses = allRes.data.filter(cls => {

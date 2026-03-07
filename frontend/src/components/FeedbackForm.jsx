@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from './Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const FeedbackForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -18,7 +17,7 @@ const FeedbackForm = ({ onClose }) => {
     setSubmitting(true);
 
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/feedback`, formData);
+      await api.post(`/feedback`, formData);
       toast.success('Thank you for your feedback! It will be reviewed soon.');
       onClose();
     } catch (err) {

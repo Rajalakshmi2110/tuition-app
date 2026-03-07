@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 import { jwtDecode } from "jwt-decode";
-import API_CONFIG from "../config/apiConfig";
 
 const StudentDashboard = () => {
   const [files, setFiles] = useState([]);
@@ -9,8 +9,6 @@ const StudentDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
-
-  const token = localStorage.getItem("token");
 
   // Clock Effect
   useEffect(() => {
@@ -31,13 +29,9 @@ const StudentDashboard = () => {
 
   // Fetch student's sessions
   const fetchClasses = useCallback(async () => {
-    if (!token) return;
     try {
-      const decoded = jwtDecode(token);
-      const res = await axios.get(
-        `${API_CONFIG.BASE_URL}/api/classes`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const decoded = jwtDecode(localStorage.getItem('token'));
+      const res = await api.get(`/classes`);
       
       const studentClasses = res.data.filter(cls => {
         const isEnrolled = cls.students && cls.students.some(student => 
@@ -46,25 +40,17 @@ const StudentDashboard = () => {
         const matchesClassLevel = cls.classLevel === decoded.className;
         return isEnrolled || matchesClassLevel;
       });
-      // Classes fetched for potential future use
     } catch (err) {
       console.error("Failed to fetch sessions:", err);
     }
-  }, [token]);
+  }, []);
 
   // Fetch files
   const fetchFiles = useCallback(async () => {
-    if (!token) return;
     try {
-      const decoded = jwtDecode(token);
-      const res = await axios.get(
-        `${API_CONFIG.BASE_URL}/api/files`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      const classRes = await axios.get(
-        `${API_CONFIG.BASE_URL}/api/classes`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const decoded = jwtDecode(localStorage.getItem('token'));
+      const res = await api.get(`/files`);
+      const classRes = await api.get(`/classes`);
       
       // Get classes where student is enrolled OR matches class level
       const studentClassIds = classRes.data
@@ -84,21 +70,16 @@ const StudentDashboard = () => {
     } catch (err) {
       console.error("Failed to fetch files:", err);
     }
-  }, [token]);
+  }, []);
 
-  // Fetch announcements
   const fetchAnnouncements = useCallback(async () => {
-    if (!token) return;
     try {
-      const res = await axios.get(
-        `${API_CONFIG.BASE_URL}/api/announcements`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
       console.error("Failed to fetch announcements:", err);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {

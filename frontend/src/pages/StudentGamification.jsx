@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
-import API_CONFIG from '../config/apiConfig';
 
 const StudentGamification = () => {
   const [stats, setStats] = useState(null);
@@ -11,23 +10,15 @@ const StudentGamification = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem('token');
-
   const fetchGamificationData = useCallback(async () => {
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
 
       const [statsRes, leaderboardRes, badgesRes] = await Promise.all([
-        axios.get(`${API_CONFIG.BASE_URL}/api/gamification/stats/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get('${API_CONFIG.BASE_URL}/api/gamification/leaderboard', {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get('${API_CONFIG.BASE_URL}/api/gamification/badges', {
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        api.get(`/gamification/stats/${userId}`),
+        api.get(`/gamification/leaderboard`),
+        api.get(`/gamification/badges`)
       ]);
 
       setStats(statsRes.data.stats);
@@ -39,7 +30,7 @@ const StudentGamification = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchGamificationData();

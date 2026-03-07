@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
@@ -30,7 +29,7 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/auth/reset-password/${token}`, { password });
+      await api.post(`/auth/reset-password/${token}`, { password });
       setSuccess(true);
       toast.success('Password reset successful!');
       setTimeout(() => navigate('/login'), 2000);

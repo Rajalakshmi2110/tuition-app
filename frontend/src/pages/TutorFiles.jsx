@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
 import FileList from "../components/FileList";
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const TutorFiles = () => {
   const [files, setFiles] = useState([]);
@@ -15,39 +14,33 @@ const TutorFiles = () => {
     title: ''
   });
   const [uploading, setUploading] = useState(false);
-
-  const token = localStorage.getItem("token");
   const toast = useToast();
 
   const fetchFiles = useCallback(async () => {
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
 
-      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/files`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/files`);
 
       const tutorFiles = res.data.filter(file => file.uploadedBy?._id === userId);
       setFiles(tutorFiles);
     } catch (err) {
       console.error("Failed to fetch files", err);
     }
-  }, [token]);
+  }, []);
 
   const fetchClasses = useCallback(async () => {
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
 
-      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/classes/tutor/${userId}`);
       setClasses(res.data);
     } catch (err) {
       console.error("Failed to load classes", err);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchFiles();
@@ -68,9 +61,8 @@ const TutorFiles = () => {
     if (uploadData.title) formData.append("title", uploadData.title);
 
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/files`, formData, {
+      await api.post(`/files`, formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { useToast } from '../components/Toast';
+import api from '../services/api';
 import API_CONFIG from '../config/apiConfig';
+import { useToast } from '../components/Toast';
 
 const StudentPayments = () => {
   const [qrCode, setQrCode] = useState('');
@@ -16,31 +16,25 @@ const StudentPayments = () => {
     paymentScreenshot: null
   });
   const [resubmitPayment, setResubmitPayment] = useState(null);
-
-  const token = localStorage.getItem('token');
   const toast = useToast();
 
   const fetchQRCode = useCallback(async () => {
     try {
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/payments/qr-code', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/payments/qr-code`);
       setQrCode(response.data.qrCodeUrl);
     } catch (error) {
       console.error('Error fetching QR code:', error);
     }
-  }, [token]);
+  }, []);
 
   const fetchPayments = useCallback(async () => {
     try {
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/payments/my-payments', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/payments/my-payments`);
       setPayments(response.data);
     } catch (error) {
       console.error('Error fetching payments:', error);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchQRCode();
@@ -75,14 +69,13 @@ const StudentPayments = () => {
       }
 
       const url = resubmitPayment
-        ? `${API_CONFIG.BASE_URL}/api/payments/resubmit/${resubmitPayment._id}`
-        : '${API_CONFIG.BASE_URL}/api/payments/submit';
+        ? `/payments/resubmit/${resubmitPayment._id}`
+        : `/payments/submit`;
 
       const method = resubmitPayment ? 'patch' : 'post';
 
-      await axios[method](url, submitData, {
+      await api[method](url, submitData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -109,9 +102,7 @@ const StudentPayments = () => {
     if (!window.confirm('Are you sure you want to cancel this payment?')) return;
 
     try {
-      await axios.delete(`${API_CONFIG.BASE_URL}/api/payments/cancel/${paymentId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/payments/cancel/${paymentId}`);
       toast.success('Payment cancelled successfully');
       fetchPayments();
     } catch (error) {

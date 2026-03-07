@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminCreateClass = () => {
   const [formData, setFormData] = useState({
@@ -22,13 +21,7 @@ const AdminCreateClass = () => {
   useEffect(() => {
     const fetchTutors = async () => {
       try {
-        const token = localStorage.getItem('token');
-        console.log('Fetching tutors from:', `${API_CONFIG.BASE_URL}/api/users/tutors`);
-        console.log('Token exists:', !!token);
-        
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/users/tutors`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/users/tutors`);
         console.log('Tutors response:', res.data);
         setTutors(res.data.tutors || []);
       } catch (error) {
@@ -46,16 +39,13 @@ const AdminCreateClass = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/create`, {
+      await api.post(`/classes/create`, {
         name: formData.name,
         subject: formData.subject,
         schedule: formData.schedule,
         scheduledDate: formData.scheduledDate,
         tutor: formData.tutorId,
         classLevel: formData.classLevel,
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Session created successfully!');
       setFormData({ name: '', subject: '', schedule: '', scheduledDate: '', tutorId: '', classLevel: '' });

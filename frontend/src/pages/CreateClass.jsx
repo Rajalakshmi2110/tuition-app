@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 
 const CreateClass = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +17,7 @@ const CreateClass = () => {
   useEffect(() => {
     const fetchTutors = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get('${API_CONFIG.BASE_URL}/api/users/tutors', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/users/tutors`);
         setTutors(res.data.tutors);
       } catch (err) {
         console.error('Error fetching tutors:', err);
@@ -36,7 +33,6 @@ const CreateClass = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
       const payload = {
         name: formData.name,
         subject: formData.subject,
@@ -44,9 +40,7 @@ const CreateClass = () => {
         tutor: formData.tutorId,
         classLevel: formData.classLevel,
       };
-      await axios.post('${API_CONFIG.BASE_URL}/api/classes/create', payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.post(`/classes/create`, payload);
       alert('Class created successfully!');
       setFormData({ name: '', subject: '', schedule: '', tutorId: '', classLevel: '' });
     } catch (err) {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminGallery = () => {
   const [images, setImages] = useState([]);
@@ -21,11 +21,8 @@ const AdminGallery = () => {
   }, []);
 
   const fetchImages = async () => {
-    const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/gallery`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/gallery`);
       setImages(res.data);
     } catch (err) {
       console.error('Error fetching images:', err);
@@ -37,7 +34,6 @@ const AdminGallery = () => {
     if (!selectedFile) return;
 
     setUploading(true);
-    const token = localStorage.getItem('token');
     const uploadData = new FormData();
     uploadData.append('image', selectedFile);
     uploadData.append('title', formData.title);
@@ -45,10 +41,9 @@ const AdminGallery = () => {
     uploadData.append('category', formData.category);
 
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/gallery`, uploadData, {
+      await api.post(`/gallery`, uploadData, {
         headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data'
         },
       });
       toast.success('Image uploaded successfully!');
@@ -66,12 +61,8 @@ const AdminGallery = () => {
 
   const deleteImage = async (id) => {
     if (!window.confirm('Are you sure you want to delete this image?')) return;
-
-    const token = localStorage.getItem('token');
     try {
-      await axios.delete(`${API_CONFIG.BASE_URL}/api/gallery/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/gallery/${id}`);
       toast.success('Image deleted successfully!');
       fetchImages();
     } catch (err) {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const StudentPerformance = () => {
   const [performances, setPerformances] = useState([]);
@@ -28,10 +27,7 @@ const StudentPerformance = () => {
 
   const fetchPerformances = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/performance', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/performance`);
       setPerformances(response.data);
     } catch (error) {
       console.error('Error fetching performances:', error);
@@ -43,10 +39,7 @@ const StudentPerformance = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      await axios.post('${API_CONFIG.BASE_URL}/api/performance', formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/performance`, formData);
       toast.success('Performance record added successfully!');
       setFormData({
         subject: '', examType: '', totalMarks: '', obtainedMarks: '',

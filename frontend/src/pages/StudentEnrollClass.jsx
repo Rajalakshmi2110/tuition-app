@@ -1,26 +1,22 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
-import API_CONFIG from "../config/apiConfig";
 
 const StudentEnrollClass = () => {
   const [availableSessions, setAvailableSessions] = useState([]);
   const [enrolledSessions, setEnrolledSessions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedSession, setSelectedSession] = useState(null);
-  const token = localStorage.getItem("token");
 
   const fetchSessions = useCallback(async () => {
-    if (!token) return;
+    
 
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
       const studentClassName = decoded.className;
 
-      const allSessionsRes = await axios.get(`${API_CONFIG.BASE_URL}/api/classes`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const allSessionsRes = await api.get(`/classes`);
 
       const enrolled = [];
       const available = [];
@@ -46,7 +42,7 @@ const StudentEnrollClass = () => {
       console.error("Failed to fetch sessions:", err);
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchSessions();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
 import API_CONFIG from '../config/apiConfig';
 
@@ -10,17 +10,13 @@ const StudentFiles = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
     async function fetchSessions() {
       try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(localStorage.getItem('token'));
         const userId = decoded.id || decoded._id;
 
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/student/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/classes/student/${userId}`);
 
         setEnrolledSessions(res.data);
         if (res.data.length > 0) setSelectedSessionId(res.data[0]._id);
@@ -30,7 +26,7 @@ const StudentFiles = () => {
       }
     }
     fetchSessions();
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (!selectedSessionId) return;
@@ -39,9 +35,7 @@ const StudentFiles = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get('${API_CONFIG.BASE_URL}/api/files', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get(`/files`);
 
         const sessionFiles = res.data.filter(file =>
           file.classId && file.classId._id === selectedSessionId
@@ -56,7 +50,7 @@ const StudentFiles = () => {
       }
     }
     fetchFiles();
-  }, [selectedSessionId, token]);
+  }, [selectedSessionId]);
 
   const getFileIcon = (filename) => {
     const ext = filename?.split('.').pop()?.toLowerCase();

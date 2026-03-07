@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
-import API_CONFIG from '../config/apiConfig';
 
 const PerformancePrediction = () => {
   const [predictions, setPredictions] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedSubject, setSelectedSubject] = useState('all');
 
-  const token = localStorage.getItem('token');
-
   const fetchPredictions = useCallback(async () => {
     try {
+      const token = localStorage.getItem('token');
       const decoded = jwtDecode(token);
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/ml/predict/${decoded.id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/ml/predict/${decoded.id}`);
       
       if (response.data.predictions) {
         setPredictions(response.data.predictions);
@@ -25,7 +21,7 @@ const PerformancePrediction = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchPredictions();

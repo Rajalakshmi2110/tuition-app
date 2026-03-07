@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 
 const AssignmentSubmit = ({ assignmentId }) => {
   const [file, setFile] = useState(null);
@@ -9,7 +9,7 @@ const AssignmentSubmit = ({ assignmentId }) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    await axios.post(`/api/assignments/${assignmentId}/submit`, formData, {
+    await api.post(`/assignments/${assignmentId}/submit`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     alert("Assignment submitted!");

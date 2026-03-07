@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminClasses = () => {
   const [classes, setClasses] = useState([]);
@@ -16,12 +15,8 @@ const AdminClasses = () => {
     if (!window.confirm('Are you sure you want to delete this session? This will also remove all student enrollments.')) {
       return;
     }
-
-    const token = localStorage.getItem('token');
     try {
-      await axios.delete(`${API_CONFIG.BASE_URL}/api/classes/${classId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/classes/${classId}`);
       setClasses(classes.filter(cls => cls._id !== classId));
       toast.success('Session deleted successfully!');
     } catch (err) {
@@ -32,11 +27,8 @@ const AdminClasses = () => {
 
   useEffect(() => {
     const fetchClasses = async () => {
-      const token = localStorage.getItem('token');
       try {
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/classes`);
         setClasses(res.data);
       } catch (err) {
         console.error('Error fetching sessions:', err);

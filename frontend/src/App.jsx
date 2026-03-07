@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastProvider } from './components/Toast';
+import ErrorBoundary from './components/ErrorBoundary';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -42,6 +43,7 @@ import AdminReports from './pages/AdminReports';
 
 const App = () => {
   return (
+    <ErrorBoundary>
     <ToastProvider>
     <Router>
       <Routes>
@@ -102,6 +104,7 @@ const App = () => {
       </Routes>
     </Router>
     </ToastProvider>
+    </ErrorBoundary>
   );
 };
 

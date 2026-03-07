@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const ClassManagePage = () => {
   const { id } = useParams();
@@ -17,11 +16,8 @@ const ClassManagePage = () => {
   useEffect(() => {
     const fetchClassInfo = async () => {
       try {
-        const token = localStorage.getItem('token');
         console.log('Fetching class info for ID:', id);
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/classes/${id}`);
         console.log('Class info response:', res.data);
         setClassInfo(res.data);
         setSchedule(res.data.schedule);
@@ -36,10 +32,7 @@ const ClassManagePage = () => {
 
   const handleScheduleUpdate = async () => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}`, { schedule }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.put(`/classes/tutor/class/${id}`, { schedule });
       toast.success('Schedule updated successfully!');
       setClassInfo({...classInfo, schedule});
     } catch (err) {
@@ -54,10 +47,7 @@ const ClassManagePage = () => {
       return;
     }
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/resource`, { link: resourceLink }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.post(`/classes/tutor/class/${id}/resource`, { link: resourceLink });
       toast.success('Resource added successfully!');
       setResourceLink('');
     } catch (err) {
@@ -72,10 +62,7 @@ const ClassManagePage = () => {
       return;
     }
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/announcement`, { text: announcement }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.post(`/classes/tutor/class/${id}/announcement`, { text: announcement });
       toast.success('Announcement sent successfully!');
       setAnnouncement('');
     } catch (err) {
@@ -88,10 +75,7 @@ const ClassManagePage = () => {
     if (!window.confirm('Mark this class as completed? It will be removed from active dashboards.')) return;
     
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`${API_CONFIG.BASE_URL}/api/classes/tutor/class/${id}/complete`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.put(`/classes/tutor/class/${id}/complete`, {});
       toast.success('Class marked as completed!');
       navigate('/tutor/sessions');
     } catch (err) {

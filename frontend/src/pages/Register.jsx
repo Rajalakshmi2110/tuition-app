@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
@@ -30,7 +30,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${API_CONFIG.BASE_URL}/api/auth/register`, formData);
+      await api.post(`/auth/register`, formData);
       toast.success('Registration successful! Please login to continue.');
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
       setTimeout(() => navigate('/login'), 1500);

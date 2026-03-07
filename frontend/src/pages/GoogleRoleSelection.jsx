@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
 import kalviLogo from '../assets/logo.png';
-import API_CONFIG from '../config/apiConfig';
 
 const GoogleRoleSelection = () => {
   const [searchParams] = useSearchParams();
@@ -50,7 +49,7 @@ const GoogleRoleSelection = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('${API_CONFIG.BASE_URL}/api/auth/complete-google-registration', {
+      const response = await api.post(`/auth/complete-google-registration`, {
         googleId: userData.googleId,
         name: userData.name,
         email: userData.email,

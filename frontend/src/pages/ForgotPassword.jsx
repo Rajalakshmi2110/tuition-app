@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +14,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('${API_CONFIG.BASE_URL}/api/auth/forgot-password', { email });
+      await api.post(`/auth/forgot-password`, { email });
       toast.success('Password reset email sent! Check your inbox.');
       setSent(true);
     } catch (error) {

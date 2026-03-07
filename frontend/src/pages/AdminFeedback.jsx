@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminFeedback = () => {
   const [feedback, setFeedback] = useState([]);
@@ -14,11 +13,8 @@ const AdminFeedback = () => {
   }, []);
 
   const fetchFeedback = async () => {
-    const token = localStorage.getItem('token');
     try {
-      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/admin/feedback`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/admin/feedback`);
       setFeedback(res.data);
     } catch (err) {
       console.error('Error fetching feedback:', err);
@@ -28,11 +24,8 @@ const AdminFeedback = () => {
   };
 
   const approveFeedback = async (id) => {
-    const token = localStorage.getItem('token');
     try {
-      await axios.patch(`${API_CONFIG.BASE_URL}/api/admin/feedback/${id}/approve`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.patch(`/admin/feedback/${id}/approve`, {});
       toast.success('Feedback approved successfully!');
       fetchFeedback();
     } catch (err) {
@@ -43,12 +36,8 @@ const AdminFeedback = () => {
 
   const deleteFeedback = async (id) => {
     if (!window.confirm('Are you sure you want to delete this feedback?')) return;
-
-    const token = localStorage.getItem('token');
     try {
-      await axios.delete(`${API_CONFIG.BASE_URL}/api/admin/feedback/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/admin/feedback/${id}`);
       toast.success('Feedback deleted successfully!');
       fetchFeedback();
     } catch (err) {

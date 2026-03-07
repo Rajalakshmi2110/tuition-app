@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const StudentAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -21,10 +20,7 @@ const StudentAssignments = () => {
 
   const fetchAssignments = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/assignments/student', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/assignments/student`);
       setAssignments(response.data);
     } catch (error) {
       console.error('Error fetching assignments:', error);
@@ -35,10 +31,7 @@ const StudentAssignments = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/assignments/submissions', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/assignments/submissions`);
       setSubmissions(response.data);
     } catch (error) {
       console.error('Error fetching submissions:', error);
@@ -49,19 +42,17 @@ const StudentAssignments = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const token = localStorage.getItem('token');
       const formData = new FormData();
       formData.append('content', submissionContent);
       if (submissionFile) {
         formData.append('file', submissionFile);
       }
 
-      await axios.post(`${API_CONFIG.BASE_URL}/api/assignments/${selectedAssignment._id}/submit`,
+      await api.post(`/assignments/${selectedAssignment._id}/submit`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data'
           }
         }
       );

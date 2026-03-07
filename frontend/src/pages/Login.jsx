@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import api from '../services/api';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import { useToast } from '../components/Toast';
 import kalviLogo from '../assets/logo.png';
@@ -12,6 +12,13 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const toast = useToast();
+  const [searchParams] = useSearchParams();
+
+  React.useEffect(() => {
+    if (searchParams.get('error') === 'session_expired') {
+      toast.error('Session expired. Please sign in again.');
+    }
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post(`${API_CONFIG.BASE_URL}/api/users/login`, formData);
+      const res = await api.post(`/users/login`, formData);
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('role', user.role);

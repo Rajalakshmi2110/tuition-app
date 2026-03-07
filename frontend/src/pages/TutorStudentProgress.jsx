@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { jwtDecode } from 'jwt-decode';
-import API_CONFIG from '../config/apiConfig';
 
 const TutorStudentProgress = () => {
   const [classesByLevel, setClassesByLevel] = useState({});
@@ -16,13 +15,10 @@ const TutorStudentProgress = () => {
 
   const fetchClassesByLevel = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
 
-      const classRes = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const classRes = await api.get(`/classes/tutor/${userId}`);
 
       const grouped = {};
       classRes.data.forEach(session => {
@@ -49,10 +45,7 @@ const TutorStudentProgress = () => {
 
   const fetchStudentPerformance = async (studentId) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/performance/student/${studentId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/performance/student/${studentId}`);
       setPerformances(response.data);
     } catch (error) {
       console.error('Error fetching student performance:', error);

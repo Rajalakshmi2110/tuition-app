@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from '../services/api';
 import { jwtDecode } from "jwt-decode";
-import API_CONFIG from "../config/apiConfig";
 
 const TutorDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -13,57 +12,35 @@ const TutorDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   const fetchAnnouncements = useCallback(async () => {
-    if (!token) return;
     try {
-      const res = await axios.get(`${API_CONFIG.BASE_URL}/api/announcements`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
       console.error("Failed to fetch announcements:", err);
     }
-  }, [token]);
+  }, []);
 
   const fetchMySessions = useCallback(async () => {
-    if (!token) return;
     try {
-      const decoded = jwtDecode(token);
-      console.log("Tutor ID from token:", decoded.id);
-      console.log("Full decoded token:", decoded);
-      console.log("API Base URL:", API_CONFIG.BASE_URL);
+      const decoded = jwtDecode(localStorage.getItem('token'));
       
       let tutorSessions = [];
       
-      // Try the dedicated tutor endpoint first
       try {
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/classes/tutor/${decoded.id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log("Tutor endpoint response:", res.data);
+        const res = await api.get(`/classes/tutor/${decoded.id}`);
         tutorSessions = res.data || [];
       } catch (tutorErr) {
         console.error("Tutor endpoint failed, trying fallback:", tutorErr);
       }
       
-      // Fallback: fetch all classes and filter
       if (tutorSessions.length === 0) {
-        console.log("Trying fallback: fetching all classes...");
-        const allRes = await axios.get(`${API_CONFIG.BASE_URL}/api/classes`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log("All classes:", allRes.data);
+        const allRes = await api.get(`/classes`);
         
-        // Filter by tutor - try multiple matching strategies
         tutorSessions = allRes.data.filter(cls => {
           const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
-          const match = clsTutorId === decoded.id;
-          console.log(`Class "${cls.name}" tutor: ${clsTutorId}, match: ${match}`);
-          return match;
+          return clsTutorId === decoded.id;
         });
-        console.log("Filtered sessions:", tutorSessions);
       }
       
       setMySessions(tutorSessions);
@@ -78,7 +55,7 @@ const TutorDashboard = () => {
     } catch (err) {
       console.error("Failed to fetch sessions:", err);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminPayments = () => {
   const [pendingPayments, setPendingPayments] = useState([]);
@@ -13,31 +13,25 @@ const AdminPayments = () => {
     status: '',
     rejectionReason: ''
   });
-
-  const token = localStorage.getItem('token');
   const toast = useToast();
 
   const fetchPendingPayments = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/payments/pending`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/payments/pending`);
       setPendingPayments(response.data);
     } catch (error) {
       console.error('Error fetching pending payments:', error);
     }
-  }, [token]);
+  }, []);
 
   const fetchStats = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/payments/stats`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/payments/stats`);
       setStats(response.data);
     } catch (error) {
       console.error('Error fetching stats:', error);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchPendingPayments();
@@ -47,11 +41,9 @@ const AdminPayments = () => {
   const handleVerifyPayment = async (paymentId, status, rejectionReason = '') => {
     setLoading(true);
     try {
-      await axios.patch(`${API_CONFIG.BASE_URL}/api/payments/verify/${paymentId}`, {
+      await api.patch(`/payments/verify/${paymentId}`, {
         status,
         rejectionReason
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
 
       toast.success(`Payment ${status} successfully!`);
@@ -68,9 +60,7 @@ const AdminPayments = () => {
   const sendReminders = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${API_CONFIG.BASE_URL}/api/payments/send-reminders`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.post(`/payments/send-reminders`, {});
       toast.success(response.data.message);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error sending reminders');

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminReports = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -12,26 +11,14 @@ const AdminReports = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
 
-  const token = localStorage.getItem('token');
-
   const fetchAllReports = useCallback(async () => {
     try {
       const [dashboard, revenue, performance, subjects, payments] = await Promise.all([
-        axios.get(`${API_CONFIG.BASE_URL}/api/reports/dashboard`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API_CONFIG.BASE_URL}/api/reports/revenue-trends`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API_CONFIG.BASE_URL}/api/reports/performance-by-class`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API_CONFIG.BASE_URL}/api/reports/subject-performance`, {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get(`${API_CONFIG.BASE_URL}/api/reports/payment-distribution`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
+        api.get(`/reports/dashboard`),
+        api.get(`/reports/revenue-trends`),
+        api.get(`/reports/performance-by-class`),
+        api.get(`/reports/subject-performance`),
+        api.get(`/reports/payment-distribution`)
       ]);
 
       setDashboardData(dashboard.data.overview);
@@ -44,7 +31,7 @@ const AdminReports = () => {
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchAllReports();

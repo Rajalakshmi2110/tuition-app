@@ -1,14 +1,11 @@
-import axios from "axios";
-import API_CONFIG from "../config/apiConfig";
-
-const API_URL = `${API_CONFIG.BASE_URL}/api`;
+import api from "../services/api";
 
 export const getStudentClasses = async (studentId) => {
-  const res = await axios.get(`${API_URL}/classes/student/${studentId}`);
+  const res = await api.get(`/classes/student/${studentId}`);
   return res.data;
 };
 
 export const getTutorClasses = async (tutorId) => {
-  const res = await axios.get(`${API_URL}/classes/tutor/${tutorId}`);
+  const res = await api.get(`/classes/tutor/${tutorId}`);
   return res.data;
 };

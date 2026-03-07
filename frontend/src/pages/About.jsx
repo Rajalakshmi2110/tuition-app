@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import axios from 'axios';
-import API_CONFIG from '../config/apiConfig';
+import api from '../services/api';
 
 const About = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -10,7 +9,7 @@ const About = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/feedback/approved`);
+        const res = await api.get(`/feedback/approved`);
         setTestimonials(res.data);
       } catch (err) {
         console.error('Error fetching testimonials:', err);

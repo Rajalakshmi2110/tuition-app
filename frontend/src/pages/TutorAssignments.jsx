@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const TutorAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -25,10 +24,7 @@ const TutorAssignments = () => {
 
   const fetchAssignments = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/assignments/tutor`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/assignments/tutor`);
       setAssignments(response.data);
     } catch (error) {
       console.error('Error fetching assignments:', error);
@@ -39,10 +35,7 @@ const TutorAssignments = () => {
 
   const fetchSubmissions = async (assignmentId) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/assignments/${assignmentId}/submissions`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/assignments/${assignmentId}/submissions`);
       setSubmissions(response.data.submissions);
     } catch (error) {
       console.error('Error fetching submissions:', error);
@@ -52,13 +45,9 @@ const TutorAssignments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      console.log('Token exists:', !!token);
       console.log('Form data:', formData);
       
-      await axios.post(`${API_CONFIG.BASE_URL}/api/assignments`, formData, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post(`/assignments`, formData);
 
       toast.success('Assignment created successfully!');
       setFormData({
@@ -75,10 +64,8 @@ const TutorAssignments = () => {
 
   const handleGrade = async (submissionId, pointsEarned, feedback) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`${API_CONFIG.BASE_URL}/api/assignments/submissions/${submissionId}/grade`,
-        { pointsEarned, feedback },
-        { headers: { Authorization: `Bearer ${token}` } }
+      await api.put(`/assignments/submissions/${submissionId}/grade`,
+        { pointsEarned, feedback }
       );
 
       toast.success('Assignment graded successfully!');

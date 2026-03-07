@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from '../services/api';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
-import API_CONFIG from '../config/apiConfig';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("student");
@@ -24,19 +23,13 @@ const AdminDashboard = () => {
   });
 
   const toast = useToast();
-  const BASE_URL = API_CONFIG.BASE_URL;
 
   const fetchData = useCallback(async () => {
-    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const [studentsRes, tutorsRes] = await Promise.all([
-        axios.get(`${BASE_URL}/api/admin/students`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get(`${BASE_URL}/api/admin/tutors`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
+        api.get(`/admin/students`),
+        api.get(`/admin/tutors`),
       ]);
       setStudents(studentsRes.data);
       setTutors(tutorsRes.data);
@@ -46,38 +39,29 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [BASE_URL, toast]);
+  }, [toast]);
 
   const fetchAnnouncements = useCallback(async () => {
-    const token = localStorage.getItem("token");
     try {
-      const res = await axios.get(`${BASE_URL}/api/announcements`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
       console.error(err);
     }
-  }, [BASE_URL]);
+  }, []);
 
   const fetchStats = useCallback(async () => {
-    const token = localStorage.getItem("token");
     try {
-      const res = await axios.get(`${BASE_URL}/api/admin/stats`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/admin/stats`);
       setStats(res.data);
     } catch (err) {
       console.error('Frontend stats error:', err);
     }
-  }, [BASE_URL]);
+  }, []);
 
   const deleteAnnouncement = async (id) => {
-    const token = localStorage.getItem("token");
     try {
-      await axios.delete(`${BASE_URL}/api/announcements/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/announcements/${id}`);
       toast.success('Announcement deleted successfully');
       fetchAnnouncements();
     } catch (err) {
@@ -93,12 +77,10 @@ const AdminDashboard = () => {
   }, [fetchData, fetchAnnouncements, fetchStats]);
 
   const approveTutor = async (id) => {
-    const token = localStorage.getItem("token");
     try {
-      await axios.patch(
-        `${BASE_URL}/api/admin/tutors/${id}/approve`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
+      await api.patch(
+        `/admin/tutors/${id}/approve`,
+        {}
       );
       toast.success('Tutor approved successfully');
       fetchData();
@@ -109,12 +91,10 @@ const AdminDashboard = () => {
   };
 
   const declineTutor = async (id) => {
-    const token = localStorage.getItem("token");
     try {
-      await axios.patch(
-        `${BASE_URL}/api/admin/tutors/${id}/decline`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
+      await api.patch(
+        `/admin/tutors/${id}/decline`,
+        {}
       );
       toast.warning('Tutor declined');
       fetchData();
@@ -148,14 +128,11 @@ const AdminDashboard = () => {
 
   const handleCreateAnnouncement = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
     try {
-      await axios.post(`${BASE_URL}/api/announcements`, {
+      await api.post(`/announcements`, {
         title: announcementTitle,
         message: announcementMessage,
         type: announcementType
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Announcement posted successfully!');
       setShowAnnouncementForm(false);

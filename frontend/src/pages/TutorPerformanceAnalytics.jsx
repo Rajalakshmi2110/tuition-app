@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import API_CONFIG from '../config/apiConfig';
+import api from '../services/api';
 
 const TutorPerformanceAnalytics = () => {
   const [classAnalytics, setClassAnalytics] = useState([]);
@@ -8,20 +7,16 @@ const TutorPerformanceAnalytics = () => {
   const [classDetails, setClassDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem('token');
-
   const fetchAllClassesAnalytics = useCallback(async () => {
     try {
-      const response = await axios.get('${API_CONFIG.BASE_URL}/api/tutor-analytics/classes', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/tutor-analytics/classes`);
       setClassAnalytics(response.data.classAnalytics || []);
     } catch (error) {
       console.error('Error fetching analytics:', error);
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     fetchAllClassesAnalytics();
@@ -30,9 +25,7 @@ const TutorPerformanceAnalytics = () => {
   const fetchClassDetails = async (classId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_CONFIG.BASE_URL}/api/tutor-analytics/class/${classId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/tutor-analytics/class/${classId}`);
       setClassDetails(response.data);
       setSelectedClass(classId);
     } catch (error) {

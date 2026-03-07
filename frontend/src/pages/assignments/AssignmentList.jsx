@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 import AssignmentCard from "../../components/assignments/AssignmentCard";
 
 const AssignmentList = () => {
   const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/assignments")
+    api.get("/assignments")
       .then(res => setAssignments(res.data))
       .catch(err => console.error(err));
   }, []);

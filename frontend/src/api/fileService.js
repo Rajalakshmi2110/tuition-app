@@ -1,18 +1,11 @@
-import axios from 'axios';
+import api from '../services/api';
 
-const API_URL = '/api/files';
-
-export const uploadFile = async (file, token) => {
+export const uploadFile = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
 
-  const config = {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.post(API_URL, formData, config);
+  const response = await api.post('/files', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
   return response.data;
 };

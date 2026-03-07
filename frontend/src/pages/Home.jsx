@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeedbackForm from '../components/FeedbackForm';
@@ -17,7 +17,7 @@ const Home = () => {
     setIsVisible(true);
     const fetchGalleryImages = async () => {
       try {
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/gallery`);
+        const res = await api.get(`/gallery`);
         setGalleryImages(res.data.slice(0, 3));
       } catch (err) {
         console.error('Error fetching gallery:', err);

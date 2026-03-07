@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 
 const SubmissionCard = ({ assignmentId, submission }) => {
   const [grade, setGrade] = useState(submission.grade || "");
@@ -7,8 +7,8 @@ const SubmissionCard = ({ assignmentId, submission }) => {
 
   const handleGrade = async () => {
     try {
-      await axios.post(
-        `/api/assignments/${assignmentId}/grade/${submission.student._id || submission.student}`,
+      await api.post(
+        `/assignments/${assignmentId}/grade/${submission.student._id || submission.student}`,
         { grade, feedback }
       );
       alert("Graded successfully!");

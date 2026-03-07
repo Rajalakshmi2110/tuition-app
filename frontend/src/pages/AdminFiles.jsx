@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import AdminLayout from '../components/AdminLayout';
+import api from '../services/api';
 import API_CONFIG from '../config/apiConfig';
+import AdminLayout from '../components/AdminLayout';
 
 const AdminFiles = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedClass, setSelectedClass] = useState('all');
-
-  const token = localStorage.getItem("token");
   const classLevels = ['4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        console.log('Fetching files from:', `${API_CONFIG.BASE_URL}/api/files`);
-        console.log('Token exists:', !!token);
-        
-        const res = await axios.get(`${API_CONFIG.BASE_URL}/api/files`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await api.get(`/files`);
         console.log('Files response:', res.data);
         setFiles(res.data);
       } catch (err) {
@@ -31,21 +24,14 @@ const AdminFiles = () => {
       }
     };
 
-    if (token) {
-      fetchFiles();
-    } else {
-      setError("No authentication token found");
-      setLoading(false);
-    }
-  }, [token]);
+    fetchFiles();
+  }, []);
 
   const handleDelete = async (fileId) => {
     if (!window.confirm("Are you sure you want to delete this file?")) return;
     
     try {
-      await axios.delete(`${API_CONFIG.BASE_URL}/api/files/${fileId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/files/${fileId}`);
       setFiles(files.filter(f => f._id !== fileId));
       alert("File deleted successfully");
     } catch (err) {

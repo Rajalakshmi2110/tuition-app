@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 
 const AssignmentUpload = () => {
   const [title, setTitle] = useState("");
@@ -15,7 +15,7 @@ const AssignmentUpload = () => {
     formData.append("deadline", deadline);
     formData.append("file", file);
 
-    await axios.post("/api/assignments/create", formData, {
+    await api.post("/assignments/create", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     alert("Assignment uploaded!");
