@@ -27,49 +27,27 @@ const Home = () => {
   const features = [
     {
       title: 'Smart Class Management',
-      description: 'Automated scheduling, easy enrollment, and seamless class organization for better learning.',
+      description: 'Join classes, view schedules, and access study materials — everything organized by your class and subject.',
       gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+      badge: 'Classes 6–12',
+      highlights: ['Easy class enrollment', 'Organized study materials', 'Assignment submissions'],
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
           <line x1="16" y1="2" x2="16" y2="6"></line>
           <line x1="8" y1="2" x2="8" y2="6"></line>
           <line x1="3" y1="10" x2="21" y2="10"></line>
-          <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path>
         </svg>
       )
     },
     {
-      title: 'Expert Tutors',
-      description: 'Learn from verified, experienced educators passionate about helping you succeed.',
-      gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-      )
-    },
-    {
-      title: 'Real-time Updates',
-      description: 'Stay connected with instant notifications, announcements, and progress tracking.',
+      title: 'Track Your Progress',
+      description: 'See how you\'re doing with detailed performance reports, attendance tracking, and AI-powered predictions.',
       gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+      badge: 'AI Powered',
+      highlights: ['Grade & attendance reports', 'AI score predictions', 'Subject-wise analytics'],
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-          <line x1="12" y1="2" x2="12" y2="4"></line>
-        </svg>
-      )
-    },
-    {
-      title: 'Performance Analytics',
-      description: 'Track grades, attendance, and learning progress with detailed reports and AI predictions.',
-      gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="18" y1="20" x2="18" y2="10"></line>
           <line x1="12" y1="20" x2="12" y2="4"></line>
           <line x1="6" y1="20" x2="6" y2="14"></line>
@@ -77,24 +55,13 @@ const Home = () => {
       )
     },
     {
-      title: 'Study Materials',
-      description: 'Access and share notes, assignments, and resources — all organized by class and subject.',
-      gradient: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+      title: 'Earn Rewards & Badges',
+      description: 'Stay motivated with gamified learning — earn badges for completing assignments, climb leaderboards, and celebrate milestones.',
+      gradient: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+      badge: 'Gamified',
+      highlights: ['Achievement badges', 'Class leaderboards', 'Learning milestones'],
       icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-        </svg>
-      )
-    },
-    {
-      title: 'Achievements & Rewards',
-      description: 'Earn badges, climb leaderboards, and stay motivated with gamified learning milestones.',
-      gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-      icon: (
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="8" r="7"></circle>
           <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
         </svg>
@@ -103,9 +70,9 @@ const Home = () => {
   ];
 
   const steps = [
-    { number: '01', title: 'Enquire & Register', description: 'Reach out to us, discuss your learning needs, and get registered for your preferred program.', color: '#10b981' },
-    { number: '02', title: 'Choose Your Mode', description: 'Pick what suits you best - institution classes, online sessions, or home tuition.', color: '#fbbf24' },
-    { number: '03', title: 'Start Learning', description: 'Begin your personalized learning journey with expert tutors and track your progress.', color: '#3b82f6' }
+    { number: '01', title: 'Register', description: 'Sign up with your class and get your account approved by admin.', color: '#10b981' },
+    { number: '02', title: 'Pick Your Mode', description: 'Choose institution classes, online sessions, or home tuition — whatever works for you.', color: '#fbbf24' },
+    { number: '03', title: 'Start Learning', description: 'Attend classes, submit assignments, track your progress, and earn rewards!', color: '#3b82f6' }
   ];
 
   const services = [
@@ -225,7 +192,7 @@ const Home = () => {
                 marginBottom: '1.5rem',
                 border: '1px solid rgba(16, 185, 129, 0.3)'
               }}>
-                <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>Smart Learning Platform</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 500 }}>For Classes 6 – 12</span>
               </div>
 
               <h1 style={{
@@ -254,8 +221,8 @@ const Home = () => {
                 marginBottom: '2rem',
                 maxWidth: '500px'
               }}>
-                Premium tuition services offering institution classes, online sessions, and home tuition. 
-                Personalized learning with expert tutors, progress tracking, and gamified achievements.
+                Tuition platform with expert tutors, progress tracking, and gamified learning. 
+                Institution classes, online sessions, or home tuition — pick what works for you.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -455,14 +422,14 @@ const Home = () => {
               Everything You Need to Excel
             </h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
-              Our platform provides all the tools students and tutors need for effective learning and teaching.
+              Our platform gives students and tutors everything they need — classes, progress tracking, and rewards — all in one place.
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '1.5rem'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
           }}>
             {features.map((feature, index) => (
               <div
@@ -474,7 +441,9 @@ const Home = () => {
                   boxShadow: 'var(--shadow-md)',
                   border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease',
-                  cursor: 'default'
+                  cursor: 'default',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px)';
@@ -485,18 +454,30 @@ const Home = () => {
                   e.currentTarget.style.boxShadow = 'var(--shadow-md)';
                 }}
               >
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  background: feature.gradient,
-                  borderRadius: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1.5rem',
-                  boxShadow: `0 8px 20px ${feature.gradient.includes('10b981') ? 'rgba(16, 185, 129, 0.3)' : feature.gradient.includes('fbbf24') ? 'rgba(251, 191, 36, 0.3)' : 'rgba(59, 130, 246, 0.3)'}`
-                }}>
-                  {feature.icon}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+                  <div style={{
+                    width: '60px',
+                    height: '60px',
+                    background: feature.gradient,
+                    borderRadius: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: `0 8px 20px ${feature.gradient.includes('10b981') ? 'rgba(16, 185, 129, 0.3)' : feature.gradient.includes('3b82f6') ? 'rgba(59, 130, 246, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`
+                  }}>
+                    {feature.icon}
+                  </div>
+                  <span style={{
+                    background: feature.gradient,
+                    color: 'white',
+                    padding: '0.3rem 0.8rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.02em'
+                  }}>
+                    {feature.badge}
+                  </span>
                 </div>
                 <h3 style={{
                   fontSize: '1.3rem',
@@ -508,10 +489,22 @@ const Home = () => {
                 </h3>
                 <p style={{
                   color: 'var(--text-muted)',
-                  lineHeight: 1.6
+                  lineHeight: 1.6,
+                  marginBottom: '1.25rem',
+                  fontSize: '0.95rem'
                 }}>
                   {feature.description}
                 </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  {feature.highlights.map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
