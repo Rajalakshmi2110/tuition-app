@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post(`/users/login`, formData);
+      const res = await api.post(`/auth/login`, formData);
       const { token, user } = res.data;
       localStorage.setItem('token', token);
       localStorage.setItem('role', user.role);
