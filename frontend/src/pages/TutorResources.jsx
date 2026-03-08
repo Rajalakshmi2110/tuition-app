@@ -5,6 +5,15 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const CATEGORIES = ['Textbook / Study Material', 'Guides', 'Class Notes', 'Question Papers', 'Other'];
 const CLASS_LEVELS = ['6', '7', '8', '9', '10', '11', '12'];
+const SUBJECTS_BY_CLASS = {
+  '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+  '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+  '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+  '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+  '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+  '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+  '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+};
 
 const TutorResources = () => {
   const [resources, setResources] = useState([]);
@@ -17,7 +26,6 @@ const TutorResources = () => {
   });
   const [filterLevel, setFilterLevel] = useState('all');
   const [filterSubject, setFilterSubject] = useState('all');
-  const [myClasses, setMyClasses] = useState([]);
   const toast = useToast();
 
   const fetchResources = useCallback(async () => {
@@ -31,17 +39,7 @@ const TutorResources = () => {
     }
   }, [toast]);
 
-  const fetchMyClasses = useCallback(async () => {
-    try {
-      const { jwtDecode } = await import('jwt-decode');
-      const decoded = jwtDecode(localStorage.getItem('token'));
-      const userId = decoded.id || decoded._id;
-      const res = await api.get(`/classes/tutor/${userId}?all=true`);
-      setMyClasses(res.data);
-    } catch { /* ignore */ }
-  }, []);
-
-  useEffect(() => { fetchResources(); fetchMyClasses(); }, [fetchResources, fetchMyClasses]);
+  useEffect(() => { fetchResources(); }, [fetchResources]);
 
   const resetForm = () => {
     setFormData({ title: '', description: '', classLevel: '', subject: '', category: '', file: null });
@@ -258,15 +256,15 @@ const TutorResources = () => {
                 <label htmlFor="res-class" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
                 <select id="res-class" value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
                   <option value="">Select class...</option>
-                  {[...new Set(myClasses.map(c => c.classLevel))].sort((a, b) => Number(a) - Number(b)).map(l => <option key={l} value={l}>Class {l}</option>)}
+                  {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
                 </select>
               </div>
 
               <div>
                 <label htmlFor="res-subject" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Subject *</label>
-                <select id="res-subject" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
-                  <option value="">Select subject...</option>
-                  {[...new Set(myClasses.filter(c => !formData.classLevel || c.classLevel === formData.classLevel).map(c => c.subject))].sort().map(s => (
+                <select id="res-subject" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required style={{ ...inputStyle, background: 'white' }} disabled={!formData.classLevel}>
+                  <option value="">{formData.classLevel ? 'Select subject...' : 'Select class first'}</option>
+                  {(SUBJECTS_BY_CLASS[formData.classLevel] || []).map(s => (
                     <option key={s} value={s}>{s}</option>
                   ))}
                 </select>
