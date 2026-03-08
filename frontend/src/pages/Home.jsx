@@ -4,7 +4,6 @@ import api from '../services/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeedbackForm from '../components/FeedbackForm';
-import bookImage from '../assets/book.png';
 import API_CONFIG from '../config/apiConfig';
 
 const Home = () => {
@@ -282,26 +281,97 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right Content - Hero Image */}
+            {/* Right Content - Hero Illustration */}
             <div style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               opacity: isVisible ? 1 : 0,
               transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.95)',
-              transition: 'all 0.8s ease-out 0.2s'
+              transition: 'all 0.8s ease-out 0.2s',
+              animation: 'float 3s ease-in-out infinite'
             }}>
-              <img
-                src={bookImage}
-                alt="Learning illustration"
-                style={{
-                  maxWidth: '100%',
-                  width: '400px',
-                  height: 'auto',
-                  filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3))',
-                  animation: 'float 3s ease-in-out infinite'
-                }}
-              />
+              <svg width="420" height="380" viewBox="0 0 420 380" fill="none" style={{ maxWidth: '100%', height: 'auto', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' }}>
+                {/* Desk */}
+                <rect x="60" y="260" width="300" height="12" rx="6" fill="#1e3a5f" />
+                <rect x="90" y="272" width="12" height="80" rx="4" fill="#1e3a5f" />
+                <rect x="318" y="272" width="12" height="80" rx="4" fill="#1e3a5f" />
+                {/* Monitor */}
+                <rect x="120" y="140" width="180" height="120" rx="10" fill="#0f172a" stroke="#10b981" strokeWidth="2" />
+                <rect x="130" y="150" width="160" height="95" rx="4" fill="#064e3b" />
+                {/* Screen content - dashboard */}
+                <rect x="140" y="160" width="60" height="8" rx="4" fill="#10b981" opacity="0.8" />
+                <rect x="140" y="175" width="140" height="3" rx="1.5" fill="#10b981" opacity="0.3" />
+                <rect x="140" y="185" width="40" height="25" rx="4" fill="#10b981" opacity="0.4" />
+                <rect x="185" y="185" width="40" height="25" rx="4" fill="#fbbf24" opacity="0.4" />
+                <rect x="230" y="185" width="40" height="25" rx="4" fill="#3b82f6" opacity="0.4" />
+                <rect x="140" y="218" width="130" height="3" rx="1.5" fill="#10b981" opacity="0.2" />
+                <rect x="140" y="226" width="90" height="3" rx="1.5" fill="#10b981" opacity="0.2" />
+                <rect x="140" y="234" width="110" height="3" rx="1.5" fill="#10b981" opacity="0.2" />
+                {/* Monitor stand */}
+                <rect x="195" y="250" width="30" height="12" rx="2" fill="#1e3a5f" />
+                <rect x="180" y="256" width="60" height="6" rx="3" fill="#1e3a5f" />
+                {/* Book stack left */}
+                <rect x="70" y="240" width="45" height="8" rx="2" fill="#10b981" transform="rotate(-3 70 240)" />
+                <rect x="72" y="232" width="42" height="8" rx="2" fill="#059669" transform="rotate(1 72 232)" />
+                <rect x="69" y="224" width="46" height="8" rx="2" fill="#fbbf24" transform="rotate(-2 69 224)" />
+                {/* Coffee mug right */}
+                <rect x="330" y="238" width="22" height="24" rx="4" fill="#374151" />
+                <rect x="352" y="244" width="8" height="12" rx="4" fill="none" stroke="#374151" strokeWidth="3" />
+                <ellipse cx="341" cy="238" rx="12" ry="2" fill="#4b5563" />
+                {/* Steam */}
+                <path d="M336 230 Q334 222 338 218" stroke="#94a3b8" strokeWidth="1.5" fill="none" opacity="0.5" strokeLinecap="round" />
+                <path d="M342 228 Q340 220 344 214" stroke="#94a3b8" strokeWidth="1.5" fill="none" opacity="0.4" strokeLinecap="round" />
+                {/* Pencil */}
+                <rect x="310" y="245" width="6" height="16" rx="1" fill="#fbbf24" transform="rotate(15 310 245)" />
+                <polygon points="310,261 313,270 316,261" fill="#f5d0a9" transform="rotate(15 313 265)" />
+                {/* Person - body */}
+                <circle cx="210" cy="85" r="28" fill="#fcd9b6" />
+                {/* Hair */}
+                <path d="M182 80 Q182 55 210 52 Q238 55 238 80" fill="#1e293b" />
+                <path d="M182 80 Q180 70 185 65" fill="#1e293b" />
+                {/* Eyes */}
+                <circle cx="200" cy="88" r="3" fill="#0f172a" />
+                <circle cx="220" cy="88" r="3" fill="#0f172a" />
+                <circle cx="201" cy="87" r="1" fill="white" />
+                <circle cx="221" cy="87" r="1" fill="white" />
+                {/* Smile */}
+                <path d="M203 98 Q210 104 217 98" stroke="#c2856e" strokeWidth="2" fill="none" strokeLinecap="round" />
+                {/* Body / shirt */}
+                <path d="M185 113 Q185 130 170 155 L170 260 L250 260 L250 155 Q235 130 235 113 Q225 108 210 108 Q195 108 185 113Z" fill="#10b981" />
+                {/* Collar */}
+                <path d="M195 113 L210 125 L225 113" stroke="#059669" strokeWidth="2" fill="none" />
+                {/* Arms */}
+                <path d="M170 155 Q145 175 155 210 L165 210 Q160 180 180 165" fill="#10b981" />
+                <path d="M250 155 Q275 175 265 210 L255 210 Q260 180 240 165" fill="#10b981" />
+                {/* Hands on desk */}
+                <ellipse cx="160" cy="255" rx="14" ry="8" fill="#fcd9b6" />
+                <ellipse cx="260" cy="255" rx="14" ry="8" fill="#fcd9b6" />
+                {/* Graduation cap */}
+                <polygon points="210,42 170,58 210,68 250,58" fill="#0f172a" />
+                <rect x="207" y="35" width="6" height="10" fill="#0f172a" />
+                <rect x="205" y="32" width="10" height="5" rx="2" fill="#fbbf24" />
+                <line x1="250" y1="58" x2="255" y2="72" stroke="#0f172a" strokeWidth="2" />
+                <circle cx="255" cy="74" r="3" fill="#fbbf24" />
+                {/* Floating elements */}
+                <g opacity="0.6">
+                  <circle cx="50" cy="100" r="6" fill="#10b981" opacity="0.4" />
+                  <circle cx="370" cy="80" r="4" fill="#fbbf24" opacity="0.5" />
+                  <circle cx="380" cy="180" r="5" fill="#3b82f6" opacity="0.4" />
+                  <circle cx="40" cy="200" r="3" fill="#fbbf24" opacity="0.4" />
+                  <rect x="355" y="130" width="12" height="12" rx="2" fill="#10b981" opacity="0.3" transform="rotate(15 361 136)" />
+                  <polygon points="55,160 60,148 65,160" fill="#fbbf24" opacity="0.3" />
+                </g>
+                {/* Light bulb idea */}
+                <g transform="translate(290, 70)">
+                  <circle cx="0" cy="0" r="16" fill="#fbbf24" opacity="0.2" />
+                  <circle cx="0" cy="0" r="10" fill="#fbbf24" opacity="0.3" />
+                  <path d="M-5 5 Q-5 12 -3 14 L3 14 Q5 12 5 5" stroke="#fbbf24" strokeWidth="1.5" fill="none" />
+                  <path d="M0 -8 L0 2 M-5 -3 L0 2 L5 -3" stroke="#fbbf24" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                  <line x1="-3" y1="16" x2="3" y2="16" stroke="#fbbf24" strokeWidth="1" />
+                  <line x1="-2" y1="18" x2="2" y2="18" stroke="#fbbf24" strokeWidth="1" />
+                </g>
+              </svg>
             </div>
           </div>
         </div>
