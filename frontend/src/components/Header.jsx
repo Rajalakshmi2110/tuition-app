@@ -23,12 +23,10 @@ const Header = () => {
   }, [location.pathname]);
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userId');
-      navigate('/');
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
+    navigate('/');
     setShowDropdown(false);
     setMobileMenuOpen(false);
   };
@@ -133,7 +131,7 @@ const Header = () => {
                       width: '24px', height: '24px', background: 'rgba(255, 255, 255, 0.2)',
                       borderRadius: '6px', display: 'flex', alignItems: 'center',
                       justifyContent: 'center', fontSize: '0.7rem', fontWeight: 600
-                    }}>A</span>
+                    }}>{(role || 'U')[0].toUpperCase()}</span>
                     My Account
                     <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s ease', transform: showDropdown ? 'rotate(180deg)' : 'rotate(0)' }}>▼</span>
                   </button>

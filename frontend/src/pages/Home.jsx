@@ -569,7 +569,10 @@ const Home = () => {
               Not sure which mode is right for you? We're here to help!
             </p>
             <button
-              onClick={() => navigate('/about')}
+              onClick={() => {
+                const footer = document.getElementById('footer');
+                if (footer) footer.scrollIntoView({ behavior: 'smooth' });
+              }}
               style={{
                 padding: '0.8rem 1.5rem',
                 fontSize: '0.95rem',
@@ -596,7 +599,7 @@ const Home = () => {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
-              Contact Us for Enquiries
+              Contact Us
             </button>
           </div>
         </div>
@@ -713,13 +716,11 @@ const Home = () => {
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    <div style={{
-                      width: '80px',
-                      height: '80px',
-                      borderRadius: '20px',
-                      background: 'rgba(255,255,255,0.2)',
-                      backdropFilter: 'blur(10px)'
-                    }} />
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                      <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
                   </div>
                   <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
                     <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{item.title}</h3>
@@ -783,7 +784,7 @@ const Home = () => {
             opacity: 0.9,
             color: '#cbd5e1'
           }}>
-            Join thousands of students and tutors who are already part of our learning community.
+            Be part of our growing learning community. Start your journey today.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button
@@ -812,7 +813,7 @@ const Home = () => {
               Join as Student
             </button>
             <button
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/about')}
               style={{
                 padding: '1rem 2rem',
                 fontSize: '1rem',
@@ -833,7 +834,7 @@ const Home = () => {
                 e.target.style.borderColor = 'rgba(255,255,255,0.3)';
               }}
             >
-              Become a Tutor
+              Learn More
             </button>
             <button
               onClick={() => setShowFeedbackForm(true)}
