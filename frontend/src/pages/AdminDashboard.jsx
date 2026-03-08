@@ -23,6 +23,7 @@ const AdminDashboard = () => {
     studyMaterials: 0
   });
 
+  const [viewUser, setViewUser] = useState(null);
   const toast = useToast();
 
   const fetchData = useCallback(async () => {
@@ -481,17 +482,20 @@ const AdminDashboard = () => {
                     )}
                     <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', textAlign: 'center' }}>
                       <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                        <button style={{
-                          padding: '0.5rem 1rem',
-                          background: '#f1f5f9',
-                          color: '#475569',
-                          border: 'none',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          fontWeight: 500,
-                          fontSize: '0.85rem',
-                          transition: 'all 0.2s ease'
-                        }}>
+                        <button
+                          onClick={() => setViewUser(item)}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            background: '#f1f5f9',
+                            color: '#475569',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            fontWeight: 500,
+                            fontSize: '0.85rem',
+                            transition: 'all 0.2s ease'
+                          }}
+                        >
                           View
                         </button>
                         {type === "tutor" && item.status?.trim().toLowerCase() === "pending" && (
@@ -789,6 +793,88 @@ const AdminDashboard = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* View User Modal */}
+      {viewUser && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1000, padding: '1rem'
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            width: '450px', maxWidth: '90%',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            animation: 'slideUp 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+                {viewUser.role === 'tutor' ? 'Tutor' : 'Student'} Details
+              </h3>
+              <button
+                onClick={() => setViewUser(null)}
+                style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f1f5f9', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#64748b' }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                <div style={{
+                  width: '48px', height: '48px',
+                  background: viewUser.role === 'student'
+                    ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                    : 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                  borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'white', fontWeight: 700, fontSize: '1.2rem'
+                }}>
+                  {viewUser.name?.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p style={{ margin: 0, fontWeight: 700, color: '#0f172a', fontSize: '1.1rem' }}>{viewUser.name}</p>
+                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.85rem' }}>{viewUser.email}</p>
+                </div>
+              </div>
+              {[{ label: 'Role', value: viewUser.role?.charAt(0).toUpperCase() + viewUser.role?.slice(1) },
+                ...(viewUser.role === 'student' ? [{ label: 'Class', value: viewUser.className ? `Class ${viewUser.className}` : '—' }] : []),
+                ...(viewUser.role === 'tutor' ? [{ label: 'Specialization', value: viewUser.specialization || '—' }] : []),
+                { label: 'Status', value: viewUser.status },
+                { label: 'Registered', value: viewUser.createdAt ? new Date(viewUser.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—' }
+              ].map((field, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
+                  <span style={{ color: '#64748b', fontWeight: 500, fontSize: '0.9rem' }}>{field.label}</span>
+                  {field.label === 'Status' ? (
+                    <span style={{
+                      padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 600,
+                      background: field.value === 'approved' ? '#dcfce7' : field.value === 'pending' ? '#fef3c7' : '#fee2e2',
+                      color: field.value === 'approved' ? '#166534' : field.value === 'pending' ? '#92400e' : '#991b1b'
+                    }}>{field.value}</span>
+                  ) : (
+                    <span style={{ color: '#0f172a', fontWeight: 600, fontSize: '0.9rem' }}>{field.value}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+            {viewUser.status === 'pending' && (
+              <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.5rem' }}>
+                <button
+                  onClick={() => { (viewUser.role === 'tutor' ? approveTutor : approveStudent)(viewUser._id); setViewUser(null); }}
+                  style={{ flex: 1, padding: '0.75rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => { (viewUser.role === 'tutor' ? declineTutor : declineStudent)(viewUser._id); setViewUser(null); }}
+                  style={{ flex: 1, padding: '0.75rem', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+                >
+                  Decline
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
