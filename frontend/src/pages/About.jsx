@@ -32,7 +32,7 @@ const About = () => {
     },
     { 
       title: 'Verified Tutors', 
-      desc: 'Rigorous screening process ensures only qualified, experienced educators join our platform.', 
+      desc: 'Admin-approved, experienced educators ensuring quality teaching on our platform.', 
       color: '#fbbf24',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,7 +43,7 @@ const About = () => {
     },
     { 
       title: 'Real-time Platform', 
-      desc: 'Instant notifications, live progress tracking, and seamless communication between students and tutors.', 
+      desc: 'Email notifications, progress tracking, and organized class management for students and tutors.', 
       color: '#3b82f6',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -53,7 +53,7 @@ const About = () => {
     },
     { 
       title: 'Personalized Learning', 
-      desc: 'Tailored learning paths and customized study materials based on individual student needs and goals.', 
+      desc: 'Class-specific study materials and assignments tailored to each student\'s registered subjects and goals.', 
       color: '#8b5cf6',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -64,7 +64,7 @@ const About = () => {
     },
     { 
       title: 'Trust & Safety', 
-      desc: 'Secure platform with verified users, safe payment processing, and comprehensive privacy protection.', 
+      desc: 'Secure platform with admin-verified users, payment tracking, and comprehensive privacy protection.', 
       color: '#ef4444',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -111,7 +111,7 @@ const About = () => {
     },
     { 
       title: 'Innovation', 
-      desc: 'Using technology to make learning more engaging — gamification, performance analytics, and seamless communication.',
+      desc: 'Using technology to make learning more engaging — gamification, performance analytics, and email notifications.',
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="9" y1="18" x2="15" y2="18"></line>
