@@ -17,6 +17,7 @@ const TutorResources = () => {
   });
   const [filterLevel, setFilterLevel] = useState('all');
   const [filterSubject, setFilterSubject] = useState('all');
+  const [myClasses, setMyClasses] = useState([]);
   const toast = useToast();
 
   const fetchResources = useCallback(async () => {
@@ -30,7 +31,17 @@ const TutorResources = () => {
     }
   }, [toast]);
 
-  useEffect(() => { fetchResources(); }, [fetchResources]);
+  const fetchMyClasses = useCallback(async () => {
+    try {
+      const { jwtDecode } = await import('jwt-decode');
+      const decoded = jwtDecode(localStorage.getItem('token'));
+      const userId = decoded.id || decoded._id;
+      const res = await api.get(`/classes/tutor/${userId}`);
+      setMyClasses(res.data);
+    } catch { /* ignore */ }
+  }, []);
+
+  useEffect(() => { fetchResources(); fetchMyClasses(); }, [fetchResources, fetchMyClasses]);
 
   const resetForm = () => {
     setFormData({ title: '', description: '', classLevel: '', subject: '', category: '', file: null });
@@ -245,15 +256,20 @@ const TutorResources = () => {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
                 <label htmlFor="res-class" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
-                <select id="res-class" value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
+                <select id="res-class" value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
                   <option value="">Select class...</option>
-                  {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
+                  {[...new Set(myClasses.map(c => c.classLevel))].sort((a, b) => Number(a) - Number(b)).map(l => <option key={l} value={l}>Class {l}</option>)}
                 </select>
               </div>
 
               <div>
                 <label htmlFor="res-subject" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Subject *</label>
-                <input id="res-subject" type="text" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} placeholder="e.g. Science, Maths, English" required style={inputStyle} />
+                <select id="res-subject" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
+                  <option value="">Select subject...</option>
+                  {[...new Set(myClasses.filter(c => !formData.classLevel || c.classLevel === formData.classLevel).map(c => c.subject))].sort().map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
               </div>
 
               <div>

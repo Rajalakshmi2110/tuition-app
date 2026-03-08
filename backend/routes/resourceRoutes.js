@@ -129,7 +129,7 @@ router.get('/student', protect, authorize('student'), async (req, res) => {
 
     const orConditions = subjectPairs.map(pair => {
       const [classLevel, subject] = pair.split('::');
-      return { classLevel, subject };
+      return { classLevel, subject: { $regex: new RegExp(`^${subject.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } };
     });
 
     const resources = await Resource.find({ $or: orConditions })
