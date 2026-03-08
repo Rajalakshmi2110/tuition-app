@@ -10,6 +10,7 @@ backend/uploads/payments/*
 
 # Debug/test files
 curl.txt
+Project Setup Status.txt
 
 # Environment variables
 backend/.env
