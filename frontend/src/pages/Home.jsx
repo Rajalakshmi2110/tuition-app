@@ -63,6 +63,42 @@ const Home = () => {
           <line x1="12" y1="2" x2="12" y2="4"></line>
         </svg>
       )
+    },
+    {
+      title: 'Performance Analytics',
+      description: 'Track grades, attendance, and learning progress with detailed reports and AI predictions.',
+      gradient: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+        </svg>
+      )
+    },
+    {
+      title: 'Study Materials',
+      description: 'Access and share notes, assignments, and resources — all organized by class and subject.',
+      gradient: 'linear-gradient(135deg, #ec4899 0%, #db2777 100%)',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+      )
+    },
+    {
+      title: 'Achievements & Rewards',
+      description: 'Earn badges, climb leaderboards, and stay motivated with gamified learning milestones.',
+      gradient: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+      icon: (
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="8" r="7"></circle>
+          <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+        </svg>
+      )
     }
   ];
 
