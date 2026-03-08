@@ -27,8 +27,8 @@ const registerUser = async (req, res) => {
       if (!className) {
         return res.status(400).json({ message: 'Class name is required for students' });
       }
-      if (!["8", "9", "10", "11", "12"].includes(className)) {
-        return res.status(400).json({ message: 'Students can only register for class 8-12' });
+      if (!["6", "7", "8", "9", "10", "11", "12"].includes(className)) {
+        return res.status(400).json({ message: 'Students can only register for class 6-12' });
       }
     }
 
@@ -256,8 +256,8 @@ const completeGoogleRegistration = async (req, res) => {
 
     // Validate student class
     if (role === 'student') {
-      if (!className || !["8", "9", "10", "11", "12"].includes(className)) {
-        return res.status(400).json({ message: 'Valid class (8-12) is required for students' });
+      if (!className || !["6", "7", "8", "9", "10", "11", "12"].includes(className)) {
+        return res.status(400).json({ message: 'Valid class (6-12) is required for students' });
       }
     }
 

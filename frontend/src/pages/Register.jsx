@@ -21,11 +21,22 @@ const Register = () => {
     subjects: []
   });
 
-  const studentClasses = ["4", "5", "6", "7", "8", "9", "10", "11", "12"];
-  const availableSubjects = ['Maths', 'Science', 'English', 'Social Science', 'Tamil', 'Hindi', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce'];
+  const studentClasses = ["6", "7", "8", "9", "10", "11", "12"];
+
+  const subjectsByClass = {
+    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
+  };
+
+  const availableSubjects = subjectsByClass[formData.className] || [];
 
   const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value, ...(e.target.name === 'className' ? { subjects: [] } : {}) }));
   };
 
   const handleSubmit = async (e) => {
@@ -314,6 +325,28 @@ const Register = () => {
                   Subjects You Want to Learn *
                 </label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData(prev => ({
+                        ...prev,
+                        subjects: prev.subjects.length === availableSubjects.length ? [] : [...availableSubjects]
+                      }));
+                    }}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      border: formData.subjects.length === availableSubjects.length ? '2px solid #3b82f6' : '2px solid #e2e8f0',
+                      background: formData.subjects.length === availableSubjects.length ? '#eff6ff' : 'white',
+                      color: formData.subjects.length === availableSubjects.length ? '#2563eb' : '#64748b',
+                      fontWeight: 700,
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    {formData.subjects.length === availableSubjects.length ? '✓ ' : ''}All Subjects
+                  </button>
                   {availableSubjects.map(sub => {
                     const selected = formData.subjects.includes(sub);
                     return (
