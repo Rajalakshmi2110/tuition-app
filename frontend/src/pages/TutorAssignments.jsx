@@ -15,8 +15,16 @@ const TutorAssignments = () => {
   });
   const toast = useToast();
 
-  const subjects = ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German'];
-  const classes = ['4', '5', '6', '7', '8', '9', '10', '11', '12'];
+  const classLevels = ['6', '7', '8', '9', '10', '11', '12'];
+  const SUBJECTS_BY_CLASS = {
+    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+  };
   const difficulties = ['Easy', 'Medium', 'Hard'];
 
   useEffect(() => {
@@ -202,18 +210,14 @@ const TutorAssignments = () => {
             />
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
-              <select name="subject" value={formData.subject} onChange={handleChange} required style={{ ...inputStyle, background: 'white' }}>
-                <option value="">Select Subject</option>
-                {subjects.map(subject => (
-                  <option key={subject} value={subject}>{subject}</option>
-                ))}
+              <select name="className" value={formData.className} onChange={e => setFormData({ ...formData, className: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
+                <option value="">Select Class</option>
+                {classLevels.map(l => <option key={l} value={l}>Class {l}</option>)}
               </select>
 
-              <select name="className" value={formData.className} onChange={handleChange} required style={{ ...inputStyle, background: 'white' }}>
-                <option value="">Select Class</option>
-                {classes.map(cls => (
-                  <option key={cls} value={cls}>Class {cls}</option>
-                ))}
+              <select name="subject" value={formData.subject} onChange={handleChange} required disabled={!formData.className} style={{ ...inputStyle, background: formData.className ? 'white' : '#f1f5f9', cursor: formData.className ? 'pointer' : 'not-allowed' }}>
+                <option value="">{formData.className ? 'Select Subject' : 'Select class first'}</option>
+                {formData.className && SUBJECTS_BY_CLASS[formData.className]?.map(s => <option key={s} value={s}>{s}</option>)}
               </select>
 
               <input
