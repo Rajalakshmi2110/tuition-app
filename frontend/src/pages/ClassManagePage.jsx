@@ -16,9 +16,7 @@ const ClassManagePage = () => {
   useEffect(() => {
     const fetchClassInfo = async () => {
       try {
-        console.log('Fetching class info for ID:', id);
         const res = await api.get(`/classes/${id}`);
-        console.log('Class info response:', res.data);
         setClassInfo(res.data);
         setSchedule(res.data.schedule);
       } catch (err) {

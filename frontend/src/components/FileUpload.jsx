@@ -29,7 +29,6 @@ const FileUpload = ({ onUpload }) => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log('Fetched classes:', res.data);
         setClasses(res.data);
       } catch (err) {
         console.error('Failed to fetch classes:', err.response?.data || err);
@@ -57,7 +56,6 @@ const FileUpload = ({ onUpload }) => {
         },
       });
 
-      console.log('Upload successful:', res.data);
       alert('File uploaded successfully!');
       setFile(null);
       setTitle('');
