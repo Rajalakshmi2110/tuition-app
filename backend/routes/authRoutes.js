@@ -15,7 +15,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   router.get('/google/callback', passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login?error=oauth_cancelled` }), googleAuthSuccess);
 } else {
   router.get('/google', (req, res) => {
-    res.status(500).json({ message: 'Google OAuth not configured' });
+    res.status(503).json({ message: 'Google login is not available' });
   });
 }
 
