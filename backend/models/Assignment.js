@@ -12,12 +12,12 @@ const assignmentSchema = new mongoose.Schema({
   subject: {
     type: String,
     required: true,
-    enum: ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German']
+    enum: ['Tamil', 'English', 'Maths', 'Science', 'Social Science', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
   },
   className: {
     type: String,
     required: true,
-    enum: ['8', '9', '10', '11', '12']
+    enum: ['6', '7', '8', '9', '10', '11', '12']
   },
   tutorId: {
     type: mongoose.Schema.Types.ObjectId,
