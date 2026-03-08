@@ -36,6 +36,7 @@ const getAssignmentsForStudent = async (req, res) => {
     
     const assignments = await Assignment.find({ 
       className: student.className,
+      subject: { $in: student.subjects || [] },
       isActive: true 
     })
     .populate('tutorId', 'name')

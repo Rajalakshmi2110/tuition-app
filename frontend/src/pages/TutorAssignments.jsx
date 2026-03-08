@@ -2,29 +2,20 @@ import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import { useToast } from '../components/Toast';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { CLASS_LEVELS, SUBJECTS_BY_CLASS } from '../constants/academic';
 
 const TutorAssignments = () => {
   const [assignments, setAssignments] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [submissions, setSubmissions] = useState([]);
+  const [gradeInputs, setGradeInputs] = useState({});
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: '', description: '', subject: '', className: '', totalPoints: 100,
     difficulty: 'Medium', dueDate: '', instructions: ''
   });
   const toast = useToast();
-
-  const classLevels = ['6', '7', '8', '9', '10', '11', '12'];
-  const SUBJECTS_BY_CLASS = {
-    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-  };
   const difficulties = ['Easy', 'Medium', 'Hard'];
 
   useEffect(() => {
@@ -212,7 +203,7 @@ const TutorAssignments = () => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
               <select name="className" value={formData.className} onChange={e => setFormData({ ...formData, className: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
                 <option value="">Select Class</option>
-                {classLevels.map(l => <option key={l} value={l}>Class {l}</option>)}
+                {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
               </select>
 
               <select name="subject" value={formData.subject} onChange={handleChange} required disabled={!formData.className} style={{ ...inputStyle, background: formData.className ? 'white' : '#f1f5f9', cursor: formData.className ? 'pointer' : 'not-allowed' }}>
@@ -508,7 +499,8 @@ const TutorAssignments = () => {
                         type="number"
                         placeholder="Points"
                         max={selectedAssignment.totalPoints}
-                        id={`points-${submission._id}`}
+                        value={gradeInputs[submission._id]?.points || ''}
+                        onChange={e => setGradeInputs({ ...gradeInputs, [submission._id]: { ...gradeInputs[submission._id], points: e.target.value } })}
                         style={{
                           padding: '0.5rem 0.75rem',
                           borderRadius: '8px',
@@ -519,7 +511,8 @@ const TutorAssignments = () => {
                       <input
                         type="text"
                         placeholder="Feedback"
-                        id={`feedback-${submission._id}`}
+                        value={gradeInputs[submission._id]?.feedback || ''}
+                        onChange={e => setGradeInputs({ ...gradeInputs, [submission._id]: { ...gradeInputs[submission._id], feedback: e.target.value } })}
                         style={{
                           padding: '0.5rem 0.75rem',
                           borderRadius: '8px',
@@ -529,11 +522,7 @@ const TutorAssignments = () => {
                         }}
                       />
                       <button
-                        onClick={() => {
-                          const points = document.getElementById(`points-${submission._id}`).value;
-                          const feedback = document.getElementById(`feedback-${submission._id}`).value;
-                          handleGrade(submission._id, points, feedback);
-                        }}
+                        onClick={() => handleGrade(submission._id, gradeInputs[submission._id]?.points, gradeInputs[submission._id]?.feedback)}
                         style={{
                           background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                           color: 'white',

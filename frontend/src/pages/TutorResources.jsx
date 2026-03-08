@@ -4,17 +4,9 @@ import API_CONFIG from '../config/apiConfig';
 import { useToast } from '../components/Toast';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+import { CLASS_LEVELS, SUBJECTS_BY_CLASS } from '../constants/academic';
+
 const CATEGORIES = ['Textbook / Study Material', 'Guides', 'Class Notes', 'Question Papers', 'Other'];
-const CLASS_LEVELS = ['6', '7', '8', '9', '10', '11', '12'];
-const SUBJECTS_BY_CLASS = {
-  '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-  '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-  '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-  '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-  '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-  '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-  '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-};
 
 const TutorResources = () => {
   const [resources, setResources] = useState([]);
