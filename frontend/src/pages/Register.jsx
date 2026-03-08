@@ -18,7 +18,8 @@ const Register = () => {
     role: '',
     specialization: '',
     className: '',
-    subjects: []
+    subjects: [],
+    stream: ''
   });
 
   const studentClasses = ["6", "7", "8", "9", "10", "11", "12"];
@@ -29,14 +30,25 @@ const Register = () => {
     '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
     '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
     '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
   };
 
-  const availableSubjects = subjectsByClass[formData.className] || [];
+  const streamSubjects = {
+    'Science (CS)': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science'],
+    'Science (Bio)': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology'],
+    'Commerce': ['Tamil', 'English', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
+  };
+
+  const isHigherClass = ['11', '12'].includes(formData.className);
+  const availableSubjects = isHigherClass
+    ? (streamSubjects[formData.stream] || [])
+    : (subjectsByClass[formData.className] || []);
 
   const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value, ...(e.target.name === 'className' ? { subjects: [] } : {}) }));
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+      ...(e.target.name === 'className' ? { subjects: [], stream: '' } : {})
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -319,7 +331,36 @@ const Register = () => {
               </div>
             )}
 
-            {formData.role === 'student' && formData.className && (
+            {formData.role === 'student' && formData.className && isHigherClass && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label htmlFor="reg-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                  Select Your Stream *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>🎓</span>
+                  <select
+                    id="reg-stream"
+                    value={formData.stream}
+                    onChange={(e) => setFormData(prev => ({ ...prev, stream: e.target.value, subjects: [] }))}
+                    required
+                    style={{
+                      ...inputStyle,
+                      appearance: 'none',
+                      background: 'white url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'%3E%3Cpath fill=\'%2364748b\' d=\'M6 8L1 3h10z\'/%3E%3C/svg%3E") no-repeat right 1rem center'
+                    }}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  >
+                    <option value="">Choose stream...</option>
+                    <option value="Science (CS)">Science (Computer Science)</option>
+                    <option value="Science (Bio)">Science (Biology)</option>
+                    <option value="Commerce">Commerce</option>
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {formData.role === 'student' && formData.className && availableSubjects.length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
                   Subjects You Want to Learn *

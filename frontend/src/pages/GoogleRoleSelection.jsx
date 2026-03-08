@@ -13,6 +13,7 @@ const GoogleRoleSelection = () => {
   const [specialization, setSpecialization] = useState('');
   const [className, setClassName] = useState('');
   const [subjects, setSubjects] = useState([]);
+  const [stream, setStream] = useState('');
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
@@ -22,11 +23,18 @@ const GoogleRoleSelection = () => {
     '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
     '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
     '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
-    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
   };
 
-  const availableSubjects = subjectsByClass[className] || [];
+  const streamSubjects = {
+    'Science (CS)': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science'],
+    'Science (Bio)': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology'],
+    'Commerce': ['Tamil', 'English', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
+  };
+
+  const isHigherClass = ['11', '12'].includes(className);
+  const availableSubjects = isHigherClass
+    ? (streamSubjects[stream] || [])
+    : (subjectsByClass[className] || []);
 
   useEffect(() => {
     const userDataParam = searchParams.get('userData');
@@ -237,7 +245,7 @@ const GoogleRoleSelection = () => {
                 <select
                   id="google-class"
                   value={className}
-                  onChange={(e) => { setClassName(e.target.value); setSubjects([]); }}
+                  onChange={(e) => { setClassName(e.target.value); setSubjects([]); setStream(''); }}
                   required
                   style={{ ...inputStyle, background: 'white' }}
                 >
@@ -255,7 +263,27 @@ const GoogleRoleSelection = () => {
               </div>
             )}
 
-            {role === 'student' && className && (
+            {role === 'student' && className && isHigherClass && (
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label htmlFor="google-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                  Select Your Stream *
+                </label>
+                <select
+                  id="google-stream"
+                  value={stream}
+                  onChange={(e) => { setStream(e.target.value); setSubjects([]); }}
+                  required
+                  style={{ ...inputStyle, background: 'white' }}
+                >
+                  <option value="">Choose stream...</option>
+                  <option value="Science (CS)">Science (Computer Science)</option>
+                  <option value="Science (Bio)">Science (Biology)</option>
+                  <option value="Commerce">Commerce</option>
+                </select>
+              </div>
+            )}
+
+            {role === 'student' && className && availableSubjects.length > 0 && (
               <div style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
                   Subjects You Want to Learn *
