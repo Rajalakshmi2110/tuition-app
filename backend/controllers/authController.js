@@ -153,7 +153,7 @@ const forgotPassword = async (req, res) => {
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: user.email,
-          subject: 'Password Reset - Tuitix',
+          subject: 'Password Reset - Kalviyagam',
           html: `
             <h2>Password Reset Request</h2>
             <p>You requested a password reset. Click the link below to reset your password:</p>

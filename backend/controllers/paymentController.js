@@ -269,7 +269,7 @@ const sendPaymentReminders = async (req, res) => {
 
 // Email helper functions
 const sendPaymentSubmissionEmail = async (email, name, month, amount) => {
-  await sendEmail(email, 'Payment Submitted - Tuitix', `
+  await sendEmail(email, 'Payment Submitted - Kalviyagam', `
     <h2>Payment Submitted Successfully</h2>
     <p>Dear ${name},</p>
     <p>Your payment of <strong>₹${amount}</strong> for <strong>${month}</strong> has been submitted successfully.</p>
@@ -279,7 +279,7 @@ const sendPaymentSubmissionEmail = async (email, name, month, amount) => {
 };
 
 const sendPaymentVerificationEmail = async (email, name, month, status, reason = '') => {
-  const subject = status === 'approved' ? 'Payment Verified - Tuitix' : 'Payment Rejected - Tuitix';
+  const subject = status === 'approved' ? 'Payment Verified - Kalviyagam' : 'Payment Rejected - Kalviyagam';
   const message = status === 'approved'
     ? `Your payment for ${month} has been verified and approved.`
     : `Your payment for ${month} has been rejected. Reason: ${reason}. Please resubmit with correct details.`;
@@ -293,7 +293,7 @@ const sendPaymentVerificationEmail = async (email, name, month, status, reason =
 };
 
 const sendPaymentReminderEmail = async (email, name, month) => {
-  await sendEmail(email, 'Payment Reminder - Tuitix', `
+  await sendEmail(email, 'Payment Reminder - Kalviyagam', `
     <h2>Payment Reminder</h2>
     <p>Dear ${name},</p>
     <p>This is a friendly reminder that your payment for <strong>${month}</strong> is still pending.</p>
