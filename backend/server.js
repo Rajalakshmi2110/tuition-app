@@ -21,6 +21,7 @@ for (const envVar of requiredEnvVars) {
 
 const passport = require('./config/passport');
 const rateLimit = require('express-rate-limit');
+const { validateObjectIds } = require('./Middleware/validateIds');
 
 const app = express();
 
@@ -154,6 +155,9 @@ app.get('/uploads/gallery/:filename', (req, res) => {
   
   res.sendFile(filePath);
 });
+
+// Validate ObjectId params on all routes
+app.use(validateObjectIds);
 
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);

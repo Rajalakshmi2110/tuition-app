@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../models/User');
 const Class = require('../models/Class');
 const File = require('../models/File');
-const mongoose = require('mongoose');
 
 const { protect, adminOnly } = require("../Middleware/authMiddleware");
 const { getUsersByRole, approveTutor, declineTutor } = require("../controllers/adminController");
@@ -18,15 +17,9 @@ router.get("/tutors/pending", protect, adminOnly, (req, res) =>
   getUsersByRole(req, res, "tutor", "pending")
 );
 
-router.patch("/tutors/:id/approve", protect, adminOnly, (req, res) => {
-  if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
-  approveTutor(req, res);
-});
+router.patch("/tutors/:id/approve", protect, adminOnly, approveTutor);
 
-router.patch("/tutors/:id/decline", protect, adminOnly, (req, res) => {
-  if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
-  declineTutor(req, res);
-});
+router.patch("/tutors/:id/decline", protect, adminOnly, declineTutor);
 
 router.get("/students", protect, adminOnly, (req, res) =>
   getUsersByRole(req, res, "student")
@@ -47,7 +40,6 @@ router.get("/feedback", protect, adminOnly, async (req, res) => {
 // Approve feedback
 router.patch("/feedback/:id/approve", protect, adminOnly, async (req, res) => {
   try {
-    if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
     const Feedback = require('../models/Feedback');
     await Feedback.findByIdAndUpdate(req.params.id, { approved: true });
     res.json({ message: 'Feedback approved' });
@@ -60,7 +52,6 @@ router.patch("/feedback/:id/approve", protect, adminOnly, async (req, res) => {
 // Delete feedback
 router.delete("/feedback/:id", protect, adminOnly, async (req, res) => {
   try {
-    if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
     const Feedback = require('../models/Feedback');
     await Feedback.findByIdAndDelete(req.params.id);
     res.json({ message: 'Feedback deleted' });
