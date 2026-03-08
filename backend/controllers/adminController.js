@@ -63,15 +63,18 @@ const deleteUser = async (req, res) => {
     // Clean up related data
     const StudentClass = require('../models/StudentClass');
     const Class = require('../models/Class');
-    const File = require('../models/File');
-    const Resource = require('../models/Resource');
+    const Assignment = require('../models/Assignment');
+    const AssignmentSubmission = require('../models/AssignmentSubmission');
 
     if (user.role === 'student') {
       await StudentClass.deleteMany({ studentId: user._id });
+      await AssignmentSubmission.deleteMany({ studentId: user._id });
     } else if (user.role === 'tutor') {
       await Class.updateMany({ tutor: user._id }, { $unset: { tutor: '' } });
-      await File.deleteMany({ uploadedBy: user._id });
-      await Resource.deleteMany({ uploadedBy: user._id });
+      const tutorAssignments = await Assignment.find({ tutorId: user._id }).select('_id');
+      const assignmentIds = tutorAssignments.map(a => a._id);
+      await AssignmentSubmission.deleteMany({ assignmentId: { $in: assignmentIds } });
+      await Assignment.deleteMany({ tutorId: user._id });
     }
 
     await User.findByIdAndDelete(req.params.id);
