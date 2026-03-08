@@ -36,8 +36,9 @@ const TutorResources = () => {
       const { jwtDecode } = await import('jwt-decode');
       const decoded = jwtDecode(localStorage.getItem('token'));
       const userId = decoded.id || decoded._id;
-      const res = await api.get(`/classes/tutor/${userId}`);
-      setMyClasses(res.data);
+      // Fetch ALL classes (including completed) for resource uploads
+      const res = await api.get(`/classes`);
+      setMyClasses(res.data.filter(c => c.tutor?._id === userId || c.tutor === userId));
     } catch { /* ignore */ }
   }, []);
 
@@ -132,7 +133,7 @@ const TutorResources = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            📚 Resource Library
+            📖 Resource Library
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Upload study materials organized by class, subject & category
@@ -174,7 +175,7 @@ const TutorResources = () => {
       {/* Content */}
       {resources.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
+          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
           <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
           <p style={{ color: '#64748b' }}>Upload your first study material to get started</p>
         </div>
@@ -244,7 +245,7 @@ const TutorResources = () => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>
-                {editingResource ? '✏️ Edit Resource' : '📚 Upload Resource'}
+                {editingResource ? '✏️ Edit Resource' : '📖 Upload Resource'}
               </h3>
               <button onClick={resetForm} style={{
                 background: '#f1f5f9', border: 'none', width: '32px', height: '32px',

@@ -59,7 +59,7 @@ const AdminResources = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              📚 Resource Library
+              📖 Resource Library
             </h2>
             <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               All resources uploaded by tutors
@@ -103,7 +103,7 @@ const AdminResources = () => {
           </div>
         ) : resources.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📚</div>
+            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
             <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
             <p style={{ color: '#64748b' }}>Resources uploaded by tutors will appear here</p>
           </div>
