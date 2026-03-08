@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import kalviyagamLogo from '../assets/logo.png';
 
 const Footer = () => {
@@ -58,41 +57,6 @@ const Footer = () => {
             }}>
               Smart tuition platform connecting students with expert tutors.
             </p>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <h4 style={{
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              marginBottom: '1rem',
-              color: 'white'
-            }}>
-              Quick Links
-            </h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {[
-                { label: 'Home', to: '/' },
-                { label: 'About', to: '/about' },
-                { label: 'Login', to: '/login' },
-                { label: 'Register', to: '/register' }
-              ].map((link, index) => (
-                <Link
-                  key={index}
-                  to={link.to}
-                  style={{
-                    color: '#94a3b8',
-                    textDecoration: 'none',
-                    fontSize: '0.85rem',
-                    transition: 'color 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => e.target.style.color = '#10b981'}
-                  onMouseLeave={(e) => e.target.style.color = '#94a3b8'}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
           </div>
 
           {/* Contact Info */}
