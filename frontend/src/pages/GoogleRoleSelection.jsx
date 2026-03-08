@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import { useToast } from '../components/Toast';
 import kalviLogo from '../assets/logo.png';
 
+import { SUBJECTS_BY_CLASS } from '../constants/academic';
+
 const GoogleRoleSelection = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -18,11 +20,11 @@ const GoogleRoleSelection = () => {
   const toast = useToast();
 
   const subjectsByClass = {
-    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '6': SUBJECTS_BY_CLASS['6'],
+    '7': SUBJECTS_BY_CLASS['7'],
+    '8': SUBJECTS_BY_CLASS['8'],
+    '9': SUBJECTS_BY_CLASS['9'],
+    '10': SUBJECTS_BY_CLASS['10'],
   };
 
   const streamSubjects = {
@@ -250,8 +252,6 @@ const GoogleRoleSelection = () => {
                   style={{ ...inputStyle, background: 'white' }}
                 >
                   <option value="">Select your class</option>
-                  <option value="4">Class 4</option>
-                  <option value="5">Class 5</option>
                   <option value="6">Class 6</option>
                   <option value="7">Class 7</option>
                   <option value="8">Class 8</option>

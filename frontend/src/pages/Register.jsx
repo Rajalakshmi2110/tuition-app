@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { useToast } from '../components/Toast';
 import kalviLogo from '../assets/logo.png';
 import API_CONFIG from '../config/apiConfig';
+import { SUBJECTS_BY_CLASS } from '../constants/academic';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -25,11 +26,11 @@ const Register = () => {
   const studentClasses = ["6", "7", "8", "9", "10", "11", "12"];
 
   const subjectsByClass = {
-    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
-    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
-    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '6': SUBJECTS_BY_CLASS['6'],
+    '7': SUBJECTS_BY_CLASS['7'],
+    '8': SUBJECTS_BY_CLASS['8'],
+    '9': SUBJECTS_BY_CLASS['9'],
+    '10': SUBJECTS_BY_CLASS['10'],
   };
 
   const streamSubjects = {
