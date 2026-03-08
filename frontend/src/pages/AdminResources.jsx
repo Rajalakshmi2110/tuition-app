@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 import AdminLayout from '../components/AdminLayout';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../components/Toast';
@@ -141,14 +142,24 @@ const AdminResources = () => {
                         {new Date(r.createdAt).toLocaleDateString()}
                       </td>
                       <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', textAlign: 'center' }}>
-                        <button onClick={() => handleDelete(r._id)} style={{
-                          padding: '0.5rem 1rem', background: 'transparent', color: '#94a3b8',
-                          border: '2px solid #e2e8f0', borderRadius: '8px', cursor: 'pointer',
-                          fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
-                        }}
-                          onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
-                        >Delete</button>
+                        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+                          <a href={`${API_CONFIG.BASE_URL}/${r.url}`} target="_blank" rel="noopener noreferrer" style={{
+                            padding: '0.5rem 1rem', background: '#f0fdf4', color: '#059669',
+                            border: '2px solid #bbf7d0', borderRadius: '8px', textDecoration: 'none',
+                            fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
+                          }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#dcfce7'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = '#f0fdf4'; }}
+                          >View</a>
+                          <button onClick={() => handleDelete(r._id)} style={{
+                            padding: '0.5rem 1rem', background: 'transparent', color: '#94a3b8',
+                            border: '2px solid #e2e8f0', borderRadius: '8px', cursor: 'pointer',
+                            fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
+                          }}
+                            onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
+                          >Delete</button>
+                        </div>
                       </td>
                     </tr>
                   ))}
