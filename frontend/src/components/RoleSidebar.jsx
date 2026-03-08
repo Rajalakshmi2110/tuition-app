@@ -36,8 +36,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
     { path: '/student/performance', icon: '△', label: 'My Performance' },
     { path: '/student/ai-prediction', icon: '⟡', label: 'AI Prediction' },
     { path: '/student/assignments', icon: '☰', label: 'My Assignments' },
-    { path: '/student/files', icon: '▣', label: 'Study Materials' },
-    { path: '/student/resources', icon: '◆', label: 'Resource Library' },
+    { path: '/student/resources', icon: '▣', label: 'Study Materials' },
     { path: '/student/enroll', icon: '○', label: 'Enrolled Sessions' },
     { path: '/student/achievements', icon: '☆', label: 'Achievements' },
     { path: '/student/timer', icon: '◎', label: 'Timer & Stopwatch' },
@@ -48,8 +47,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
     { path: '/tutor', icon: '◇', label: 'Dashboard' },
     { path: '/tutor/assignments', icon: '☰', label: 'Manage Assignments' },
     { path: '/tutor/sessions', icon: '○', label: 'My Sessions' },
-    { path: '/tutor/files', icon: '▣', label: 'File Management' },
-    { path: '/tutor/resources', icon: '◆', label: 'Resource Library' },
+    { path: '/tutor/resources', icon: '▣', label: 'Study Materials' },
     { path: '/tutor/student-progress', icon: '△', label: 'Student Progress' },
     { path: '/tutor/analytics', icon: '⟡', label: 'Performance Analytics' }
   ];

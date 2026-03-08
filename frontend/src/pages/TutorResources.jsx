@@ -131,7 +131,7 @@ const TutorResources = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            📖 Resource Library
+            📖 Study Materials
           </h2>
           <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Upload study materials organized by class, subject & category
@@ -248,7 +248,7 @@ const TutorResources = () => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>
-                {editingResource ? '✏️ Edit Resource' : '📖 Upload Resource'}
+                {editingResource ? '✏️ Edit Resource' : '📖 Upload Study Material'}
               </h3>
               <button onClick={resetForm} style={{
                 background: '#f1f5f9', border: 'none', width: '32px', height: '32px',

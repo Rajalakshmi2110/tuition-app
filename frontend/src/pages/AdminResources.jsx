@@ -60,10 +60,10 @@ const AdminResources = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              📖 Resource Library
+              📖 Study Materials
             </h2>
             <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
-              All resources uploaded by tutors
+              All study materials uploaded by tutors
             </p>
           </div>
           {!loading && !error && resources.length > 0 && (

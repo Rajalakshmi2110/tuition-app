@@ -67,10 +67,10 @@ const StudentResources = () => {
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          📖 Resource Library
+          📖 Study Materials
         </h2>
         <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
-          Study materials, guides, notes & question papers for your enrolled subjects
+          Study materials, guides, notes & question papers for your subjects
         </p>
       </div>
 

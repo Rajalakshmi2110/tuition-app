@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
 import { jwtDecode } from "jwt-decode";
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const StudentDashboard = () => {
-  const [files, setFiles] = useState([]);
   const [selectedClass, setSelectedClass] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -45,32 +43,6 @@ const StudentDashboard = () => {
     }
   }, []);
 
-  // Fetch files
-  const fetchFiles = useCallback(async () => {
-    try {
-      const decoded = jwtDecode(localStorage.getItem('token'));
-      const res = await api.get(`/files`);
-      const classRes = await api.get(`/classes`);
-      
-      // Get classes where student is enrolled OR matches class level
-      const studentClassIds = classRes.data
-        .filter(cls => {
-          const isEnrolled = cls.students && cls.students.some(student => 
-            student._id === decoded.id || student._id?.toString() === decoded.id
-          );
-          const matchesClassLevel = cls.classLevel === decoded.className;
-          return isEnrolled || matchesClassLevel;
-        })
-        .map(cls => cls._id);
-      
-      const studentFiles = res.data.filter(file =>
-        studentClassIds.includes(file.classId?._id)
-      );
-      setFiles(studentFiles);
-    } catch (err) {
-    }
-  }, []);
-
   const fetchAnnouncements = useCallback(async () => {
     try {
       const res = await api.get(`/announcements`);
@@ -84,13 +56,12 @@ const StudentDashboard = () => {
       setLoading(true);
       await Promise.all([
         fetchClasses(),
-        fetchFiles(),
         fetchAnnouncements()
       ]);
       setLoading(false);
     };
     loadData();
-  }, [fetchClasses, fetchFiles, fetchAnnouncements]);
+  }, [fetchClasses, fetchAnnouncements]);
 
   if (loading) {
     return <LoadingSpinner message="Loading dashboard..." fullPage />;
@@ -184,94 +155,6 @@ const StudentDashboard = () => {
                 </div>
               );
             })}
-          </div>
-        </div>
-      )}
-
-      {/* Study Materials */}
-      {files.length > 0 && (
-        <div>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 700,
-            color: '#0f172a',
-            marginBottom: '1rem'
-          }}>
-            Study Materials
-          </h2>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '1.5rem',
-            borderRadius: '16px',
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
-          }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '1rem'
-            }}>
-              {files.map((file) => (
-                <a
-                  key={file._id}
-                  href={`${API_CONFIG.BASE_URL}/${file.url}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    padding: '1rem',
-                    background: '#f8fafc',
-                    borderRadius: '10px',
-                    textDecoration: 'none',
-                    transition: 'all 0.2s ease',
-                    border: '1px solid transparent'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#f0fdf4';
-                    e.currentTarget.style.borderColor = '#10b981';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#f8fafc';
-                    e.currentTarget.style.borderColor = 'transparent';
-                  }}
-                >
-                  <div style={{
-                    width: '40px',
-                    height: '40px',
-                    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontWeight: 700,
-                    fontSize: '0.9rem',
-                    flexShrink: 0
-                  }}>
-                    PDF
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{
-                      margin: 0,
-                      color: '#0f172a',
-                      fontWeight: 600,
-                      fontSize: '0.9rem',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
-                    }}>
-                      {file.title}
-                    </p>
-                    <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.8rem' }}>
-                      {file.classId?.name} • {file.uploadedBy?.name}
-                    </p>
-                  </div>
-                  <span style={{ color: '#10b981', fontSize: '1.2rem' }}>↓</span>
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       )}
