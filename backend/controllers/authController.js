@@ -9,7 +9,7 @@ const passport = require('passport');
 // REGISTER
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, specialization, className } = req.body;
+    const { name, email, password, role, specialization, className, subjects } = req.body;
 
     // Prevent self-registration of admins
     if (role === 'admin') {
@@ -44,6 +44,7 @@ const registerUser = async (req, res) => {
       role,
       specialization: role === 'tutor' ? specialization : undefined,
       className: role === 'student' ? className : undefined,
+      subjects: role === 'student' && subjects ? subjects : undefined,
       status: 'pending'
     });
 
@@ -240,7 +241,7 @@ const googleAuthSuccess = async (req, res) => {
 // COMPLETE GOOGLE OAUTH REGISTRATION
 const completeGoogleRegistration = async (req, res) => {
   try {
-    const { googleId, name, email, role, specialization, className } = req.body;
+    const { googleId, name, email, role, specialization, className, subjects } = req.body;
 
     // Prevent admin registration via Google OAuth
     if (role === 'admin') {
@@ -268,6 +269,7 @@ const completeGoogleRegistration = async (req, res) => {
       role,
       specialization: role === 'tutor' ? specialization : undefined,
       className: role === 'student' ? className : undefined,
+      subjects: role === 'student' && subjects ? subjects : undefined,
       status: 'pending'
     });
 

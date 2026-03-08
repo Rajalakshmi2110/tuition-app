@@ -460,7 +460,16 @@ const AdminDashboard = () => {
                     </td>
                     {type === "student" ? (
                       <>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{item.className || "—"}</td>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
+                          {item.className || "—"}
+                          {item.subjects && item.subjects.length > 0 && (
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', marginTop: '0.35rem' }}>
+                              {item.subjects.map(s => (
+                                <span key={s} style={{ background: '#f0fdf4', color: '#059669', padding: '0.15rem 0.5rem', borderRadius: '10px', fontSize: '0.7rem', fontWeight: 600 }}>{s}</span>
+                              ))}
+                            </div>
+                          )}
+                        </td>
                         <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
                           <span style={{
                             padding: '0.25rem 0.75rem',
@@ -870,6 +879,7 @@ const AdminDashboard = () => {
               </div>
               {[{ label: 'Role', value: viewUser.role?.charAt(0).toUpperCase() + viewUser.role?.slice(1) },
                 ...(viewUser.role === 'student' ? [{ label: 'Class', value: viewUser.className ? `Class ${viewUser.className}` : '—' }] : []),
+                ...(viewUser.role === 'student' && viewUser.subjects?.length ? [{ label: 'Subjects', value: viewUser.subjects.join(', ') }] : []),
                 ...(viewUser.role === 'tutor' ? [{ label: 'Specialization', value: viewUser.specialization || '—' }] : []),
                 { label: 'Status', value: viewUser.status },
                 { label: 'Registered', value: viewUser.createdAt ? new Date(viewUser.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—' }

@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       return this.role === 'student';
     }
   },
+  subjects: [{
+    type: String
+  }],
   googleId: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date

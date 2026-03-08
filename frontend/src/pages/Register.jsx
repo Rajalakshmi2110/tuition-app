@@ -17,10 +17,12 @@ const Register = () => {
     password: '',
     role: '',
     specialization: '',
-    className: ''
+    className: '',
+    subjects: []
   });
 
   const studentClasses = ["4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  const availableSubjects = ['Maths', 'Science', 'English', 'Social Science', 'Tamil', 'Hindi', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce'];
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -32,7 +34,7 @@ const Register = () => {
     try {
       await api.post(`/auth/register`, formData);
       toast.info('Registration successful! Your profile is pending admin approval. You will be notified once verified.');
-      setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
+      setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '', subjects: [] });
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to register. Please try again.');
@@ -306,22 +308,65 @@ const Register = () => {
               </div>
             )}
 
+            {formData.role === 'student' && formData.className && (
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                  Subjects You Want to Learn *
+                </label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {availableSubjects.map(sub => {
+                    const selected = formData.subjects.includes(sub);
+                    return (
+                      <button
+                        key={sub}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            subjects: selected
+                              ? prev.subjects.filter(s => s !== sub)
+                              : [...prev.subjects, sub]
+                          }));
+                        }}
+                        style={{
+                          padding: '0.5rem 1rem',
+                          borderRadius: '20px',
+                          border: selected ? '2px solid #10b981' : '2px solid #e2e8f0',
+                          background: selected ? '#f0fdf4' : 'white',
+                          color: selected ? '#059669' : '#64748b',
+                          fontWeight: 600,
+                          fontSize: '0.85rem',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                      >
+                        {selected ? '✓ ' : ''}{sub}
+                      </button>
+                    );
+                  })}
+                </div>
+                {formData.subjects.length === 0 && (
+                  <p style={{ color: '#ef4444', fontSize: '0.8rem', margin: '0.5rem 0 0' }}>Please select at least one subject</p>
+                )}
+              </div>
+            )}
+
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={loading || !formData.role}
+              disabled={loading || !formData.role || (formData.role === 'student' && formData.subjects.length === 0)}
               style={{
                 width: '100%',
                 padding: '1rem',
                 fontSize: '1rem',
                 fontWeight: 600,
-                background: (loading || !formData.role) ? '#94a3b8' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                background: (loading || !formData.role || (formData.role === 'student' && formData.subjects.length === 0)) ? '#94a3b8' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '12px',
-                cursor: (loading || !formData.role) ? 'not-allowed' : 'pointer',
+                cursor: (loading || !formData.role || (formData.role === 'student' && formData.subjects.length === 0)) ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s ease',
-                boxShadow: (loading || !formData.role) ? 'none' : '0 4px 14px rgba(16, 185, 129, 0.4)',
+                boxShadow: (loading || !formData.role || (formData.role === 'student' && formData.subjects.length === 0)) ? 'none' : '0 4px 14px rgba(16, 185, 129, 0.4)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

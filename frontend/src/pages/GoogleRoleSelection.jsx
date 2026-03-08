@@ -12,8 +12,11 @@ const GoogleRoleSelection = () => {
   const [role, setRole] = useState('');
   const [specialization, setSpecialization] = useState('');
   const [className, setClassName] = useState('');
+  const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+
+  const availableSubjects = ['Maths', 'Science', 'English', 'Social Science', 'Tamil', 'Hindi', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce'];
 
   useEffect(() => {
     const userDataParam = searchParams.get('userData');
@@ -46,6 +49,11 @@ const GoogleRoleSelection = () => {
       return;
     }
 
+    if (role === 'student' && subjects.length === 0) {
+      toast.error('Please select at least one subject');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await api.post(`/auth/complete-google-registration`, {
@@ -54,7 +62,8 @@ const GoogleRoleSelection = () => {
         email: userData.email,
         role,
         specialization: role === 'tutor' ? specialization : undefined,
-        className: role === 'student' ? className : undefined
+        className: role === 'student' ? className : undefined,
+        subjects: role === 'student' ? subjects : undefined
       });
 
       if (response.data.token) {
@@ -233,6 +242,38 @@ const GoogleRoleSelection = () => {
                   <option value="11">Class 11</option>
                   <option value="12">Class 12</option>
                 </select>
+              </div>
+            )}
+
+            {role === 'student' && className && (
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                  Subjects You Want to Learn *
+                </label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {availableSubjects.map(sub => {
+                    const selected = subjects.includes(sub);
+                    return (
+                      <button
+                        key={sub}
+                        type="button"
+                        onClick={() => setSubjects(selected ? subjects.filter(s => s !== sub) : [...subjects, sub])}
+                        style={{
+                          padding: '0.5rem 1rem', borderRadius: '20px',
+                          border: selected ? '2px solid #10b981' : '2px solid #e2e8f0',
+                          background: selected ? '#f0fdf4' : 'white',
+                          color: selected ? '#059669' : '#64748b',
+                          fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s ease'
+                        }}
+                      >
+                        {selected ? '✓ ' : ''}{sub}
+                      </button>
+                    );
+                  })}
+                </div>
+                {subjects.length === 0 && (
+                  <p style={{ color: '#ef4444', fontSize: '0.8rem', margin: '0.5rem 0 0' }}>Please select at least one subject</p>
+                )}
               </div>
             )}
 
