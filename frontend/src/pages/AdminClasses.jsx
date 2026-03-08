@@ -17,6 +17,15 @@ const AdminClasses = () => {
   });
   const toast = useToast();
   const classLevels = ['6', '7', '8', '9', '10', '11', '12'];
+  const SUBJECTS_BY_CLASS = {
+    '6': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '7': ['Tamil', 'English', 'Maths', 'Science', 'Social Science'],
+    '8': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '9': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '10': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Biology', 'Social Science'],
+    '11': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+    '12': ['Tamil', 'English', 'Maths', 'Physics', 'Chemistry', 'Computer Science', 'Biology', 'Accountancy', 'Commerce', 'Economics', 'Business Maths'],
+  };
 
   const fetchClasses = useCallback(async () => {
     try {
@@ -225,8 +234,18 @@ const AdminClasses = () => {
                 <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g., Math Class for Grade 10" required style={inputStyle} />
               </div>
               <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
+                <select value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
+                  <option value="">Select class level...</option>
+                  {classLevels.map(l => <option key={l} value={l}>Class {l}</option>)}
+                </select>
+              </div>
+              <div>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Subject *</label>
-                <input type="text" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} placeholder="e.g., Mathematics" required style={inputStyle} />
+                <select value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required disabled={!formData.classLevel} style={{ ...inputStyle, background: formData.classLevel ? 'white' : '#f1f5f9', cursor: formData.classLevel ? 'pointer' : 'not-allowed' }}>
+                  <option value="">{formData.classLevel ? 'Select subject...' : 'Select class level first'}</option>
+                  {formData.classLevel && SUBJECTS_BY_CLASS[formData.classLevel]?.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
@@ -243,13 +262,6 @@ const AdminClasses = () => {
                 <select value={formData.tutorId} onChange={e => setFormData({ ...formData, tutorId: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
                   <option value="">Select a tutor...</option>
                   {tutors.map(t => <option key={t._id} value={t._id}>{t.name} ({t.email})</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
-                <select value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
-                  <option value="">Select class level...</option>
-                  {classLevels.map(l => <option key={l} value={l}>Class {l}</option>)}
                 </select>
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
