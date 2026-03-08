@@ -120,6 +120,17 @@ const AdminDashboard = () => {
     }
   };
 
+  const deleteUser = async (id, role) => {
+    try {
+      await api.delete(`/admin/${role}s/${id}`);
+      toast.success(`${role.charAt(0).toUpperCase() + role.slice(1)} deleted`);
+      fetchData();
+      fetchStats();
+    } catch {
+      toast.error('Failed to delete user');
+    }
+  };
+
   // Filter students by class
   const filteredStudents = selectedClass === 'all' 
     ? students 
@@ -498,6 +509,24 @@ const AdminDashboard = () => {
                         >
                           View
                         </button>
+                        <button
+                          onClick={() => deleteUser(item._id, item.role)}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            background: 'transparent',
+                            color: '#94a3b8',
+                            border: '2px solid #e2e8f0',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            fontWeight: 500,
+                            fontSize: '0.85rem',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
+                        >
+                          Delete
+                        </button>
                         {type === "tutor" && item.status?.trim().toLowerCase() === "pending" && (
                           <>
                             <button
@@ -875,6 +904,14 @@ const AdminDashboard = () => {
                 </button>
               </div>
             )}
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: viewUser.status === 'pending' ? '0.5rem' : '1.5rem' }}>
+              <button
+                onClick={() => { deleteUser(viewUser._id, viewUser.role); setViewUser(null); }}
+                style={{ flex: 1, padding: '0.75rem', background: '#fef2f2', color: '#dc2626', border: '2px solid #fecaca', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+              >
+                Delete User
+              </button>
+            </div>
           </div>
         </div>
       )}
