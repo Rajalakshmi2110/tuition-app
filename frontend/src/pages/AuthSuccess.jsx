@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 const AuthSuccess = () => {
   const navigate = useNavigate();
@@ -12,6 +13,10 @@ const AuthSuccess = () => {
     if (token && role) {
       localStorage.setItem('token', token);
       localStorage.setItem('role', role);
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded.id) localStorage.setItem('userId', decoded.id);
+      } catch { /* ignore */ }
 
       if (role === 'admin') navigate('/admin');
       else if (role === 'tutor') navigate('/tutor');
