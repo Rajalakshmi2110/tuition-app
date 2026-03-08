@@ -175,6 +175,29 @@ Google Sign-In allows users to register/login with their Google account.
 
 ---
 
+## MongoDB Atlas Setup
+
+The app uses MongoDB Atlas (cloud-hosted). You need your own free cluster.
+
+1. Go to [mongodb.com/atlas](https://www.mongodb.com/atlas) and create a free account
+2. Click **Build a Database** → choose **M0 (Free)** tier
+3. Pick a cloud provider & region (any works), click **Create Cluster**
+4. Under **Database Access** → **Add New Database User**:
+   - Username & password (save these — you'll need them for the connection string)
+5. Under **Network Access** → **Add IP Address**:
+   - Click **Allow Access from Anywhere** (`0.0.0.0/0`) for development
+   - Or add your specific IP for tighter security
+6. Go back to **Database** → click **Connect** → **Drivers**
+7. Copy the connection string and replace `<username>`, `<password>`, and `<dbname>`:
+   ```env
+   MONGO_URI=mongodb+srv://yourUsername:yourPassword@yourCluster.mongodb.net/kalviyagam
+   ```
+8. Paste it in `backend/.env`
+
+> **Note:** The database and collections are created automatically when the app first connects — no manual setup needed.
+
+---
+
 ## Academic Structure
 
 The app targets **Class 6–12** students with the following subject mapping:
