@@ -4,8 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Resource = require('../models/Resource');
-const StudentClass = require('../models/StudentClass');
-const Class = require('../models/Class');
 const { protect, tutorOnly, adminOnly, authorize } = require('../Middleware/authMiddleware');
 
 const storage = multer.diskStorage({
@@ -114,23 +112,18 @@ router.delete('/:id', protect, authorize('tutor', 'admin'), async (req, res) => 
   }
 });
 
-// Student: Get resources for enrolled subjects
+// Student: Get resources for registered class & subjects
 router.get('/student', protect, authorize('student'), async (req, res) => {
   try {
-    const enrollments = await StudentClass.find({ studentId: req.user._id });
-    if (enrollments.length === 0) return res.json([]);
+    const user = req.user;
+    if (!user.className || !user.subjects || user.subjects.length === 0) {
+      return res.json([]);
+    }
 
-    const enrolledClassIds = enrollments.map(e => e.classId);
-    const classes = await Class.find({ _id: { $in: enrolledClassIds } }).select('classLevel subject');
-
-    // Build unique classLevel+subject pairs
-    const subjectPairs = [...new Set(classes.map(c => `${c.classLevel}::${c.subject}`))];
-    if (subjectPairs.length === 0) return res.json([]);
-
-    const orConditions = subjectPairs.map(pair => {
-      const [classLevel, subject] = pair.split('::');
-      return { classLevel, subject: { $regex: new RegExp(`^${subject.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } };
-    });
+    const orConditions = user.subjects.map(subject => ({
+      classLevel: user.className,
+      subject: { $regex: new RegExp(`^${subject.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+    }));
 
     const resources = await Resource.find({ $or: orConditions })
       .populate('uploadedBy', 'name')
