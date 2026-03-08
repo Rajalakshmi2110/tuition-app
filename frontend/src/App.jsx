@@ -1,48 +1,52 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastProvider } from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ThemeProvider } from './contexts/ThemeContext';
-
-import Home from './pages/Home';
-import About from './pages/About';
-import WelcomePortal from './pages/WelcomePortal';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import AuthSuccess from './pages/AuthSuccess';
-import GoogleRoleSelection from './pages/GoogleRoleSelection';
-import StudentPerformance from './pages/StudentPerformance';
-import StudentAssignments from './pages/StudentAssignments';
-import TutorAssignments from './pages/TutorAssignments';
-import TutorClasses from './pages/TutorClasses';
-import TutorStudentProgress from './pages/TutorStudentProgress';
-import TutorFiles from './pages/TutorFiles';
+import LoadingSpinner from './components/LoadingSpinner';
 
 import Layout from './components/Layout';
 import RoleLayout from './components/RoleLayout';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminCreateClass from './pages/AdminCreateClass';
-import AdminClasses from './pages/AdminClasses';
-import AdminFeedback from './pages/AdminFeedback';
-import AdminGallery from './pages/AdminGallery';
-import TutorDashboard from './pages/TutorDashboard';
-import ClassManagePage from './pages/ClassManagePage';
-
-import StudentDashboard from './pages/StudentDashboard';
-import StudentEnrollClass from './pages/StudentEnrollClass';
-import StudentFiles from './pages/StudentFiles';
-import AdminFiles from './pages/AdminFiles';
-import StudentGamification from './pages/StudentGamification';
-import StudentTimer from './pages/StudentTimer';
-import StudentPayments from './pages/StudentPayments';
-import AdminPayments from './pages/AdminPayments';
-import PerformancePrediction from './components/PerformancePrediction';
-import TutorPerformanceAnalytics from './pages/TutorPerformanceAnalytics';
-import AdminReports from './pages/AdminReports';
 import ProtectedRoute from './components/ProtectedRoute';
-import NotFound from './pages/NotFound';
+
+// Lazy-loaded pages
+const Home = React.lazy(() => import('./pages/Home'));
+const About = React.lazy(() => import('./pages/About'));
+const WelcomePortal = React.lazy(() => import('./pages/WelcomePortal'));
+const Login = React.lazy(() => import('./pages/Login'));
+const Register = React.lazy(() => import('./pages/Register'));
+const ForgotPassword = React.lazy(() => import('./pages/ForgotPassword'));
+const ResetPassword = React.lazy(() => import('./pages/ResetPassword'));
+const AuthSuccess = React.lazy(() => import('./pages/AuthSuccess'));
+const GoogleRoleSelection = React.lazy(() => import('./pages/GoogleRoleSelection'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
+const AdminCreateClass = React.lazy(() => import('./pages/AdminCreateClass'));
+const AdminClasses = React.lazy(() => import('./pages/AdminClasses'));
+const AdminFeedback = React.lazy(() => import('./pages/AdminFeedback'));
+const AdminGallery = React.lazy(() => import('./pages/AdminGallery'));
+const AdminFiles = React.lazy(() => import('./pages/AdminFiles'));
+const AdminPayments = React.lazy(() => import('./pages/AdminPayments'));
+const AdminReports = React.lazy(() => import('./pages/AdminReports'));
+
+const TutorDashboard = React.lazy(() => import('./pages/TutorDashboard'));
+const TutorAssignments = React.lazy(() => import('./pages/TutorAssignments'));
+const TutorClasses = React.lazy(() => import('./pages/TutorClasses'));
+const TutorFiles = React.lazy(() => import('./pages/TutorFiles'));
+const TutorStudentProgress = React.lazy(() => import('./pages/TutorStudentProgress'));
+const TutorPerformanceAnalytics = React.lazy(() => import('./pages/TutorPerformanceAnalytics'));
+const ClassManagePage = React.lazy(() => import('./pages/ClassManagePage'));
+
+const StudentDashboard = React.lazy(() => import('./pages/StudentDashboard'));
+const StudentEnrollClass = React.lazy(() => import('./pages/StudentEnrollClass'));
+const StudentFiles = React.lazy(() => import('./pages/StudentFiles'));
+const StudentPerformance = React.lazy(() => import('./pages/StudentPerformance'));
+const StudentAssignments = React.lazy(() => import('./pages/StudentAssignments'));
+const StudentGamification = React.lazy(() => import('./pages/StudentGamification'));
+const StudentTimer = React.lazy(() => import('./pages/StudentTimer'));
+const StudentPayments = React.lazy(() => import('./pages/StudentPayments'));
+const PerformancePrediction = React.lazy(() => import('./components/PerformancePrediction'));
 
 const App = () => {
   return (
@@ -50,6 +54,7 @@ const App = () => {
     <ThemeProvider>
     <ToastProvider>
     <Router>
+      <Suspense fallback={<LoadingSpinner />}>
       <Routes>
 
         {/* Public Routes */}
@@ -105,6 +110,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
 
       </Routes>
+      </Suspense>
     </Router>
     </ToastProvider>
     </ThemeProvider>
