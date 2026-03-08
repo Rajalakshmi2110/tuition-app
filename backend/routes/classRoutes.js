@@ -165,7 +165,7 @@ router.get("/available-for-student/:studentId", protect, async (req, res) => {
     const student = await Student.findById(req.params.studentId);
     if (!student) return res.status(404).json({ message: "Student not found" });
 
-    const availableClasses = await Class.find({ classLevel: student.classLevel });
+    const availableClasses = await Class.find({ classLevel: student.className });
     const enrolledLinks = await StudentClass.find({ studentId: student._id });
     const enrolledClassIds = enrolledLinks.map(link => link.classId.toString());
 

@@ -9,7 +9,7 @@ const studentPerformanceSchema = new mongoose.Schema({
   subject: {
     type: String,
     required: true,
-    enum: ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German']
+    enum: ['Tamil', 'English', 'Maths', 'Science', 'Social Science', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Accountancy', 'Commerce', 'Economics', 'Business Maths']
   },
   examType: {
     type: String,

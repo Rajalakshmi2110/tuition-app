@@ -65,10 +65,16 @@ const deleteUser = async (req, res) => {
     const Class = require('../models/Class');
     const Assignment = require('../models/Assignment');
     const AssignmentSubmission = require('../models/AssignmentSubmission');
+    const Payment = require('../models/Payment');
+    const StudentPerformance = require('../models/StudentPerformance');
+    const UserStats = require('../models/UserStats');
+    const UserBadge = require('../models/UserBadge');
 
     if (user.role === 'student') {
       await StudentClass.deleteMany({ studentId: user._id });
       await AssignmentSubmission.deleteMany({ studentId: user._id });
+      await Payment.deleteMany({ studentId: user._id });
+      await StudentPerformance.deleteMany({ studentId: user._id });
     } else if (user.role === 'tutor') {
       await Class.updateMany({ tutor: user._id }, { $unset: { tutor: '' } });
       const tutorAssignments = await Assignment.find({ tutorId: user._id }).select('_id');
@@ -76,6 +82,10 @@ const deleteUser = async (req, res) => {
       await AssignmentSubmission.deleteMany({ assignmentId: { $in: assignmentIds } });
       await Assignment.deleteMany({ tutorId: user._id });
     }
+
+    // Clean up gamification data for any role
+    await UserStats.deleteMany({ userId: user._id });
+    await UserBadge.deleteMany({ userId: user._id });
 
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: `${user.role} deleted successfully` });

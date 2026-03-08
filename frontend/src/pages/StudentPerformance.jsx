@@ -3,6 +3,7 @@ import api from '../services/api';
 import { useToast } from '../components/Toast';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EmptyState from '../components/EmptyState';
+import { SUBJECTS_BY_CLASS } from '../constants/academic';
 
 const StudentPerformance = () => {
   const [performances, setPerformances] = useState([]);
@@ -19,12 +20,21 @@ const StudentPerformance = () => {
   });
 
   const toast = useToast();
-  const subjects = ['Mathematics', 'Science', 'English', 'Social Studies', 'Physics', 'Chemistry', 'Biology', 'Computer Science', 'Tamil', 'Hindi', 'Sanskrit', 'French', 'German'];
+  const [studentSubjects, setStudentSubjects] = useState([]);
   const examTypes = ['Unit Test', 'Mid Term', 'Final Exam', 'Monthly Test', 'Quarterly', 'Half Yearly'];
   const terms = ['Term 1', 'Term 2', 'Term 3'];
 
   useEffect(() => {
     fetchPerformances();
+    // Get student's registered subjects from profile
+    api.get('/users/profile').then(res => {
+      const user = res.data;
+      if (user.className && SUBJECTS_BY_CLASS[user.className]) {
+        setStudentSubjects(SUBJECTS_BY_CLASS[user.className]);
+      } else if (user.subjects?.length) {
+        setStudentSubjects(user.subjects);
+      }
+    }).catch(() => {});
   }, []);
 
   const fetchPerformances = async () => {
@@ -186,7 +196,7 @@ const StudentPerformance = () => {
               style={inputStyle}
             >
               <option value="">Select Subject</option>
-              {subjects.map(subject => (
+              {studentSubjects.map(subject => (
                 <option key={subject} value={subject}>{subject}</option>
               ))}
             </select>

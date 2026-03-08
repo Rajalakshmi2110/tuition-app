@@ -120,19 +120,14 @@ const deletePerformance = async (req, res) => {
 // Get all students' performance for a tutor
 const getTutorStudentsPerformance = async (req, res) => {
   try {
-    // Get all classes taught by this tutor
     const Class = require('../models/Class');
-    const tutorClasses = await Class.find({ tutor: req.user._id }).populate('students', 'name email');
+    const StudentClass = require('../models/StudentClass');
+    const tutorClasses = await Class.find({ tutor: req.user._id });
     
-    // Get all student IDs from tutor's classes
-    const studentIds = [];
-    tutorClasses.forEach(cls => {
-      cls.students.forEach(student => {
-        if (!studentIds.includes(student._id.toString())) {
-          studentIds.push(student._id);
-        }
-      });
-    });
+    // Get student IDs from StudentClass join table
+    const classIds = tutorClasses.map(cls => cls._id);
+    const enrollments = await StudentClass.find({ classId: { $in: classIds } });
+    const studentIds = [...new Set(enrollments.map(e => e.studentId.toString()))].map(id => new mongoose.Types.ObjectId(id));
     
     // Get performance records for all these students
     const performances = await StudentPerformance.find({ 
