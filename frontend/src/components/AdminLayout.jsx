@@ -88,6 +88,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
 
       {/* Mobile hamburger */}
       {isMobile && !mobileOpen && (
@@ -323,7 +324,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
         </header>
 
         {/* Content Area */}
-        <main style={{ flex: 1, padding: isMobile ? '1rem' : '2rem', overflowY: 'auto' }}>
+        <main id="main-content" style={{ flex: 1, padding: isMobile ? '1rem' : '2rem', overflowY: 'auto' }}>
           <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
             {children}
           </div>

@@ -22,7 +22,7 @@ const GoogleRoleSelection = () => {
         const parsedData = JSON.parse(decodeURIComponent(userDataParam));
         setUserData(parsedData);
       } catch (error) {
-        console.error('Error parsing user data:', error);
+        console.error('Error parsing user data');
         navigate('/login');
       }
     } else {
@@ -68,7 +68,7 @@ const GoogleRoleSelection = () => {
         navigate('/login');
       }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Registration error');
       toast.error(error.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
@@ -184,7 +184,7 @@ const GoogleRoleSelection = () => {
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{
+              <label htmlFor="google-role" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 fontSize: '0.9rem',
@@ -194,6 +194,7 @@ const GoogleRoleSelection = () => {
                 I am a...
               </label>
               <select
+                id="google-role"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 required
@@ -207,7 +208,7 @@ const GoogleRoleSelection = () => {
 
             {role === 'student' && (
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{
+                <label htmlFor="google-class" style={{
                   display: 'block',
                   marginBottom: '0.5rem',
                   fontSize: '0.9rem',
@@ -217,6 +218,7 @@ const GoogleRoleSelection = () => {
                   Academic Class
                 </label>
                 <select
+                  id="google-class"
                   value={className}
                   onChange={(e) => setClassName(e.target.value)}
                   required
@@ -238,7 +240,7 @@ const GoogleRoleSelection = () => {
 
             {role === 'tutor' && (
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{
+                <label htmlFor="google-specialization" style={{
                   display: 'block',
                   marginBottom: '0.5rem',
                   fontSize: '0.9rem',
@@ -248,6 +250,7 @@ const GoogleRoleSelection = () => {
                   Specialization
                 </label>
                 <input
+                  id="google-specialization"
                   type="text"
                   value={specialization}
                   onChange={(e) => setSpecialization(e.target.value)}

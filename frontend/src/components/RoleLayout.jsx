@@ -25,6 +25,7 @@ const RoleLayout = ({ role }) => {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f1f5f9' }}>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <RoleSidebar role={role} onWidthChange={setSidebarWidth} />
 
       <div style={{
@@ -141,7 +142,7 @@ const RoleLayout = ({ role }) => {
         </header>
 
         {/* Main Content Area */}
-        <main style={{
+        <main id="main-content" style={{
           flex: 1,
           padding: isMobile ? '1rem' : '2rem',
           overflowY: 'auto'

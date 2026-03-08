@@ -115,7 +115,7 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             {/* Email Input */}
             <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{
+              <label htmlFor="login-email" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 fontSize: '0.9rem',
@@ -136,6 +136,7 @@ const Login = () => {
                   @
                 </span>
                 <input
+                  id="login-email"
                   name="email"
                   type="email"
                   placeholder="you@example.com"
@@ -166,7 +167,7 @@ const Login = () => {
 
             {/* Password Input */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{
+              <label htmlFor="login-password" style={{
                 display: 'block',
                 marginBottom: '0.5rem',
                 fontSize: '0.9rem',
@@ -187,6 +188,7 @@ const Login = () => {
                   🔒
                 </span>
                 <input
+                  id="login-password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
@@ -217,6 +219,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                   style={{
                     position: 'absolute',
                     right: '1rem',

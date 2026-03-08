@@ -7,8 +7,9 @@ import '../styles/layout.css';
 const Layout = () => {
   return (
     <>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <Header />
-      <main>
+      <main id="main-content">
         <Outlet /> 
       </main>
       <Footer />

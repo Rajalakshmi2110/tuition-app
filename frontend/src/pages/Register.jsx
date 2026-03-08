@@ -35,7 +35,6 @@ const Register = () => {
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      console.error('Registration failed', err);
       toast.error(err.response?.data?.message || 'Failed to register. Please try again.');
     } finally {
       setLoading(false);
@@ -208,10 +207,10 @@ const Register = () => {
 
             {/* Role Selection */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label id="reg-role-label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
                 I am a...
               </label>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+              <div role="group" aria-labelledby="reg-role-label" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <button
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, role: 'student' }))}
@@ -256,12 +255,13 @@ const Register = () => {
             {/* Conditional Fields */}
             {formData.role === 'tutor' && (
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="reg-specialization" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
                   Specialization / Subject
                 </label>
                 <div style={{ position: 'relative' }}>
                   <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>▣</span>
                   <input
+                    id="reg-specialization"
                     type="text"
                     name="specialization"
                     placeholder="e.g., Mathematics, Physics"
@@ -278,12 +278,13 @@ const Register = () => {
 
             {formData.role === 'student' && (
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="reg-class" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
                   Select Your Class
                 </label>
                 <div style={{ position: 'relative' }}>
                   <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>📖</span>
                   <select
+                    id="reg-class"
                     name="className"
                     value={formData.className}
                     onChange={handleChange}
