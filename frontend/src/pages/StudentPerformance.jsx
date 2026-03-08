@@ -32,7 +32,6 @@ const StudentPerformance = () => {
       const response = await api.get(`/performance`);
       setPerformances(response.data);
     } catch (error) {
-      console.error('Error fetching performances:', error);
     } finally {
       setLoading(false);
     }
@@ -51,7 +50,6 @@ const StudentPerformance = () => {
       fetchPerformances();
     } catch (error) {
       toast.error('Error adding performance record');
-      console.error('Submit error:', error);
     }
   };
 

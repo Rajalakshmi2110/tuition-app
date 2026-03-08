@@ -12,7 +12,6 @@ const About = () => {
         const res = await api.get(`/feedback/approved`);
         setTestimonials(res.data);
       } catch (err) {
-        console.error('Error fetching testimonials:', err);
       }
     };
     fetchTestimonials();

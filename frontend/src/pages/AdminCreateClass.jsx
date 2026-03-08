@@ -24,7 +24,6 @@ const AdminCreateClass = () => {
         const res = await api.get(`/users/tutors`);
         setTutors(res.data.tutors || []);
       } catch (error) {
-        console.error('Failed to fetch tutors', error.response?.data || error.message);
       }
     };
     fetchTutors();
@@ -49,7 +48,6 @@ const AdminCreateClass = () => {
       toast.success('Session created successfully!');
       setFormData({ name: '', subject: '', schedule: '', scheduledDate: '', tutorId: '', classLevel: '' });
     } catch (err) {
-      console.error('Session creation failed', err);
       toast.error('Failed to create session');
     } finally {
       setLoading(false);

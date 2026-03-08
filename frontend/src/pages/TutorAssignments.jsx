@@ -28,7 +28,6 @@ const TutorAssignments = () => {
       const response = await api.get(`/assignments/tutor`);
       setAssignments(response.data);
     } catch (error) {
-      console.error('Error fetching assignments:', error);
     } finally {
       setLoading(false);
     }
@@ -39,7 +38,6 @@ const TutorAssignments = () => {
       const response = await api.get(`/assignments/${assignmentId}/submissions`);
       setSubmissions(response.data.submissions);
     } catch (error) {
-      console.error('Error fetching submissions:', error);
     }
   };
 
@@ -56,7 +54,6 @@ const TutorAssignments = () => {
       setShowForm(false);
       fetchAssignments();
     } catch (error) {
-      console.error('Assignment creation error:', error.response?.data || error.message);
       toast.error(error.response?.data?.message || 'Error creating assignment');
     }
   };
@@ -71,7 +68,6 @@ const TutorAssignments = () => {
       fetchSubmissions(selectedAssignment._id);
     } catch (error) {
       toast.error('Error grading assignment');
-      console.error(error);
     }
   };
 

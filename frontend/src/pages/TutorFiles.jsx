@@ -26,7 +26,6 @@ const TutorFiles = () => {
       const tutorFiles = res.data.filter(file => file.uploadedBy?._id === userId);
       setFiles(tutorFiles);
     } catch (err) {
-      console.error("Failed to fetch files", err);
     }
   }, []);
 
@@ -38,7 +37,6 @@ const TutorFiles = () => {
       const res = await api.get(`/classes/tutor/${userId}`);
       setClasses(res.data);
     } catch (err) {
-      console.error("Failed to load classes", err);
     }
   }, []);
 
@@ -72,7 +70,6 @@ const TutorFiles = () => {
       fetchFiles();
     } catch (err) {
       toast.error("File upload failed.");
-      console.error(err);
     } finally {
       setUploading(false);
     }

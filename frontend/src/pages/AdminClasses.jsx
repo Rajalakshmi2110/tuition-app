@@ -21,7 +21,6 @@ const AdminClasses = () => {
       setClasses(classes.filter(cls => cls._id !== classId));
       toast.success('Session deleted successfully!');
     } catch (err) {
-      console.error('Error deleting session:', err);
       toast.error('Failed to delete session');
     }
   };
@@ -32,7 +31,6 @@ const AdminClasses = () => {
         const res = await api.get(`/classes`);
         setClasses(res.data);
       } catch (err) {
-        console.error('Error fetching sessions:', err);
       } finally {
         setLoading(false);
       }

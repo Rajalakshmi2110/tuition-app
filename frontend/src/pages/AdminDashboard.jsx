@@ -36,18 +36,16 @@ const AdminDashboard = () => {
       setTutors(tutorsRes.data);
     } catch (err) {
       setError("Failed to load data.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchAnnouncements = useCallback(async () => {
     try {
       const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
-      console.error(err);
     }
   }, []);
 
@@ -56,7 +54,6 @@ const AdminDashboard = () => {
       const res = await api.get(`/admin/stats`);
       setStats(res.data);
     } catch (err) {
-      console.error('Frontend stats error:', err);
     }
   }, []);
 
@@ -67,7 +64,6 @@ const AdminDashboard = () => {
       fetchAnnouncements();
     } catch (err) {
       toast.error('Failed to delete announcement');
-      console.error(err);
     }
   };
 
@@ -87,7 +83,6 @@ const AdminDashboard = () => {
       fetchData();
     } catch (err) {
       toast.error('Failed to approve tutor');
-      console.error(err);
     }
   };
 
@@ -101,7 +96,6 @@ const AdminDashboard = () => {
       fetchData();
     } catch (err) {
       toast.error('Failed to decline tutor');
-      console.error(err);
     }
   };
 
@@ -142,7 +136,6 @@ const AdminDashboard = () => {
       setAnnouncementType('general');
       fetchAnnouncements();
     } catch (err) {
-      console.error(err);
       toast.error('Failed to post announcement');
     }
   };

@@ -18,7 +18,6 @@ const TutorDashboard = () => {
       const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
-      console.error("Failed to fetch announcements:", err);
     }
   }, []);
 
@@ -32,7 +31,6 @@ const TutorDashboard = () => {
         const res = await api.get(`/classes/tutor/${decoded.id}`);
         tutorSessions = res.data || [];
       } catch (tutorErr) {
-        console.error("Tutor endpoint failed, trying fallback:", tutorErr);
       }
       
       if (tutorSessions.length === 0) {
@@ -54,7 +52,6 @@ const TutorDashboard = () => {
         totalFiles: 0
       });
     } catch (err) {
-      console.error("Failed to fetch sessions:", err);
     }
   }, []);
 

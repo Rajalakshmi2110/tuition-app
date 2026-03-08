@@ -34,7 +34,7 @@ const StudentDashboard = () => {
       const decoded = jwtDecode(localStorage.getItem('token'));
       const res = await api.get(`/classes`);
       
-      const studentClasses = res.data.filter(cls => {
+      res.data.filter(cls => {
         const isEnrolled = cls.students && cls.students.some(student => 
           student._id === decoded.id || student._id?.toString() === decoded.id
         );
@@ -42,7 +42,6 @@ const StudentDashboard = () => {
         return isEnrolled || matchesClassLevel;
       });
     } catch (err) {
-      console.error("Failed to fetch sessions:", err);
     }
   }, []);
 
@@ -69,7 +68,6 @@ const StudentDashboard = () => {
       );
       setFiles(studentFiles);
     } catch (err) {
-      console.error("Failed to fetch files:", err);
     }
   }, []);
 
@@ -78,7 +76,6 @@ const StudentDashboard = () => {
       const res = await api.get(`/announcements`);
       setAnnouncements(res.data);
     } catch (err) {
-      console.error("Failed to fetch announcements:", err);
     }
   }, []);
 

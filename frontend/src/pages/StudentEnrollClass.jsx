@@ -38,7 +38,6 @@ const StudentEnrollClass = () => {
       setAvailableSessions(available);
       setLoading(false);
     } catch (err) {
-      console.error("Failed to fetch sessions:", err);
       setLoading(false);
     }
   }, []);

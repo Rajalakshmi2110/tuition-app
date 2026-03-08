@@ -20,7 +20,6 @@ const Home = () => {
         const res = await api.get(`/gallery`);
         setGalleryImages(res.data.slice(0, 3));
       } catch (err) {
-        console.error('Error fetching gallery:', err);
       }
     };
     fetchGalleryImages();

@@ -27,7 +27,6 @@ const StudentGamification = () => {
       setLeaderboard(leaderboardRes.data);
       setAllBadges(badgesRes.data);
     } catch (error) {
-      console.error('Error fetching gamification data:', error);
     } finally {
       setLoading(false);
     }

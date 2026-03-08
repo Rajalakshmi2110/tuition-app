@@ -28,7 +28,6 @@ const AdminReports = () => {
       setSubjectPerformance(subjects.data.subjectPerformance || []);
       setPaymentDistribution(payments.data.paymentDistribution || []);
     } catch (error) {
-      console.error('Error fetching reports:', error);
     } finally {
       setLoading(false);
     }

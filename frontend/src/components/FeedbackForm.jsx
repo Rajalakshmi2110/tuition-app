@@ -21,7 +21,6 @@ const FeedbackForm = ({ onClose }) => {
       toast.success('Thank you for your feedback! It will be reviewed soon.');
       onClose();
     } catch (err) {
-      console.error('Feedback submission error:', err);
       toast.error(`Failed to submit feedback: ${err.response?.data?.message || err.message}`);
     } finally {
       setSubmitting(false);

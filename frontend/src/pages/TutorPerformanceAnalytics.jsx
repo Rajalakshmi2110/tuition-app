@@ -13,7 +13,6 @@ const TutorPerformanceAnalytics = () => {
       const response = await api.get(`/tutor-analytics/classes`);
       setClassAnalytics(response.data.classAnalytics || []);
     } catch (error) {
-      console.error('Error fetching analytics:', error);
     } finally {
       setLoading(false);
     }
@@ -30,7 +29,6 @@ const TutorPerformanceAnalytics = () => {
       setClassDetails(response.data);
       setSelectedClass(classId);
     } catch (error) {
-      console.error('Error fetching class details:', error);
     } finally {
       setLoading(false);
     }

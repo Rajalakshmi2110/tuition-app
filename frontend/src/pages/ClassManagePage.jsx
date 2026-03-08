@@ -20,7 +20,6 @@ const ClassManagePage = () => {
         setClassInfo(res.data);
         setSchedule(res.data.schedule);
       } catch (err) {
-        console.error('Failed to fetch class info:', err);
       } finally {
         setLoading(false);
       }
@@ -34,7 +33,6 @@ const ClassManagePage = () => {
       toast.success('Schedule updated successfully!');
       setClassInfo({...classInfo, schedule});
     } catch (err) {
-      console.error(err);
       toast.error('Failed to update schedule');
     }
   };
@@ -49,7 +47,6 @@ const ClassManagePage = () => {
       toast.success('Resource added successfully!');
       setResourceLink('');
     } catch (err) {
-      console.error(err);
       toast.error('Failed to upload resource');
     }
   };
@@ -64,7 +61,6 @@ const ClassManagePage = () => {
       toast.success('Announcement sent successfully!');
       setAnnouncement('');
     } catch (err) {
-      console.error(err);
       toast.error('Failed to send announcement');
     }
   };
@@ -77,7 +73,6 @@ const ClassManagePage = () => {
       toast.success('Class marked as completed!');
       navigate('/tutor/sessions');
     } catch (err) {
-      console.error(err);
       toast.error('Failed to mark class as completed');
     }
   };

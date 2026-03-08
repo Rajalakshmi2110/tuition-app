@@ -18,7 +18,6 @@ const AdminFeedback = () => {
       const res = await api.get(`/admin/feedback`);
       setFeedback(res.data);
     } catch (err) {
-      console.error('Error fetching feedback:', err);
     } finally {
       setLoading(false);
     }
@@ -31,7 +30,6 @@ const AdminFeedback = () => {
       fetchFeedback();
     } catch (err) {
       toast.error('Error approving feedback');
-      console.error('Error approving feedback:', err);
     }
   };
 
@@ -43,7 +41,6 @@ const AdminFeedback = () => {
       fetchFeedback();
     } catch (err) {
       toast.error('Error deleting feedback');
-      console.error('Error deleting feedback:', err);
     }
   };
 

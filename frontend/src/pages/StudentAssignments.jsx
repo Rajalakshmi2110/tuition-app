@@ -24,7 +24,6 @@ const StudentAssignments = () => {
       const response = await api.get(`/assignments/student`);
       setAssignments(response.data);
     } catch (error) {
-      console.error('Error fetching assignments:', error);
     } finally {
       setLoading(false);
     }
@@ -35,7 +34,6 @@ const StudentAssignments = () => {
       const response = await api.get(`/assignments/submissions`);
       setSubmissions(response.data);
     } catch (error) {
-      console.error('Error fetching submissions:', error);
     }
   };
 

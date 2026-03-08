@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import API from '../services/api';
 import API_CONFIG from '../config/apiConfig';
+import { useToast } from './Toast';
 
 const FileItem = ({ file, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const toast = useToast();
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this file?')) {
@@ -12,8 +14,7 @@ const FileItem = ({ file, onDelete }) => {
         await API.delete(`/${file._id}`);
         onDelete(file._id);
       } catch (err) {
-        console.error(err);
-        alert('Delete failed');
+        toast.error('Delete failed');
         setIsDeleting(false);
       }
     }

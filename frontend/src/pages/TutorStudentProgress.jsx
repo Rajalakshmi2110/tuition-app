@@ -39,7 +39,6 @@ const TutorStudentProgress = () => {
       setClassesByLevel(grouped);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching classes:', error);
       setLoading(false);
     }
   };
@@ -49,7 +48,6 @@ const TutorStudentProgress = () => {
       const response = await api.get(`/performance/student/${studentId}`);
       setPerformances(response.data);
     } catch (error) {
-      console.error('Error fetching student performance:', error);
       setPerformances([]);
     }
   };

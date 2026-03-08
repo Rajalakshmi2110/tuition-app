@@ -23,7 +23,6 @@ const StudentPayments = () => {
       const response = await api.get(`/payments/qr-code`);
       setQrCode(response.data.qrCodeUrl);
     } catch (error) {
-      console.error('Error fetching QR code:', error);
     }
   }, []);
 
@@ -32,7 +31,6 @@ const StudentPayments = () => {
       const response = await api.get(`/payments/my-payments`);
       setPayments(response.data);
     } catch (error) {
-      console.error('Error fetching payments:', error);
     }
   }, []);
 

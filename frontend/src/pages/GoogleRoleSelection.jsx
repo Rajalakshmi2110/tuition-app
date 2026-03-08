@@ -22,7 +22,6 @@ const GoogleRoleSelection = () => {
         const parsedData = JSON.parse(decodeURIComponent(userDataParam));
         setUserData(parsedData);
       } catch (error) {
-        console.error('Error parsing user data');
         navigate('/login');
       }
     } else {
@@ -68,7 +67,6 @@ const GoogleRoleSelection = () => {
         navigate('/login');
       }
     } catch (error) {
-      console.error('Registration error');
       toast.error(error.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);

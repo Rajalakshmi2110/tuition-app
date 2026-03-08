@@ -25,7 +25,6 @@ const AdminGallery = () => {
       const res = await api.get(`/gallery`);
       setImages(res.data);
     } catch (err) {
-      console.error('Error fetching images:', err);
     }
   };
 
@@ -53,7 +52,6 @@ const AdminGallery = () => {
       fetchImages();
     } catch (err) {
       toast.error('Failed to upload image');
-      console.error(err);
     } finally {
       setUploading(false);
     }
@@ -67,7 +65,6 @@ const AdminGallery = () => {
       fetchImages();
     } catch (err) {
       toast.error('Error deleting image');
-      console.error('Error deleting image:', err);
     }
   };
 

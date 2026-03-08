@@ -17,7 +17,6 @@ const PerformancePrediction = () => {
         setPredictions(response.data.predictions);
       }
     } catch (error) {
-      console.error('Error fetching predictions:', error);
     } finally {
       setLoading(false);
     }

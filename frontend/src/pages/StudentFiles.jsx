@@ -22,7 +22,6 @@ const StudentFiles = () => {
         setEnrolledSessions(res.data);
         if (res.data.length > 0) setSelectedSessionId(res.data[0]._id);
       } catch (err) {
-        console.error('Error fetching sessions:', err);
         setError("Failed to load sessions");
       }
     }
@@ -44,7 +43,6 @@ const StudentFiles = () => {
 
         setFiles(sessionFiles);
       } catch (err) {
-        console.error('Error fetching files:', err);
         setError("Failed to load files");
       } finally {
         setLoading(false);

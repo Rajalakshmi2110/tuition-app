@@ -82,7 +82,6 @@ const TutorClasses = () => {
           );
           tutorClasses = res.data || [];
         } catch (tutorErr) {
-          console.error("Tutor endpoint failed:", tutorErr);
         }
 
         if (tutorClasses.length === 0) {
@@ -98,7 +97,6 @@ const TutorClasses = () => {
 
         setClasses(tutorClasses);
       } catch (err) {
-        console.error("Failed to fetch tutor classes", err);
       } finally {
         setLoading(false);
       }

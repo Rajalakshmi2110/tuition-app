@@ -17,7 +17,6 @@ const AdminFiles = () => {
         const res = await api.get(`/files`);
         setFiles(res.data);
       } catch (err) {
-        console.error('Error details:', err.response?.data || err.message);
         setError(err.response?.data?.message || "Failed to load files");
       } finally {
         setLoading(false);
@@ -34,7 +33,6 @@ const AdminFiles = () => {
       await api.delete(`/files/${fileId}`);
       setFiles(files.filter(f => f._id !== fileId));
     } catch (err) {
-      console.error(err);
     }
   };
 
