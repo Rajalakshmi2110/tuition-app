@@ -20,7 +20,6 @@ router.post("/", protect, adminOnly, async (req, res) => {
     const studentClass = await StudentClass.create({ studentId, classId });
     res.status(201).json(studentClass);
   } catch (err) {
-    console.error("Error creating student-class link:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

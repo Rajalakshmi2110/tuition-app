@@ -20,7 +20,6 @@ const enrollInClass = async (req, res) => {
 
     res.status(200).json({ message: "Enrolled successfully" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -37,7 +36,6 @@ const getMyClasses = async (req, res) => {
     const enrolledClasses = enrollments.map(e => e.classId).filter(Boolean);
     res.json({ enrolledClasses });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -56,7 +54,6 @@ const getAvailableClasses = async (req, res) => {
 
     res.json({ availableClasses });
   } catch (err) {
-    console.error('Error getting available classes:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -75,7 +72,6 @@ const getTutorsForStudent = async (req, res) => {
 
     res.json(tutors);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 };

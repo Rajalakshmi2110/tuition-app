@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const StudentPerformance = require('../models/StudentPerformance');
 const Payment = require('../models/Payment');
-const Assignment = require('../models/AssignmentSubmission');
 const Class = require('../models/Class');
 const UserStats = require('../models/UserStats');
 
@@ -71,7 +70,6 @@ const getDashboardAnalytics = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Dashboard analytics error:', error);
     res.status(500).json({ message: 'Error fetching dashboard analytics' });
   }
 };

@@ -22,7 +22,6 @@ router.get('/stats', async (req, res) => {
       studyMaterials
     });
   } catch (err) {
-    console.error('Public stats error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

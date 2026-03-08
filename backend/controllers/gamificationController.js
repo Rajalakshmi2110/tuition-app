@@ -94,7 +94,6 @@ const getUserStats = async (req, res) => {
       }))
     });
   } catch (error) {
-    console.error('Error fetching user stats:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -125,7 +124,6 @@ const getLeaderboard = async (req, res) => {
 
     res.json(formattedLeaderboard);
   } catch (error) {
-    console.error('Error fetching leaderboard:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -153,7 +151,6 @@ const awardPoints = async (userId, points, reason = 'Activity') => {
     await stats.save();
     return stats;
   } catch (error) {
-    console.error('Error awarding points:', error);
   }
 };
 
@@ -189,7 +186,6 @@ const updateStreak = async (userId) => {
     
     return stats;
   } catch (error) {
-    console.error('Error updating streak:', error);
   }
 };
 
@@ -236,7 +232,6 @@ const checkBadgeEligibility = async (userId) => {
       }
     }
   } catch (error) {
-    console.error('Error checking badge eligibility:', error);
   }
 };
 
@@ -246,7 +241,6 @@ const getAllBadges = async (req, res) => {
     const badges = await Badge.find().sort({ rarity: 1, points: 1 });
     res.json(badges);
   } catch (error) {
-    console.error('Error fetching badges:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

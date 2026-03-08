@@ -8,7 +8,6 @@ const getAllTutors = async (req, res) => {
     }).select('-password');
     res.json({ tutors });
   } catch (err) {
-    console.error('Error fetching tutors:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };

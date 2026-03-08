@@ -8,7 +8,6 @@ const getUsersByRole = async (req, res, role, status) => {
     const users = await User.find(query).select('-password');
     res.json(users);
   } catch (err) {
-    console.error('Error fetching users:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -27,7 +26,6 @@ const approveTutor = async (req, res) => {
     
     res.json({ message: 'Tutor approved successfully', tutor: updatedTutor });
   } catch (err) {
-    console.error('Error approving tutor:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -46,7 +44,6 @@ const declineTutor = async (req, res) => {
     
     res.json({ message: 'Tutor declined successfully', tutor: updatedTutor });
   } catch (err) {
-    console.error('Error declining tutor:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };

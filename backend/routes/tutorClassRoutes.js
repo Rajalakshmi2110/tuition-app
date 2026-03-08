@@ -11,7 +11,6 @@ router.post("/", protect, adminOnly, async (req, res) => {
     const newTutorClass = await TutorClass.create({ tutorId, classId });
     res.status(201).json(newTutorClass);
   } catch (err) {
-    console.error("Error creating tutor-class link:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -32,7 +31,6 @@ router.get("/:tutorId", protect, async (req, res) => {
     const classes = tutorLinks.map(link => link.classId);
     res.json(classes);
   } catch (err) {
-    console.error("Error fetching tutor classes:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

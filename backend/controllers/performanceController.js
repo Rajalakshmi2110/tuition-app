@@ -21,7 +21,6 @@ const addPerformance = async (req, res) => {
     await performance.save();
     res.status(201).json({ message: 'Performance record added successfully', performance });
   } catch (error) {
-    console.error('Add Performance Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -37,7 +36,6 @@ const getStudentPerformance = async (req, res) => {
 
     res.json(performances);
   } catch (error) {
-    console.error('Get Performance Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -73,7 +71,6 @@ const getPerformanceAnalytics = async (req, res) => {
       totalRecords: await StudentPerformance.countDocuments({ studentId })
     });
   } catch (error) {
-    console.error('Analytics Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -96,7 +93,6 @@ const updatePerformance = async (req, res) => {
 
     res.json({ message: 'Performance updated successfully', performance });
   } catch (error) {
-    console.error('Update Performance Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -117,7 +113,6 @@ const deletePerformance = async (req, res) => {
 
     res.json({ message: 'Performance record deleted successfully' });
   } catch (error) {
-    console.error('Delete Performance Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -148,7 +143,6 @@ const getTutorStudentsPerformance = async (req, res) => {
     
     res.json(performances);
   } catch (error) {
-    console.error('Get Tutor Students Performance Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

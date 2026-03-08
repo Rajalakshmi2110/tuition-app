@@ -73,7 +73,6 @@ const submitPayment = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Submit payment error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -136,7 +135,6 @@ const verifyPayment = async (req, res) => {
 
     res.json({ message: `Payment ${status} successfully`, payment });
   } catch (error) {
-    console.error('Verify payment error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -256,7 +254,6 @@ const sendPaymentReminders = async (req, res) => {
         await sendPaymentReminderEmail(student.email, student.name, currentMonth);
         remindersSent++;
       } catch (emailError) {
-        console.error(`Failed to send reminder to ${student.email}:`, emailError);
       }
     }
 

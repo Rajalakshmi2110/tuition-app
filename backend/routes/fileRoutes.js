@@ -42,7 +42,6 @@ router.post('/', protect, upload.single('file'), async (req, res) => {
     
     res.json(newFile);
   } catch (error) {
-    console.error('Upload error:', error.message);
     res.status(500).json({ message: error.message });
   }
 });
@@ -62,7 +61,6 @@ router.post('/upload', protect, upload.single('file'), async (req, res) => {
     
     res.json(newFile);
   } catch (error) {
-    console.error('Upload error:', error.message);
     res.status(500).json({ message: error.message });
   }
 });
@@ -75,7 +73,6 @@ router.get('/', protect, async (req, res) => {
       .populate('classId', 'name classLevel');
     res.json(files);
   } catch (err) {
-    console.error('Error fetching files:', err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -96,7 +93,6 @@ router.get('/by-classname/:className', protect, async (req, res) => {
     
     res.json(files);
   } catch (err) {
-    console.error('Error fetching files by className:', err);
     res.status(500).json({ message: err.message });
   }
 });
@@ -113,7 +109,6 @@ router.delete('/:id', protect, async (req, res) => {
     await File.findByIdAndDelete(req.params.id);
     res.json({ message: 'File deleted successfully' });
   } catch (err) {
-    console.error('Error deleting file:', err);
     res.status(500).json({ message: err.message });
   }
 });

@@ -403,7 +403,6 @@ const getStudentPrediction = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Prediction error:', error);
     res.status(500).json({ message: 'Error generating prediction' });
   }
 };
@@ -454,7 +453,6 @@ const updateAllPredictions = async (req, res) => {
         await getStudentPrediction(mockReq, mockRes);
         updated++;
       } catch (error) {
-        console.error(`Failed to update prediction for student ${student._id}:`, error.message);
       }
     }
 

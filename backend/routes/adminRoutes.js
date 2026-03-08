@@ -32,7 +32,6 @@ router.get("/feedback", protect, adminOnly, async (req, res) => {
     const feedback = await Feedback.find().sort({ createdAt: -1 });
     res.json(feedback);
   } catch (err) {
-    console.error('Admin feedback fetch error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -44,7 +43,6 @@ router.patch("/feedback/:id/approve", protect, adminOnly, async (req, res) => {
     await Feedback.findByIdAndUpdate(req.params.id, { approved: true });
     res.json({ message: 'Feedback approved' });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -56,7 +54,6 @@ router.delete("/feedback/:id", protect, adminOnly, async (req, res) => {
     await Feedback.findByIdAndDelete(req.params.id);
     res.json({ message: 'Feedback deleted' });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -82,7 +79,6 @@ router.get("/stats", protect, adminOnly, async (req, res) => {
     
     res.json(stats);
   } catch (err) {
-    console.error('Stats error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

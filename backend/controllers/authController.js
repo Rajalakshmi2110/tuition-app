@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const ClassModel = require('../models/Class');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
@@ -58,7 +57,6 @@ const registerUser = async (req, res) => {
         await sendTutorPendingEmail(user.email, user.name);
       }
     } catch (emailError) {
-      console.error('Email sending failed, but registration successful:', emailError.message);
     }
 
     res.status(201).json({
@@ -67,7 +65,6 @@ const registerUser = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Register User Error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -115,7 +112,6 @@ const loginUser = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Login User Error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -166,7 +162,6 @@ const forgotPassword = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
       } catch (emailError) {
-        console.error('Email send failed:', emailError.message);
       }
     }
     
@@ -174,7 +169,6 @@ const forgotPassword = async (req, res) => {
       message: 'Password reset email sent if account exists.'
     });
   } catch (err) {
-    console.error('Forgot Password Error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -204,7 +198,6 @@ const resetPassword = async (req, res) => {
     
     res.status(200).json({ message: 'Password reset successful' });
   } catch (err) {
-    console.error('Reset Password Error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -232,7 +225,6 @@ const googleAuthSuccess = async (req, res) => {
     // Redirect to frontend with token
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}&role=${req.user.role}`);
   } catch (err) {
-    console.error('Google Auth Success Error:', err);
     res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
   }
 };
@@ -307,7 +299,6 @@ const completeGoogleRegistration = async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Complete Google Registration Error:', err.message);
     res.status(500).json({ message: 'Server error' });
   }
 };

@@ -33,7 +33,6 @@ router.get('/', async (req, res) => {
     const images = await Gallery.find({ active: true }).sort({ createdAt: -1 });
     res.json(images);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -57,7 +56,6 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
     await gallery.save();
     res.status(201).json(gallery);
   } catch (err) {
-    console.error('Gallery upload error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -68,7 +66,6 @@ router.delete('/:id', protect, adminOnly, async (req, res) => {
     await Gallery.findByIdAndDelete(req.params.id);
     res.json({ message: 'Image deleted' });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 });

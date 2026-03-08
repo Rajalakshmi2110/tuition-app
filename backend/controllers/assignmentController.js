@@ -22,7 +22,6 @@ const createAssignment = async (req, res) => {
     await assignment.save();
     res.status(201).json({ message: 'Assignment created successfully', assignment });
   } catch (error) {
-    console.error('Create Assignment Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -58,7 +57,6 @@ const getAssignmentsForStudent = async (req, res) => {
 
     res.json(assignmentsWithStatus);
   } catch (error) {
-    console.error('Get Assignments Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -92,7 +90,6 @@ const getTutorAssignments = async (req, res) => {
 
     res.json(assignmentsWithStats);
   } catch (error) {
-    console.error('Get Tutor Assignments Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -153,7 +150,6 @@ const submitAssignment = async (req, res) => {
     await submission.save();
     res.status(201).json({ message: 'Assignment submitted successfully', submission });
   } catch (error) {
-    console.error('Submit Assignment Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -179,7 +175,6 @@ const getAssignmentSubmissions = async (req, res) => {
 
     res.json({ assignment, submissions });
   } catch (error) {
-    console.error('Get Submissions Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -211,7 +206,6 @@ const gradeAssignment = async (req, res) => {
     await submission.save();
     res.json({ message: 'Assignment graded successfully', submission });
   } catch (error) {
-    console.error('Grade Assignment Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -226,7 +220,6 @@ const getStudentSubmissions = async (req, res) => {
 
     res.json(submissions);
   } catch (error) {
-    console.error('Get Student Submissions Error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

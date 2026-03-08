@@ -37,7 +37,6 @@ router.post("/create", protect, authorize("admin"), async (req, res) => {
       class: newClass
     });
   } catch (err) {
-    console.error("Error creating class:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -55,7 +54,6 @@ router.get("/", protect, async (req, res) => {
     const classes = await Class.find().populate("tutor", "name email");
     res.json(classes);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -76,7 +74,6 @@ router.get("/by-classname/:className", protect, async (req, res) => {
     
     res.json(classes);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -98,7 +95,6 @@ router.put("/tutor/class/:id/complete", protect, async (req, res) => {
     
     res.json({ message: "Class marked as completed" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -110,7 +106,6 @@ router.get("/:id", protect, async (req, res) => {
     if (!classItem) return res.status(404).json({ message: "Class not found" });
     res.json(classItem);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -130,7 +125,6 @@ router.put("/:id", protect, authorize("admin"), async (req, res) => {
     if (!updatedClass) return res.status(404).json({ message: "Class not found" });
     res.json(updatedClass);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -149,7 +143,6 @@ router.delete("/:id", protect, authorize("admin"), async (req, res) => {
     
     res.json({ message: "Class deleted successfully" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -193,7 +186,6 @@ router.get("/student/:studentId", protect, async (req, res) => {
 
     res.json(allClasses);
   } catch (err) {
-    console.error("Error fetching student classes:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -213,7 +205,6 @@ router.get("/available-for-student/:studentId", protect, async (req, res) => {
 
     res.json(filteredClasses);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -228,7 +219,6 @@ router.post("/enroll", protect, async (req, res) => {
     const enrollment = await StudentClass.create({ studentId, classId });
     res.status(201).json(enrollment);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -286,7 +276,6 @@ router.get("/tutor/:tutorId", protect, async (req, res) => {
 
     res.json(classesWithStudents);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -309,7 +298,6 @@ router.put("/tutor/class/:id", protect, async (req, res) => {
     
     res.json({ message: "Schedule updated successfully", class: classItem });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -333,7 +321,6 @@ router.post("/tutor/class/:id/resource", protect, async (req, res) => {
     
     res.json({ message: "Resource added successfully" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -357,7 +344,6 @@ router.post("/tutor/class/:id/announcement", protect, async (req, res) => {
     
     res.json({ message: "Announcement posted successfully" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
