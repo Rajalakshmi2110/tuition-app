@@ -71,7 +71,7 @@ const Home = () => {
 
   const steps = [
     { number: '01', title: 'Register', description: 'Sign up with your class and get your account approved by admin.', color: '#10b981' },
-    { number: '02', title: 'Pick Your Mode', description: 'Choose institution classes, online sessions, or home tuition — whatever works for you.', color: '#fbbf24' },
+    { number: '02', title: 'Get Approved', description: 'Our admin reviews your profile and activates your account — you\'ll be notified once approved.', color: '#fbbf24' },
     { number: '03', title: 'Start Learning', description: 'Attend classes, submit assignments, track your progress, and earn rewards!', color: '#3b82f6' }
   ];
 
