@@ -24,6 +24,7 @@ const AdminDashboard = () => {
   });
 
   const [viewUser, setViewUser] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const toast = useToast();
 
   const fetchData = useCallback(async () => {
@@ -120,14 +121,17 @@ const AdminDashboard = () => {
     }
   };
 
-  const deleteUser = async (id, role) => {
+  const confirmDeleteUser = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/admin/${role}s/${id}`);
-      toast.success(`${role.charAt(0).toUpperCase() + role.slice(1)} deleted`);
+      await api.delete(`/admin/${deleteTarget.role}s/${deleteTarget.id}`);
+      toast.success(`${deleteTarget.role.charAt(0).toUpperCase() + deleteTarget.role.slice(1)} deleted`);
       fetchData();
       fetchStats();
     } catch {
       toast.error('Failed to delete user');
+    } finally {
+      setDeleteTarget(null);
     }
   };
 
@@ -519,7 +523,7 @@ const AdminDashboard = () => {
                           View
                         </button>
                         <button
-                          onClick={() => deleteUser(item._id, item.role)}
+                          onClick={() => setDeleteTarget({ id: item._id, name: item.name, role: item.role })}
                           style={{
                             padding: '0.5rem 1rem',
                             background: 'transparent',
@@ -916,11 +920,46 @@ const AdminDashboard = () => {
             )}
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: viewUser.status === 'pending' ? '0.5rem' : '1.5rem' }}>
               <button
-                onClick={() => { deleteUser(viewUser._id, viewUser.role); setViewUser(null); }}
+                onClick={() => { setDeleteTarget({ id: viewUser._id, name: viewUser.name, role: viewUser.role }); setViewUser(null); }}
                 style={{ flex: 1, padding: '0.75rem', background: '#fef2f2', color: '#dc2626', border: '2px solid #fecaca', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
               >
                 Delete User
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteTarget && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem'
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            maxWidth: '400px', width: '100%', textAlign: 'center',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+          }}>
+            <div style={{
+              width: '56px', height: '56px', borderRadius: '50%', background: '#fef2f2',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 1rem', fontSize: '1.5rem'
+            }}>⚠️</div>
+            <h3 style={{ margin: '0 0 0.5rem', color: '#0f172a', fontWeight: 700, fontSize: '1.15rem' }}>Delete {deleteTarget.role === 'tutor' ? 'Tutor' : 'Student'}?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: '#64748b', fontSize: '0.9rem', lineHeight: 1.5 }}>
+              Are you sure you want to delete <strong style={{ color: '#0f172a' }}>{deleteTarget.name}</strong>? This will remove all their data and cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button
+                onClick={() => setDeleteTarget(null)}
+                style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid #e2e8f0', background: 'white', color: '#64748b', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+              >Cancel</button>
+              <button
+                onClick={confirmDeleteUser}
+                style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)' }}
+              >Delete</button>
             </div>
           </div>
         </div>
