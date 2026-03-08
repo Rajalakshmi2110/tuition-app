@@ -1,18 +1,7 @@
-/* layout.css */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-}
-
+/* layout.css — minimal overrides for Layout component */
 a {
   text-decoration: none;
-  color: #007bff;
-}
-
-a:hover {
-  text-decoration: underline;
+  color: inherit;
 }
 
 button {
