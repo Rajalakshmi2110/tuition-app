@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const mongoose = require('mongoose');
 const File = require('../models/File');
 const Class = require('../models/Class');
 const { protect } = require('../Middleware/authMiddleware');
+
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 // Multer setup with file extension preservation and limits
 const storage = multer.diskStorage({
@@ -104,6 +107,7 @@ router.get('/by-classname/:className', protect, async (req, res) => {
 // Delete a file
 router.delete('/:id', protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
     const file = await File.findById(req.params.id);
     
     if (!file) {

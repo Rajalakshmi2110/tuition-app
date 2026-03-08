@@ -1,4 +1,15 @@
-/uploads
+# Uploaded files
+backend/uploads/*
+!backend/uploads/.gitkeep
+!backend/uploads/gallery/
+!backend/uploads/payments/
+backend/uploads/gallery/*
+!backend/uploads/gallery/.gitkeep
+backend/uploads/payments/*
+!backend/uploads/payments/.gitkeep
+
+# Debug/test files
+curl.txt
 
 # Environment variables
 backend/.env

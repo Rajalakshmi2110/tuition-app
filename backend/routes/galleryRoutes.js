@@ -1,10 +1,12 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const mongoose = require('mongoose');
 const Gallery = require('../models/Gallery');
 const { protect, adminOnly } = require('../Middleware/authMiddleware');
 
 const router = express.Router();
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
@@ -65,6 +67,7 @@ router.post('/', protect, adminOnly, upload.single('image'), async (req, res) =>
 // Delete gallery image (admin only)
 router.delete('/:id', protect, adminOnly, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: 'Invalid ID' });
     await Gallery.findByIdAndDelete(req.params.id);
     res.json({ message: 'Image deleted' });
   } catch (err) {

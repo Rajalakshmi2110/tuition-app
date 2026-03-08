@@ -7,6 +7,9 @@ const Class = require("../models/Class");
 const StudentClass = require("../models/StudentClass");
 const Student = require("../models/User");
 
+// Validate MongoDB ObjectId
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
+
 // ------------------ ADMIN ROUTES ------------------
 
 // Create a new class
@@ -84,6 +87,7 @@ router.get("/by-classname/:className", protect, async (req, res) => {
 // Mark class as completed (tutor only)
 router.put("/tutor/class/:id/complete", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classId = req.params.id;
     
     // Verify tutor owns this class
@@ -106,6 +110,7 @@ router.put("/tutor/class/:id/complete", protect, async (req, res) => {
 // Get class by ID - MUST be after specific routes
 router.get("/:id", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classItem = await Class.findById(req.params.id).populate("tutor", "name email");
     if (!classItem) return res.status(404).json({ message: "Class not found" });
     res.json(classItem);
@@ -115,10 +120,19 @@ router.get("/:id", protect, async (req, res) => {
   }
 });
 
-// Update class (admin)
+// Update class (admin) - whitelist allowed fields
 router.put("/:id", protect, authorize("admin"), async (req, res) => {
   try {
-    const updatedClass = await Class.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
+    const { name, subject, schedule, scheduledDate, classLevel, status } = req.body;
+    const updates = {};
+    if (name) updates.name = name;
+    if (subject) updates.subject = subject;
+    if (schedule) updates.schedule = schedule;
+    if (scheduledDate) updates.scheduledDate = scheduledDate;
+    if (classLevel) updates.classLevel = classLevel;
+    if (status) updates.status = status;
+    const updatedClass = await Class.findByIdAndUpdate(req.params.id, updates, { new: true });
     if (!updatedClass) return res.status(404).json({ message: "Class not found" });
     res.json(updatedClass);
   } catch (err) {
@@ -130,6 +144,7 @@ router.put("/:id", protect, authorize("admin"), async (req, res) => {
 // Delete class (admin)
 router.delete("/:id", protect, authorize("admin"), async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classItem = await Class.findById(req.params.id);
     if (!classItem) return res.status(404).json({ message: "Class not found" });
     
@@ -151,6 +166,7 @@ router.delete("/:id", protect, authorize("admin"), async (req, res) => {
 // Get classes enrolled by a student
 router.get("/student/:studentId", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.studentId)) return res.status(400).json({ message: "Invalid ID" });
     const studentId = req.params.studentId;
 
     // Get the student info to check their classLevel
@@ -194,6 +210,7 @@ router.get("/student/:studentId", protect, async (req, res) => {
 // Get available classes for a student (not enrolled yet)
 router.get("/available-for-student/:studentId", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.studentId)) return res.status(400).json({ message: "Invalid ID" });
     const student = await Student.findById(req.params.studentId);
     if (!student) return res.status(404).json({ message: "Student not found" });
 
@@ -232,6 +249,7 @@ router.post("/enroll", protect, async (req, res) => {
 // Get classes assigned to a tutor
 router.get("/tutor/:tutorId", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.tutorId)) return res.status(400).json({ message: "Invalid ID" });
     const tutorId = req.params.tutorId;
 
     const classes = await Class.find({ 
@@ -286,6 +304,7 @@ router.get("/tutor/:tutorId", protect, async (req, res) => {
 // Update class schedule (tutor only)
 router.put("/tutor/class/:id", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classId = req.params.id;
     const { schedule } = req.body;
     
@@ -309,6 +328,7 @@ router.put("/tutor/class/:id", protect, async (req, res) => {
 // Add resource link (tutor only)
 router.post("/tutor/class/:id/resource", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classId = req.params.id;
     const { link } = req.body;
     
@@ -333,6 +353,7 @@ router.post("/tutor/class/:id/resource", protect, async (req, res) => {
 // Post announcement (tutor only)
 router.post("/tutor/class/:id/announcement", protect, async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) return res.status(400).json({ message: "Invalid ID" });
     const classId = req.params.id;
     const { text } = req.body;
     
