@@ -20,7 +20,7 @@ const About = () => {
   const features = [
     { 
       title: 'Smart Technology', 
-      desc: 'AI-powered class matching, automated scheduling, and intelligent progress tracking for optimal learning outcomes.', 
+      desc: 'Automated scheduling, class management, and progress tracking to keep learning organized and efficient.', 
       color: '#10b981',
       icon: (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -111,7 +111,7 @@ const About = () => {
     },
     { 
       title: 'Innovation', 
-      desc: 'Leveraging cutting-edge technology to create smarter, more effective learning experiences.',
+      desc: 'Using technology to make learning more engaging — gamification, performance analytics, and seamless communication.',
       icon: (
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <line x1="9" y1="18" x2="15" y2="18"></line>
@@ -123,7 +123,7 @@ const About = () => {
   ];
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: 'var(--bg-secondary)', minHeight: '100vh' }}>
       <Header />
 
       {/* Hero Section */}
@@ -192,13 +192,13 @@ const About = () => {
             maxWidth: '600px',
             margin: '0 auto'
           }}>
-            We're building the future of personalized learning, connecting students with expert tutors for transformative educational experiences.
+            We connect students with expert tutors for personalized learning — through institution classes, online sessions, and home tuition.
           </p>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section style={{ padding: '5rem 2rem', backgroundColor: 'white' }}>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'var(--bg-primary)' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <span style={{
             display: 'inline-block',
@@ -215,7 +215,7 @@ const About = () => {
           <h2 style={{
             fontSize: '2.5rem',
             fontWeight: 800,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1.5rem',
             letterSpacing: '-0.02em'
           }}>
@@ -223,13 +223,13 @@ const About = () => {
           </h2>
           <p style={{
             fontSize: '1.1rem',
-            color: '#64748b',
+            color: 'var(--text-muted)',
             lineHeight: 1.8,
             marginBottom: '3rem',
             maxWidth: '700px',
             margin: '0 auto 3rem'
           }}>
-            To create a seamless, technology-driven platform that connects learners with expert tutors, making personalized learning accessible to everyone regardless of their background or location.
+            To make quality education accessible to every student through a platform that connects learners with experienced tutors, tracks progress, and makes learning engaging.
           </p>
 
           <div style={{
@@ -242,9 +242,9 @@ const About = () => {
                 key={index}
                 style={{
                   padding: '2rem',
-                  background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '20px',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -272,12 +272,12 @@ const About = () => {
                 <h3 style={{
                   fontSize: '1.3rem',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: 'var(--text-primary)',
                   marginBottom: '0.75rem'
                 }}>
                   {value.title}
                 </h3>
-                <p style={{ color: '#64748b', lineHeight: 1.6 }}>{value.desc}</p>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>{value.desc}</p>
               </div>
             ))}
           </div>
@@ -285,7 +285,7 @@ const About = () => {
       </section>
 
       {/* Features Section */}
-      <section style={{ padding: '5rem 2rem', backgroundColor: '#f8fafc' }}>
+      <section style={{ padding: '5rem 2rem', backgroundColor: 'var(--bg-secondary)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span style={{
@@ -303,7 +303,7 @@ const About = () => {
             <h2 style={{
               fontSize: '2.5rem',
               fontWeight: 800,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               letterSpacing: '-0.02em'
             }}>
               What Makes Kalviyagam Different
@@ -319,23 +319,23 @@ const About = () => {
               <div
                 key={index}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: 'var(--bg-primary)',
                   padding: '2rem',
                   borderRadius: '20px',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)',
-                  border: '1px solid #e2e8f0',
+                  boxShadow: 'var(--shadow-md)',
+                  border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease',
                   cursor: 'default'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-5px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.1)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
                   e.currentTarget.style.borderColor = feature.color;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                 }}
               >
                 <div style={{
@@ -353,12 +353,12 @@ const About = () => {
                 <h3 style={{
                   fontSize: '1.25rem',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: 'var(--text-primary)',
                   marginBottom: '0.75rem'
                 }}>
                   {feature.title}
                 </h3>
-                <p style={{ color: '#64748b', lineHeight: 1.6, fontSize: '0.95rem' }}>{feature.desc}</p>
+                <p style={{ color: 'var(--text-muted)', lineHeight: 1.6, fontSize: '0.95rem' }}>{feature.desc}</p>
               </div>
             ))}
           </div>
