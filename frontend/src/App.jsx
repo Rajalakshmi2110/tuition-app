@@ -22,7 +22,6 @@ const GoogleRoleSelection = React.lazy(() => import('./pages/GoogleRoleSelection
 const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
-const AdminCreateClass = React.lazy(() => import('./pages/AdminCreateClass'));
 const AdminClasses = React.lazy(() => import('./pages/AdminClasses'));
 const AdminFeedback = React.lazy(() => import('./pages/AdminFeedback'));
 const AdminGallery = React.lazy(() => import('./pages/AdminGallery'));
@@ -76,7 +75,6 @@ const App = () => {
           <Route path="/admin">
             <Route index element={<AdminDashboard />} />
             <Route path="classes" element={<AdminClasses />} />
-            <Route path="create-class" element={<AdminCreateClass />} />
             <Route path="feedback" element={<AdminFeedback />} />
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="files" element={<AdminFiles />} />
