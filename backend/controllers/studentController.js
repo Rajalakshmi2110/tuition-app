@@ -46,9 +46,11 @@ const getAvailableClasses = async (req, res) => {
     if (!student) return res.status(404).json({ message: 'Student not found' });
 
     const enrollments = await StudentClass.find({ studentId: req.user.id }).lean();
-    const enrolledClassIds = enrollments.map(e => e.classId);
+    const enrolledClassIds = enrollments.map(e => e.classId.toString());
 
+    // Only show classes matching student's classLevel that they're not enrolled in
     const availableClasses = await Class.find({
+      classLevel: student.className,
       _id: { $nin: enrolledClassIds }
     }).populate('tutor', 'name email');
 

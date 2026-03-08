@@ -77,17 +77,22 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-// Get files by className (for students)
+// Get files by className (for students) - only files from enrolled classes
 router.get('/by-classname/:className', protect, async (req, res) => {
   try {
-    const className = decodeURIComponent(req.params.className);
+    const userId = req.user._id;
     
-    // Find all classes with this classLevel
-    const classes = await Class.find({ classLevel: className });
-    const classIds = classes.map(c => c._id);
+    // Get classes the student is explicitly enrolled in
+    const StudentClass = require('../models/StudentClass');
+    const enrollments = await StudentClass.find({ studentId: userId });
+    const enrolledClassIds = enrollments.map(e => e.classId);
     
-    // Find files for these classes
-    const files = await File.find({ classId: { $in: classIds } })
+    if (enrolledClassIds.length === 0) {
+      return res.json([]);
+    }
+    
+    // Find files only for enrolled classes
+    const files = await File.find({ classId: { $in: enrolledClassIds } })
       .populate('uploadedBy', 'name')
       .populate('classId', 'name');
     
