@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { sendTutorApprovalEmail, sendTutorDeclineEmail } = require('../services/emailService');
+const { sendTutorApprovalEmail, sendTutorDeclineEmail, sendStudentApprovalEmail, sendStudentDeclineEmail } = require('../services/emailService');
 
 const getUsersByRole = async (req, res, role, status) => {
   try {
@@ -12,40 +12,46 @@ const getUsersByRole = async (req, res, role, status) => {
   }
 };
 
-const approveTutor = async (req, res) => {
+const approveUser = async (req, res) => {
   try {
-    const updatedTutor = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       req.params.id,
       { status: 'approved' },
       { new: true }
     );
-    if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
-    
-    // Send approval email
-    await sendTutorApprovalEmail(updatedTutor.email, updatedTutor.name);
-    
-    res.json({ message: 'Tutor approved successfully', tutor: updatedTutor });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.role === 'tutor') {
+      await sendTutorApprovalEmail(user.email, user.name);
+    } else if (user.role === 'student') {
+      await sendStudentApprovalEmail(user.email, user.name);
+    }
+
+    res.json({ message: `${user.role} approved successfully`, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-const declineTutor = async (req, res) => {
+const declineUser = async (req, res) => {
   try {
-    const updatedTutor = await User.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(
       req.params.id,
       { status: 'declined' },
       { new: true }
     );
-    if (!updatedTutor) return res.status(404).json({ message: 'Tutor not found' });
-    
-    // Send decline email
-    await sendTutorDeclineEmail(updatedTutor.email, updatedTutor.name);
-    
-    res.json({ message: 'Tutor declined successfully', tutor: updatedTutor });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (user.role === 'tutor') {
+      await sendTutorDeclineEmail(user.email, user.name);
+    } else if (user.role === 'student') {
+      await sendStudentDeclineEmail(user.email, user.name);
+    }
+
+    res.json({ message: `${user.role} declined successfully`, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
 };
 
-module.exports = { approveTutor, declineTutor, getUsersByRole };
+module.exports = { approveUser, declineUser, getUsersByRole };

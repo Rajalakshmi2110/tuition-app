@@ -63,8 +63,8 @@ const GoogleRoleSelection = () => {
         toast.success('Registration successful!');
         navigate(`/${role}`);
       } else {
-        toast.info(response.data.note || 'Registration successful! Your profile is pending admin approval. You will be notified once verified.');
-        navigate('/login');
+        toast.info('Registration successful! Your profile is pending admin approval. You will be notified once verified.');
+        setTimeout(() => navigate('/login'), 3000);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');

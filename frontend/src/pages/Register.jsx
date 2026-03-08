@@ -31,15 +31,9 @@ const Register = () => {
     setLoading(true);
     try {
       const res = await api.post(`/auth/register`, formData);
-      if (res.data.note) {
-        toast.info('Registration successful! Your profile is pending admin approval. You will be notified once verified.');
-        setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
-        setTimeout(() => navigate('/login'), 3000);
-      } else {
-        toast.success('Registration successful! Please login to continue.');
-        setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
-        setTimeout(() => navigate('/login'), 1500);
-      }
+      toast.info('Registration successful! Your profile is pending admin approval. You will be notified once verified.');
+      setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
+      setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to register. Please try again.');
     } finally {

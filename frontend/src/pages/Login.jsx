@@ -15,8 +15,13 @@ const Login = () => {
   const [searchParams] = useSearchParams();
 
   React.useEffect(() => {
-    if (searchParams.get('error') === 'session_expired') {
+    const error = searchParams.get('error');
+    if (error === 'session_expired') {
       toast.error('Session expired. Please sign in again.');
+    } else if (error === 'pending_approval') {
+      toast.info('Your account is pending admin approval. You will be notified once verified.');
+    } else if (error === 'account_declined') {
+      toast.error('Your account application was declined. Please contact support for more details.');
     }
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 

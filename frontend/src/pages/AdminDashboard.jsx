@@ -99,6 +99,26 @@ const AdminDashboard = () => {
     }
   };
 
+  const approveStudent = async (id) => {
+    try {
+      await api.patch(`/admin/students/${id}/approve`, {});
+      toast.success('Student approved successfully');
+      fetchData();
+    } catch (err) {
+      toast.error('Failed to approve student');
+    }
+  };
+
+  const declineStudent = async (id) => {
+    try {
+      await api.patch(`/admin/students/${id}/decline`, {});
+      toast.warning('Student declined');
+      fetchData();
+    } catch (err) {
+      toast.error('Failed to decline student');
+    }
+  };
+
   // Filter students by class
   const filteredStudents = selectedClass === 'all' 
     ? students 
@@ -385,7 +405,7 @@ const AdminDashboard = () => {
               <tr style={{ background: '#f8fafc' }}>
                 <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Name</th>
                 <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>{type === "student" ? "Class" : "Specialization"}</th>
-                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>{type === "student" ? "Subject" : "Status"}</th>
+                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Status</th>
                 <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
               </tr>
             </thead>
@@ -429,7 +449,18 @@ const AdminDashboard = () => {
                     {type === "student" ? (
                       <>
                         <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{item.className || "—"}</td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{item.subject || "—"}</td>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                          <span style={{
+                            padding: '0.25rem 0.75rem',
+                            borderRadius: '20px',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            background: item.status?.toLowerCase() === 'approved' ? '#dcfce7' : item.status?.toLowerCase() === 'pending' ? '#fef3c7' : '#fee2e2',
+                            color: item.status?.toLowerCase() === 'approved' ? '#166534' : item.status?.toLowerCase() === 'pending' ? '#92400e' : '#991b1b'
+                          }}>
+                            {item.status}
+                          </span>
+                        </td>
                       </>
                     ) : (
                       <>
@@ -483,6 +514,42 @@ const AdminDashboard = () => {
                             </button>
                             <button
                               onClick={() => declineTutor(item._id)}
+                              style={{
+                                padding: '0.5rem 1rem',
+                                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                fontWeight: 500,
+                                fontSize: '0.85rem',
+                                transition: 'all 0.2s ease'
+                              }}
+                            >
+                              Decline
+                            </button>
+                          </>
+                        )}
+                        {type === "student" && item.status?.trim().toLowerCase() === "pending" && (
+                          <>
+                            <button
+                              onClick={() => approveStudent(item._id)}
+                              style={{
+                                padding: '0.5rem 1rem',
+                                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '8px',
+                                cursor: 'pointer',
+                                fontWeight: 500,
+                                fontSize: '0.85rem',
+                                transition: 'all 0.2s ease'
+                              }}
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => declineStudent(item._id)}
                               style={{
                                 padding: '0.5rem 1rem',
                                 background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',

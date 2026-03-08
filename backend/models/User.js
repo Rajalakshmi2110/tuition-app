@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['pending', 'approved', 'declined'],
     default: function () {
-      return this.role === 'tutor' ? 'pending' : 'approved';
+      return this.role === 'admin' ? 'approved' : 'pending';
     }
   },
   specialization: {

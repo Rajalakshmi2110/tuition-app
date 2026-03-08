@@ -71,6 +71,48 @@ const sendStudentRegistrationEmail = async (studentEmail, studentName) => {
   await sendEmail(studentEmail, subject, html);
 };
 
+const sendStudentPendingEmail = async (studentEmail, studentName) => {
+  const subject = 'Registration Received - Tuitix';
+  const html = `
+    <h2>Registration Received Successfully</h2>
+    <p>Dear ${studentName},</p>
+    <p>Thank you for registering at Tuitix!</p>
+    <p>Your account is currently under review by our admin team.</p>
+    <p>You will receive an email notification once your account is approved.</p>
+    <p>This usually takes 1-2 business days.</p>
+    <p>Thank you for your patience!</p>
+    <p>Best regards,<br>Tuitix Team</p>
+  `;
+  await sendEmail(studentEmail, subject, html);
+};
+
+const sendStudentApprovalEmail = async (studentEmail, studentName) => {
+  const subject = 'Account Approved - Tuitix';
+  const html = `
+    <h2>Your Account is Approved!</h2>
+    <p>Dear ${studentName},</p>
+    <p>We're happy to inform you that your student account has been approved!</p>
+    <p>You can now log in and start your learning journey.</p>
+    <p><a href="${process.env.FRONTEND_URL}/login" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Login Now</a></p>
+    <p>Welcome to the Tuitix family!</p>
+    <p>Best regards,<br>Tuitix Team</p>
+  `;
+  await sendEmail(studentEmail, subject, html);
+};
+
+const sendStudentDeclineEmail = async (studentEmail, studentName) => {
+  const subject = 'Registration Update - Tuitix';
+  const html = `
+    <h2>Registration Status Update</h2>
+    <p>Dear ${studentName},</p>
+    <p>Thank you for your interest in joining Tuitix.</p>
+    <p>After review, we are unable to approve your registration at this time.</p>
+    <p>Please contact support if you have any questions.</p>
+    <p>Best regards,<br>Tuitix Team</p>
+  `;
+  await sendEmail(studentEmail, subject, html);
+};
+
 const sendTutorPendingEmail = async (tutorEmail, tutorName) => {
   const subject = 'Tutor Application Received - Tuitix';
   const html = `
@@ -91,5 +133,8 @@ module.exports = {
   sendTutorApprovalEmail,
   sendTutorDeclineEmail,
   sendStudentRegistrationEmail,
+  sendStudentPendingEmail,
+  sendStudentApprovalEmail,
+  sendStudentDeclineEmail,
   sendTutorPendingEmail
 };

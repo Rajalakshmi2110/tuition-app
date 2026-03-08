@@ -5,7 +5,7 @@ const Class = require('../models/Class');
 const File = require('../models/File');
 
 const { protect, adminOnly } = require("../Middleware/authMiddleware");
-const { getUsersByRole, approveTutor, declineTutor } = require("../controllers/adminController");
+const { getUsersByRole, approveUser, declineUser } = require("../controllers/adminController");
 
 const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
@@ -17,13 +17,21 @@ router.get("/tutors/pending", protect, adminOnly, (req, res) =>
   getUsersByRole(req, res, "tutor", "pending")
 );
 
-router.patch("/tutors/:id/approve", protect, adminOnly, approveTutor);
+router.patch("/tutors/:id/approve", protect, adminOnly, approveUser);
 
-router.patch("/tutors/:id/decline", protect, adminOnly, declineTutor);
+router.patch("/tutors/:id/decline", protect, adminOnly, declineUser);
 
 router.get("/students", protect, adminOnly, (req, res) =>
   getUsersByRole(req, res, "student")
 );
+
+router.get("/students/pending", protect, adminOnly, (req, res) =>
+  getUsersByRole(req, res, "student", "pending")
+);
+
+router.patch("/students/:id/approve", protect, adminOnly, approveUser);
+
+router.patch("/students/:id/decline", protect, adminOnly, declineUser);
 
 // Get all feedback for admin
 router.get("/feedback", protect, adminOnly, async (req, res) => {

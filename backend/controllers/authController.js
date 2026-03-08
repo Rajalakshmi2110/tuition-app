@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const { sendStudentRegistrationEmail, sendTutorPendingEmail } = require('../services/emailService');
+const { sendStudentPendingEmail, sendTutorPendingEmail } = require('../services/emailService');
 const passport = require('passport');
 
 // REGISTER
@@ -44,24 +44,24 @@ const registerUser = async (req, res) => {
       role,
       specialization: role === 'tutor' ? specialization : undefined,
       className: role === 'student' ? className : undefined,
-      status: role === 'tutor' ? 'pending' : 'approved'
+      status: 'pending'
     });
 
     await user.save();
 
     // Send email notifications (don't let email failures break registration)
     try {
-      if (role === 'student') {
-        await sendStudentRegistrationEmail(user.email, user.name);
-      } else if (role === 'tutor') {
+      if (role === 'tutor') {
         await sendTutorPendingEmail(user.email, user.name);
+      } else if (role === 'student') {
+        await sendStudentPendingEmail(user.email, user.name);
       }
     } catch (emailError) {
     }
 
     res.status(201).json({
       message: 'User registered successfully',
-      note: role === 'tutor' ? 'Your account is pending admin approval.' : undefined
+      note: 'Your account is pending admin approval.'
     });
 
   } catch (err) {
@@ -89,9 +89,11 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid email or password' });
 
-    if (user.role === 'tutor') {
-      if (user.status === 'pending') return res.status(403).json({ message: 'Your account is pending approval.' });
-      if (user.status === 'declined') return res.status(403).json({ message: 'Your tutor application was declined.' });
+    if (user.status === 'pending') {
+      return res.status(403).json({ message: 'Your account is pending admin approval. You will be notified once verified.' });
+    }
+    if (user.status === 'declined') {
+      return res.status(403).json({ message: 'Your account application was declined. Please contact support for more details.' });
     }
 
     const token = jwt.sign(
@@ -207,7 +209,6 @@ const googleAuthSuccess = async (req, res) => {
   try {
     // Check if user needs role selection
     if (req.user.needsRoleSelection) {
-      // Store user data in session and redirect to role selection
       const userData = encodeURIComponent(JSON.stringify({
         googleId: req.user.googleId,
         name: req.user.name,
@@ -216,14 +217,21 @@ const googleAuthSuccess = async (req, res) => {
       return res.redirect(`${process.env.FRONTEND_URL}/google-role-selection?userData=${userData}`);
     }
 
-    const token = jwt.sign(
+    // Block pending/declined users
+    if (req.user.status === 'pending') {
+      return res.redirect(`${process.env.FRONTEND_URL}/login?error=pending_approval`);
+    }
+    if (req.user.status === 'declined') {
+      return res.redirect(`${process.env.FRONTEND_URL}/login?error=account_declined`);
+    }
+
+    const googleToken = jwt.sign(
       { id: req.user._id, role: req.user.role, className: req.user.className },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Redirect to frontend with token
-    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${token}&role=${req.user.role}`);
+    res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${googleToken}&role=${req.user.role}`);
   } catch (err) {
     res.redirect(`${process.env.FRONTEND_URL}/login?error=auth_failed`);
   }
@@ -260,42 +268,24 @@ const completeGoogleRegistration = async (req, res) => {
       role,
       specialization: role === 'tutor' ? specialization : undefined,
       className: role === 'student' ? className : undefined,
-      status: role === 'tutor' ? 'pending' : 'approved'
+      status: 'pending'
     });
 
     await user.save();
 
     // Send email notifications
-    if (role === 'student') {
-      await sendStudentRegistrationEmail(user.email, user.name);
-    } else if (role === 'tutor') {
-      await sendTutorPendingEmail(user.email, user.name);
-    }
-
-    // Generate token for immediate login (except pending tutors)
-    if (role === 'student' || (role === 'tutor' && user.status === 'approved')) {
-      const token = jwt.sign(
-        { id: user._id, role: user.role, className: user.className },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-
-      return res.status(201).json({
-        message: 'Registration completed successfully',
-        token,
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          status: user.status
-        }
-      });
+    try {
+      if (role === 'tutor') {
+        await sendTutorPendingEmail(user.email, user.name);
+      } else if (role === 'student') {
+        await sendStudentPendingEmail(user.email, user.name);
+      }
+    } catch (emailError) {
     }
 
     res.status(201).json({
       message: 'Registration completed successfully',
-      note: 'Your tutor account is pending admin approval.'
+      note: 'Your account is pending admin approval. You will be notified once verified.'
     });
 
   } catch (err) {
