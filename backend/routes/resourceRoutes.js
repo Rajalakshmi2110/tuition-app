@@ -36,6 +36,16 @@ const upload = multer({
   }
 });
 
+// Tutor: Get class levels & subjects for dropdowns
+router.get('/my-classes', protect, tutorOnly, async (req, res) => {
+  try {
+    const classes = await Class.find({ tutor: req.user._id }).select('classLevel subject');
+    res.json(classes);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch classes' });
+  }
+});
+
 // Tutor: Create resource
 router.post('/', protect, tutorOnly, upload.single('file'), async (req, res) => {
   try {

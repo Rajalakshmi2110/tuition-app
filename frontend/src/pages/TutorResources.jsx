@@ -33,17 +33,8 @@ const TutorResources = () => {
 
   const fetchMyClasses = useCallback(async () => {
     try {
-      let userId = localStorage.getItem('userId');
-      if (!userId) {
-        const { jwtDecode } = await import('jwt-decode');
-        userId = jwtDecode(localStorage.getItem('token'))?.id;
-      }
-      if (!userId) return;
-      const res = await api.get('/classes');
-      setMyClasses(res.data.filter(c => {
-        const tutorId = c.tutor?._id || c.tutor;
-        return String(tutorId) === String(userId);
-      }));
+      const res = await api.get('/resources/my-classes');
+      setMyClasses(res.data);
     } catch { /* ignore */ }
   }, []);
 
