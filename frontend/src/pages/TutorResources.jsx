@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import api from '../services/api';
+import API_CONFIG from '../config/apiConfig';
 import { useToast } from '../components/Toast';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -207,6 +208,11 @@ const TutorResources = () => {
                           </p>
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
+                          <a href={`${API_CONFIG.BASE_URL}/${r.url}`} target="_blank" rel="noopener noreferrer" style={{
+                            padding: '0.4rem 0.75rem', background: '#f0fdf4', color: '#059669',
+                            border: '1px solid #bbf7d0', borderRadius: '6px', textDecoration: 'none',
+                            fontWeight: 600, fontSize: '0.8rem'
+                          }}>View</a>
                           <button onClick={() => handleEdit(r)} style={{
                             padding: '0.4rem 0.75rem', background: '#f0f9ff', color: '#0284c7',
                             border: '1px solid #bae6fd', borderRadius: '6px', cursor: 'pointer',
