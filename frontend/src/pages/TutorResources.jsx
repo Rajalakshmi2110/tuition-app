@@ -33,7 +33,10 @@ const TutorResources = () => {
 
   const fetchMyClasses = useCallback(async () => {
     try {
-      const res = await api.get('/resources/my-classes');
+      const { jwtDecode } = await import('jwt-decode');
+      const decoded = jwtDecode(localStorage.getItem('token'));
+      const userId = decoded.id || decoded._id;
+      const res = await api.get(`/classes/tutor/${userId}?all=true`);
       setMyClasses(res.data);
     } catch { /* ignore */ }
   }, []);

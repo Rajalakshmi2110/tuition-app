@@ -202,7 +202,7 @@ router.get("/tutor/:tutorId", protect, async (req, res) => {
 
     const classes = await Class.find({ 
       tutor: tutorId,
-      status: { $nin: ['completed', 'cancelled'] }
+      ...(req.query.all ? {} : { status: { $nin: ['completed', 'cancelled'] } })
     });
 
     // For each class, get enrolled students
