@@ -27,6 +27,7 @@ const AdminClasses = React.lazy(() => import('./pages/AdminClasses'));
 const AdminFeedback = React.lazy(() => import('./pages/AdminFeedback'));
 const AdminGallery = React.lazy(() => import('./pages/AdminGallery'));
 const AdminFiles = React.lazy(() => import('./pages/AdminFiles'));
+const AdminResources = React.lazy(() => import('./pages/AdminResources'));
 const AdminPayments = React.lazy(() => import('./pages/AdminPayments'));
 const AdminReports = React.lazy(() => import('./pages/AdminReports'));
 
@@ -34,6 +35,7 @@ const TutorDashboard = React.lazy(() => import('./pages/TutorDashboard'));
 const TutorAssignments = React.lazy(() => import('./pages/TutorAssignments'));
 const TutorClasses = React.lazy(() => import('./pages/TutorClasses'));
 const TutorFiles = React.lazy(() => import('./pages/TutorFiles'));
+const TutorResources = React.lazy(() => import('./pages/TutorResources'));
 const TutorStudentProgress = React.lazy(() => import('./pages/TutorStudentProgress'));
 const TutorPerformanceAnalytics = React.lazy(() => import('./pages/TutorPerformanceAnalytics'));
 const ClassManagePage = React.lazy(() => import('./pages/ClassManagePage'));
@@ -41,6 +43,7 @@ const ClassManagePage = React.lazy(() => import('./pages/ClassManagePage'));
 const StudentDashboard = React.lazy(() => import('./pages/StudentDashboard'));
 const StudentEnrollClass = React.lazy(() => import('./pages/StudentEnrollClass'));
 const StudentFiles = React.lazy(() => import('./pages/StudentFiles'));
+const StudentResources = React.lazy(() => import('./pages/StudentResources'));
 const StudentPerformance = React.lazy(() => import('./pages/StudentPerformance'));
 const StudentAssignments = React.lazy(() => import('./pages/StudentAssignments'));
 const StudentGamification = React.lazy(() => import('./pages/StudentGamification'));
@@ -77,6 +80,7 @@ const App = () => {
             <Route path="feedback" element={<AdminFeedback />} />
             <Route path="gallery" element={<AdminGallery />} />
             <Route path="files" element={<AdminFiles />} />
+            <Route path="resources" element={<AdminResources />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="reports" element={<AdminReports />} />
           </Route>
@@ -89,6 +93,7 @@ const App = () => {
           <Route path="sessions" element={<TutorClasses />} />
           <Route path="session/:id" element={<ClassManagePage />} />
           <Route path="files" element={<TutorFiles />} />
+          <Route path="resources" element={<TutorResources />} />
           <Route path="student-progress" element={<TutorStudentProgress />} />
           <Route path="analytics" element={<TutorPerformanceAnalytics />} />
         </Route>
@@ -98,6 +103,7 @@ const App = () => {
           <Route index element={<StudentDashboard />} />
           <Route path="enroll" element={<StudentEnrollClass />} />
           <Route path="files" element={<StudentFiles />} />
+          <Route path="resources" element={<StudentResources />} />
           <Route path="performance" element={<StudentPerformance />} />
           <Route path="assignments" element={<StudentAssignments />} />
           <Route path="achievements" element={<StudentGamification />} />

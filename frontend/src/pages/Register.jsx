@@ -30,7 +30,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await api.post(`/auth/register`, formData);
+      await api.post(`/auth/register`, formData);
       toast.info('Registration successful! Your profile is pending admin approval. You will be notified once verified.');
       setFormData({ name: '', email: '', password: '', role: '', specialization: '', className: '' });
       setTimeout(() => navigate('/login'), 3000);

@@ -57,8 +57,10 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Create uploads directories if they don't exist
 const uploadsDir = path.join(__dirname, 'uploads');
 const galleryDir = path.join(__dirname, 'uploads', 'gallery');
+const resourcesDir = path.join(__dirname, 'uploads', 'resources');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 if (!fs.existsSync(galleryDir)) fs.mkdirSync(galleryDir);
+if (!fs.existsSync(resourcesDir)) fs.mkdirSync(resourcesDir);
 
 // Session middleware for Passport
 app.use(session({
@@ -135,6 +137,38 @@ app.get('/uploads/:filename', (req, res) => {
   res.sendFile(filePath);
 });
 
+// Serve resource files
+app.get('/uploads/resources/:filename', (req, res) => {
+  const filename = sanitizeFilename(req.params.filename);
+  const filePath = path.join(__dirname, 'uploads', 'resources', filename);
+  
+  const ext = path.extname(filename).toLowerCase();
+  const mimeTypes = {
+    '.pdf': 'application/pdf',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.txt': 'text/plain',
+    '.doc': 'application/msword',
+    '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    '.xls': 'application/vnd.ms-excel',
+    '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    '.ppt': 'application/vnd.ms-powerpoint',
+    '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  };
+  
+  const contentType = mimeTypes[ext] || 'application/octet-stream';
+  res.setHeader('Content-Type', contentType);
+  if (req.query.download === 'true') {
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  } else {
+    res.setHeader('Content-Disposition', 'inline');
+  }
+  
+  res.sendFile(filePath);
+});
+
 // Serve gallery images
 app.get('/uploads/gallery/:filename', (req, res) => {
   const filename = sanitizeFilename(req.params.filename);
@@ -193,6 +227,9 @@ app.use("/api/tutor-classes", tutorClassRoutes);
 
 const fileRoutes = require("./routes/fileRoutes");
 app.use("/api/files", fileRoutes);
+
+const resourceRoutes = require("./routes/resourceRoutes");
+app.use("/api/resources", resourceRoutes);
 
 const announcementRoutes = require("./routes/announcementRoutes");
 app.use("/api/announcements", announcementRoutes);
