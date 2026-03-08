@@ -81,12 +81,10 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
   ];
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userId');
-      navigate('/');
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
+    navigate('/');
   };
 
   const showSidebar = isMobile ? mobileOpen : true;
