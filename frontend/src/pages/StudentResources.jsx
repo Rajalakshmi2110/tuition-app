@@ -118,7 +118,7 @@ const StudentResources = () => {
               {CATEGORIES.filter(cat => categories[cat]).map(cat => (
                 <div key={cat} style={{ marginBottom: '1.5rem' }}>
                   <h4 style={{ margin: '0 0 0.75rem', color: '#374151', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {categoryIcon(cat)} {cat} ({categories[cat].length})
+                    {categoryIcon(cat)} {cat} <span style={{ background: '#dbeafe', color: '#1e40af', fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '10px', fontWeight: 600, marginLeft: '0.25rem' }}>{categories[cat].length}</span>
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {categories[cat].map(r => (

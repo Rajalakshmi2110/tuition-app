@@ -746,7 +746,7 @@ const StudentEnrollClass = () => {
                       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                     </svg>
-                    Resources ({selectedSession.resources.length})
+                    Resources <span style={{ background: '#ecfdf5', color: '#059669', fontSize: '0.7rem', padding: '0.1rem 0.45rem', borderRadius: '10px', fontWeight: 600 }}>{selectedSession.resources.length}</span>
                   </h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {selectedSession.resources.map((resource, index) => (
@@ -809,7 +809,7 @@ const StudentEnrollClass = () => {
                       <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                       <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    Announcements ({selectedSession.announcements.length})
+                    Announcements <span style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.7rem', padding: '0.1rem 0.45rem', borderRadius: '10px', fontWeight: 600 }}>{selectedSession.announcements.length}</span>
                   </h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {selectedSession.announcements.slice().reverse().map((announcement, index) => (

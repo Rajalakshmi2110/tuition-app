@@ -110,10 +110,10 @@ const AdminClasses = () => {
               padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
               fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
             }}>
-              <option value="all">All Classes ({classes.length})</option>
+              <option value="all">All Classes · {classes.length}</option>
               {classLevels.map(l => {
                 const count = classes.filter(c => c.classLevel === l).length;
-                return count > 0 ? <option key={l} value={l}>Class {l} ({count})</option> : null;
+                return count > 0 ? <option key={l} value={l}>Class {l} · {count}</option> : null;
               })}
             </select>
             {selectedClass !== 'all' && (

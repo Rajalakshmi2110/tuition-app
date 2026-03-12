@@ -432,7 +432,7 @@ const StudentGamification = () => {
             gap: '0.75rem'
           }}>
             <span style={{ color: '#fbbf24' }}>{icons.award}</span>
-            Your Badges ({badges.length}/{allBadges.length})
+            Your Badges <span style={{ background: '#fef3c7', color: '#92400e', fontSize: '0.8rem', padding: '0.15rem 0.6rem', borderRadius: '12px', fontWeight: 600 }}>{badges.length}/{allBadges.length}</span>
           </h3>
 
           {badges.length === 0 ? (

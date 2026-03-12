@@ -398,7 +398,7 @@ const TutorClasses = () => {
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                       </svg>
-                      Students ({cls.students?.length || 0})
+                      Students <span style={{ background: '#ecfdf5', color: '#059669', fontSize: '0.7rem', padding: '0.1rem 0.45rem', borderRadius: '10px', fontWeight: 600 }}>{cls.students?.length || 0}</span>
                     </p>
                     {cls.students && cls.students.length > 0 ? (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>

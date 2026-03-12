@@ -364,10 +364,10 @@ const AdminDashboard = () => {
               minWidth: '180px'
             }}
           >
-            <option value="all">All Students ({classCounts.all})</option>
+            <option value="all">All Students · {classCounts.all}</option>
             {['4', '5', '6', '7', '8', '9', '10', '11', '12'].map((cls) => (
               <option key={cls} value={cls}>
-                Class {cls} ({classCounts[cls]})
+                Class {cls} · {classCounts[cls]}
               </option>
             ))}
           </select>
