@@ -264,6 +264,9 @@ app.use("/api/tutor-analytics", tutorAnalyticsRoutes);
 const reportsRoutes = require("./routes/reportsRoutes");
 app.use("/api/reports", reportsRoutes);
 
+const notificationRoutes = require("./routes/notificationRoutes");
+app.use("/api/notifications", notificationRoutes);
+
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {
   res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_cancelled`);

@@ -7,6 +7,10 @@ const About = () => {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchTestimonials = async () => {
       try {
         const res = await api.get(`/feedback/approved`);

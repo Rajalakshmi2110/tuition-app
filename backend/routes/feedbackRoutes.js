@@ -2,6 +2,7 @@ const express = require('express');
 const Feedback = require('../models/Feedback');
 
 const { protect, adminOnly } = require('../Middleware/authMiddleware');
+const { notifyByRole } = require('../services/notificationService');
 
 const router = express.Router();
 
@@ -18,8 +19,14 @@ router.post('/', async (req, res) => {
     });
     
     const savedFeedback = await feedback.save();
+
+    try {
+      await notifyByRole('admin', 'feedback_submitted', 'New Feedback', `${name} (${role}) submitted feedback. Rating: ${rating}/5`, '/admin');
+    } catch (e) {}
+
     res.status(201).json({ message: 'Feedback submitted successfully!' });
   } catch (err) {
+    console.error('Feedback POST error:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });

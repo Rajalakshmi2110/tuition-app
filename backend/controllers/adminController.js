@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const { sendTutorApprovalEmail, sendTutorDeclineEmail, sendStudentApprovalEmail, sendStudentDeclineEmail } = require('../services/emailService');
+const { createNotification } = require('../services/notificationService');
 
 const getUsersByRole = async (req, res, role, status) => {
   try {
@@ -27,6 +28,8 @@ const approveUser = async (req, res) => {
       await sendStudentApprovalEmail(user.email, user.name);
     }
 
+    await createNotification(user._id, 'account_approved', 'Account Approved', `Your ${user.role} account has been approved. Welcome to Kalviyagam!`, `/${user.role}`);
+
     res.json({ message: `${user.role} approved successfully`, user });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -47,6 +50,8 @@ const declineUser = async (req, res) => {
     } else if (user.role === 'student') {
       await sendStudentDeclineEmail(user.email, user.name);
     }
+
+    await createNotification(user._id, 'account_declined', 'Account Declined', `Your ${user.role} application was declined. Contact support for details.`);
 
     res.json({ message: `${user.role} declined successfully`, user });
   } catch (err) {

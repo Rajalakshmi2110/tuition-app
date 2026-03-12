@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const TutorDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [mySessions, setMySessions] = useState([]);
+  const [tutorName, setTutorName] = useState('');
   const [stats, setStats] = useState({
     totalSessions: 0,
     totalStudents: 0,
@@ -25,6 +26,11 @@ const TutorDashboard = () => {
     try {
       const decoded = jwtDecode(localStorage.getItem('token'));
       
+      try {
+        const userRes = await api.get('/users/profile');
+        setTutorName(userRes.data.user?.name || '');
+      } catch (e) {}
+
       let tutorSessions = [];
       
       try {
@@ -44,25 +50,32 @@ const TutorDashboard = () => {
       
       setMySessions(tutorSessions);
       
-      // Calculate stats
-      const totalStudents = tutorSessions.reduce((acc, session) => acc + (session.students?.length || 0), 0);
-      setStats({
-        totalSessions: tutorSessions.length,
-        totalStudents: totalStudents,
-        totalFiles: 0
-      });
+      setStats(prev => ({
+        ...prev,
+        totalSessions: tutorSessions.length
+      }));
     } catch (err) {
     }
+  }, []);
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await api.get('/tutor-analytics/stats');
+      setStats(prev => ({
+        ...prev,
+        totalStudents: res.data.totalStudents || 0
+      }));
+    } catch (e) {}
   }, []);
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await Promise.all([fetchAnnouncements(), fetchMySessions()]);
+      await Promise.all([fetchAnnouncements(), fetchMySessions(), fetchStats()]);
       setLoading(false);
     };
     loadData();
-  }, [fetchAnnouncements, fetchMySessions]);
+  }, [fetchAnnouncements, fetchMySessions, fetchStats]);
 
   if (loading) {
     return <LoadingSpinner message="Loading dashboard..." fullPage />;
@@ -96,7 +109,7 @@ const TutorDashboard = () => {
       )
     },
     { 
-      value: mySessions.reduce((acc, s) => acc + (s.announcements?.length || 0), 0), 
+      value: announcements.length, 
       label: 'Announcements', 
       color: '#3b82f6',
       icon: (
@@ -135,7 +148,7 @@ const TutorDashboard = () => {
             fontWeight: 700,
             margin: '0 0 0.5rem 0'
           }}>
-            Welcome back, Tutor!
+            Welcome back, {tutorName || 'Tutor'}!
           </h1>
           <p style={{
             fontSize: '1rem',
@@ -158,11 +171,11 @@ const TutorDashboard = () => {
           <div
             key={index}
             style={{
-              background: 'white',
+              background: 'var(--bg-primary)',
               padding: '1.5rem',
               borderRadius: '16px',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0',
+              boxShadow: 'var(--shadow-md)',
+              border: '1px solid var(--border-light)',
               transition: 'all 0.3s ease'
             }}
             onMouseEnter={(e) => {
@@ -172,16 +185,16 @@ const TutorDashboard = () => {
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+              e.currentTarget.style.borderColor = 'var(--border-light)';
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
                   {stat.label}
                 </p>
-                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                   {stat.value}
                 </h3>
               </div>
@@ -207,7 +220,7 @@ const TutorDashboard = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1rem',
             display: 'flex',
             alignItems: 'center',
@@ -224,7 +237,7 @@ const TutorDashboard = () => {
               const typeStyles = {
                 urgent: { bg: '#fef2f2', border: '#ef4444' },
                 holiday: { bg: '#f0fdf4', border: '#22c55e' },
-                general: { bg: '#f8fafc', border: '#10b981' }
+                general: { bg: 'var(--bg-secondary)', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -240,13 +253,13 @@ const TutorDashboard = () => {
                   }}
                 >
                   <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 600 }}>
                       {announcement.title}
                     </h4>
-                    <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
+                    <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                       {announcement.message}
                     </p>
-                    <small style={{ color: '#94a3b8' }}>
+                    <small style={{ color: 'var(--text-light)' }}>
                       {new Date(announcement.createdAt).toLocaleDateString()}
                     </small>
                   </div>
@@ -262,7 +275,7 @@ const TutorDashboard = () => {
         <h2 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           marginBottom: '1rem',
           display: 'flex',
           alignItems: 'center',
@@ -277,19 +290,19 @@ const TutorDashboard = () => {
         
         {mySessions.length === 0 ? (
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '3rem',
             borderRadius: '16px',
-            boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0',
+            boxShadow: 'var(--shadow-md)',
+            border: '1px solid var(--border-light)',
             textAlign: 'center'
           }}>
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 1rem' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 1rem' }}>
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
-            <h3 style={{ color: '#64748b', margin: '0 0 0.5rem 0', fontWeight: 600 }}>No Sessions Assigned</h3>
-            <p style={{ color: '#94a3b8', margin: 0, fontSize: '0.9rem' }}>
+            <h3 style={{ color: 'var(--text-muted)', margin: '0 0 0.5rem 0', fontWeight: 600 }}>No Sessions Assigned</h3>
+            <p style={{ color: 'var(--text-light)', margin: 0, fontSize: '0.9rem' }}>
               You haven't been assigned to any sessions yet. Please contact the admin.
             </p>
           </div>
@@ -303,11 +316,11 @@ const TutorDashboard = () => {
               <div
                 key={session._id}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: 'var(--bg-primary)',
                   padding: '1.5rem',
                   borderRadius: '16px',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                  border: '1px solid #e2e8f0',
+                  boxShadow: 'var(--shadow-md)',
+                  border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -317,8 +330,8 @@ const TutorDashboard = () => {
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                 }}
               >
                 <div style={{
@@ -355,20 +368,20 @@ const TutorDashboard = () => {
                 <h3 style={{
                   fontSize: '1.2rem',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: 'var(--text-primary)',
                   marginBottom: '0.75rem'
                 }}>
                   {session.name}
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                  <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
                     Subject: {session.subject}
                   </p>
-                  <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                  <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
                     Schedule: {session.schedule}
                   </p>
                   {session.classLevel && (
-                    <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+                    <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
                       Class: Grade {session.classLevel}
                     </p>
                   )}

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Announcement = require('../models/Announcement');
 const { protect, adminOnly } = require('../Middleware/authMiddleware');
+const { notifyByRole } = require('../services/notificationService');
 
 // Get all announcements
 router.get('/', protect, async (req, res) => {
@@ -28,6 +29,12 @@ router.post('/', protect, adminOnly, async (req, res) => {
 
     const populatedAnnouncement = await Announcement.findById(announcement._id)
       .populate('postedBy', 'name');
+
+    // Notify all students and tutors
+    try {
+      await notifyByRole('student', 'announcement', 'New Announcement', `${title}`, '/student');
+      await notifyByRole('tutor', 'announcement', 'New Announcement', `${title}`, '/tutor');
+    } catch (e) {}
 
     res.status(201).json(populatedAnnouncement);
   } catch (err) {

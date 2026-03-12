@@ -4,7 +4,9 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const Resource = require('../models/Resource');
+const User = require('../models/User');
 const { protect, tutorOnly, adminOnly, authorize } = require('../Middleware/authMiddleware');
+const { notifyMultiple } = require('../services/notificationService');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -49,6 +51,12 @@ router.post('/', protect, tutorOnly, upload.single('file'), async (req, res) => 
       title, description: description || '', url: req.file.path,
       classLevel, subject, category, uploadedBy: req.user._id
     });
+
+    // Notify students in this class+subject
+    try {
+      const students = await User.find({ role: 'student', status: 'approved', className: classLevel, subjects: subject }).select('_id');
+      await notifyMultiple(students.map(s => s._id), 'resource_uploaded', 'New Study Material', `"${title}" uploaded for ${subject} (Class ${classLevel}).`, '/student/resources');
+    } catch (e) {}
 
     res.status(201).json(resource);
   } catch (err) {

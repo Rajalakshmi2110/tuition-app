@@ -2,6 +2,7 @@ const Payment = require('../models/Payment');
 const FeeStructure = require('../models/FeeStructure');
 const User = require('../models/User');
 const { sendEmail } = require('../services/emailService');
+const { createNotification, notifyByRole } = require('../services/notificationService');
 const path = require('path');
 const fs = require('fs');
 
@@ -61,6 +62,11 @@ const submitPayment = async (req, res) => {
 
     // Send confirmation email to student
     await sendPaymentSubmissionEmail(req.user.email, req.user.name, month, amount);
+
+    // Notify admins
+    try {
+      await notifyByRole('admin', 'payment_submitted', 'Payment Submitted', `${req.user.name} submitted ₹${amount} for ${month}. Needs verification.`, '/admin/payments');
+    } catch (e) {}
 
     res.status(201).json({
       message: 'Payment submitted successfully. Awaiting admin verification.',
@@ -129,8 +135,10 @@ const verifyPayment = async (req, res) => {
     // Send email notification to student
     if (status === 'verified') {
       await sendPaymentVerificationEmail(payment.studentId.email, payment.studentId.name, payment.month, 'approved');
+      await createNotification(payment.studentId._id, 'payment_verified', 'Payment Verified', `Your payment for ${payment.month} has been approved.`, '/student/payments');
     } else if (status === 'rejected') {
       await sendPaymentVerificationEmail(payment.studentId.email, payment.studentId.name, payment.month, 'rejected', rejectionReason);
+      await createNotification(payment.studentId._id, 'payment_rejected', 'Payment Rejected', `Your payment for ${payment.month} was rejected. ${rejectionReason || ''}`, '/student/payments');
     }
 
     res.json({ message: `Payment ${status} successfully`, payment });

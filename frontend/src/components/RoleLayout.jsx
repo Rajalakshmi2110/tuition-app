@@ -2,16 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import RoleSidebar from './RoleSidebar';
 import ThemeToggle from './ThemeToggle';
+import NotificationDropdown from './NotificationDropdown';
+import api from '../services/api';
 
 const RoleLayout = ({ role }) => {
   const [sidebarWidth, setSidebarWidth] = useState(window.innerWidth <= 768 ? 0 : 260);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [userName, setUserName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const fetchName = async () => {
+      try {
+        const res = await api.get('/users/profile');
+        setUserName(res.data.user?.name || '');
+      } catch (e) {}
+    };
+    fetchName();
   }, []);
 
   const handleLogout = () => {
@@ -24,7 +37,7 @@ const RoleLayout = ({ role }) => {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#f1f5f9' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-secondary)' }}>
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <RoleSidebar role={role} onWidthChange={setSidebarWidth} />
 
@@ -38,9 +51,9 @@ const RoleLayout = ({ role }) => {
       }}>
         {/* Top Header Bar */}
         <header style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: isMobile ? '1rem 1rem 1rem 4rem' : '1rem 2rem',
-          borderBottom: '1px solid #e2e8f0',
+          borderBottom: '1px solid var(--border-light)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -53,12 +66,12 @@ const RoleLayout = ({ role }) => {
           <div style={{ minWidth: 0 }}>
             <h1 style={{
               fontSize: isMobile ? '1.2rem' : '1.5rem',
-              fontWeight: 700, color: '#0f172a', margin: 0, textTransform: 'capitalize'
+              fontWeight: 700, color: 'var(--text-primary)', margin: 0, textTransform: 'capitalize'
             }}>
               {role} Dashboard
             </h1>
             {!isMobile && (
-              <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
                 Welcome back! Here's what's happening today.
               </p>
             )}
@@ -66,34 +79,14 @@ const RoleLayout = ({ role }) => {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.5rem' : '1rem' }}>
             <ThemeToggle />
-            {/* Notifications */}
-            <button style={{
-              width: '40px', height: '40px', borderRadius: '10px',
-              background: '#f8fafc', border: '1px solid #e2e8f0',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', transition: 'all 0.2s ease', position: 'relative',
-              flexShrink: 0
-            }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#f1f5f9'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc'; }}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-              <span style={{
-                position: 'absolute', top: '6px', right: '6px',
-                width: '8px', height: '8px', background: '#10b981',
-                borderRadius: '50%', border: '2px solid white'
-              }} />
-            </button>
+            <NotificationDropdown />
 
             {/* User Profile - hide on very small screens */}
             {!isMobile && (
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
-                padding: '0.5rem 1rem', background: '#f8fafc',
-                borderRadius: '12px', border: '1px solid #e2e8f0'
+                padding: '0.5rem 1rem', background: 'var(--bg-secondary)',
+                borderRadius: '12px', border: '1px solid var(--border-light)'
               }}>
                 <div style={{
                   width: '36px', height: '36px',
@@ -113,10 +106,10 @@ const RoleLayout = ({ role }) => {
                   )}
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>
-                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                    {userName || role.charAt(0).toUpperCase() + role.slice(1)}
                   </p>
-                  <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Active</p>
+                  <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Active</p>
                 </div>
               </div>
             )}
@@ -154,10 +147,10 @@ const RoleLayout = ({ role }) => {
 
         {/* Footer */}
         <footer style={{
-          padding: '1rem 2rem', background: 'white',
-          borderTop: '1px solid #e2e8f0', textAlign: 'center'
+          padding: '1rem 2rem', background: 'var(--bg-primary)',
+          borderTop: '1px solid var(--border-light)', textAlign: 'center'
         }}>
-          <p style={{ margin: 0, fontSize: '0.85rem', color: '#94a3b8' }}>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-light)' }}>
             © {new Date().getFullYear()} Kalvi. Built for better learning.
           </p>
         </footer>

@@ -793,9 +793,15 @@ const Home = () => {
             {galleryImages.length === 0 ? (
               // Placeholder cards
               [
-                { title: 'Modern Classrooms', desc: 'State-of-the-art learning spaces', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)' },
-                { title: 'Student Success', desc: 'Celebrating achievements', gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' },
-                { title: 'Interactive Learning', desc: 'Engaging group activities', gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)' }
+                { title: 'Modern Classrooms', desc: 'State-of-the-art learning spaces', gradient: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', icon: (
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                )},
+                { title: 'Student Success', desc: 'Celebrating achievements together', gradient: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)', icon: (
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                )},
+                { title: 'Interactive Learning', desc: 'Engaging group activities', gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', icon: (
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                )}
               ].map((item, index) => (
                 <div
                   key={index}
@@ -812,14 +818,13 @@ const Home = () => {
                     height: '200px',
                     background: item.gradient,
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    gap: '0.75rem'
                   }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
+                    {item.icon}
+                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', fontWeight: 500 }}>Upload images from Admin Panel</span>
                   </div>
                   <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
                     <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{item.title}</h3>

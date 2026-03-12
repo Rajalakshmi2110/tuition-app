@@ -3,7 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const { sendStudentPendingEmail, sendTutorPendingEmail } = require('../services/emailService');
+const { sendStudentPendingEmail, sendTutorPendingEmail, sendAdminNewRegistrationEmail } = require('../services/emailService');
+const { createNotification, notifyByRole } = require('../services/notificationService');
 const passport = require('passport');
 
 // REGISTER
@@ -57,8 +58,14 @@ const registerUser = async (req, res) => {
       } else if (role === 'student') {
         await sendStudentPendingEmail(user.email, user.name);
       }
+      await sendAdminNewRegistrationEmail(user.name, role, user.email);
     } catch (emailError) {
     }
+
+    // Notify admins about new registration
+    try {
+      await notifyByRole('admin', 'new_registration', 'New Registration', `${name} registered as ${role}. Pending approval.`, '/admin');
+    } catch (e) {}
 
     res.status(201).json({
       message: 'User registered successfully',
@@ -142,28 +149,29 @@ const forgotPassword = async (req, res) => {
     // Try to send email, fallback to console if credentials invalid
     if (process.env.EMAIL_PASS && process.env.EMAIL_PASS !== 'your-16-digit-app-password') {
       try {
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-          }
-        });
+        const { sendEmail } = require('../services/emailService');
+        const emailWrapper = (content) => `
+          <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <div style="background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%); padding: 2rem; text-align: center;">
+              <h1 style="color: white; margin: 0; font-size: 1.5rem; font-weight: 700;"><span style="color: #10b981;">Kalvi</span><span style="color: #fbbf24;">yagam</span></h1>
+            </div>
+            <div style="padding: 2rem;">${content}</div>
+            <div style="background: #f8fafc; padding: 1.5rem; text-align: center; border-top: 1px solid #e2e8f0;"><p style="margin: 0; color: #94a3b8; font-size: 0.8rem;">© ${new Date().getFullYear()} Kalviyagam</p></div>
+          </div>`;
 
-        const mailOptions = {
-          from: process.env.EMAIL_USER,
-          to: user.email,
-          subject: 'Password Reset - Kalviyagam',
-          html: `
-            <h2>Password Reset Request</h2>
-            <p>You requested a password reset. Click the link below to reset your password:</p>
-            <a href="${resetUrl}" style="background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
-            <p>This link expires in 10 minutes.</p>
-            <p>If you didn't request this, please ignore this email.</p>
-          `
-        };
+        const html = emailWrapper(`
+          <h2 style="color: #0f172a; margin-top: 0;">Password Reset Request 🔐</h2>
+          <p>Dear <strong>${user.name}</strong>,</p>
+          <p>You requested a password reset. Click the button below to reset your password:</p>
+          <div style="text-align: center; margin: 1.5rem 0;">
+            <a href="${resetUrl}" style="display: inline-block; background: #10b981; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">Reset Password →</a>
+          </div>
+          <p style="color: #ef4444; font-size: 0.9rem;">⏰ This link expires in 10 minutes.</p>
+          <p style="color: #64748b; font-size: 0.85rem;">If you didn't request this, please ignore this email.</p>
+          <p>Best regards,<br><strong>Kalviyagam Team</strong></p>
+        `);
 
-        await transporter.sendMail(mailOptions);
+        await sendEmail(user.email, 'Password Reset - Kalviyagam', html);
       } catch (emailError) {
       }
     }
@@ -282,8 +290,14 @@ const completeGoogleRegistration = async (req, res) => {
       } else if (role === 'student') {
         await sendStudentPendingEmail(user.email, user.name);
       }
+      await sendAdminNewRegistrationEmail(user.name, role, user.email);
     } catch (emailError) {
     }
+
+    // Notify admins about Google OAuth registration
+    try {
+      await notifyByRole('admin', 'new_registration', 'New Registration', `${name} registered as ${role} via Google. Pending approval.`, '/admin');
+    } catch (e) {}
 
     res.status(201).json({
       message: 'Registration completed successfully',

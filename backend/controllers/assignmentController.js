@@ -1,6 +1,7 @@
 const Assignment = require('../models/Assignment');
 const AssignmentSubmission = require('../models/AssignmentSubmission');
 const User = require('../models/User');
+const { createNotification, notifyMultiple } = require('../services/notificationService');
 
 // Create assignment (Tutor only)
 const createAssignment = async (req, res) => {
@@ -20,6 +21,13 @@ const createAssignment = async (req, res) => {
     });
 
     await assignment.save();
+
+    // Notify students in this class+subject
+    try {
+      const students = await User.find({ role: 'student', status: 'approved', className, subjects: subject }).select('_id');
+      await notifyMultiple(students.map(s => s._id), 'assignment_created', 'New Assignment', `"${title}" has been assigned in ${subject}.`, '/student/assignments');
+    } catch (e) {}
+
     res.status(201).json({ message: 'Assignment created successfully', assignment });
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -152,6 +160,13 @@ const submitAssignment = async (req, res) => {
     const submission = new AssignmentSubmission(submissionData);
 
     await submission.save();
+
+    // Notify tutor
+    try {
+      const student = await User.findById(req.user.id).select('name');
+      await createNotification(assignment.tutorId, 'assignment_submitted', 'Assignment Submitted', `${student.name} submitted "${assignment.title}".`, '/tutor/assignments');
+    } catch (e) {}
+
     res.status(201).json({ message: 'Assignment submitted successfully', submission });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -208,6 +223,12 @@ const gradeAssignment = async (req, res) => {
     submission.status = 'Graded';
 
     await submission.save();
+
+    // Notify student
+    try {
+      await createNotification(submission.studentId, 'assignment_graded', 'Assignment Graded', `Your submission for "${submission.assignmentId.title}" has been graded. Score: ${pointsEarned}/${submission.assignmentId.totalPoints}`, '/student/assignments');
+    } catch (e) {}
+
     res.json({ message: 'Assignment graded successfully', submission });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
