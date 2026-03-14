@@ -8,6 +8,8 @@ const StudentDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [loading, setLoading] = useState(true);
+  const [studentName, setStudentName] = useState('');
+  const [studentEmail, setStudentEmail] = useState('');
 
   // Clock Effect
   useEffect(() => {
@@ -32,6 +34,12 @@ const StudentDashboard = () => {
       const decoded = jwtDecode(localStorage.getItem('token'));
       const res = await api.get(`/classes`);
       
+      try {
+        const userRes = await api.get('/users/profile');
+        setStudentName(userRes.data.user?.name || '');
+        setStudentEmail(userRes.data.user?.email || '');
+      } catch (e) {}
+
       res.data.filter(cls => {
         const isEnrolled = cls.students && cls.students.some(student => 
           student._id === decoded.id || student._id?.toString() === decoded.id
@@ -69,6 +77,35 @@ const StudentDashboard = () => {
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+
+      {/* Welcome Section */}
+      <div style={{
+        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        padding: '2rem',
+        borderRadius: '20px',
+        color: 'white',
+        marginBottom: '2rem',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: '-50%',
+          right: '-10%',
+          width: '300px',
+          height: '300px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%'
+        }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: '0 0 0.25rem 0' }}>
+            Welcome back, {studentName || 'Student'}!
+          </h1>
+          {studentEmail && (
+            <p style={{ fontSize: '0.9rem', opacity: 0.85, margin: 0 }}>{studentEmail}</p>
+          )}
+        </div>
+      </div>
 
       {/* Clock Widget */}
       <div style={{
@@ -119,7 +156,7 @@ const StudentDashboard = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1rem'
           }}>
             Announcements
@@ -127,9 +164,9 @@ const StudentDashboard = () => {
           <div style={{ display: 'grid', gap: '1rem' }}>
             {announcements.slice(0, 3).map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e' },
-                general: { bg: '#f8fafc', border: '#10b981' }
+                urgent: { bg: 'var(--bg-urgent, #fef2f2)', border: '#ef4444' },
+                holiday: { bg: 'var(--bg-success, #f0fdf4)', border: '#22c55e' },
+                general: { bg: 'var(--bg-secondary)', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -142,13 +179,13 @@ const StudentDashboard = () => {
                   transition: 'all 0.2s ease'
                 }}>
                   <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 600 }}>
+                    <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 600 }}>
                       {announcement.title}
                     </h4>
-                    <p style={{ margin: '0 0 0.5rem 0', color: '#475569', lineHeight: 1.5 }}>
+                    <p style={{ margin: '0 0 0.5rem 0', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                       {announcement.message}
                     </p>
-                    <small style={{ color: '#94a3b8' }}>
+                    <small style={{ color: 'var(--text-light)' }}>
                       {new Date(announcement.createdAt).toLocaleDateString()}
                     </small>
                   </div>
@@ -182,7 +219,7 @@ const StudentDashboard = () => {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              backgroundColor: 'white',
+              backgroundColor: 'var(--bg-primary)',
               padding: '2rem',
               borderRadius: '20px',
               maxWidth: '500px',
@@ -203,12 +240,12 @@ const StudentDashboard = () => {
                 <h3 style={{
                   fontSize: '1.5rem',
                   fontWeight: 700,
-                  color: '#0f172a',
+                  color: 'var(--text-primary)',
                   margin: 0
                 }}>
                   {selectedClass.name}
                 </h3>
-                <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+                <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
                   {selectedClass.subject}
                 </p>
               </div>
@@ -218,14 +255,14 @@ const StudentDashboard = () => {
                   width: '36px',
                   height: '36px',
                   borderRadius: '10px',
-                  background: '#f1f5f9',
+                  background: 'var(--bg-secondary)',
                   border: 'none',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '1.2rem',
-                  color: '#64748b',
+                  color: 'var(--text-muted)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -233,8 +270,8 @@ const StudentDashboard = () => {
                   e.target.style.color = '#ef4444';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = '#f1f5f9';
-                  e.target.style.color = '#64748b';
+                  e.target.style.background = 'var(--bg-secondary)';
+                  e.target.style.color = 'var(--text-muted)';
                 }}
               >
                 ×
@@ -249,24 +286,24 @@ const StudentDashboard = () => {
             }}>
               <div style={{
                 padding: '0.75rem',
-                background: '#f8fafc',
+                background: 'var(--bg-secondary)',
                 borderRadius: '10px'
               }}>
-                <span style={{ color: '#475569' }}>Schedule: {selectedClass.schedule}</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Schedule: {selectedClass.schedule}</span>
               </div>
               <div style={{
                 padding: '0.75rem',
-                background: '#f8fafc',
+                background: 'var(--bg-secondary)',
                 borderRadius: '10px'
               }}>
-                <span style={{ color: '#475569' }}>Tutor: {selectedClass.tutor?.name || "N/A"}</span>
+                <span style={{ color: 'var(--text-secondary)' }}>Tutor: {selectedClass.tutor?.name || "N/A"}</span>
               </div>
             </div>
 
             {/* Resources */}
             {selectedClass.resources && selectedClass.resources.length > 0 && (
               <div style={{ marginBottom: '1.5rem' }}>
-                <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
+                <h4 style={{ color: 'var(--text-primary)', marginBottom: '0.75rem', fontWeight: 600 }}>
                   Resources
                 </h4>
                 {selectedClass.resources.map((resource, index) => (
@@ -298,24 +335,24 @@ const StudentDashboard = () => {
             {/* Announcements */}
             {selectedClass.announcements && selectedClass.announcements.length > 0 && (
               <div>
-                <h4 style={{ color: '#0f172a', marginBottom: '0.75rem', fontWeight: 600 }}>
+                <h4 style={{ color: 'var(--text-primary)', marginBottom: '0.75rem', fontWeight: 600 }}>
                   Class Announcements
                 </h4>
                 {selectedClass.announcements.slice().reverse().map((announcement, index) => (
                   <div
                     key={index}
                     style={{
-                      backgroundColor: '#f8fafc',
+                      backgroundColor: 'var(--bg-secondary)',
                       padding: '1rem',
                       borderRadius: '10px',
                       borderLeft: '3px solid #10b981',
                       marginBottom: '0.75rem'
                     }}
                   >
-                    <p style={{ margin: 0, color: '#475569', lineHeight: 1.5 }}>
+                    <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                       {announcement.text}
                     </p>
-                    <small style={{ color: '#94a3b8' }}>
+                    <small style={{ color: 'var(--text-light)' }}>
                       {new Date(announcement.postedAt).toLocaleDateString()}
                     </small>
                   </div>

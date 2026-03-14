@@ -824,7 +824,7 @@ const Home = () => {
                     gap: '0.75rem'
                   }}>
                     {item.icon}
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', fontWeight: 500 }}>Upload images from Admin Panel</span>
+                    <span style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', fontWeight: 600 }}>{item.title}</span>
                   </div>
                   <div style={{ padding: '1.5rem', backgroundColor: 'var(--bg-primary)' }}>
                     <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{item.title}</h3>

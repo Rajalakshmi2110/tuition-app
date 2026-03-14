@@ -7,6 +7,7 @@ const TutorDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [mySessions, setMySessions] = useState([]);
   const [tutorName, setTutorName] = useState('');
+  const [tutorEmail, setTutorEmail] = useState('');
   const [stats, setStats] = useState({
     totalSessions: 0,
     totalStudents: 0,
@@ -29,6 +30,7 @@ const TutorDashboard = () => {
       try {
         const userRes = await api.get('/users/profile');
         setTutorName(userRes.data.user?.name || '');
+        setTutorEmail(userRes.data.user?.email || '');
       } catch (e) {}
 
       let tutorSessions = [];
@@ -150,6 +152,9 @@ const TutorDashboard = () => {
           }}>
             Welcome back, {tutorName || 'Tutor'}!
           </h1>
+          {tutorEmail && (
+            <p style={{ fontSize: '0.9rem', opacity: 0.85, margin: '0 0 0.25rem 0' }}>{tutorEmail}</p>
+          )}
           <p style={{
             fontSize: '1rem',
             opacity: 0.9,
