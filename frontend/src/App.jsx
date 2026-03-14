@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import LoadingSpinner from './components/LoadingSpinner';
 
 import Layout from './components/Layout';
+import ScrollToTop from './components/ScrollToTop';
 import RoleLayout from './components/RoleLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -56,6 +57,7 @@ const App = () => {
     <ThemeProvider>
     <ToastProvider>
     <Router>
+      <ScrollToTop />
       <Suspense fallback={<LoadingSpinner />}>
       <Routes>
 

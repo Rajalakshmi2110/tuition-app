@@ -140,6 +140,10 @@
   --z-modal: 500;
   --z-popover: 600;
   --z-tooltip: 700;
+
+  /* Semantic Backgrounds */
+  --bg-urgent: #fef2f2;
+  --bg-success: #f0fdf4;
 }
 
 /* === DARK MODE === */
@@ -159,6 +163,9 @@
   
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  --bg-urgent: #2a1515;
+  --bg-success: #152a1a;
 }
 
 /* === BASE STYLES === */

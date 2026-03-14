@@ -235,8 +235,8 @@ const TutorDashboard = () => {
           <div style={{ display: 'grid', gap: '1rem' }}>
             {announcements.slice(0, 3).map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e' },
+                urgent: { bg: 'var(--bg-urgent, #fef2f2)', border: '#ef4444' },
+                holiday: { bg: 'var(--bg-success, #f0fdf4)', border: '#22c55e' },
                 general: { bg: 'var(--bg-secondary)', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
@@ -356,7 +356,7 @@ const TutorDashboard = () => {
                   </div>
                   <span style={{
                     padding: '0.25rem 0.75rem',
-                    background: '#f0fdf4',
+                    background: 'var(--bg-success, #f0fdf4)',
                     color: '#059669',
                     borderRadius: '20px',
                     fontSize: '0.75rem',
