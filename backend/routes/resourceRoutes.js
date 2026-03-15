@@ -60,7 +60,8 @@ router.post('/', protect, tutorOnly, upload.single('file'), async (req, res) => 
 
     res.status(201).json(resource);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to upload resource' });
+    console.error('Resource upload error:', err);
+    res.status(500).json({ message: 'Failed to upload resource', error: err.message });
   }
 });
 

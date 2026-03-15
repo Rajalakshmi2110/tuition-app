@@ -80,7 +80,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
   const sidebarWidth = isMobile ? '280px' : (isMinimized ? '70px' : '260px');
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f1f5f9' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-tertiary)' }}>
       <a href="#main-content" className="skip-link">Skip to main content</a>
 
       {/* Mobile hamburger */}
@@ -273,20 +273,20 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
       }}>
         {/* Top Header */}
         <header style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: isMobile ? '1rem 1rem 1rem 4rem' : '1rem 2rem',
-          borderBottom: '1px solid #e2e8f0',
+          borderBottom: '1px solid var(--border-light)',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           position: 'sticky', top: 0, zIndex: 100,
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+          boxShadow: 'var(--shadow-sm)',
           flexWrap: 'wrap', gap: '0.5rem'
         }}>
           <div>
-            <h1 style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+            <h1 style={{ fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
               Admin Dashboard
             </h1>
             {!isMobile && (
-              <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>Manage your tuition platform</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>Manage your tuition platform</p>
             )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -294,8 +294,8 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             {!isMobile && (
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
-                padding: '0.5rem 1rem', background: '#f8fafc',
-                borderRadius: '12px', border: '1px solid #e2e8f0'
+                padding: '0.5rem 1rem', background: 'var(--bg-secondary)',
+                borderRadius: '12px', border: '1px solid var(--border-light)'
               }}>
                 <div style={{
                   width: '36px', height: '36px',
@@ -308,8 +308,8 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
                   </svg>
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Administrator</p>
-                  <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Full Access</p>
+                  <p style={{ margin: 0, fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>Administrator</p>
+                  <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--text-muted)' }}>Full Access</p>
                 </div>
               </div>
             )}
@@ -325,10 +325,10 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
 
         {/* Footer */}
         <footer style={{
-          padding: '1rem 2rem', background: 'white',
-          borderTop: '1px solid #e2e8f0', textAlign: 'center'
+          padding: '1rem 2rem', background: 'var(--bg-primary)',
+          borderTop: '1px solid var(--border-light)', textAlign: 'center'
         }}>
-          <p style={{ margin: 0, fontSize: '0.85rem', color: '#94a3b8' }}>
+          <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-light)' }}>
             © {new Date().getFullYear()} Kalvi Admin Panel
           </p>
         </footer>

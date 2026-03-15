@@ -15,7 +15,12 @@ const StudentEnrollClass = () => {
       const userId = decoded.id || decoded._id;
       const studentClassName = decoded.className;
 
-      const allSessionsRes = await api.get(`/classes`);
+      const [allSessionsRes, profileRes] = await Promise.all([
+        api.get(`/classes`),
+        api.get('/users/profile')
+      ]);
+
+      const studentSubjects = profileRes.data.user?.subjects || [];
 
       const enrolled = [];
       const available = [];
@@ -24,8 +29,10 @@ const StudentEnrollClass = () => {
         const isEnrolledById = session.students && session.students.some(student => 
           student._id === userId || student._id?.toString() === userId
         );
-        const matchesClassLevel = session.classLevel === studentClassName;
-        const isEnrolled = isEnrolledById || matchesClassLevel;
+        const matchesClass = session.classLevel === studentClassName;
+        const matchesSubject = studentSubjects.length === 0 || 
+          studentSubjects.some(sub => session.subject?.toLowerCase().includes(sub.toLowerCase()) || sub.toLowerCase().includes(session.subject?.toLowerCase()));
+        const isEnrolled = isEnrolledById || (matchesClass && matchesSubject);
         
         if (isEnrolled) {
           enrolled.push(session);
