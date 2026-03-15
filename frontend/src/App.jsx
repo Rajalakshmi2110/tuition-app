@@ -74,7 +74,7 @@ const App = () => {
         <Route path="/google-role-selection" element={<GoogleRoleSelection />} />
 
         {/* Admin Routes - Protected */}
-        <Route element={<ProtectedRoute allowedRoles={['admin']}><Layout /></ProtectedRoute>}>
+        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route path="/admin">
             <Route index element={<AdminDashboard />} />
             <Route path="classes" element={<AdminClasses />} />

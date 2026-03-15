@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const isTokenExpired = (token) => {
   try {
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     return <Navigate to={dashboardMap[role] || '/login'} replace />;
   }
 
-  return children;
+  return children || <Outlet />;
 };
 
 export default ProtectedRoute;
