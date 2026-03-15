@@ -50,6 +50,7 @@ const StudentGamification = React.lazy(() => import('./pages/StudentGamification
 const StudentTimer = React.lazy(() => import('./pages/StudentTimer'));
 const StudentPayments = React.lazy(() => import('./pages/StudentPayments'));
 const PerformancePrediction = React.lazy(() => import('./components/PerformancePrediction'));
+const Profile = React.lazy(() => import('./pages/Profile'));
 
 const App = () => {
   return (
@@ -96,6 +97,7 @@ const App = () => {
           <Route path="resources" element={<TutorResources />} />
           <Route path="student-progress" element={<TutorStudentProgress />} />
           <Route path="analytics" element={<TutorPerformanceAnalytics />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Student Routes - Protected */}
@@ -110,6 +112,7 @@ const App = () => {
           <Route path="timer" element={<StudentTimer />} />
           <Route path="payments" element={<StudentPayments />} />
           <Route path="ai-prediction" element={<PerformancePrediction />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* 404 Catch-all */}
