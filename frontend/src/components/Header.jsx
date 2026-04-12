@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import kalviyagamLogo from '../assets/logo.png';
-import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -97,7 +96,6 @@ const Header = () => {
             <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <NavLink to="/" active={isActive('/')}>Home</NavLink>
               <NavLink to="/about" active={isActive('/about')}>About</NavLink>
-              <ThemeToggle />
               <button onClick={scrollToFooter} style={{
                 color: 'rgba(255, 255, 255, 0.8)',
                 textDecoration: 'none',
@@ -242,7 +240,6 @@ const Header = () => {
               border: 'none', padding: '0.875rem 1rem', borderRadius: '10px',
               fontSize: '1rem', fontWeight: 500, textAlign: 'left', cursor: 'pointer'
             }}>Contact</button>
-            <div style={{ padding: '0.5rem 1rem' }}><ThemeToggle /></div>
 
             <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.1)', margin: '0.5rem 0' }} />
 
