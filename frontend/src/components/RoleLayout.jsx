@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import RoleSidebar from './RoleSidebar';
-import ThemeToggle from './ThemeToggle';
 import NotificationDropdown from './NotificationDropdown';
 import LogoutModal from './LogoutModal';
 import api from '../services/api';
@@ -78,7 +77,7 @@ const RoleLayout = ({ role }) => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '0.5rem' : '1rem' }}>
-            <ThemeToggle />
+
             <NotificationDropdown />
 
             {/* User Profile - hide on very small screens */}

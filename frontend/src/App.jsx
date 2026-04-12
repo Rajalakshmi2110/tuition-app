@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import LoadingSpinner from './components/LoadingSpinner';
 
 import ScrollToTop from './components/ScrollToTop';
+import FloatingThemeToggle from './components/FloatingThemeToggle';
 import RoleLayout from './components/RoleLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -121,6 +122,7 @@ const App = () => {
 
       </Routes>
       </Suspense>
+      <FloatingThemeToggle />
     </Router>
     </ToastProvider>
     </ThemeProvider>

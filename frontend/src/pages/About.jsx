@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import FloatingThemeToggle from '../components/FloatingThemeToggle';
 import api from '../services/api';
 
 const About = () => {
@@ -483,7 +482,6 @@ const About = () => {
       </section>
 
       <Footer />
-      <FloatingThemeToggle />
     </div>
   );
 };

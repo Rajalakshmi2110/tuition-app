@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import FloatingThemeToggle from '../components/FloatingThemeToggle';
 import FeedbackForm from '../components/FeedbackForm';
 import fileUrl from '../config/fileUrl';
 
@@ -971,7 +970,6 @@ const Home = () => {
       </section>
 
       <Footer />
-      <FloatingThemeToggle />
 
       {showFeedbackForm && (
         <FeedbackForm onClose={() => setShowFeedbackForm(false)} />

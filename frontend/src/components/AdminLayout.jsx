@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import kalviLogo from '../assets/logo.png';
-import ThemeToggle from './ThemeToggle';
 import LogoutModal from './LogoutModal';
 import { useToast } from './Toast';
 
@@ -299,7 +298,7 @@ const AdminLayout = ({ children }) => {
             )}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <ThemeToggle />
+
             {!isMobile && (
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
