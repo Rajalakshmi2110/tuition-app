@@ -38,7 +38,7 @@ const StudentGamification = () => {
 
   const getRarityColor = (rarity) => {
     const colors = {
-      common: { bg: '#f1f5f9', text: 'var(--text-muted)', border: '#94a3b8', gradient: 'linear-gradient(135deg, #94a3b8, #64748b)' },
+      common: { bg: 'var(--bg-secondary)', text: 'var(--text-muted)', border: '#94a3b8', gradient: 'linear-gradient(135deg, #94a3b8, #64748b)' },
       rare: { bg: '#dbeafe', text: '#1e40af', border: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #1e40af)' },
       epic: { bg: '#f3e8ff', text: '#7c3aed', border: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' },
       legendary: { bg: '#fef3c7', text: '#b45309', border: '#f59e0b', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' }
@@ -610,10 +610,10 @@ const StudentGamification = () => {
                 const isTopThree = index < 3;
                 const podiumColors = [
                   { bg: 'linear-gradient(135deg, #fef3c7, #fde68a)', border: '#f59e0b', text: '#92400e' },
-                  { bg: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)', border: '#94a3b8', text: '#475569' },
+                  { bg: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary, #e2e8f0))', border: '#94a3b8', text: 'var(--text-secondary)' },
                   { bg: 'linear-gradient(135deg, #ffedd5, #fed7aa)', border: '#f97316', text: '#c2410c' }
                 ];
-                const style = isTopThree ? podiumColors[index] : { bg: 'white', border: 'var(--border-light)', text: 'var(--text-primary)' };
+                const style = isTopThree ? podiumColors[index] : { bg: 'var(--bg-primary)', border: 'var(--border-light)', text: 'var(--text-primary)' };
 
                 return (
                   <div
@@ -727,7 +727,7 @@ const StudentGamification = () => {
               <div style={{ 
                 textAlign: 'center', 
                 padding: '2rem',
-                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+                background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary, #f1f5f9))',
                 borderRadius: '16px'
               }}>
                 <div style={{ color: '#fbbf24', marginBottom: '0.75rem' }}>{icons.star}</div>
@@ -807,7 +807,7 @@ const StudentGamification = () => {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       padding: '1rem 1.25rem',
-                      background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+                      background: 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary, #f1f5f9))',
                       borderRadius: '14px',
                       transition: 'all 0.2s ease'
                     }}
@@ -817,7 +817,7 @@ const StudentGamification = () => {
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.background = 'linear-gradient(135deg, #f8fafc, #f1f5f9)';
+                      e.currentTarget.style.background = 'linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary, #f1f5f9))';
                     }}
                   >
                     <span style={{ 
