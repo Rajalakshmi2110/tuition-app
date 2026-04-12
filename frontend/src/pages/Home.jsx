@@ -216,7 +216,7 @@ const Home = () => {
 
               <p style={{
                 fontSize: '1.2rem',
-                color: '#94a3b8',
+                color: 'var(--text-light)',
                 lineHeight: 1.6,
                 marginBottom: '2rem',
                 maxWidth: '500px'
@@ -564,7 +564,7 @@ const Home = () => {
             }}>
               Choose Your Learning Mode
             </h2>
-            <p style={{ color: '#94a3b8', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
+            <p style={{ color: 'var(--text-light)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>
               We offer flexible learning options to suit your preferences. Pick the mode that works best for you.
             </p>
           </div>
@@ -621,7 +621,7 @@ const Home = () => {
                   {service.title}
                 </h3>
                 <p style={{
-                  color: '#94a3b8',
+                  color: 'var(--text-light)',
                   lineHeight: 1.7,
                   marginBottom: '1.5rem',
                   fontSize: '0.95rem'
@@ -664,7 +664,7 @@ const Home = () => {
             borderRadius: '16px',
             border: '1px solid rgba(16, 185, 129, 0.2)'
           }}>
-            <p style={{ color: '#94a3b8', marginBottom: '1rem', fontSize: '1rem' }}>
+            <p style={{ color: 'var(--text-light)', marginBottom: '1rem', fontSize: '1rem' }}>
               Not sure which mode is right for you? We're here to help!
             </p>
             <button
@@ -946,7 +946,7 @@ const Home = () => {
                 padding: '1rem 2rem',
                 fontSize: '1rem',
                 background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                color: '#0f172a',
+                color: 'var(--text-primary)',
                 border: 'none',
                 borderRadius: '12px',
                 fontWeight: 600,

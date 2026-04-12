@@ -187,7 +187,7 @@ const About = () => {
           </h1>
           <p style={{
             fontSize: '1.2rem',
-            color: '#94a3b8',
+            color: 'var(--text-light)',
             lineHeight: 1.6,
             maxWidth: '600px',
             margin: '0 auto'
@@ -202,7 +202,7 @@ const About = () => {
         <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <span style={{
             display: 'inline-block',
-            background: '#f0fdf4',
+            background: 'var(--bg-success, #f0fdf4)',
             color: '#059669',
             padding: '0.5rem 1rem',
             borderRadius: '9999px',
@@ -290,7 +290,7 @@ const About = () => {
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <span style={{
               display: 'inline-block',
-              background: '#fef3c7',
+              background: 'var(--bg-warning, #fef3c7)',
               color: '#d97706',
               padding: '0.5rem 1rem',
               borderRadius: '9999px',

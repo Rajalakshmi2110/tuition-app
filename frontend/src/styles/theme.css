@@ -144,6 +144,7 @@
   /* Semantic Backgrounds */
   --bg-urgent: #fef2f2;
   --bg-success: #f0fdf4;
+  --bg-warning: #fef3c7;
 }
 
 /* === DARK MODE === */
@@ -166,6 +167,7 @@
 
   --bg-urgent: #2a1515;
   --bg-success: #152a1a;
+  --bg-warning: #2a2515;
 }
 
 /* === BASE STYLES === */
