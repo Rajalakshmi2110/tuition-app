@@ -2,11 +2,32 @@ const express = require('express');
 const router = express.Router();
 const { protect } = require('../Middleware/authMiddleware');
 const Groq = require('groq-sdk');
+const DoubtChat = require('../models/DoubtChat');
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 router.get('/health', (req, res) => {
   res.json({ status: process.env.GROQ_API_KEY ? 'ok' : 'no_api_key' });
+});
+
+router.get('/history', protect, async (req, res) => {
+  try {
+    const chats = await DoubtChat.find({ studentId: req.user._id })
+      .sort({ createdAt: -1 })
+      .limit(50);
+    res.json(chats.reverse());
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch history' });
+  }
+});
+
+router.delete('/history', protect, async (req, res) => {
+  try {
+    await DoubtChat.deleteMany({ studentId: req.user._id });
+    res.json({ message: 'History cleared' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to clear history' });
+  }
 });
 
 router.post('/chat', protect, async (req, res) => {
@@ -27,7 +48,7 @@ Rules:
 - Keep answers clear and concise: 3-8 sentences for simple questions, more for complex ones
 - Use numbered steps for problem-solving, formulas where needed
 - If the question is not academic (personal, inappropriate, off-topic), politely decline and ask them to ask a school-related question
-- Do NOT use markdown headers. Use plain text with line breaks.`;
+- Do NOT use markdown formatting like ** or # or *. Use plain text only.`;
 
     const messages = [{ role: 'system', content: systemPrompt }];
 
@@ -50,12 +71,9 @@ Rules:
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/^#{1,6}\s/gm, '');
 
-    res.json({
-      status: 'success',
-      question,
-      answer,
-      final_status: 'VALID'
-    });
+    await DoubtChat.create({ studentId: user._id, question, answer });
+
+    res.json({ status: 'success', question, answer, final_status: 'VALID' });
   } catch (err) {
     res.status(500).json({ status: 'error', answer: 'AI service error. Please try again.' });
   }

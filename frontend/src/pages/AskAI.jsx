@@ -5,7 +5,23 @@ const AskAI = () => {
   const [question, setQuestion] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingHistory, setLoadingHistory] = useState(true);
   const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const res = await api.get('/ai-doubt/history');
+        const history = res.data.map(chat => ([
+          { type: 'user', text: chat.question },
+          { type: 'bot', data: { answer: chat.answer, status: 'success' } }
+        ])).flat();
+        setMessages(history);
+      } catch (e) {}
+      setLoadingHistory(false);
+    };
+    loadHistory();
+  }, []);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,6 +46,14 @@ const AskAI = () => {
     setLoading(false);
   };
 
+  const clearHistory = async () => {
+    if (!window.confirm('Clear all chat history?')) return;
+    try {
+      await api.delete('/ai-doubt/history');
+      setMessages([]);
+    } catch (e) {}
+  };
+
   return (
     <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 180px)' }}>
       {/* Header */}
@@ -39,9 +63,18 @@ const AskAI = () => {
         position: 'relative', overflow: 'hidden'
       }}>
         <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '250px', height: '250px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%' }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.25rem 0' }}>AI Doubt Clarification</h1>
-          <p style={{ fontSize: '0.9rem', opacity: 0.85, margin: 0 }}>Ask any school subject doubt — Maths, Physics, Chemistry, Biology & more</p>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.25rem 0' }}>AI Doubt Clarification</h1>
+            <p style={{ fontSize: '0.9rem', opacity: 0.85, margin: 0 }}>Ask any school subject doubt — Maths, Physics, Chemistry, Biology & more</p>
+          </div>
+          {messages.length > 0 && (
+            <button onClick={clearHistory} style={{
+              background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white',
+              padding: '0.4rem 0.8rem', borderRadius: '10px', cursor: 'pointer',
+              fontSize: '0.8rem', fontWeight: 500
+            }}>Clear History</button>
+          )}
         </div>
       </div>
 
@@ -51,23 +84,24 @@ const AskAI = () => {
         background: 'var(--bg-primary)', borderRadius: '16px',
         border: '1px solid var(--border-light)', marginBottom: '1rem'
       }}>
-        {messages.length === 0 && (
+        {loadingHistory ? (
+          <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>Loading history...</div>
+        ) : messages.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-muted)' }}>
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ margin: '0 auto 1rem', opacity: 0.5 }}>
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
             <p style={{ fontWeight: 600, marginBottom: '0.75rem' }}>Ask your first question</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', maxWidth: '500px', margin: '0 auto' }}>
-              {['What is Newton\'s 3rd law?', 'Solve: 2x + 5 = 15', 'What is photosynthesis?', 'Explain Pythagoras theorem'].map((q, i) => (
-                <button key={i} onClick={() => { setQuestion(q); }} style={{
+              {["What is Newton's 3rd law?", 'Solve: 2x + 5 = 15', 'What is photosynthesis?', 'Explain Pythagoras theorem'].map((q, i) => (
+                <button key={i} onClick={() => setQuestion(q)} style={{
                   padding: '0.4rem 0.8rem', borderRadius: '20px', border: '1px solid var(--border-light)',
-                  background: 'var(--bg-secondary)', color: 'var(--text-muted)', fontSize: '0.8rem',
-                  cursor: 'pointer'
+                  background: 'var(--bg-secondary)', color: 'var(--text-muted)', fontSize: '0.8rem', cursor: 'pointer'
                 }}>{q}</button>
               ))}
             </div>
           </div>
-        )}
+        ) : null}
 
         {messages.map((msg, i) => (
           <div key={i} style={{
