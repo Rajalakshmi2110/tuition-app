@@ -10,10 +10,6 @@ const AdminDashboard = () => {
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showAnnouncementForm, setShowAnnouncementForm] = useState(false);
-  const [announcementTitle, setAnnouncementTitle] = useState('');
-  const [announcementMessage, setAnnouncementMessage] = useState('');
-  const [announcementType, setAnnouncementType] = useState('general');
   const [announcements, setAnnouncements] = useState([]);
   const [selectedClass, setSelectedClass] = useState('all');
   const [stats, setStats] = useState({
@@ -74,6 +70,12 @@ const AdminDashboard = () => {
     fetchAnnouncements();
     fetchStats();
   }, [fetchData, fetchAnnouncements, fetchStats]);
+
+  useEffect(() => {
+    const handler = () => fetchAnnouncements();
+    window.addEventListener('announcement-posted', handler);
+    return () => window.removeEventListener('announcement-posted', handler);
+  }, [fetchAnnouncements]);
 
   const approveTutor = async (id) => {
     try {
@@ -157,24 +159,6 @@ const AdminDashboard = () => {
     '12': students.filter(s => s.className === '12').length,
   };
 
-  const handleCreateAnnouncement = async (e) => {
-    e.preventDefault();
-    try {
-      await api.post(`/announcements`, {
-        title: announcementTitle,
-        message: announcementMessage,
-        type: announcementType
-      });
-      toast.success('Announcement posted successfully!');
-      setShowAnnouncementForm(false);
-      setAnnouncementTitle('');
-      setAnnouncementMessage('');
-      setAnnouncementType('general');
-      fetchAnnouncements();
-    } catch (err) {
-      toast.error('Failed to post announcement');
-    }
-  };
 
   const statCards = [
     { 
@@ -234,7 +218,7 @@ const AdminDashboard = () => {
   );
 
   return (
-    <AdminLayout showAnnouncementForm={showAnnouncementForm} setShowAnnouncementForm={setShowAnnouncementForm}>
+    <AdminLayout>
       {/* Stats Cards */}
       <div style={{
         display: 'grid',
@@ -685,160 +669,6 @@ const AdminDashboard = () => {
       )}
 
       {/* Announcement Form Modal */}
-      {showAnnouncementForm && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(15, 23, 42, 0.7)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '1rem'
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            padding: '2rem',
-            borderRadius: '20px',
-            width: '500px',
-            maxWidth: '90%',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-            animation: 'slideUp 0.3s ease'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>Post Global Announcement</h3>
-              <button
-                onClick={() => setShowAnnouncementForm(false)}
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  background: '#f1f5f9',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: '1rem',
-                  color: '#64748b'
-                }}
-              >
-                ×
-              </button>
-            </div>
-            <form onSubmit={handleCreateAnnouncement}>
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Title</label>
-                <input
-                  type="text"
-                  placeholder="Announcement Title"
-                  value={announcementTitle}
-                  onChange={(e) => setAnnouncementTitle(e.target.value)}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '0.875rem',
-                    borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = '#10b981';
-                    e.target.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.1)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = '#e2e8f0';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
-              </div>
-              <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Type</label>
-                <select
-                  value={announcementType}
-                  onChange={(e) => setAnnouncementType(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '0.875rem',
-                    borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                    background: 'white'
-                  }}
-                >
-                  <option value="general">General</option>
-                  <option value="holiday">Holiday</option>
-                  <option value="urgent">Urgent</option>
-                </select>
-              </div>
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Message</label>
-                <textarea
-                  placeholder="Announcement Message"
-                  value={announcementMessage}
-                  onChange={(e) => setAnnouncementMessage(e.target.value)}
-                  required
-                  rows="4"
-                  style={{
-                    width: '100%',
-                    padding: '0.875rem',
-                    borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    fontSize: '1rem',
-                    outline: 'none',
-                    boxSizing: 'border-box',
-                    resize: 'vertical',
-                    fontFamily: 'inherit'
-                  }}
-                />
-              </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button
-                  type="submit"
-                  style={{
-                    flex: 1,
-                    padding: '0.875rem',
-                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                    fontSize: '0.95rem',
-                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-                  }}
-                >
-                  Post Announcement
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowAnnouncementForm(false)}
-                  style={{
-                    flex: 1,
-                    padding: '0.875rem',
-                    background: '#f1f5f9',
-                    color: '#64748b',
-                    border: 'none',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                    fontSize: '0.95rem'
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
       {/* View User Modal */}
       {viewUser && (
         <div style={{

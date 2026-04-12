@@ -3,10 +3,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import kalviLogo from '../assets/logo.png';
 import ThemeToggle from './ThemeToggle';
 
-const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }) => {
+import api from '../services/api';
+
+const AdminLayout = ({ children }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showAnnouncementForm, setShowAnnouncementForm] = useState(false);
+  const [announcementTitle, setAnnouncementTitle] = useState('');
+  const [announcementMessage, setAnnouncementMessage] = useState('');
+  const [announcementType, setAnnouncementType] = useState('general');
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -192,8 +198,7 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
             <button
               onClick={() => {
                 setMobileOpen(false);
-                if (setShowAnnouncementForm) setShowAnnouncementForm(true);
-                else window.location.href = '/admin';
+                setShowAnnouncementForm(true);
               }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
@@ -338,7 +343,59 @@ const AdminLayout = ({ children, showAnnouncementForm, setShowAnnouncementForm }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideInFromLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
+
+      {showAnnouncementForm && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          zIndex: 1100, padding: '1rem'
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            width: '500px', maxWidth: '90%',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+            animation: 'slideUp 0.3s ease'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>Post Global Announcement</h3>
+              <button onClick={() => setShowAnnouncementForm(false)} style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f1f5f9', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#64748b' }}>×</button>
+            </div>
+            <form onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                await api.post('/announcements', { title: announcementTitle, message: announcementMessage, type: announcementType });
+                setShowAnnouncementForm(false);
+                setAnnouncementTitle(''); setAnnouncementMessage(''); setAnnouncementType('general');
+                window.dispatchEvent(new Event('announcement-posted'));
+              } catch (err) {}
+            }}>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Title</label>
+                <input type="text" placeholder="Announcement Title" value={announcementTitle} onChange={(e) => setAnnouncementTitle(e.target.value)} required style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' }} />
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Type</label>
+                <select value={announcementType} onChange={(e) => setAnnouncementType(e.target.value)} style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', background: 'white' }}>
+                  <option value="general">General</option>
+                  <option value="holiday">Holiday</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Message</label>
+                <textarea placeholder="Announcement Message" value={announcementMessage} onChange={(e) => setAnnouncementMessage(e.target.value)} required rows="4" style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }} />
+              </div>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button type="submit" style={{ flex: 1, padding: '0.875rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Post Announcement</button>
+                <button type="button" onClick={() => setShowAnnouncementForm(false)} style={{ flex: 1, padding: '0.875rem', background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
