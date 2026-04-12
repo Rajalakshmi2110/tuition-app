@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import kalviLogo from '../assets/logo.png';
 import ThemeToggle from './ThemeToggle';
 import LogoutModal from './LogoutModal';
+import { useToast } from './Toast';
 
 import api from '../services/api';
 
@@ -14,6 +15,7 @@ const AdminLayout = ({ children }) => {
   const [announcementTitle, setAnnouncementTitle] = useState('');
   const [announcementMessage, setAnnouncementMessage] = useState('');
   const [announcementType, setAnnouncementType] = useState('general');
+  const toast = useToast();
   const [showLogout, setShowLogout] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -373,6 +375,7 @@ const AdminLayout = ({ children }) => {
                 await api.post('/announcements', { title: announcementTitle, message: announcementMessage, type: announcementType });
                 setShowAnnouncementForm(false);
                 setAnnouncementTitle(''); setAnnouncementMessage(''); setAnnouncementType('general');
+                toast.success('Announcement posted successfully!');
                 window.dispatchEvent(new Event('announcement-posted'));
               } catch (err) {}
             }}>

@@ -491,6 +491,27 @@ const TutorAssignments = () => {
                   }}>
                     <strong style={{ fontSize: '0.85rem', color: '#64748b' }}>Solution:</strong>
                     <p style={{ margin: '0.25rem 0 0', color: '#374151', fontSize: '0.9rem' }}>{submission.content}</p>
+                    {submission.attachments && submission.attachments.length > 0 && (
+                      <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                        {submission.attachments.map((att, idx) => (
+                          <a
+                            key={idx}
+                            href={att.url?.startsWith('http') ? att.url : `${require('../config/apiConfig').default?.BASE_URL || ''}/${att.url}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex', alignItems: 'center', gap: '0.35rem',
+                              padding: '0.35rem 0.75rem', background: '#eff6ff', color: '#2563eb',
+                              borderRadius: '8px', fontSize: '0.8rem', fontWeight: 500,
+                              textDecoration: 'none', border: '1px solid #bfdbfe'
+                            }}
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                            {att.filename || `File ${idx + 1}`}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {submission.status === 'Submitted' && (

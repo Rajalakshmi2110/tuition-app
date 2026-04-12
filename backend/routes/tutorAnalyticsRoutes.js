@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { protect } = require('../Middleware/authMiddleware');
 const User = require('../models/User');
+const Class = require('../models/Class');
 const Announcement = require('../models/Announcement');
 const {
   getClassAnalytics,
@@ -12,7 +13,7 @@ const {
 router.get('/stats', protect, async (req, res) => {
   try {
     const [totalStudents, totalAnnouncements] = await Promise.all([
-      User.countDocuments({ role: 'student', status: 'approved' }),
+      Class.find({ tutor: req.user._id }).distinct('students').then(ids => ids.length),
       Announcement.countDocuments()
     ]);
     res.json({ totalStudents, totalAnnouncements });
