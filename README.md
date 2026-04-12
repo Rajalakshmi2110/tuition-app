@@ -12,6 +12,7 @@ A full-stack tuition centre management platform with role-based access for admin
 | Backend | Node.js, Express 4, Mongoose 8 |
 | Database | MongoDB Atlas |
 | Auth | JWT + Google OAuth 2.0 (Passport.js) |
+| File Storage | Cloudinary (images, documents, screenshots) |
 | Email | Nodemailer (Gmail SMTP) |
 | Deployment | Netlify (frontend), Render (backend) |
 
@@ -19,14 +20,17 @@ A full-stack tuition centre management platform with role-based access for admin
 
 - **Auth** — Email/password registration, Google OAuth, password reset via email, JWT sessions
 - **Roles** — Admin (full control + approval workflow), Tutor (sessions, assignments, grading, study materials), Student (enrollment, submissions, payments)
-- **Sessions** — Create, schedule, assign tutors, hierarchical class → subject dropdowns (Class 6–12)
+- **Profile** — Editable profile page for students (name, email, class, subjects) and tutors (name, email, specialization)
+- **Sessions** — Create, schedule, assign tutors, hierarchical class → subject dropdowns (Class 6–12). Students only see sessions matching their registered class + subjects
 - **Assignments** — Create with class → subject hierarchy, student submissions, grading with feedback
-- **Study Materials** — Upload/manage resources organized by class, subject & category. Students see materials matching their registered class + subjects
-- **Payments** — GPay QR screenshot upload, admin verification workflow, monthly tracking, email reminders
+- **Study Materials** — Upload/manage resources via Cloudinary, organized by class, subject & category. Students see materials matching their registered class + subjects
+- **Payments** — GPay QR screenshot upload (Cloudinary), admin verification workflow, monthly tracking, email reminders
 - **Performance** — Exam records, grade calculation, subject-wise analytics
 - **Gamification** — Badges, points, levels, streaks, leaderboard
 - **Email Notifications** — Registration, approval/decline, password reset, payment status
-- **Gallery** — Educational content sharing
+- **Gallery** — Educational content sharing with Cloudinary-hosted images
+- **Announcements** — Admin can post global announcements from any admin page
+- **Dark Mode** — Full light/dark theme support across all dashboards
 - **Mobile Responsive** — Hamburger menu, drawer sidebar, responsive grids and tables
 
 ## Project Structure
@@ -34,22 +38,21 @@ A full-stack tuition centre management platform with role-based access for admin
 ```
 tuition-app/
 ├── backend/
-│   ├── config/          # Passport.js (Google OAuth)
+│   ├── config/          # Passport.js (Google OAuth), Cloudinary config
 │   ├── controllers/     # Route handlers (15 controllers)
 │   ├── Middleware/       # auth, file upload, ObjectId validation
 │   ├── models/          # Mongoose schemas (17 models)
 │   ├── routes/          # Express routes (21 route files)
-│   ├── services/        # Email service (Nodemailer)
-│   ├── uploads/         # Local file storage (gitignored)
+│   ├── services/        # Email service (Nodemailer), Notification service
 │   ├── seed.js          # Admin user seeder
 │   └── server.js        # App entry point
 ├── frontend/
 │   ├── src/
-│   │   ├── components/  # Reusable UI (Layout, Header, Sidebar, Toast, etc.)
+│   │   ├── components/  # Reusable UI (Layout, Header, Sidebar, Toast, ScrollToTop, etc.)
 │   │   ├── constants/   # Shared data (CLASS_LEVELS, SUBJECTS_BY_CLASS)
-│   │   ├── pages/       # Route pages (30+ pages)
+│   │   ├── pages/       # Route pages (30+ pages including Profile)
 │   │   ├── services/    # Axios API client with interceptors
-│   │   ├── config/      # API base URL config
+│   │   ├── config/      # API base URL config, Cloudinary file URL helper
 │   │   ├── contexts/    # Theme context
 │   │   └── styles/      # theme.css, animations.css, layout.css
 │   └── public/
@@ -62,7 +65,8 @@ tuition-app/
 
 - [Node.js](https://nodejs.org) v18+
 - [Git](https://git-scm.com)
-- MongoDB Atlas account (or local MongoDB)
+- MongoDB Atlas account
+- Cloudinary account (free tier)
 
 ### 1. Clone & Install
 
@@ -85,7 +89,7 @@ Create `backend/.env` (copy from `backend/.env.example`):
 
 ```env
 MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/tuitionApp
-JWT_SECRET=your-jwt-secret
+JWT_SECRET=generate-a-strong-random-secret
 PORT=5000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:3000
@@ -98,9 +102,19 @@ EMAIL_PASS=your-16-char-app-password
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 
+# Cloudinary — see "Cloudinary Setup" section below
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
 # Admin seed
 ADMIN_EMAIL=admin@kalviyagam.com
 ADMIN_PASSWORD=change-me-to-a-strong-password
+```
+
+Generate a strong JWT secret:
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
 
 ### 3. Seed Admin User
@@ -123,6 +137,33 @@ npm start               # http://localhost:3000
 ```
 
 Frontend auto-detects environment — uses `localhost:5000` in dev, Render URL in production (see `frontend/src/config/apiConfig.js`).
+
+---
+
+## Cloudinary Setup
+
+Cloudinary is used for persistent file storage (gallery images, study materials, payment screenshots). Files survive server redeployments.
+
+1. Go to [cloudinary.com](https://cloudinary.com) and sign up for a **free account**
+2. From your **Dashboard**, copy:
+   - Cloud Name
+   - API Key
+   - API Secret
+3. Update `backend/.env`:
+   ```env
+   CLOUDINARY_CLOUD_NAME=your-cloud-name
+   CLOUDINARY_API_KEY=your-api-key
+   CLOUDINARY_API_SECRET=your-api-secret
+   ```
+
+**Free tier includes:** 25GB storage, 25GB bandwidth/month — more than enough for a tuition app.
+
+Files are organized into folders:
+- `kalviyagam/gallery/` — Gallery images
+- `kalviyagam/resources/` — Study materials (PDFs, docs, images)
+- `kalviyagam/payments/` — Payment screenshots
+
+> **Note:** If Cloudinary credentials are not set, file uploads will fail. This is a required service for production.
 
 ---
 
@@ -218,9 +259,10 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 - MongoDB query injection prevention (express-mongo-sanitize)
 - Rate limiting on auth routes (20 attempts per 15 min)
 - JWT auth with role-based middleware (protect, adminOnly, tutorOnly)
+- Strong random JWT secret (not default placeholder)
 - Global ObjectId validation on all route params
 - File upload limits (10 MB) with MIME type whitelist
-- Path traversal protection on file serving routes
+- Cloudinary for secure file storage (no local file serving in production)
 - CORS whitelist (Netlify + localhost)
 - No stack traces in production error responses
 
