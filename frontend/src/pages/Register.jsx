@@ -164,7 +164,9 @@ const Register = () => {
                 Full Name
               </label>
               <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>○</span>
+                <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5, display: 'flex', alignItems: 'center' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                </span>
                 <input
                   name="name"
                   type="text"
@@ -290,7 +292,9 @@ const Register = () => {
                     gap: '0.5rem'
                   }}
                 >
-                  <span style={{ fontSize: '1.5rem' }}>○</span>
+                  <span style={{ fontSize: '1.5rem' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                  </span>
                   <span style={{ fontWeight: 600, color: formData.role === 'student' ? '#059669' : '#374151' }}>Student</span>
                 </button>
                 <button
@@ -309,7 +313,9 @@ const Register = () => {
                     gap: '0.5rem'
                   }}
                 >
-                  <span style={{ fontSize: '1.5rem' }}>◇</span>
+                  <span style={{ fontSize: '1.5rem' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" /></svg>
+                  </span>
                   <span style={{ fontWeight: 600, color: formData.role === 'tutor' ? '#d97706' : '#374151' }}>Tutor</span>
                 </button>
               </div>
@@ -345,7 +351,9 @@ const Register = () => {
                   Select Your Class
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>📖</span>
+                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5, display: 'flex', alignItems: 'center' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
+                  </span>
                   <select
                     id="reg-class"
                     name="className"
@@ -375,7 +383,9 @@ const Register = () => {
                   Select Your Stream *
                 </label>
                 <div style={{ position: 'relative' }}>
-                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1rem', opacity: 0.5 }}>🎓</span>
+                  <span style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5, display: 'flex', alignItems: 'center' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>
+                  </span>
                   <select
                     id="reg-stream"
                     value={formData.stream}
