@@ -162,9 +162,31 @@ const AskAI = () => {
                   <p style={{ margin: 0, lineHeight: 1.6 }}>{msg.text}</p>
                 </>
               ) : (
-                <p style={{ margin: 0, lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
-                  {msg.data.answer}
-                </p>
+                <div style={{ margin: 0, lineHeight: 1.8 }}>
+                  {msg.data.answer.split('\n').map((line, j) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return <br key={j} />;
+                    if (/^[-•]\s/.test(trimmed)) {
+                      return <div key={j} style={{ paddingLeft: '1rem', marginBottom: '0.25rem' }}>{trimmed}</div>;
+                    }
+                    if (/^\d+[.)]\s/.test(trimmed)) {
+                      return <div key={j} style={{ paddingLeft: '1rem', marginBottom: '0.25rem' }}>{trimmed}</div>;
+                    }
+                    if (/^[A-Z].*[:=]$/.test(trimmed) || /^Where:/.test(trimmed)) {
+                      return <div key={j} style={{ fontWeight: 600, marginTop: '0.5rem', marginBottom: '0.25rem' }}>{trimmed}</div>;
+                    }
+                    if (/^[F-Z]\s*=/.test(trimmed) || /\^\d/.test(trimmed) || /\/\s*r/.test(trimmed)) {
+                      return (
+                        <div key={j} style={{
+                          fontFamily: 'monospace', background: 'rgba(139,92,246,0.08)',
+                          padding: '0.5rem 0.75rem', borderRadius: '8px', margin: '0.5rem 0',
+                          fontSize: '0.95rem', borderLeft: '3px solid #8b5cf6'
+                        }}>{trimmed}</div>
+                      );
+                    }
+                    return <div key={j} style={{ marginBottom: '0.25rem' }}>{trimmed}</div>;
+                  })}
+                </div>
               )}
             </div>
           </div>
