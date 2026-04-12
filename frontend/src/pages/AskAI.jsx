@@ -47,16 +47,17 @@ const AskAI = () => {
     if (!question.trim() || loading) return;
     const q = question.trim();
     const localPreview = preview;
+    const fileToSend = selectedFile;
     setQuestion('');
-    setMessages(prev => [...prev, { type: 'user', text: q, imageUrl: localPreview }]);
     removeFile();
+    setMessages(prev => [...prev, { type: 'user', text: q, imageUrl: localPreview }]);
     setLoading(true);
 
     try {
       const fd = new FormData();
       fd.append('question', q);
       fd.append('history', JSON.stringify(messages));
-      if (selectedFile) fd.append('image', selectedFile);
+      if (fileToSend) fd.append('image', fileToSend);
 
       const res = await api.post('/ai-doubt/chat', fd, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -65,8 +66,8 @@ const AskAI = () => {
       setMessages(prev => {
         const updated = [...prev];
         if (res.data.imageUrl && updated.length > 0) {
-          const lastUser = updated[updated.length - 1];
-          if (lastUser.type === 'user') lastUser.imageUrl = res.data.imageUrl;
+          const lastUser = [...updated].reverse().find(m => m.type === 'user');
+          if (lastUser) lastUser.imageUrl = res.data.imageUrl;
         }
         return [...updated, { type: 'bot', data: res.data }];
       });
