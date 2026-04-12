@@ -59,10 +59,10 @@ const AdminResources = () => {
       <div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               📖 Study Materials
             </h2>
-            <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               All study materials uploaded by tutors
             </p>
           </div>
@@ -77,20 +77,20 @@ const AdminResources = () => {
         {!loading && !error && resources.length > 0 && (
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <select value={filterLevel} onChange={e => setFilterLevel(e.target.value)} style={{
-              padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+              padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
             }}>
               <option value="all">All Classes</option>
               {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
             </select>
             <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} style={{
-              padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+              padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
             }}>
               <option value="all">All Subjects</option>
               {subjects.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
-            <span style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 500 }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>
               {filtered.length} shown
             </span>
           </div>
@@ -103,22 +103,22 @@ const AdminResources = () => {
             <p style={{ color: '#dc2626', fontWeight: 600 }}>{error}</p>
           </div>
         ) : resources.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
+          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
-            <p style={{ color: '#64748b' }}>Resources uploaded by tutors will appear here</p>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Resources uploaded by tutors will appear here</p>
           </div>
         ) : (
-          <div style={{ background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
+          <div style={{ background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
             <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '700px' }}>
                 <thead>
-                  <tr style={{ background: '#f8fafc' }}>
+                  <tr style={{ background: 'var(--bg-secondary)' }}>
                     {['Title', 'Class', 'Subject', 'Category', 'Uploaded By', 'Date', 'Actions'].map(h => (
                       <th key={h} style={{
                         padding: '1rem', textAlign: h === 'Actions' ? 'center' : 'left',
-                        fontWeight: 600, fontSize: '0.85rem', color: '#64748b',
-                        textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0'
+                        fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)',
+                        textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)'
                       }}>{h}</th>
                     ))}
                   </tr>
@@ -129,19 +129,19 @@ const AdminResources = () => {
                       onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'}
                       onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? 'white' : '#f8fafc'}
                     >
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>{r.title}</td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>Class {r.classLevel}</td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{r.subject}</td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>{r.title}</td>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>Class {r.classLevel}</td>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{r.subject}</td>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                           {categoryIcon(r.category)} {r.category}
                         </span>
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{r.uploadedBy?.name || 'N/A'}</td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{r.uploadedBy?.name || 'N/A'}</td>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                         {new Date(r.createdAt).toLocaleDateString()}
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', textAlign: 'center' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
                           <a href={fileUrl(r.url)} target="_blank" rel="noopener noreferrer" style={{
                             padding: '0.5rem 1rem', background: '#f0fdf4', color: '#059669',
@@ -152,12 +152,12 @@ const AdminResources = () => {
                             onMouseLeave={e => { e.currentTarget.style.background = '#f0fdf4'; }}
                           >View</a>
                           <button onClick={() => handleDelete(r._id)} style={{
-                            padding: '0.5rem 1rem', background: 'transparent', color: '#94a3b8',
-                            border: '2px solid #e2e8f0', borderRadius: '8px', cursor: 'pointer',
+                            padding: '0.5rem 1rem', background: 'transparent', color: 'var(--text-light)',
+                            border: '2px solid var(--border-light)', borderRadius: '8px', cursor: 'pointer',
                             fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
                           }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = '#94a3b8'; }}
                           >Delete</button>
                         </div>
                       </td>

@@ -71,7 +71,7 @@ const AdminClasses = () => {
 
   const inputStyle = {
     width: '100%', padding: '0.75rem 1rem', fontSize: '0.95rem',
-    border: '2px solid #e2e8f0', borderRadius: '10px', outline: 'none',
+    border: '2px solid var(--border-light)', borderRadius: '10px', outline: 'none',
     transition: 'all 0.2s ease', boxSizing: 'border-box'
   };
 
@@ -85,13 +85,13 @@ const AdminClasses = () => {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
               </svg>
               Sessions
             </h1>
-            <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>Manage all tuition sessions</p>
+            <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>Manage all tuition sessions</p>
           </div>
           <button onClick={() => setShowCreateModal(true)} style={{
             padding: '0.875rem 1.5rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
@@ -107,8 +107,8 @@ const AdminClasses = () => {
         {classes.length > 0 && (
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} style={{
-              padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+              padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
             }}>
               <option value="all">All Classes · {classes.length}</option>
               {classLevels.map(l => {
@@ -127,29 +127,29 @@ const AdminClasses = () => {
 
         {/* Sessions List */}
         {classes.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
+          <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📅</div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Sessions Yet</h3>
-            <p style={{ color: '#64748b' }}>Click "Create Session" to get started</p>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Sessions Yet</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Click "Create Session" to get started</p>
           </div>
         ) : filteredClasses.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-            <p style={{ color: '#64748b' }}>No sessions found for Class {selectedClass}</p>
+          <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', border: '1px solid var(--border-light)' }}>
+            <p style={{ color: 'var(--text-muted)' }}>No sessions found for Class {selectedClass}</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '1rem' }}>
             {filteredClasses.map(cls => (
               <div key={cls._id} style={{
-                backgroundColor: 'white', padding: '1.5rem', borderRadius: '16px',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0',
+                backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '16px',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)',
                 transition: 'all 0.2s ease'
               }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = '#10b981'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-light)'; }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: '1rem' }}>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ margin: '0 0 0.75rem', color: '#0f172a', fontSize: '1.15rem', fontWeight: 700 }}>{cls.name}</h3>
+                    <h3 style={{ margin: '0 0 0.75rem', color: 'var(--text-primary)', fontSize: '1.15rem', fontWeight: 700 }}>{cls.name}</h3>
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>{cls.subject}</span>
                       <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>Class {cls.classLevel}</span>
@@ -165,11 +165,11 @@ const AdminClasses = () => {
                       {cls.status === 'completed' ? '✓ Completed' : '◷ Scheduled'}
                     </span>
                     <button onClick={() => setDeleteTarget(cls)} style={{
-                      padding: '0.4rem 0.75rem', background: 'transparent', color: '#94a3b8',
-                      border: '2px solid #e2e8f0', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
+                      padding: '0.4rem 0.75rem', background: 'transparent', color: 'var(--text-light)',
+                      border: '2px solid var(--border-light)', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
                     }}
                       onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = '#94a3b8'; }}
                     >Delete</button>
                   </div>
                 </div>
@@ -183,12 +183,12 @@ const AdminClasses = () => {
                       color: 'white', fontWeight: 700, fontSize: '0.8rem'
                     }}>{cls.tutor?.name?.charAt(0) || 'N'}</div>
                     <div>
-                      <p style={{ margin: 0, fontWeight: 600, color: '#0f172a', fontSize: '0.9rem' }}>{cls.tutor?.name || 'No tutor'}</p>
-                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>{cls.tutor?.email || ''}</p>
+                      <p style={{ margin: 0, fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>{cls.tutor?.name || 'No tutor'}</p>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{cls.tutor?.email || ''}</p>
                     </div>
                   </div>
                   {cls.scheduledDate && (
-                    <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                       {new Date(cls.scheduledDate).toLocaleDateString()}
                     </span>
                   )}
@@ -207,33 +207,33 @@ const AdminClasses = () => {
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             maxWidth: '500px', width: '100%', maxHeight: '85vh', overflow: 'auto',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>📅 Create Session</h3>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.25rem' }}>📅 Create Session</h3>
               <button onClick={() => setShowCreateModal(false)} style={{
-                background: '#f1f5f9', border: 'none', width: '32px', height: '32px',
-                borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', color: '#64748b',
+                background: 'var(--bg-secondary)', border: 'none', width: '32px', height: '32px',
+                borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--text-muted)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>×</button>
             </div>
 
             <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Session Name *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Session Name *</label>
                 <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="e.g., Math Class for Grade 10" required style={inputStyle} />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
-                <select value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Class Level *</label>
+                <select value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                   <option value="">Select class level...</option>
                   {classLevels.map(l => <option key={l} value={l}>Class {l}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Subject *</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Subject *</label>
                 <select value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required disabled={!formData.classLevel} style={{ ...inputStyle, background: formData.classLevel ? 'white' : '#f1f5f9', cursor: formData.classLevel ? 'pointer' : 'not-allowed' }}>
                   <option value="">{formData.classLevel ? 'Select subject...' : 'Select class level first'}</option>
                   {formData.classLevel && SUBJECTS_BY_CLASS[formData.classLevel]?.map(s => <option key={s} value={s}>{s}</option>)}
@@ -241,25 +241,25 @@ const AdminClasses = () => {
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Time *</label>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Time *</label>
                   <input type="text" value={formData.schedule} onChange={e => setFormData({ ...formData, schedule: e.target.value })} placeholder="6:00 PM - 7:00 PM" required style={inputStyle} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Date *</label>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Date *</label>
                   <input type="date" value={formData.scheduledDate} onChange={e => setFormData({ ...formData, scheduledDate: e.target.value })} required style={inputStyle} />
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Assign Tutor *</label>
-                <select value={formData.tutorId} onChange={e => setFormData({ ...formData, tutorId: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Assign Tutor *</label>
+                <select value={formData.tutorId} onChange={e => setFormData({ ...formData, tutorId: e.target.value })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                   <option value="">Select a tutor...</option>
                   {tutors.map(t => <option key={t._id} value={t._id}>{t.name} ({t.email})</option>)}
                 </select>
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
                 <button type="button" onClick={() => setShowCreateModal(false)} style={{
-                  flex: 1, padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0',
-                  background: 'white', color: '#64748b', cursor: 'pointer', fontWeight: 600
+                  flex: 1, padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)',
+                  background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600
                 }}>Cancel</button>
                 <button type="submit" disabled={creating} style={{
                   flex: 1, padding: '0.875rem', borderRadius: '10px', border: 'none',
@@ -281,17 +281,17 @@ const AdminClasses = () => {
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             maxWidth: '400px', width: '100%', textAlign: 'center',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', fontSize: '1.5rem' }}>⚠️</div>
-            <h3 style={{ margin: '0 0 0.5rem', color: '#0f172a', fontWeight: 700, fontSize: '1.15rem' }}>Delete Session?</h3>
-            <p style={{ margin: '0 0 1.5rem', color: '#64748b', fontSize: '0.9rem', lineHeight: 1.5 }}>
-              Are you sure you want to delete <strong style={{ color: '#0f172a' }}>{deleteTarget.name}</strong>? This will also remove all student enrollments.
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.15rem' }}>Delete Session?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+              Are you sure you want to delete <strong style={{ color: 'var(--text-primary)' }}>{deleteTarget.name}</strong>? This will also remove all student enrollments.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button onClick={() => setDeleteTarget(null)} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid #e2e8f0', background: 'white', color: '#64748b', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+              <button onClick={() => setDeleteTarget(null)} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)', background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
               <button onClick={confirmDelete} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', cursor: 'pointer', fontWeight: 600, boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)' }}>Delete</button>
             </div>
           </div>

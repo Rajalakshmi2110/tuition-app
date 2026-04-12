@@ -68,7 +68,7 @@ const AdminReports = () => {
             <h2 style={{
               fontSize: '1.5rem',
               fontWeight: 700,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               margin: 0,
               display: 'flex',
               alignItems: 'center',
@@ -81,7 +81,7 @@ const AdminReports = () => {
               </svg>
               Reports & Analytics
             </h2>
-            <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               Track performance, revenue, and student progress
             </p>
           </div>
@@ -179,7 +179,7 @@ const AdminReports = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -192,7 +192,7 @@ const AdminReports = () => {
             </svg>
             Reports & Analytics
           </h2>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Track performance, revenue, and student progress
           </p>
         </div>
@@ -202,7 +202,7 @@ const AdminReports = () => {
           display: 'flex',
           gap: '0.5rem',
           marginBottom: '2rem',
-          background: '#f1f5f9',
+          background: 'var(--bg-secondary)',
           padding: '0.5rem',
           borderRadius: '12px',
           width: 'fit-content'
@@ -240,11 +240,11 @@ const AdminReports = () => {
               <div
                 key={index}
                 style={{
-                  background: 'white',
+                  background: 'var(--bg-primary)',
                   padding: '1.5rem',
                   borderRadius: '16px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -255,15 +255,15 @@ const AdminReports = () => {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
-                    <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
                       {card.label}
                     </p>
-                    <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                    <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                       {card.value}
                     </h3>
                     {card.growth !== undefined && (
@@ -296,16 +296,16 @@ const AdminReports = () => {
         {/* Revenue Tab */}
         {activeTab === 'revenue' && (
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '16px',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <h3 style={{
               fontSize: '1.2rem',
               fontWeight: 700,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               marginBottom: '1.5rem',
               display: 'flex',
               alignItems: 'center',
@@ -315,7 +315,7 @@ const AdminReports = () => {
             </h3>
 
             {revenueTrends.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '2rem', color: '#64748b' }}>
+              <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
                 No revenue data available
               </div>
             ) : (
@@ -325,7 +325,7 @@ const AdminReports = () => {
                 gap: '1rem',
                 height: '280px',
                 padding: '1rem',
-                backgroundColor: '#f8fafc',
+                backgroundColor: 'var(--bg-secondary)',
                 borderRadius: '12px'
               }}>
                 {revenueTrends.map((trend, index) => (
@@ -353,13 +353,13 @@ const AdminReports = () => {
                     </div>
                     <div style={{
                       fontSize: '0.8rem',
-                      color: '#0f172a',
+                      color: 'var(--text-primary)',
                       fontWeight: 600,
                       marginTop: '0.75rem'
                     }}>
                       {formatMonth(trend.month)}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       {trend.payments} payments
                     </div>
                   </div>
@@ -378,16 +378,16 @@ const AdminReports = () => {
           }}>
             {/* By Class */}
             <div style={{
-              backgroundColor: 'white',
+              backgroundColor: 'var(--bg-primary)',
               padding: '1.5rem',
               borderRadius: '16px',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0'
+              border: '1px solid var(--border-light)'
             }}>
               <h3 style={{
                 fontSize: '1.1rem',
                 fontWeight: 700,
-                color: '#0f172a',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem',
                 display: 'flex',
                 alignItems: 'center',
@@ -397,15 +397,15 @@ const AdminReports = () => {
               </h3>
 
               {performanceByClass.length === 0 ? (
-                <p style={{ color: '#64748b', textAlign: 'center' }}>No data available</p>
+                <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>No data available</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {performanceByClass.map((classData, index) => (
                     <div key={index} style={{
                       padding: '1rem',
-                      backgroundColor: '#f8fafc',
+                      backgroundColor: 'var(--bg-secondary)',
                       borderRadius: '10px',
-                      border: '1px solid #e2e8f0'
+                      border: '1px solid var(--border-light)'
                     }}>
                       <div style={{
                         display: 'flex',
@@ -413,14 +413,14 @@ const AdminReports = () => {
                         alignItems: 'center',
                         marginBottom: '0.5rem'
                       }}>
-                        <h4 style={{ margin: 0, color: '#0f172a', fontWeight: 600 }}>
+                        <h4 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 600 }}>
                           Class {classData._id || 'Unassigned'}
                         </h4>
                         <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#10b981' }}>
                           {Math.round(classData.avgScore)}%
                         </span>
                       </div>
-                      <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '0 0 0.5rem' }}>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0 0 0.5rem' }}>
                         {classData.count} exams • Range: {Math.round(classData.minScore)}% - {Math.round(classData.maxScore)}%
                       </p>
                       <div style={{
@@ -446,16 +446,16 @@ const AdminReports = () => {
 
             {/* By Subject */}
             <div style={{
-              backgroundColor: 'white',
+              backgroundColor: 'var(--bg-primary)',
               padding: '1.5rem',
               borderRadius: '16px',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0'
+              border: '1px solid var(--border-light)'
             }}>
               <h3 style={{
                 fontSize: '1.1rem',
                 fontWeight: 700,
-                color: '#0f172a',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem',
                 display: 'flex',
                 alignItems: 'center',
@@ -465,15 +465,15 @@ const AdminReports = () => {
               </h3>
 
               {subjectPerformance.length === 0 ? (
-                <p style={{ color: '#64748b', textAlign: 'center' }}>No data available</p>
+                <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>No data available</p>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   {subjectPerformance.map((subject, index) => (
                     <div key={index} style={{
                       padding: '1rem',
-                      backgroundColor: '#f8fafc',
+                      backgroundColor: 'var(--bg-secondary)',
                       borderRadius: '10px',
-                      border: '1px solid #e2e8f0'
+                      border: '1px solid var(--border-light)'
                     }}>
                       <div style={{
                         display: 'flex',
@@ -481,12 +481,12 @@ const AdminReports = () => {
                         alignItems: 'center',
                         marginBottom: '0.25rem'
                       }}>
-                        <h4 style={{ margin: 0, color: '#0f172a', fontWeight: 600 }}>{subject._id}</h4>
+                        <h4 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 600 }}>{subject._id}</h4>
                         <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#10b981' }}>
                           {Math.round(subject.avgScore)}%
                         </span>
                       </div>
-                      <p style={{ fontSize: '0.85rem', color: '#64748b', margin: 0 }}>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
                         {subject.count} exams
                       </p>
                       {subject.studentsBelow50 > 0 && (
@@ -505,16 +505,16 @@ const AdminReports = () => {
         {/* Payments Tab */}
         {activeTab === 'payments' && (
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '16px',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <h3 style={{
               fontSize: '1.2rem',
               fontWeight: 700,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               marginBottom: '1.5rem',
               display: 'flex',
               alignItems: 'center',
@@ -524,7 +524,7 @@ const AdminReports = () => {
             </h3>
 
             {paymentDistribution.length === 0 ? (
-              <p style={{ color: '#64748b', textAlign: 'center' }}>No payment data available</p>
+              <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>No payment data available</p>
             ) : (
               <div style={{
                 display: 'grid',
@@ -571,7 +571,7 @@ const AdminReports = () => {
                       key={index}
                       style={{
                         padding: '1.5rem',
-                        backgroundColor: '#f8fafc',
+                        backgroundColor: 'var(--bg-secondary)',
                         borderRadius: '16px',
                         border: `2px solid ${getStatusColor(payment.status)}`,
                         textAlign: 'center',
@@ -590,7 +590,7 @@ const AdminReports = () => {
                         {payment.count}
                       </h4>
                       <p style={{
-                        color: '#64748b',
+                        color: 'var(--text-muted)',
                         margin: '0.25rem 0',
                         textTransform: 'capitalize',
                         fontWeight: 500
@@ -600,7 +600,7 @@ const AdminReports = () => {
                       {payment.amount > 0 && (
                         <div style={{
                           fontSize: '0.9rem',
-                          color: '#0f172a',
+                          color: 'var(--text-primary)',
                           fontWeight: 600,
                           marginTop: '0.25rem'
                         }}>

@@ -230,11 +230,11 @@ const AdminDashboard = () => {
           <div
             key={index}
             style={{
-              background: 'white',
+              background: 'var(--bg-primary)',
               padding: '1.5rem',
               borderRadius: '16px',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0',
+              border: '1px solid var(--border-light)',
               transition: 'all 0.3s ease',
               cursor: 'default'
             }}
@@ -246,15 +246,15 @@ const AdminDashboard = () => {
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = 'var(--border-light)';
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div>
-                <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
                   {stat.label}
                 </p>
-                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                <h3 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                   {stat.value}
                 </h3>
               </div>
@@ -279,7 +279,7 @@ const AdminDashboard = () => {
         display: 'flex',
         gap: '0.5rem',
         marginBottom: '1.5rem',
-        background: '#f1f5f9',
+        background: 'var(--bg-secondary)',
         padding: '0.5rem',
         borderRadius: '12px',
         width: 'fit-content'
@@ -289,7 +289,7 @@ const AdminDashboard = () => {
           style={{
             padding: '0.75rem 1.5rem',
             background: activeTab === "student" ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
-            color: activeTab === "student" ? 'white' : '#64748b',
+            color: activeTab === "student" ? 'white' : 'var(--text-muted)',
             border: 'none',
             borderRadius: '8px',
             fontWeight: 600,
@@ -326,19 +326,19 @@ const AdminDashboard = () => {
           marginBottom: '1.5rem',
           alignItems: 'center'
         }}>
-          <span style={{ color: '#64748b', fontWeight: 500 }}>Filter by Class:</span>
+          <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Filter by Class:</span>
           <select
             value={selectedClass}
             onChange={(e) => setSelectedClass(e.target.value)}
             style={{
               padding: '0.75rem 1rem',
               paddingRight: '2.5rem',
-              background: 'white',
-              border: '2px solid #e2e8f0',
+              background: 'var(--bg-primary)',
+              border: '2px solid var(--border-light)',
               borderRadius: '10px',
               fontWeight: 600,
               fontSize: '0.95rem',
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               cursor: 'pointer',
               outline: 'none',
               appearance: 'none',
@@ -360,8 +360,8 @@ const AdminDashboard = () => {
               onClick={() => setSelectedClass('all')}
               style={{
                 padding: '0.5rem 1rem',
-                background: '#f1f5f9',
-                color: '#64748b',
+                background: 'var(--bg-secondary)',
+                color: 'var(--text-muted)',
                 border: 'none',
                 borderRadius: '8px',
                 fontWeight: 500,
@@ -386,33 +386,33 @@ const AdminDashboard = () => {
           padding: '2rem',
           background: '#fef2f2',
           borderRadius: '12px',
-          border: '2px solid #fecaca',
+          border: '2px solid var(--border-light)',
           textAlign: 'center'
         }}>
           <p style={{ color: '#dc2626', fontWeight: 600 }}>{error}</p>
         </div>
       ) : (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           overflow: 'hidden'
         }}>
           <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '600px' }}>
             <thead>
-              <tr style={{ background: '#f8fafc' }}>
-                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Name</th>
-                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>{type === "student" ? "Class" : "Specialization"}</th>
-                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Status</th>
-                <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Actions</th>
+              <tr style={{ background: 'var(--bg-secondary)' }}>
+                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Name</th>
+                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>{type === "student" ? "Class" : "Specialization"}</th>
+                <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Status</th>
+                <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Actions</th>
               </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan="4" style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+                  <td colSpan="4" style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
                     No {type}s found.
                   </td>
                 </tr>
@@ -421,13 +421,13 @@ const AdminDashboard = () => {
                   <tr
                     key={item._id}
                     style={{
-                      background: index % 2 === 0 ? 'white' : '#f8fafc',
+                      background: index % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)',
                       transition: 'all 0.2s ease'
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.background = '#f0fdf4'}
-                    onMouseLeave={(e) => e.currentTarget.style.background = index % 2 === 0 ? 'white' : '#f8fafc'}
+                    onMouseLeave={(e) => e.currentTarget.style.background = index % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)'}
                   >
-                    <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                         <div style={{
                           width: '36px',
@@ -443,12 +443,12 @@ const AdminDashboard = () => {
                         }}>
                           {item.name?.charAt(0).toUpperCase()}
                         </div>
-                        <span style={{ fontWeight: 600, color: '#0f172a' }}>{item.name}</span>
+                        <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{item.name}</span>
                       </div>
                     </td>
                     {type === "student" ? (
                       <>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>
                           {item.className || "—"}
                           {item.subjects && item.subjects.length > 0 && (
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', marginTop: '0.35rem' }}>
@@ -458,7 +458,7 @@ const AdminDashboard = () => {
                             </div>
                           )}
                         </td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                           <span style={{
                             padding: '0.25rem 0.75rem',
                             borderRadius: '20px',
@@ -473,8 +473,8 @@ const AdminDashboard = () => {
                       </>
                     ) : (
                       <>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{item.specialization || "—"}</td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{item.specialization || "—"}</td>
+                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                           <span style={{
                             padding: '0.25rem 0.75rem',
                             borderRadius: '20px',
@@ -488,14 +488,14 @@ const AdminDashboard = () => {
                         </td>
                       </>
                     )}
-                    <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', textAlign: 'center' }}>
+                    <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', textAlign: 'center' }}>
                       <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
                         <button
                           onClick={() => setViewUser(item)}
                           style={{
                             padding: '0.5rem 1rem',
-                            background: '#f1f5f9',
-                            color: '#475569',
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-secondary)',
                             border: 'none',
                             borderRadius: '8px',
                             cursor: 'pointer',
@@ -511,8 +511,8 @@ const AdminDashboard = () => {
                           style={{
                             padding: '0.5rem 1rem',
                             background: 'transparent',
-                            color: '#94a3b8',
-                            border: '2px solid #e2e8f0',
+                            color: 'var(--text-light)',
+                            border: '2px solid var(--border-light)',
                             borderRadius: '8px',
                             cursor: 'pointer',
                             fontWeight: 500,
@@ -520,7 +520,7 @@ const AdminDashboard = () => {
                             transition: 'all 0.2s ease'
                           }}
                           onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.color = '#94a3b8'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-light)'; }}
                         >
                           Delete
                         </button>
@@ -611,21 +611,21 @@ const AdminDashboard = () => {
       {announcements.length > 0 && (
         <div style={{
           marginTop: '2rem',
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '1.5rem',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
-          <h3 style={{ marginBottom: '1rem', color: '#0f172a', fontWeight: 700 }}>
+          <h3 style={{ marginBottom: '1rem', color: 'var(--text-primary)', fontWeight: 700 }}>
             Current Announcements
           </h3>
           <div style={{ display: 'grid', gap: '0.75rem' }}>
             {announcements.map((announcement) => {
               const typeStyles = {
-                urgent: { bg: '#fef2f2', border: '#ef4444' },
-                holiday: { bg: '#f0fdf4', border: '#22c55e' },
-                general: { bg: '#f8fafc', border: '#10b981' }
+                urgent: { bg: 'var(--bg-urgent, #fef2f2)', border: '#ef4444' },
+                holiday: { bg: 'var(--bg-success, #f0fdf4)', border: '#22c55e' },
+                general: { bg: 'var(--bg-secondary)', border: '#10b981' }
               };
               const style = typeStyles[announcement.type] || typeStyles.general;
 
@@ -643,8 +643,8 @@ const AdminDashboard = () => {
                   }}
                 >
                   <div>
-                    <strong style={{ color: '#0f172a' }}>{announcement.title}</strong>
-                    <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.9rem' }}>{announcement.message}</p>
+                    <strong style={{ color: 'var(--text-primary)' }}>{announcement.title}</strong>
+                    <p style={{ margin: '0.25rem 0 0', color: 'var(--text-muted)', fontSize: '0.9rem' }}>{announcement.message}</p>
                   </div>
                   <button
                     onClick={() => deleteAnnouncement(announcement._id)}
@@ -678,18 +678,18 @@ const AdminDashboard = () => {
           zIndex: 1000, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             width: '450px', maxWidth: '90%',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             animation: 'slideUp 0.3s ease'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {viewUser.role === 'tutor' ? 'Tutor' : 'Student'} Details
               </h3>
               <button
                 onClick={() => setViewUser(null)}
-                style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f1f5f9', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#64748b' }}
+                style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', fontSize: '1rem', color: 'var(--text-muted)' }}
               >
                 ×
               </button>
@@ -707,8 +707,8 @@ const AdminDashboard = () => {
                   {viewUser.name?.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <p style={{ margin: 0, fontWeight: 700, color: '#0f172a', fontSize: '1.1rem' }}>{viewUser.name}</p>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.85rem' }}>{viewUser.email}</p>
+                  <p style={{ margin: 0, fontWeight: 700, color: 'var(--text-primary)', fontSize: '1.1rem' }}>{viewUser.name}</p>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>{viewUser.email}</p>
                 </div>
               </div>
               {[{ label: 'Role', value: viewUser.role?.charAt(0).toUpperCase() + viewUser.role?.slice(1) },
@@ -718,8 +718,8 @@ const AdminDashboard = () => {
                 { label: 'Status', value: viewUser.status },
                 { label: 'Registered', value: viewUser.createdAt ? new Date(viewUser.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—' }
               ].map((field, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
-                  <span style={{ color: '#64748b', fontWeight: 500, fontSize: '0.9rem' }}>{field.label}</span>
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem', background: 'var(--bg-secondary)', borderRadius: '10px' }}>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500, fontSize: '0.9rem' }}>{field.label}</span>
                   {field.label === 'Status' ? (
                     <span style={{
                       padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 600,
@@ -727,7 +727,7 @@ const AdminDashboard = () => {
                       color: field.value === 'approved' ? '#166534' : field.value === 'pending' ? '#92400e' : '#991b1b'
                     }}>{field.value}</span>
                   ) : (
-                    <span style={{ color: '#0f172a', fontWeight: 600, fontSize: '0.9rem' }}>{field.value}</span>
+                    <span style={{ color: 'var(--text-primary)', fontWeight: 600, fontSize: '0.9rem' }}>{field.value}</span>
                   )}
                 </div>
               ))}
@@ -751,7 +751,7 @@ const AdminDashboard = () => {
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: viewUser.status === 'pending' ? '0.5rem' : '1.5rem' }}>
               <button
                 onClick={() => { setDeleteTarget({ id: viewUser._id, name: viewUser.name, role: viewUser.role }); setViewUser(null); }}
-                style={{ flex: 1, padding: '0.75rem', background: '#fef2f2', color: '#dc2626', border: '2px solid #fecaca', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+                style={{ flex: 1, padding: '0.75rem', background: '#fef2f2', color: '#dc2626', border: '2px solid var(--border-light)', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
               >
                 Delete User
               </button>
@@ -768,7 +768,7 @@ const AdminDashboard = () => {
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             maxWidth: '400px', width: '100%', textAlign: 'center',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
@@ -777,14 +777,14 @@ const AdminDashboard = () => {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               margin: '0 auto 1rem', fontSize: '1.5rem'
             }}>⚠️</div>
-            <h3 style={{ margin: '0 0 0.5rem', color: '#0f172a', fontWeight: 700, fontSize: '1.15rem' }}>Delete {deleteTarget.role === 'tutor' ? 'Tutor' : 'Student'}?</h3>
-            <p style={{ margin: '0 0 1.5rem', color: '#64748b', fontSize: '0.9rem', lineHeight: 1.5 }}>
-              Are you sure you want to delete <strong style={{ color: '#0f172a' }}>{deleteTarget.name}</strong>? This will remove all their data and cannot be undone.
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.15rem' }}>Delete {deleteTarget.role === 'tutor' ? 'Tutor' : 'Student'}?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+              Are you sure you want to delete <strong style={{ color: 'var(--text-primary)' }}>{deleteTarget.name}</strong>? This will remove all their data and cannot be undone.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button
                 onClick={() => setDeleteTarget(null)}
-                style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid #e2e8f0', background: 'white', color: '#64748b', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
+                style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)', background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600, fontSize: '0.9rem' }}
               >Cancel</button>
               <button
                 onClick={confirmDeleteUser}

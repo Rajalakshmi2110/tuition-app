@@ -72,7 +72,7 @@ const AdminGallery = () => {
     width: '100%',
     padding: '0.75rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -102,7 +102,7 @@ const AdminGallery = () => {
             <h1 style={{
               fontSize: '1.5rem',
               fontWeight: 700,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               margin: 0,
               display: 'flex',
               alignItems: 'center',
@@ -115,7 +115,7 @@ const AdminGallery = () => {
               </svg>
               Gallery Management
             </h1>
-            <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
               Manage photos for your tuition center
             </p>
           </div>
@@ -146,12 +146,12 @@ const AdminGallery = () => {
 
         {images.length === 0 ? (
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '4rem 2rem',
             borderRadius: '16px',
             textAlign: 'center',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <div style={{
               width: '80px',
@@ -168,10 +168,10 @@ const AdminGallery = () => {
                 <circle cx="12" cy="13" r="4"></circle>
               </svg>
             </div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Images Yet
             </h3>
-            <p style={{ color: '#64748b' }}>Upload your first image to get started.</p>
+            <p style={{ color: 'var(--text-muted)' }}>Upload your first image to get started.</p>
           </div>
         ) : (
           <div style={{
@@ -185,11 +185,11 @@ const AdminGallery = () => {
                 <div
                   key={image._id}
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: 'var(--bg-primary)',
                     borderRadius: '16px',
                     overflow: 'hidden',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--border-light)',
                     transition: 'all 0.3s ease'
                   }}
                   onMouseEnter={(e) => {
@@ -221,7 +221,7 @@ const AdminGallery = () => {
                   <div style={{ padding: '1.25rem' }}>
                     <h3 style={{
                       margin: '0 0 0.5rem 0',
-                      color: '#0f172a',
+                      color: 'var(--text-primary)',
                       fontWeight: 700,
                       fontSize: '1.1rem'
                     }}>
@@ -230,7 +230,7 @@ const AdminGallery = () => {
                     {image.description && (
                       <p style={{
                         margin: '0 0 1rem 0',
-                        color: '#64748b',
+                        color: 'var(--text-muted)',
                         fontSize: '0.9rem',
                         lineHeight: 1.5
                       }}>
@@ -293,7 +293,7 @@ const AdminGallery = () => {
             padding: '1rem'
           }}>
             <div style={{
-              backgroundColor: 'white',
+              backgroundColor: 'var(--bg-primary)',
               padding: '2rem',
               borderRadius: '20px',
               width: '500px',
@@ -306,7 +306,7 @@ const AdminGallery = () => {
                 alignItems: 'center',
                 marginBottom: '1.5rem'
               }}>
-                <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                     <circle cx="12" cy="13" r="4"></circle>
@@ -316,14 +316,14 @@ const AdminGallery = () => {
                 <button
                   onClick={() => setShowUploadForm(false)}
                   style={{
-                    background: '#f1f5f9',
+                    background: 'var(--bg-secondary)',
                     border: 'none',
                     width: '32px',
                     height: '32px',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontSize: '1.2rem',
-                    color: '#64748b'
+                    color: 'var(--text-muted)'
                   }}
                 >
                   ×
@@ -332,7 +332,7 @@ const AdminGallery = () => {
 
               <form onSubmit={handleUpload} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                     Title *
                   </label>
                   <input
@@ -346,7 +346,7 @@ const AdminGallery = () => {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                     Description
                   </label>
                   <textarea
@@ -359,13 +359,13 @@ const AdminGallery = () => {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                     Category
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    style={{ ...inputStyle, background: 'white' }}
+                    style={{ ...inputStyle, background: 'var(--bg-primary)' }}
                   >
                     <option value="classroom">Classroom</option>
                     <option value="students">Students</option>
@@ -375,7 +375,7 @@ const AdminGallery = () => {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                     Image File *
                   </label>
                   <input
@@ -383,7 +383,7 @@ const AdminGallery = () => {
                     accept="image/*"
                     onChange={(e) => setSelectedFile(e.target.files[0])}
                     required
-                    style={{ ...inputStyle, padding: '0.5rem', background: '#f8fafc' }}
+                    style={{ ...inputStyle, padding: '0.5rem', background: 'var(--bg-secondary)' }}
                   />
                 </div>
 
@@ -395,9 +395,9 @@ const AdminGallery = () => {
                       flex: 1,
                       padding: '0.875rem',
                       borderRadius: '10px',
-                      border: '2px solid #e2e8f0',
-                      background: 'white',
-                      color: '#64748b',
+                      border: '2px solid var(--border-light)',
+                      background: 'var(--bg-primary)',
+                      color: 'var(--text-muted)',
                       cursor: 'pointer',
                       fontWeight: 600
                     }}

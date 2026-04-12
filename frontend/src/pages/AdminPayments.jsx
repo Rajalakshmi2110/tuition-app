@@ -136,7 +136,7 @@ const AdminPayments = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -148,7 +148,7 @@ const AdminPayments = () => {
             </svg>
             Payment Management
           </h2>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Verify payments and track revenue
           </p>
         </div>
@@ -164,11 +164,11 @@ const AdminPayments = () => {
             <div
               key={index}
               style={{
-                background: 'white',
+                background: 'var(--bg-primary)',
                 padding: '1.25rem',
                 borderRadius: '16px',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-light)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
@@ -179,15 +179,15 @@ const AdminPayments = () => {
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.borderColor = 'var(--border-light)';
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div>
-                  <p style={{ color: '#64748b', fontSize: '0.8rem', margin: '0 0 0.25rem 0', fontWeight: 500 }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: '0 0 0.25rem 0', fontWeight: 500 }}>
                     {stat.label}
                   </p>
-                  <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                     {stat.value}
                   </h3>
                 </div>
@@ -231,14 +231,14 @@ const AdminPayments = () => {
 
         {/* Pending Payments */}
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '1.5rem',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <h3 style={{
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1.5rem',
             fontWeight: 700,
             display: 'flex',
@@ -265,10 +265,10 @@ const AdminPayments = () => {
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
               </div>
-              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+              <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
                 All Caught Up!
               </h3>
-              <p style={{ color: '#64748b' }}>No pending payments to verify.</p>
+              <p style={{ color: 'var(--text-muted)' }}>No pending payments to verify.</p>
             </div>
           ) : (
             <div style={{ display: 'grid', gap: '1rem' }}>
@@ -291,10 +291,10 @@ const AdminPayments = () => {
                     gap: '0.5rem'
                   }}>
                     <div>
-                      <h4 style={{ margin: '0 0 0.25rem 0', color: '#0f172a', fontWeight: 700 }}>
+                      <h4 style={{ margin: '0 0 0.25rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>
                         {payment.studentId.name} - {payment.month}
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+                      <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                         Class: {payment.studentId.className} | {payment.studentId.email}
                       </p>
                     </div>
@@ -302,7 +302,7 @@ const AdminPayments = () => {
                       <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f59e0b' }}>
                         ₹{payment.amount}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                         {new Date(payment.submittedAt).toLocaleDateString()}
                       </div>
                     </div>
@@ -312,7 +312,7 @@ const AdminPayments = () => {
                     display: 'flex',
                     gap: '1rem',
                     fontSize: '0.85rem',
-                    color: '#64748b',
+                    color: 'var(--text-muted)',
                     marginBottom: '1rem',
                     flexWrap: 'wrap'
                   }}>
@@ -411,7 +411,7 @@ const AdminPayments = () => {
           >
             <div
               style={{
-                backgroundColor: 'white',
+                backgroundColor: 'var(--bg-primary)',
                 padding: '2rem',
                 borderRadius: '20px',
                 maxWidth: '500px',
@@ -420,10 +420,10 @@ const AdminPayments = () => {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 style={{ margin: '0 0 1rem 0', color: '#0f172a', fontWeight: 700 }}>
+              <h3 style={{ margin: '0 0 1rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>
                 Reject Payment
               </h3>
-              <p style={{ marginBottom: '1rem', color: '#64748b' }}>
+              <p style={{ marginBottom: '1rem', color: 'var(--text-muted)' }}>
                 Student: <strong>{selectedPayment.studentId.name}</strong> - {selectedPayment.month}
               </p>
 
@@ -436,7 +436,7 @@ const AdminPayments = () => {
                   width: '100%',
                   padding: '0.875rem',
                   borderRadius: '10px',
-                  border: '2px solid #e2e8f0',
+                  border: '2px solid var(--border-light)',
                   marginBottom: '1rem',
                   fontFamily: 'inherit',
                   fontSize: '0.95rem',
@@ -452,7 +452,7 @@ const AdminPayments = () => {
                   style={{
                     padding: '0.75rem 1.5rem',
                     backgroundColor: '#f1f5f9',
-                    color: '#64748b',
+                    color: 'var(--text-muted)',
                     border: 'none',
                     borderRadius: '10px',
                     cursor: 'pointer',

@@ -58,7 +58,7 @@ const AdminFeedback = () => {
           <h1 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -69,19 +69,19 @@ const AdminFeedback = () => {
             </svg>
             Manage Feedback
           </h1>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Review and approve student testimonials
           </p>
         </div>
 
         {feedback.length === 0 ? (
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '4rem 2rem',
             borderRadius: '16px',
             textAlign: 'center',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <div style={{
               width: '80px',
@@ -97,10 +97,10 @@ const AdminFeedback = () => {
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             </div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Feedback Yet
             </h3>
-            <p style={{ color: '#64748b' }}>Feedback from students will appear here.</p>
+            <p style={{ color: 'var(--text-muted)' }}>Feedback from students will appear here.</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '1.5rem' }}>
@@ -108,7 +108,7 @@ const AdminFeedback = () => {
               <div
                 key={item._id}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: 'var(--bg-primary)',
                   padding: '1.5rem',
                   borderRadius: '16px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
@@ -125,7 +125,7 @@ const AdminFeedback = () => {
                   gap: '1rem'
                 }}>
                   <div>
-                    <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontSize: '1.2rem', fontWeight: 700 }}>
+                    <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontSize: '1.2rem', fontWeight: 700 }}>
                       {item.name}
                     </h3>
                     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -151,11 +151,11 @@ const AdminFeedback = () => {
                             ★
                           </span>
                         ))}
-                        <span style={{ fontSize: '0.85rem', color: '#64748b', marginLeft: '0.5rem' }}>
+                        <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginLeft: '0.5rem' }}>
                           ({item.rating}/5)
                         </span>
                       </div>
-                      <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                         {new Date(item.createdAt).toLocaleDateString()}
                       </span>
                     </div>
@@ -187,14 +187,14 @@ const AdminFeedback = () => {
                 </div>
 
                 <div style={{
-                  backgroundColor: '#f8fafc',
+                  backgroundColor: 'var(--bg-secondary)',
                   padding: '1rem',
                   borderRadius: '10px',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   marginBottom: '1rem'
                 }}>
                   <p style={{
-                    color: '#374151',
+                    color: 'var(--text-primary)',
                     lineHeight: 1.6,
                     margin: 0,
                     fontStyle: 'italic'
@@ -240,9 +240,9 @@ const AdminFeedback = () => {
                     onClick={() => deleteFeedback(item._id)}
                     style={{
                       background: 'transparent',
-                      color: '#94a3b8',
+                      color: 'var(--text-light)',
                       padding: '0.6rem 1.25rem',
-                      border: '2px solid #e2e8f0',
+                      border: '2px solid var(--border-light)',
                       borderRadius: '10px',
                       cursor: 'pointer',
                       fontWeight: 600,
@@ -259,7 +259,7 @@ const AdminFeedback = () => {
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.borderColor = 'var(--border-light)';
                       e.currentTarget.style.color = '#94a3b8';
                     }}
                   >
