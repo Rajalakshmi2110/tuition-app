@@ -70,8 +70,8 @@ const Footer = () => {
               Contact Us
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <a href="mailto:rajalakshmirathinam7@gmail.com" style={{ color: '#94a3b8', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseEnter={(e) => e.target.style.color = '#10b981'} onMouseLeave={(e) => e.target.style.color = '#94a3b8'}>rajalakshmirathinam7@gmail.com</a>
-              <a href="tel:+918220297989" style={{ color: '#94a3b8', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseEnter={(e) => e.target.style.color = '#10b981'} onMouseLeave={(e) => e.target.style.color = '#94a3b8'}>+91 8220297989</a>
+              <a href="https://mail.google.com/mail/?view=cm&to=rajalakshmirathinam7@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseEnter={(e) => e.target.style.color = '#10b981'} onMouseLeave={(e) => e.target.style.color = '#94a3b8'}>rajalakshmirathinam7@gmail.com</a>
+              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>+91 8220297989</span>
               <span style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: 500 }}>Mon – Sat, 9 AM – 7 PM</span>
             </div>
           </div>
