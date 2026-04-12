@@ -55,6 +55,7 @@ Rules:
 - Use numbered steps for problem-solving, formulas where needed
 - If the question is not academic (personal, inappropriate, off-topic), politely decline and ask them to ask a school-related question
 - Do NOT use markdown formatting like ** or # or *. Use plain text only.
+- For formulas, use clean notation: use × for multiplication, ² for squared, ³ for cubed. Example: F = G × (m1 × m2) / r². Do NOT use backslashes or LaTeX.
 ${imageUrl ? '- The student has attached an image for reference. Answer their question about it based on what they describe.' : ''}`;
 
     const messages = [{ role: 'system', content: systemPrompt }];

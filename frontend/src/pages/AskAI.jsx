@@ -176,12 +176,18 @@ const AskAI = () => {
                       return <div key={j} style={{ fontWeight: 600, marginTop: '0.5rem', marginBottom: '0.25rem' }}>{trimmed}</div>;
                     }
                     if (/^[F-Z]\s*=/.test(trimmed) || /\^\d/.test(trimmed) || /\/\s*r/.test(trimmed)) {
+                      const formatted = trimmed
+                        .replace(/\\\s*/g, '×')
+                        .replace(/\^(\d+)/g, '\u00B$1'.length ? '\u00B2' : '$1')
+                        .replace(/\^2/g, '²')
+                        .replace(/\^3/g, '³')
+                        .replace(/\^(-?\d+)/g, '^($1)');
                       return (
                         <div key={j} style={{
                           fontFamily: 'monospace', background: 'rgba(139,92,246,0.08)',
                           padding: '0.5rem 0.75rem', borderRadius: '8px', margin: '0.5rem 0',
-                          fontSize: '0.95rem', borderLeft: '3px solid #8b5cf6'
-                        }}>{trimmed}</div>
+                          fontSize: '0.95rem', borderLeft: '3px solid #8b5cf6', letterSpacing: '0.5px'
+                        }}>{formatted}</div>
                       );
                     }
                     return <div key={j} style={{ marginBottom: '0.25rem' }}>{trimmed}</div>;
