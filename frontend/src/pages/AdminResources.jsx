@@ -67,7 +67,7 @@ const AdminResources = () => {
             </p>
           </div>
           {!loading && !error && resources.length > 0 && (
-            <div style={{ padding: '0.5rem 1rem', background: '#f0fdf4', color: '#059669', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 600 }}>
+            <div style={{ padding: '0.5rem 1rem', background: 'var(--bg-success, #f0fdf4)', color: '#059669', borderRadius: '8px', fontSize: '0.9rem', fontWeight: 600 }}>
               {resources.length} resource{resources.length !== 1 ? 's' : ''} total
             </div>
           )}
@@ -78,14 +78,14 @@ const AdminResources = () => {
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <select value={filterLevel} onChange={e => setFilterLevel(e.target.value)} style={{
               padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none', background: 'var(--bg-primary)'
             }}>
               <option value="all">All Classes</option>
               {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
             </select>
             <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} style={{
               padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none', background: 'var(--bg-primary)'
             }}>
               <option value="all">All Subjects</option>
               {subjects.map(s => <option key={s} value={s}>{s}</option>)}
@@ -126,7 +126,7 @@ const AdminResources = () => {
                 <tbody>
                   {filtered.map((r, i) => (
                     <tr key={r._id} style={{ background: i % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)' }}
-                      onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-success, #f0fdf4)'}
                       onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)'}
                     >
                       <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>{r.title}</td>
@@ -144,12 +144,12 @@ const AdminResources = () => {
                       <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
                           <a href={fileUrl(r.url)} target="_blank" rel="noopener noreferrer" style={{
-                            padding: '0.5rem 1rem', background: '#f0fdf4', color: '#059669',
+                            padding: '0.5rem 1rem', background: 'var(--bg-success, #f0fdf4)', color: '#059669',
                             border: '2px solid #bbf7d0', borderRadius: '8px', textDecoration: 'none',
                             fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
                           }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#dcfce7'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = '#f0fdf4'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-success, #f0fdf4)'; }}
                           >View</a>
                           <button onClick={() => handleDelete(r._id)} style={{
                             padding: '0.5rem 1rem', background: 'transparent', color: 'var(--text-light)',
