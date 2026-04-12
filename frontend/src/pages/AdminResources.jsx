@@ -125,9 +125,9 @@ const AdminResources = () => {
                 </thead>
                 <tbody>
                   {filtered.map((r, i) => (
-                    <tr key={r._id} style={{ background: i % 2 === 0 ? 'white' : '#f8fafc' }}
+                    <tr key={r._id} style={{ background: i % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)' }}
                       onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'}
-                      onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? 'white' : '#f8fafc'}
+                      onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? 'var(--bg-primary)' : 'var(--bg-secondary)'}
                     >
                       <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>{r.title}</td>
                       <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>Class {r.classLevel}</td>
