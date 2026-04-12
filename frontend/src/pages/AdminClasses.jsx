@@ -119,7 +119,7 @@ const AdminClasses = () => {
             </select>
             {selectedClass !== 'all' && (
               <button onClick={() => setSelectedClass('all')} style={{
-                padding: '0.5rem 1rem', background: '#fef2f2', color: '#dc2626',
+                padding: '0.5rem 1rem', background: 'var(--bg-urgent, #fef2f2)', color: '#dc2626',
                 border: '2px solid #fecaca', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
               }}>✕ Clear</button>
             )}
@@ -154,12 +154,12 @@ const AdminClasses = () => {
                     <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                       <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>{cls.subject}</span>
                       <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>Class {cls.classLevel}</span>
-                      <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>{cls.schedule}</span>
+                      <span style={{ backgroundColor: 'var(--bg-warning, #fef3c7)', color: '#92400e', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 500 }}>{cls.schedule}</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <span style={{
-                      backgroundColor: cls.status === 'completed' ? '#fee2e2' : '#f0fdf4',
+                      backgroundColor: cls.status === 'completed' ? 'var(--bg-urgent, #fee2e2)' : 'var(--bg-success, #f0fdf4)',
                       color: cls.status === 'completed' ? '#991b1b' : '#166534',
                       padding: '0.4rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 600
                     }}>
@@ -169,7 +169,7 @@ const AdminClasses = () => {
                       padding: '0.4rem 0.75rem', background: 'transparent', color: 'var(--text-light)',
                       border: '2px solid var(--border-light)', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
                     }}
-                      onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-urgent, #fef2f2)'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
                       onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-light)'; }}
                     >Delete</button>
                   </div>
@@ -286,7 +286,7 @@ const AdminClasses = () => {
             maxWidth: '400px', width: '100%', textAlign: 'center',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', fontSize: '1.5rem' }}>⚠️</div>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--bg-urgent, #fef2f2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', fontSize: '1.5rem' }}>⚠️</div>
             <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.15rem' }}>Delete Session?</h3>
             <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
               Are you sure you want to delete <strong style={{ color: 'var(--text-primary)' }}>{deleteTarget.name}</strong>? This will also remove all student enrollments.
