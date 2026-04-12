@@ -45,7 +45,10 @@ Rules:
       temperature: 0.7
     });
 
-    const answer = completion.choices[0]?.message?.content || 'Sorry, I could not generate an answer.';
+    const answer = (completion.choices[0]?.message?.content || 'Sorry, I could not generate an answer.')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\*(.*?)\*/g, '$1')
+      .replace(/^#{1,6}\s/gm, '');
 
     res.json({
       status: 'success',
