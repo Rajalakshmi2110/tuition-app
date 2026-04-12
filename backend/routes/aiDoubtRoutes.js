@@ -3,6 +3,7 @@ const router = express.Router();
 const { protect } = require('../Middleware/authMiddleware');
 const Groq = require('groq-sdk');
 const DoubtChat = require('../models/DoubtChat');
+const { uploadGallery } = require('../config/cloudinary');
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -30,10 +31,15 @@ router.delete('/history', protect, async (req, res) => {
   }
 });
 
-router.post('/chat', protect, async (req, res) => {
+router.post('/chat', protect, uploadGallery.single('image'), async (req, res) => {
   try {
-    const { question, history = [] } = req.body;
+    const question = req.body.question;
+    let history = [];
+    try { history = JSON.parse(req.body.history || '[]'); } catch (e) {}
+
     if (!question) return res.status(400).json({ error: 'Question is required' });
+
+    const imageUrl = req.file ? req.file.path : null;
 
     const user = req.user;
     const classLevel = user.className || '';
@@ -48,7 +54,8 @@ Rules:
 - Keep answers clear and concise: 3-8 sentences for simple questions, more for complex ones
 - Use numbered steps for problem-solving, formulas where needed
 - If the question is not academic (personal, inappropriate, off-topic), politely decline and ask them to ask a school-related question
-- Do NOT use markdown formatting like ** or # or *. Use plain text only.`;
+- Do NOT use markdown formatting like ** or # or *. Use plain text only.
+${imageUrl ? '- The student has attached an image for reference. Answer their question about it based on what they describe.' : ''}`;
 
     const messages = [{ role: 'system', content: systemPrompt }];
 
@@ -57,7 +64,11 @@ Rules:
       if (msg.type === 'user') messages.push({ role: 'user', content: msg.text });
       else if (msg.type === 'bot' && msg.data?.answer) messages.push({ role: 'assistant', content: msg.data.answer });
     }
-    messages.push({ role: 'user', content: question });
+
+    const userMessage = imageUrl
+      ? `[Student attached an image for reference]\n\n${question}`
+      : question;
+    messages.push({ role: 'user', content: userMessage });
 
     const completion = await groq.chat.completions.create({
       model: 'llama-3.1-8b-instant',
@@ -71,9 +82,9 @@ Rules:
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/^#{1,6}\s/gm, '');
 
-    await DoubtChat.create({ studentId: user._id, question, answer });
+    await DoubtChat.create({ studentId: user._id, question, answer, imageUrl });
 
-    res.json({ status: 'success', question, answer, final_status: 'VALID' });
+    res.json({ status: 'success', question, answer, imageUrl, final_status: 'VALID' });
   } catch (err) {
     res.status(500).json({ status: 'error', answer: 'AI service error. Please try again.' });
   }

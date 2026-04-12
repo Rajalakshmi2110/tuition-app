@@ -6,14 +6,17 @@ const AskAI = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingHistory, setLoadingHistory] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const chatEndRef = useRef(null);
+  const fileRef = useRef(null);
 
   useEffect(() => {
     const loadHistory = async () => {
       try {
         const res = await api.get('/ai-doubt/history');
         const history = res.data.map(chat => ([
-          { type: 'user', text: chat.question },
+          { type: 'user', text: chat.question, imageUrl: chat.imageUrl },
           { type: 'bot', data: { answer: chat.answer, status: 'success' } }
         ])).flat();
         setMessages(history);
@@ -27,16 +30,46 @@ const AskAI = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setSelectedFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+    setPreview(null);
+    if (fileRef.current) fileRef.current.value = '';
+  };
+
   const handleSend = async () => {
     if (!question.trim() || loading) return;
     const q = question.trim();
+    const localPreview = preview;
     setQuestion('');
-    setMessages(prev => [...prev, { type: 'user', text: q }]);
+    setMessages(prev => [...prev, { type: 'user', text: q, imageUrl: localPreview }]);
+    removeFile();
     setLoading(true);
 
     try {
-      const res = await api.post('/ai-doubt/chat', { question: q, history: messages });
-      setMessages(prev => [...prev, { type: 'bot', data: res.data }]);
+      const fd = new FormData();
+      fd.append('question', q);
+      fd.append('history', JSON.stringify(messages));
+      if (selectedFile) fd.append('image', selectedFile);
+
+      const res = await api.post('/ai-doubt/chat', fd, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        timeout: 30000
+      });
+      setMessages(prev => {
+        const updated = [...prev];
+        if (res.data.imageUrl && updated.length > 0) {
+          const lastUser = updated[updated.length - 1];
+          if (lastUser.type === 'user') lastUser.imageUrl = res.data.imageUrl;
+        }
+        return [...updated, { type: 'bot', data: res.data }];
+      });
     } catch (err) {
       setMessages(prev => [...prev, {
         type: 'bot',
@@ -92,6 +125,7 @@ const AskAI = () => {
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
             <p style={{ fontWeight: 600, marginBottom: '0.75rem' }}>Ask your first question</p>
+            <p style={{ fontSize: '0.85rem', marginBottom: '1rem' }}>You can also attach an image of a textbook page or problem</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', maxWidth: '500px', margin: '0 auto' }}>
               {["What is Newton's 3rd law?", 'Solve: 2x + 5 = 15', 'What is photosynthesis?', 'Explain Pythagoras theorem'].map((q, i) => (
                 <button key={i} onClick={() => setQuestion(q)} style={{
@@ -117,7 +151,15 @@ const AskAI = () => {
               border: msg.type === 'bot' ? '1px solid var(--border-light)' : 'none'
             }}>
               {msg.type === 'user' ? (
-                <p style={{ margin: 0, lineHeight: 1.6 }}>{msg.text}</p>
+                <>
+                  {msg.imageUrl && (
+                    <img src={msg.imageUrl} alt="Attached" style={{
+                      maxWidth: '100%', maxHeight: '200px', borderRadius: '10px',
+                      marginBottom: '0.5rem', display: 'block'
+                    }} />
+                  )}
+                  <p style={{ margin: 0, lineHeight: 1.6 }}>{msg.text}</p>
+                </>
               ) : (
                 <p style={{ margin: 0, lineHeight: 1.7, whiteSpace: 'pre-wrap' }}>
                   {msg.data.answer}
@@ -144,12 +186,44 @@ const AskAI = () => {
         <div ref={chatEndRef} />
       </div>
 
+      {/* File Preview */}
+      {preview && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 1rem',
+          background: 'var(--bg-secondary)', borderRadius: '12px', marginBottom: '0.5rem',
+          border: '1px solid var(--border-light)'
+        }}>
+          <img src={preview} alt="Preview" style={{ width: '48px', height: '48px', borderRadius: '8px', objectFit: 'cover' }} />
+          <span style={{ flex: 1, fontSize: '0.85rem', color: 'var(--text-muted)' }}>{selectedFile?.name}</span>
+          <button onClick={removeFile} style={{
+            background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '1.2rem', padding: '0.25rem'
+          }}>×</button>
+        </div>
+      )}
+
       {/* Input */}
       <div style={{
-        display: 'flex', gap: '0.75rem', padding: '1rem',
+        display: 'flex', gap: '0.5rem', padding: '1rem',
         background: 'var(--bg-primary)', borderRadius: '16px',
-        border: '1px solid var(--border-light)'
+        border: '1px solid var(--border-light)', alignItems: 'center'
       }}>
+        <input type="file" ref={fileRef} accept="image/*" onChange={handleFileSelect} style={{ display: 'none' }} />
+        <button
+          onClick={() => fileRef.current?.click()}
+          disabled={loading}
+          title="Attach image"
+          style={{
+            width: '40px', height: '40px', borderRadius: '10px', border: '1px solid var(--border-light)',
+            background: 'var(--bg-secondary)', cursor: 'pointer', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--text-muted)'
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </button>
         <input
           type="text"
           value={question}
