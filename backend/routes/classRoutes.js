@@ -16,6 +16,16 @@ router.post("/create", protect, authorize("admin"), async (req, res) => {
     if (!name || !subject || !schedule || !scheduledDate || !tutor || !classLevel)
       return res.status(400).json({ message: "All fields are required" });
 
+    const conflict = await Class.findOne({
+      tutor,
+      scheduledDate: new Date(scheduledDate),
+      schedule,
+      status: { $ne: 'cancelled' }
+    });
+    if (conflict) {
+      return res.status(400).json({ message: `This tutor already has a session ("${conflict.name}") at ${schedule} on that date.` });
+    }
+
     const newClass = await Class.create({
       name, subject, schedule,
       scheduledDate: new Date(scheduledDate),
