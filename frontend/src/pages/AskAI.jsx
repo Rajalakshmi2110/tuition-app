@@ -178,7 +178,6 @@ const AskAI = () => {
                     if (/^[F-Z]\s*=/.test(trimmed) || /\^\d/.test(trimmed) || /\/\s*r/.test(trimmed)) {
                       const formatted = trimmed
                         .replace(/\\\s*/g, '×')
-                        .replace(/\^(\d+)/g, '\u00B$1'.length ? '\u00B2' : '$1')
                         .replace(/\^2/g, '²')
                         .replace(/\^3/g, '³')
                         .replace(/\^(-?\d+)/g, '^($1)');
