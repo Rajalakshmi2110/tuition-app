@@ -1,6 +1,7 @@
 const StudentPerformance = require('../models/StudentPerformance');
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const { syncToSheet } = require('../services/googleSheetsService');
 
 // Add student performance record
 const addPerformance = async (req, res) => {
@@ -19,6 +20,12 @@ const addPerformance = async (req, res) => {
     });
 
     await performance.save();
+
+    try {
+      const student = await User.findById(req.user._id).select('name email className');
+      syncToSheet(performance, student);
+    } catch (e) {}
+
     res.status(201).json({ message: 'Performance record added successfully', performance });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -142,11 +149,35 @@ const getTutorStudentsPerformance = async (req, res) => {
   }
 };
 
+const exportPerformanceCSV = async (req, res) => {
+  try {
+    const records = await StudentPerformance.find()
+      .populate('studentId', 'name email className')
+      .sort({ examDate: -1 });
+
+    const header = 'Student Name,Email,Class,Subject,Exam Type,Total Marks,Obtained Marks,Percentage,Grade,Exam Date,Term,Academic Year\n';
+    const rows = records.map(r => [
+      r.studentId?.name || '', r.studentId?.email || '', r.studentId?.className || '',
+      r.subject, r.examType, r.totalMarks, r.obtainedMarks,
+      r.percentage?.toFixed(1), r.grade,
+      new Date(r.examDate).toLocaleDateString('en-IN'),
+      r.term, r.academicYear
+    ].map(v => `"${v}"`).join(',')).join('\n');
+
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=student_marks.csv');
+    res.send(header + rows);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to export' });
+  }
+};
+
 module.exports = {
   addPerformance,
   getStudentPerformance,
   getPerformanceAnalytics,
   updatePerformance,
   deletePerformance,
-  getTutorStudentsPerformance
+  getTutorStudentsPerformance,
+  exportPerformanceCSV
 };

@@ -7,7 +7,8 @@ const {
   getPerformanceAnalytics,
   updatePerformance,
   deletePerformance,
-  getTutorStudentsPerformance
+  getTutorStudentsPerformance,
+  exportPerformanceCSV
 } = require('../controllers/performanceController');
 
 // Student routes
@@ -21,5 +22,6 @@ router.delete('/:id', protect, deletePerformance);
 router.get('/student/:studentId', protect, getStudentPerformance);
 router.get('/student/:studentId/analytics', protect, getPerformanceAnalytics);
 router.get('/tutor/students', protect, getTutorStudentsPerformance);
+router.get('/export/csv', protect, exportPerformanceCSV);
 
 module.exports = router;
