@@ -75,7 +75,7 @@ const StudentAssignments = () => {
       'Graded': { bg: '#dcfce7', color: '#166534', border: '#22c55e' },
       'Not Submitted': { bg: '#fee2e2', color: '#991b1b', border: '#ef4444' }
     };
-    return styles[status] || { bg: '#f1f5f9', color: '#475569', border: '#94a3b8' };
+    return styles[status] || { bg: '#f1f5f9', color: 'var(--text-secondary)', border: '#94a3b8' };
   };
 
   const getDifficultyStyle = (difficulty) => {
@@ -84,7 +84,7 @@ const StudentAssignments = () => {
       'Medium': { bg: '#fef3c7', color: '#92400e' },
       'Hard': { bg: '#fee2e2', color: '#991b1b' }
     };
-    return styles[difficulty] || { bg: '#f1f5f9', color: '#475569' };
+    return styles[difficulty] || { bg: '#f1f5f9', color: 'var(--text-secondary)' };
   };
 
   if (loading) {
@@ -98,7 +98,7 @@ const StudentAssignments = () => {
         <h2 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: 0,
           display: 'flex',
           alignItems: 'center',
@@ -106,7 +106,7 @@ const StudentAssignments = () => {
         }}>
           My Assignments
         </h2>
-        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           View and submit your assignments
         </p>
       </div>
@@ -116,7 +116,7 @@ const StudentAssignments = () => {
         display: 'flex',
         gap: '0.5rem',
         marginBottom: '2rem',
-        background: '#f1f5f9',
+        background: 'var(--bg-secondary)',
         padding: '0.5rem',
         borderRadius: '12px',
         width: 'fit-content'
@@ -151,16 +151,16 @@ const StudentAssignments = () => {
         <div style={{ display: 'grid', gap: '1rem' }}>
           {assignments.length === 0 ? (
             <div style={{
-              background: 'white',
+              background: 'var(--bg-primary)',
               padding: '4rem 2rem',
               borderRadius: '16px',
               textAlign: 'center',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0'
+              border: '1px solid var(--border-light)'
             }}>
               <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>☰</div>
-              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments</h3>
-              <p style={{ color: '#64748b' }}>No assignments available at the moment.</p>
+              <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments</h3>
+              <p style={{ color: 'var(--text-muted)' }}>No assignments available at the moment.</p>
             </div>
           ) : (
             assignments.map((assignment) => {
@@ -170,7 +170,7 @@ const StudentAssignments = () => {
                 <div
                   key={assignment._id}
                   style={{
-                    background: 'white',
+                    background: 'var(--bg-primary)',
                     padding: '1.5rem',
                     borderRadius: '16px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
@@ -180,10 +180,10 @@ const StudentAssignments = () => {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '1rem', flexWrap: 'wrap' }}>
                     <div style={{ flex: 1 }}>
-                      <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 700, fontSize: '1.1rem' }}>
+                      <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.1rem' }}>
                         {assignment.title}
                       </h3>
-                      <p style={{ color: '#64748b', margin: '0 0 1rem 0', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                      <p style={{ color: 'var(--text-muted)', margin: '0 0 1rem 0', fontSize: '0.9rem', lineHeight: 1.5 }}>
                         {assignment.description}
                       </p>
                       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
@@ -231,10 +231,10 @@ const StudentAssignments = () => {
                       {assignment.instructions && (
                         <div style={{
                           padding: '0.75rem',
-                          background: '#f8fafc',
+                          background: 'var(--bg-secondary)',
                           borderRadius: '8px',
                           fontSize: '0.85rem',
-                          color: '#475569'
+                          color: 'var(--text-secondary)'
                         }}>
                           <strong>Instructions:</strong> {assignment.instructions}
                         </div>
@@ -275,7 +275,7 @@ const StudentAssignments = () => {
                           onClick={() => setSelectedAssignment(assignment)}
                           style={{
                             background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                            color: '#0f172a',
+                            color: 'var(--text-primary)',
                             padding: '0.5rem 1rem',
                             border: 'none',
                             borderRadius: '8px',
@@ -302,29 +302,29 @@ const StudentAssignments = () => {
       {/* Submissions Tab */}
       {activeTab === 'submissions' && (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           overflow: 'hidden'
         }}>
           {submissions.length === 0 ? (
             <div style={{ padding: '4rem 2rem', textAlign: 'center' }}>
               <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>✓</div>
-              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Submissions Yet</h3>
-              <p style={{ color: '#64748b' }}>Submit your first assignment to see it here.</p>
+              <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Submissions Yet</h3>
+              <p style={{ color: 'var(--text-muted)' }}>Submit your first assignment to see it here.</p>
             </div>
           ) : (
             <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '650px' }}>
               <thead>
-                <tr style={{ background: '#f8fafc' }}>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Assignment</th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Subject</th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Submitted</th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Status</th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Score</th>
-                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Feedback</th>
+                <tr style={{ background: 'var(--bg-secondary)' }}>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Assignment</th>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Subject</th>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Submitted</th>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Status</th>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Score</th>
+                  <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Feedback</th>
                 </tr>
               </thead>
               <tbody>
@@ -335,16 +335,16 @@ const StudentAssignments = () => {
                       key={submission._id}
                       style={{ background: index % 2 === 0 ? 'white' : '#f8fafc' }}
                     >
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>
                         {submission.assignmentId?.title}
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>
                         {submission.assignmentId?.subject}
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                         {new Date(submission.submittedAt).toLocaleDateString()}
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                         <span style={{
                           background: statusStyle.bg,
                           color: statusStyle.color,
@@ -356,13 +356,13 @@ const StudentAssignments = () => {
                           {submission.status}
                         </span>
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>
                         {submission.pointsEarned !== null
                           ? `${submission.pointsEarned}/${submission.assignmentId?.totalPoints}`
                           : '—'
                         }
                       </td>
-                      <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                      <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                         {submission.feedback || '—'}
                       </td>
                     </tr>
@@ -392,7 +392,7 @@ const StudentAssignments = () => {
           padding: '1rem'
         }}>
           <div style={{
-            background: 'white',
+            background: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '20px',
             maxWidth: '600px',
@@ -407,20 +407,20 @@ const StudentAssignments = () => {
               alignItems: 'center',
               marginBottom: '1.5rem'
             }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>
                 {selectedAssignment.isSubmitted ? '✏️ Update' : '📤 Submit'}: {selectedAssignment.title}
               </h3>
               <button
                 onClick={() => setSelectedAssignment(null)}
                 style={{
-                  background: '#f1f5f9',
+                  background: 'var(--bg-secondary)',
                   border: 'none',
                   width: '32px',
                   height: '32px',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   fontSize: '1.2rem',
-                  color: '#64748b'
+                  color: 'var(--text-muted)'
                 }}
               >
                 ×
@@ -429,7 +429,7 @@ const StudentAssignments = () => {
 
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                   Your Solution
                 </label>
                 <textarea
@@ -440,7 +440,7 @@ const StudentAssignments = () => {
                   style={{
                     width: '100%',
                     padding: '0.875rem',
-                    border: '2px solid #e2e8f0',
+                    border: '2px solid var(--border-light)',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
                     resize: 'vertical',
@@ -451,7 +451,7 @@ const StudentAssignments = () => {
               </div>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>
                   Attach File (Optional)
                 </label>
                 <input
@@ -461,14 +461,14 @@ const StudentAssignments = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    border: '2px solid #e2e8f0',
+                    border: '2px solid var(--border-light)',
                     borderRadius: '10px',
                     fontSize: '0.95rem',
                     boxSizing: 'border-box',
-                    background: '#f8fafc'
+                    background: 'var(--bg-secondary)'
                   }}
                 />
-                <p style={{ margin: '0.25rem 0 0', fontSize: '0.8rem', color: '#64748b' }}>
+                <p style={{ margin: '0.25rem 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                   Supported: PDF, DOC, DOCX, TXT, JPG, PNG
                 </p>
               </div>
@@ -481,9 +481,9 @@ const StudentAssignments = () => {
                     flex: 1,
                     padding: '0.875rem',
                     borderRadius: '10px',
-                    border: '2px solid #e2e8f0',
-                    background: 'white',
-                    color: '#64748b',
+                    border: '2px solid var(--border-light)',
+                    background: 'var(--bg-primary)',
+                    color: 'var(--text-muted)',
                     cursor: 'pointer',
                     fontWeight: 600
                   }}

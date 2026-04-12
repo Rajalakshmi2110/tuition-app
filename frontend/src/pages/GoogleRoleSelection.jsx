@@ -106,7 +106,7 @@ const GoogleRoleSelection = () => {
     width: '100%',
     padding: '0.875rem 1rem',
     fontSize: '1rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '12px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -150,7 +150,7 @@ const GoogleRoleSelection = () => {
         padding: '2rem'
       }}>
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2.5rem',
           borderRadius: '24px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
@@ -184,12 +184,12 @@ const GoogleRoleSelection = () => {
             <h2 style={{
               fontSize: '1.5rem',
               fontWeight: 800,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               marginBottom: '0.5rem'
             }}>
               Complete Registration
             </h2>
-            <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               Just a few more details to get started
             </p>
           </div>
@@ -216,7 +216,7 @@ const GoogleRoleSelection = () => {
                 marginBottom: '0.5rem',
                 fontSize: '0.9rem',
                 fontWeight: 600,
-                color: '#374151'
+                color: 'var(--text-primary)'
               }}>
                 I am a...
               </label>
@@ -225,7 +225,7 @@ const GoogleRoleSelection = () => {
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 required
-                style={{ ...inputStyle, background: 'white' }}
+                style={{ ...inputStyle, background: 'var(--bg-primary)' }}
               >
                 <option value="">Choose your role</option>
                 <option value="student">Student</option>
@@ -240,7 +240,7 @@ const GoogleRoleSelection = () => {
                   marginBottom: '0.5rem',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#374151'
+                  color: 'var(--text-primary)'
                 }}>
                   Academic Class
                 </label>
@@ -249,7 +249,7 @@ const GoogleRoleSelection = () => {
                   value={className}
                   onChange={(e) => { setClassName(e.target.value); setSubjects([]); setStream(''); }}
                   required
-                  style={{ ...inputStyle, background: 'white' }}
+                  style={{ ...inputStyle, background: 'var(--bg-primary)' }}
                 >
                   <option value="">Select your class</option>
                   <option value="6">Class 6</option>
@@ -265,7 +265,7 @@ const GoogleRoleSelection = () => {
 
             {role === 'student' && className && isHigherClass && (
               <div style={{ marginBottom: '1.25rem' }}>
-                <label htmlFor="google-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="google-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Select Your Stream *
                 </label>
                 <select
@@ -273,7 +273,7 @@ const GoogleRoleSelection = () => {
                   value={stream}
                   onChange={(e) => { setStream(e.target.value); setSubjects([]); }}
                   required
-                  style={{ ...inputStyle, background: 'white' }}
+                  style={{ ...inputStyle, background: 'var(--bg-primary)' }}
                 >
                   <option value="">Choose stream...</option>
                   <option value="Science (CS)">Science (Computer Science)</option>
@@ -285,7 +285,7 @@ const GoogleRoleSelection = () => {
 
             {role === 'student' && className && availableSubjects.length > 0 && (
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Subjects You Want to Learn *
                 </label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -296,7 +296,7 @@ const GoogleRoleSelection = () => {
                       padding: '0.5rem 1rem', borderRadius: '20px',
                       border: subjects.length === availableSubjects.length ? '2px solid #3b82f6' : '2px solid #e2e8f0',
                       background: subjects.length === availableSubjects.length ? '#eff6ff' : 'white',
-                      color: subjects.length === availableSubjects.length ? '#2563eb' : '#64748b',
+                      color: subjects.length === availableSubjects.length ? '#2563eb' : 'var(--text-muted)',
                       fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s ease'
                     }}
                   >
@@ -313,7 +313,7 @@ const GoogleRoleSelection = () => {
                           padding: '0.5rem 1rem', borderRadius: '20px',
                           border: selected ? '2px solid #10b981' : '2px solid #e2e8f0',
                           background: selected ? '#f0fdf4' : 'white',
-                          color: selected ? '#059669' : '#64748b',
+                          color: selected ? '#059669' : 'var(--text-muted)',
                           fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer', transition: 'all 0.2s ease'
                         }}
                       >
@@ -335,7 +335,7 @@ const GoogleRoleSelection = () => {
                   marginBottom: '0.5rem',
                   fontSize: '0.9rem',
                   fontWeight: 600,
-                  color: '#374151'
+                  color: 'var(--text-primary)'
                 }}>
                   Specialization
                 </label>

@@ -260,7 +260,7 @@ const AdminFeedback = () => {
                     onMouseLeave={(e) => {
                       e.currentTarget.style.background = 'transparent';
                       e.currentTarget.style.borderColor = 'var(--border-light)';
-                      e.currentTarget.style.color = '#94a3b8';
+                      e.currentTarget.style.color = 'var(--text-light)';
                     }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

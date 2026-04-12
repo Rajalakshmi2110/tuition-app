@@ -116,13 +116,13 @@ const RoleLayout = ({ role }) => {
             {/* Logout Button */}
             <button onClick={() => setShowLogout(true)} style={{
               padding: isMobile ? '0.5rem' : '0.6rem 1rem',
-              background: 'white', color: '#ef4444', border: '2px solid #fee2e2',
+              background: 'var(--bg-primary)', color: '#ef4444', border: '2px solid #fee2e2',
               borderRadius: '10px', cursor: 'pointer', fontSize: '0.85rem',
               fontWeight: 600, transition: 'all 0.2s ease',
               display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0
             }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'white'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--bg-primary)'; }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />

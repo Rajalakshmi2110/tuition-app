@@ -26,7 +26,7 @@ class ErrorBoundary extends React.Component {
           padding: '2rem'
         }}>
           <div style={{
-            background: 'white',
+            background: 'var(--bg-primary)',
             borderRadius: '24px',
             padding: '3rem',
             maxWidth: '440px',
@@ -34,10 +34,10 @@ class ErrorBoundary extends React.Component {
             boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)'
           }}>
             <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
-            <h2 style={{ color: '#0f172a', fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.75rem' }}>
+            <h2 style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.75rem' }}>
               Something went wrong
             </h2>
-            <p style={{ color: '#64748b', fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', lineHeight: 1.6 }}>
               An unexpected error occurred. Please try refreshing the page.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
@@ -60,9 +60,9 @@ class ErrorBoundary extends React.Component {
                 onClick={() => { window.location.href = '/'; }}
                 style={{
                   padding: '0.75rem 1.5rem',
-                  background: 'white',
-                  color: '#374151',
-                  border: '2px solid #e2e8f0',
+                  background: 'var(--bg-primary)',
+                  color: 'var(--text-primary)',
+                  border: '2px solid var(--border-light)',
                   borderRadius: '12px',
                   fontWeight: 600,
                   cursor: 'pointer',

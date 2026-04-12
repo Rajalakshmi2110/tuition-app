@@ -43,7 +43,7 @@ const ResetPassword = () => {
     width: '100%',
     padding: '0.875rem 1rem 0.875rem 2.75rem',
     fontSize: '1rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '12px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -65,7 +65,7 @@ const ResetPassword = () => {
         padding: '2rem'
       }}>
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           borderRadius: '24px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
           width: '100%',
@@ -104,13 +104,13 @@ const ResetPassword = () => {
               <h2 style={{
                 fontSize: '1.5rem',
                 fontWeight: 700,
-                color: '#0f172a',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem'
               }}>
                 Password Reset!
               </h2>
               <p style={{
-                color: '#64748b',
+                color: 'var(--text-muted)',
                 marginBottom: '2rem',
                 lineHeight: 1.6
               }}>
@@ -147,13 +147,13 @@ const ResetPassword = () => {
                 <h2 style={{
                   fontSize: '1.75rem',
                   fontWeight: 800,
-                  color: '#0f172a',
+                  color: 'var(--text-primary)',
                   marginBottom: '0.5rem',
                   letterSpacing: '-0.02em'
                 }}>
                   Set New Password
                 </h2>
-                <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
                   Enter your new password below
                 </p>
               </div>
@@ -165,7 +165,7 @@ const ResetPassword = () => {
                     marginBottom: '0.5rem',
                     fontSize: '0.9rem',
                     fontWeight: 600,
-                    color: '#374151'
+                    color: 'var(--text-primary)'
                   }}>
                     New Password
                   </label>
@@ -228,7 +228,7 @@ const ResetPassword = () => {
                     marginBottom: '0.5rem',
                     fontSize: '0.9rem',
                     fontWeight: 600,
-                    color: '#374151'
+                    color: 'var(--text-primary)'
                   }}>
                     Confirm Password
                   </label>

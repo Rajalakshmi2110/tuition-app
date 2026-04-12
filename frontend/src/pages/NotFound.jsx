@@ -43,7 +43,7 @@ const NotFound = () => {
           Page Not Found
         </h1>
         <p style={{
-          color: '#94a3b8',
+          color: 'var(--text-light)',
           fontSize: '1.05rem',
           lineHeight: 1.6,
           marginBottom: '2rem'

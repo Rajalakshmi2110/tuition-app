@@ -36,7 +36,7 @@ const AuthSuccess = () => {
       background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)'
     }}>
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '3rem',
         borderRadius: '24px',
         textAlign: 'center',
@@ -54,12 +54,12 @@ const AuthSuccess = () => {
         <h2 style={{
           fontSize: '1.25rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: '0 0 0.5rem'
         }}>
           Signing you in...
         </h2>
-        <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
           Please wait while we set up your account
         </p>
       </div>

@@ -38,7 +38,7 @@ const StudentGamification = () => {
 
   const getRarityColor = (rarity) => {
     const colors = {
-      common: { bg: '#f1f5f9', text: '#64748b', border: '#94a3b8', gradient: 'linear-gradient(135deg, #94a3b8, #64748b)' },
+      common: { bg: '#f1f5f9', text: 'var(--text-muted)', border: '#94a3b8', gradient: 'linear-gradient(135deg, #94a3b8, #64748b)' },
       rare: { bg: '#dbeafe', text: '#1e40af', border: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6, #1e40af)' },
       epic: { bg: '#f3e8ff', text: '#7c3aed', border: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' },
       legendary: { bg: '#fef3c7', text: '#b45309', border: '#f59e0b', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' }
@@ -275,7 +275,7 @@ const StudentGamification = () => {
             <div
               key={index}
               style={{
-                background: 'white',
+                background: 'var(--bg-primary)',
                 padding: '1.5rem',
                 borderRadius: '20px',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
@@ -309,7 +309,7 @@ const StudentGamification = () => {
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative' }}>
                 <div style={{ flex: 1 }}>
                   <p style={{ 
-                    color: '#64748b', 
+                    color: 'var(--text-muted)', 
                     fontSize: '0.9rem', 
                     margin: '0 0 0.75rem 0', 
                     fontWeight: 600,
@@ -321,7 +321,7 @@ const StudentGamification = () => {
                   <h3 style={{ 
                     fontSize: '2.5rem', 
                     fontWeight: 800, 
-                    color: '#0f172a', 
+                    color: 'var(--text-primary)', 
                     margin: 0,
                     lineHeight: 1
                   }}>
@@ -331,7 +331,7 @@ const StudentGamification = () => {
                     <div style={{ marginTop: '1rem' }}>
                       <div style={{ 
                         width: '100%', 
-                        backgroundColor: '#e2e8f0', 
+                        backgroundColor: 'var(--border-light)', 
                         borderRadius: '10px', 
                         height: '8px',
                         overflow: 'hidden'
@@ -347,7 +347,7 @@ const StudentGamification = () => {
                       </div>
                       <p style={{ 
                         fontSize: '0.8rem', 
-                        color: '#94a3b8', 
+                        color: 'var(--text-light)', 
                         margin: '0.5rem 0 0',
                         fontWeight: 500
                       }}>
@@ -381,7 +381,7 @@ const StudentGamification = () => {
         display: 'flex',
         gap: '0.5rem',
         marginBottom: '2rem',
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '0.5rem',
         borderRadius: '16px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
@@ -394,7 +394,7 @@ const StudentGamification = () => {
             style={{
               padding: '0.875rem 1.5rem',
               background: activeTab === tab.id ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : 'transparent',
-              color: activeTab === tab.id ? 'white' : '#64748b',
+              color: activeTab === tab.id ? 'white' : 'var(--text-muted)',
               border: 'none',
               borderRadius: '12px',
               cursor: 'pointer',
@@ -416,15 +416,15 @@ const StudentGamification = () => {
       {/* Tab Content */}
       {activeTab === 'badges' && (
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2rem',
           borderRadius: '20px',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <h3 style={{
             marginBottom: '1.5rem',
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             fontWeight: 700,
             fontSize: '1.25rem',
             display: 'flex',
@@ -445,7 +445,7 @@ const StudentGamification = () => {
               <div style={{
                 width: '100px',
                 height: '100px',
-                background: 'white',
+                background: 'var(--bg-primary)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -524,7 +524,7 @@ const StudentGamification = () => {
                     <p style={{ 
                       margin: '0 0 1rem 0', 
                       fontSize: '0.9rem', 
-                      color: '#64748b' 
+                      color: 'var(--text-muted)' 
                     }}>
                       {badge.description}
                     </p>
@@ -545,7 +545,7 @@ const StudentGamification = () => {
                     <p style={{ 
                       margin: '1rem 0 0 0', 
                       fontSize: '0.8rem', 
-                      color: '#94a3b8',
+                      color: 'var(--text-light)',
                       fontWeight: 500
                     }}>
                       🗓️ Earned: {new Date(badge.earnedAt).toLocaleDateString()}
@@ -560,15 +560,15 @@ const StudentGamification = () => {
 
       {activeTab === 'leaderboard' && (
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2rem',
           borderRadius: '20px',
           boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <h3 style={{
             marginBottom: '1.5rem',
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             fontWeight: 700,
             fontSize: '1.25rem',
             display: 'flex',
@@ -589,7 +589,7 @@ const StudentGamification = () => {
               <div style={{
                 width: '100px',
                 height: '100px',
-                background: 'white',
+                background: 'var(--bg-primary)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -613,7 +613,7 @@ const StudentGamification = () => {
                   { bg: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)', border: '#94a3b8', text: '#475569' },
                   { bg: 'linear-gradient(135deg, #ffedd5, #fed7aa)', border: '#f97316', text: '#c2410c' }
                 ];
-                const style = isTopThree ? podiumColors[index] : { bg: 'white', border: '#e2e8f0', text: '#0f172a' };
+                const style = isTopThree ? podiumColors[index] : { bg: 'white', border: 'var(--border-light)', text: 'var(--text-primary)' };
 
                 return (
                   <div
@@ -668,7 +668,7 @@ const StudentGamification = () => {
                         display: 'flex', 
                         gap: '1.25rem', 
                         fontSize: '0.85rem', 
-                        color: '#64748b', 
+                        color: 'var(--text-muted)', 
                         flexWrap: 'wrap' 
                       }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -705,15 +705,15 @@ const StudentGamification = () => {
         }}>
           {/* Recent Badges */}
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '20px',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <h3 style={{
               marginBottom: '1.25rem',
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               fontWeight: 700,
               fontSize: '1.1rem',
               display: 'flex',
@@ -731,8 +731,8 @@ const StudentGamification = () => {
                 borderRadius: '16px'
               }}>
                 <div style={{ color: '#fbbf24', marginBottom: '0.75rem' }}>{icons.star}</div>
-                <p style={{ color: '#64748b', margin: 0, fontWeight: 500 }}>No badges earned yet</p>
-                <p style={{ color: '#94a3b8', margin: '0.25rem 0 0', fontSize: '0.85rem' }}>Keep learning to unlock badges!</p>
+                <p style={{ color: 'var(--text-muted)', margin: 0, fontWeight: 500 }}>No badges earned yet</p>
+                <p style={{ color: 'var(--text-light)', margin: '0.25rem 0 0', fontSize: '0.85rem' }}>Keep learning to unlock badges!</p>
               </div>
             ) : (
               badges.slice(0, 3).map((badge) => {
@@ -769,7 +769,7 @@ const StudentGamification = () => {
                       }}>
                         {badge.name}
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>{badge.description}</p>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{badge.description}</p>
                     </div>
                   </div>
                 );
@@ -779,15 +779,15 @@ const StudentGamification = () => {
 
           {/* Progress Summary */}
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '20px',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <h3 style={{
               marginBottom: '1.25rem',
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               fontWeight: 700,
               fontSize: '1.1rem',
               display: 'flex',
@@ -821,7 +821,7 @@ const StudentGamification = () => {
                     }}
                   >
                     <span style={{ 
-                      color: '#64748b', 
+                      color: 'var(--text-muted)', 
                       display: 'flex', 
                       alignItems: 'center', 
                       gap: '0.75rem',
@@ -842,7 +842,7 @@ const StudentGamification = () => {
                       {item.label}
                     </span>
                     <strong style={{ 
-                      color: '#0f172a', 
+                      color: 'var(--text-primary)', 
                       fontSize: '1.1rem',
                       fontWeight: 700
                     }}>

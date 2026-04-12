@@ -140,7 +140,7 @@ const Header = () => {
                       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }} onClick={() => setShowDropdown(false)} />
                       <div style={{
                         position: 'absolute', top: 'calc(100% + 8px)', right: 0,
-                        background: 'white', borderRadius: '12px',
+                        background: 'var(--bg-primary)', borderRadius: '12px',
                         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.2)',
                         minWidth: '200px', zIndex: 1000, overflow: 'hidden',
                         animation: 'dropdownFade 0.2s ease-out',
@@ -149,11 +149,11 @@ const Header = () => {
                         <Link to={getDashboardLink()} onClick={() => setShowDropdown(false)}
                           style={{
                             display: 'flex', alignItems: 'center', gap: '0.75rem',
-                            padding: '0.9rem 1.2rem', color: '#374151', textDecoration: 'none',
+                            padding: '0.9rem 1.2rem', color: 'var(--text-primary)', textDecoration: 'none',
                             fontSize: '0.9rem', fontWeight: 500, transition: 'all 0.2s ease',
-                            borderBottom: '1px solid #f1f5f9'
+                            borderBottom: '1px solid var(--border-light)'
                           }}
-                          onMouseEnter={(e) => e.target.style.background = '#f8fafc'}
+                          onMouseEnter={(e) => e.target.style.background = 'var(--bg-secondary)'}
                           onMouseLeave={(e) => e.target.style.background = 'transparent'}
                         >Dashboard</Link>
                         <button onClick={handleLogout}
@@ -194,17 +194,17 @@ const Header = () => {
               aria-label="Toggle menu"
             >
               <span style={{
-                display: 'block', width: '24px', height: '2px', background: 'white',
+                display: 'block', width: '24px', height: '2px', background: 'var(--bg-primary)',
                 transition: 'all 0.3s ease', borderRadius: '2px',
                 transform: mobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
               }} />
               <span style={{
-                display: 'block', width: '24px', height: '2px', background: 'white',
+                display: 'block', width: '24px', height: '2px', background: 'var(--bg-primary)',
                 transition: 'all 0.3s ease', borderRadius: '2px',
                 opacity: mobileMenuOpen ? 0 : 1
               }} />
               <span style={{
-                display: 'block', width: '24px', height: '2px', background: 'white',
+                display: 'block', width: '24px', height: '2px', background: 'var(--bg-primary)',
                 transition: 'all 0.3s ease', borderRadius: '2px',
                 transform: mobileMenuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none'
               }} />

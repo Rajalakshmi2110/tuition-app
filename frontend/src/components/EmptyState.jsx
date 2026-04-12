@@ -30,13 +30,13 @@ const EmptyState = ({ icon, title, description, action }) => (
     <h3 style={{
       fontSize: '1.2rem',
       fontWeight: 700,
-      color: '#0f172a',
+      color: 'var(--text-primary)',
       margin: '0 0 0.5rem 0'
     }}>
       {title || 'Nothing here yet'}
     </h3>
     <p style={{
-      color: '#64748b',
+      color: 'var(--text-muted)',
       fontSize: '0.95rem',
       margin: 0,
       maxWidth: '360px',

@@ -66,10 +66,10 @@ const StudentResources = () => {
     <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           📖 Study Materials
         </h2>
-        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Study materials, guides, notes & question papers for your subjects
         </p>
       </div>
@@ -78,20 +78,20 @@ const StudentResources = () => {
       {resources.length > 0 && (
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} style={{
-            padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+            padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
           }}>
             <option value="all">All Subjects</option>
             {subjects.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
           <select value={filterCategory} onChange={e => setFilterCategory(e.target.value)} style={{
-            padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+            padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
           }}>
             <option value="all">All Categories</option>
             {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
-          <span style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 500 }}>
+          <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>
             {filtered.length} resource{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
@@ -99,25 +99,25 @@ const StudentResources = () => {
 
       {/* Content */}
       {resources.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
-          <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Available</h3>
-          <p style={{ color: '#64748b' }}>Resources will appear here once your tutors upload them for your enrolled subjects</p>
+          <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Available</h3>
+          <p style={{ color: 'var(--text-muted)' }}>Resources will appear here once your tutors upload them for your enrolled subjects</p>
         </div>
       ) : filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-          <p style={{ color: '#64748b' }}>No resources match the selected filters</p>
+        <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', border: '1px solid var(--border-light)' }}>
+          <p style={{ color: 'var(--text-muted)' }}>No resources match the selected filters</p>
         </div>
       ) : (
         Object.entries(grouped).sort().map(([subjectKey, categories]) => (
-          <div key={subjectKey} style={{ marginBottom: '2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
+          <div key={subjectKey} style={{ marginBottom: '2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
             <div style={{ padding: '1rem 1.5rem', background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)', borderBottom: '1px solid #bfdbfe' }}>
               <h3 style={{ margin: 0, color: '#1e40af', fontSize: '1.1rem', fontWeight: 700 }}>{subjectKey}</h3>
             </div>
             <div style={{ padding: '1.5rem' }}>
               {CATEGORIES.filter(cat => categories[cat]).map(cat => (
                 <div key={cat} style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ margin: '0 0 0.75rem', color: '#374151', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h4 style={{ margin: '0 0 0.75rem', color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     {categoryIcon(cat)} {cat} <span style={{ background: '#dbeafe', color: '#1e40af', fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '10px', fontWeight: 600, marginLeft: '0.25rem' }}>{categories[cat].length}</span>
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -129,17 +129,17 @@ const StudentResources = () => {
                         rel="noopener noreferrer"
                         style={{
                           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                          padding: '0.75rem 1rem', background: '#f8fafc', borderRadius: '10px',
-                          border: '1px solid #e2e8f0', textDecoration: 'none', color: 'inherit',
+                          padding: '0.75rem 1rem', background: 'var(--bg-secondary)', borderRadius: '10px',
+                          border: '1px solid var(--border-light)', textDecoration: 'none', color: 'inherit',
                           transition: 'all 0.2s ease', gap: '1rem', flexWrap: 'wrap'
                         }}
                         onMouseEnter={e => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#bbf7d0'; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'var(--bg-secondary)'; e.currentTarget.style.borderColor = 'var(--border-light)'; }}
                       >
                         <div style={{ flex: 1, minWidth: '200px' }}>
-                          <span style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.95rem' }}>{r.title}</span>
-                          {r.description && <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.85rem' }}>{r.description}</p>}
-                          <p style={{ margin: '0.25rem 0 0', color: '#94a3b8', fontSize: '0.8rem' }}>
+                          <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>{r.title}</span>
+                          {r.description && <p style={{ margin: '0.25rem 0 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{r.description}</p>}
+                          <p style={{ margin: '0.25rem 0 0', color: 'var(--text-light)', fontSize: '0.8rem' }}>
                             Uploaded by {r.uploadedBy?.name || 'Tutor'} • {new Date(r.createdAt).toLocaleDateString()}
                           </p>
                         </div>

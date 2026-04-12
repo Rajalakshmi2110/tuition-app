@@ -80,7 +80,7 @@ const Register = () => {
     width: '100%',
     padding: '0.875rem 1rem 0.875rem 2.75rem',
     fontSize: '1rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '12px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -93,7 +93,7 @@ const Register = () => {
   };
 
   const handleBlur = (e) => {
-    e.target.style.borderColor = '#e2e8f0';
+    e.target.style.borderColor = 'var(--border-light)';
     e.target.style.boxShadow = 'none';
   };
 
@@ -110,7 +110,7 @@ const Register = () => {
       }}>
         {/* Register Card */}
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           borderRadius: '24px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
           width: '100%',
@@ -145,13 +145,13 @@ const Register = () => {
             <h2 style={{
               fontSize: '1.75rem',
               fontWeight: 800,
-              color: '#0f172a',
+              color: 'var(--text-primary)',
               marginBottom: '0.5rem',
               letterSpacing: '-0.02em'
             }}>
               Create Account
             </h2>
-            <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
               Join Kalvi and start your learning journey
             </p>
           </div>
@@ -160,7 +160,7 @@ const Register = () => {
           <form onSubmit={handleSubmit}>
             {/* Full Name */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Full Name
               </label>
               <div style={{ position: 'relative' }}>
@@ -183,7 +183,7 @@ const Register = () => {
 
             {/* Email */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Email Address
               </label>
               <div style={{ position: 'relative' }}>
@@ -204,7 +204,7 @@ const Register = () => {
 
             {/* Password */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Password
               </label>
               <div style={{ position: 'relative' }}>
@@ -250,7 +250,7 @@ const Register = () => {
 
             {/* Confirm Password */}
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Confirm Password
               </label>
               <div style={{ position: 'relative' }}>
@@ -272,7 +272,7 @@ const Register = () => {
 
             {/* Role Selection */}
             <div style={{ marginBottom: '1rem' }}>
-              <label id="reg-role-label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+              <label id="reg-role-label" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                 I am a...
               </label>
               <div role="group" aria-labelledby="reg-role-label" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
@@ -324,7 +324,7 @@ const Register = () => {
             {/* Conditional Fields */}
             {formData.role === 'tutor' && (
               <div style={{ marginBottom: '1rem' }}>
-                <label htmlFor="reg-specialization" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="reg-specialization" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Specialization / Subject
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -347,7 +347,7 @@ const Register = () => {
 
             {formData.role === 'student' && (
               <div style={{ marginBottom: '1rem' }}>
-                <label htmlFor="reg-class" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="reg-class" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Select Your Class
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -379,7 +379,7 @@ const Register = () => {
 
             {formData.role === 'student' && formData.className && isHigherClass && (
               <div style={{ marginBottom: '1rem' }}>
-                <label htmlFor="reg-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label htmlFor="reg-stream" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Select Your Stream *
                 </label>
                 <div style={{ position: 'relative' }}>
@@ -410,7 +410,7 @@ const Register = () => {
 
             {formData.role === 'student' && formData.className && availableSubjects.length > 0 && (
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Subjects You Want to Learn *
                 </label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -427,7 +427,7 @@ const Register = () => {
                       borderRadius: '20px',
                       border: formData.subjects.length === availableSubjects.length ? '2px solid #3b82f6' : '2px solid #e2e8f0',
                       background: formData.subjects.length === availableSubjects.length ? '#eff6ff' : 'white',
-                      color: formData.subjects.length === availableSubjects.length ? '#2563eb' : '#64748b',
+                      color: formData.subjects.length === availableSubjects.length ? '#2563eb' : 'var(--text-muted)',
                       fontWeight: 700,
                       fontSize: '0.85rem',
                       cursor: 'pointer',
@@ -455,7 +455,7 @@ const Register = () => {
                           borderRadius: '20px',
                           border: selected ? '2px solid #10b981' : '2px solid #e2e8f0',
                           background: selected ? '#f0fdf4' : 'white',
-                          color: selected ? '#059669' : '#64748b',
+                          color: selected ? '#059669' : 'var(--text-muted)',
                           fontWeight: 600,
                           fontSize: '0.85rem',
                           cursor: 'pointer',
@@ -519,9 +519,9 @@ const Register = () => {
 
           {/* Divider */}
           <div style={{ display: 'flex', alignItems: 'center', margin: '1.5rem 0', gap: '1rem' }}>
-            <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }} />
-            <span style={{ color: '#94a3b8', fontSize: '0.85rem', fontWeight: 500 }}>or continue with</span>
-            <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }} />
+            <div style={{ flex: 1, height: '1px', background: 'var(--border-light)' }} />
+            <span style={{ color: 'var(--text-light)', fontSize: '0.85rem', fontWeight: 500 }}>or continue with</span>
+            <div style={{ flex: 1, height: '1px', background: 'var(--border-light)' }} />
           </div>
 
           {/* Google Sign Up */}
@@ -534,9 +534,9 @@ const Register = () => {
               gap: '0.75rem',
               width: '100%',
               padding: '0.875rem',
-              background: 'white',
-              color: '#374151',
-              border: '2px solid #e2e8f0',
+              background: 'var(--bg-primary)',
+              color: 'var(--text-primary)',
+              border: '2px solid var(--border-light)',
               borderRadius: '12px',
               textDecoration: 'none',
               fontSize: '0.95rem',
@@ -544,12 +544,12 @@ const Register = () => {
               transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#f8fafc';
+              e.currentTarget.style.background = 'var(--bg-secondary)';
               e.currentTarget.style.borderColor = '#cbd5e1';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'white';
-              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.background = 'var(--bg-primary)';
+              e.currentTarget.style.borderColor = 'var(--border-light)';
             }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24">
@@ -562,7 +562,7 @@ const Register = () => {
           </a>
 
           {/* Login Link */}
-          <p style={{ textAlign: 'center', marginTop: '1.5rem', color: '#64748b', fontSize: '0.95rem' }}>
+          <p style={{ textAlign: 'center', marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
             Already have an account?{' '}
             <Link
               to="/login"

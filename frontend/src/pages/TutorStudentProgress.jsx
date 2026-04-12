@@ -78,7 +78,7 @@ const TutorStudentProgress = () => {
       'D': { bg: '#fee2e2', color: '#991b1b' },
       'F': { bg: '#fee2e2', color: '#991b1b' }
     };
-    return styles[grade] || { bg: '#f1f5f9', color: '#475569' };
+    return styles[grade] || { bg: '#f1f5f9', color: 'var(--text-secondary)' };
   };
 
   if (loading) {
@@ -94,7 +94,7 @@ const TutorStudentProgress = () => {
         alignItems: 'center',
         gap: '0.5rem',
         fontSize: '0.9rem',
-        color: '#64748b'
+        color: 'var(--text-muted)'
       }}>
         <span
           onClick={handleBackToClasses}
@@ -124,7 +124,7 @@ const TutorStudentProgress = () => {
         {selectedStudent && (
           <>
             <span>›</span>
-            <span style={{ color: '#0f172a', fontWeight: 600 }}>{selectedStudent.name}</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{selectedStudent.name}</span>
           </>
         )}
       </div>
@@ -134,7 +134,7 @@ const TutorStudentProgress = () => {
         <h2 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: 0,
           display: 'flex',
           alignItems: 'center',
@@ -144,7 +144,7 @@ const TutorStudentProgress = () => {
             selectedClass ? `Class ${selectedClass} Students` :
               'Student Progress by Class'}
         </h2>
-        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           {selectedStudent ? 'View detailed performance records' :
             selectedClass ? 'Select a student to view their progress' :
               'Select a class to view enrolled students'}
@@ -163,14 +163,14 @@ const TutorStudentProgress = () => {
               gridColumn: '1 / -1',
               textAlign: 'center',
               padding: '4rem 2rem',
-              backgroundColor: 'white',
+              backgroundColor: 'var(--bg-primary)',
               borderRadius: '16px',
               boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-              border: '1px solid #e2e8f0'
+              border: '1px solid var(--border-light)'
             }}>
               <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>▣</div>
-              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Students Found</h3>
-              <p style={{ color: '#64748b' }}>No students found in your classes</p>
+              <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Students Found</h3>
+              <p style={{ color: 'var(--text-muted)' }}>No students found in your classes</p>
             </div>
           ) : (
             Object.entries(classesByLevel)
@@ -180,14 +180,14 @@ const TutorStudentProgress = () => {
                   key={className}
                   onClick={() => setSelectedClass(className)}
                   style={{
-                    backgroundColor: 'white',
+                    backgroundColor: 'var(--bg-primary)',
                     padding: '2rem',
                     borderRadius: '16px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease',
                     textAlign: 'center',
-                    border: '2px solid #e2e8f0'
+                    border: '2px solid var(--border-light)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-4px)';
@@ -196,7 +196,7 @@ const TutorStudentProgress = () => {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.borderColor = '#e2e8f0';
+                    e.currentTarget.style.borderColor = 'var(--border-light)';
                     e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
                   }}
                 >
@@ -214,10 +214,10 @@ const TutorStudentProgress = () => {
                   }}>
                     ▣
                   </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                     Class {className}
                   </h3>
-                  <p style={{ color: '#64748b', fontSize: '1rem', margin: 0 }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '1rem', margin: 0 }}>
                     {students.length} student{students.length !== 1 ? 's' : ''}
                   </p>
                   <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
@@ -239,20 +239,20 @@ const TutorStudentProgress = () => {
               key={student._id}
               onClick={() => handleStudentSelect(student)}
               style={{
-                backgroundColor: 'white',
+                backgroundColor: 'var(--bg-primary)',
                 padding: '1.25rem',
                 borderRadius: '12px',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                border: '2px solid #e2e8f0'
+                border: '2px solid var(--border-light)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = '#10b981';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.borderColor = 'var(--border-light)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
@@ -272,10 +272,10 @@ const TutorStudentProgress = () => {
                   {student.name.charAt(0).toUpperCase()}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <h4 style={{ margin: '0 0 0.25rem 0', color: '#0f172a', fontSize: '1rem', fontWeight: 600 }}>
+                  <h4 style={{ margin: '0 0 0.25rem 0', color: 'var(--text-primary)', fontSize: '1rem', fontWeight: 600 }}>
                     {student.name}
                   </h4>
-                  <p style={{ margin: 0, color: '#64748b', fontSize: '0.85rem' }}>{student.email}</p>
+                  <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.85rem' }}>{student.email}</p>
                 </div>
                 <div style={{ color: '#10b981', fontSize: '1.2rem' }}>→</div>
               </div>
@@ -285,19 +285,19 @@ const TutorStudentProgress = () => {
       ) : (
         /* Performance Details View */
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           overflow: 'hidden'
         }}>
           {performances.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
               <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>△</div>
-              <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+              <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
                 No Performance Records
               </h3>
-              <p style={{ color: '#64748b' }}>
+              <p style={{ color: 'var(--text-muted)' }}>
                 {selectedStudent.name} hasn't added any school exam results yet.
               </p>
             </div>
@@ -319,14 +319,14 @@ const TutorStudentProgress = () => {
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr style={{ background: '#f8fafc' }}>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Subject</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Exam Type</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Marks</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>%</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Grade</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Date</th>
-                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Term</th>
+                    <tr style={{ background: 'var(--bg-secondary)' }}>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Subject</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Exam Type</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Marks</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>%</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Grade</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Date</th>
+                      <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Term</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -339,15 +339,15 @@ const TutorStudentProgress = () => {
                           onMouseEnter={(e) => e.currentTarget.style.background = '#f0fdf4'}
                           onMouseLeave={(e) => e.currentTarget.style.background = index % 2 === 0 ? 'white' : '#f8fafc'}
                         >
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>{performance.subject}</td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.examType}</td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
-                            <span style={{ fontWeight: 600, color: '#0f172a' }}>{performance.obtainedMarks}</span>/{performance.totalMarks}
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>{performance.subject}</td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{performance.examType}</td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>
+                            <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{performance.obtainedMarks}</span>/{performance.totalMarks}
                           </td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>
                             {performance.percentage.toFixed(1)}%
                           </td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                             <span style={{
                               background: gradeStyle.bg,
                               color: gradeStyle.color,
@@ -359,10 +359,10 @@ const TutorStudentProgress = () => {
                               {performance.grade}
                             </span>
                           </td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                             {new Date(performance.examDate).toLocaleDateString()}
                           </td>
-                          <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.term}</td>
+                          <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{performance.term}</td>
                         </tr>
                       );
                     })}

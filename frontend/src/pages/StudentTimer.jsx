@@ -283,7 +283,7 @@ const StudentTimer = () => {
         display: 'flex',
         gap: '0.5rem',
         marginBottom: '2rem',
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '0.5rem',
         borderRadius: '16px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)'
@@ -296,7 +296,7 @@ const StudentTimer = () => {
               flex: 1,
               padding: '1rem',
               background: activeTab === tab.id ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'transparent',
-              color: activeTab === tab.id ? 'white' : '#64748b',
+              color: activeTab === tab.id ? 'white' : 'var(--text-muted)',
               border: 'none',
               borderRadius: '12px',
               cursor: 'pointer',
@@ -319,11 +319,11 @@ const StudentTimer = () => {
       {/* Timer Tab */}
       {activeTab === 'timer' && (
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2.5rem',
           borderRadius: '24px',
           boxShadow: '0 10px 40px rgba(0, 0, 0, 0.08)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           textAlign: 'center'
         }}>
           {/* Timer Circle */}
@@ -351,7 +351,7 @@ const StudentTimer = () => {
                 cy="120"
                 r="105"
                 fill="none"
-                stroke="#f1f5f9"
+                stroke="var(--border-light)"
                 strokeWidth="14"
               />
               {/* Progress arc */}
@@ -386,7 +386,7 @@ const StudentTimer = () => {
               <div style={{
                 fontSize: '3.5rem',
                 fontWeight: 800,
-                color: timerActive ? '#10b981' : '#0f172a',
+                color: timerActive ? '#10b981' : 'var(--text-primary)',
                 fontFamily: "'JetBrains Mono', monospace",
                 letterSpacing: '-0.02em',
                 transition: 'color 0.3s ease'
@@ -394,7 +394,7 @@ const StudentTimer = () => {
                 {formatTime(timerTime)}
               </div>
               <div style={{ 
-                color: timerActive ? '#10b981' : '#64748b', 
+                color: timerActive ? '#10b981' : 'var(--text-muted)', 
                 fontSize: '0.95rem', 
                 marginTop: '0.5rem',
                 fontWeight: 600,
@@ -432,9 +432,9 @@ const StudentTimer = () => {
                     padding: '0.75rem 1.25rem',
                     background: timerMinutes === preset.minutes 
                       ? `linear-gradient(135deg, ${preset.color}, ${preset.color}dd)`
-                      : '#f8fafc',
-                    color: timerMinutes === preset.minutes ? 'white' : '#64748b',
-                    border: `2px solid ${timerMinutes === preset.minutes ? preset.color : '#e2e8f0'}`,
+                      : 'var(--bg-secondary)',
+                    color: timerMinutes === preset.minutes ? 'white' : 'var(--text-muted)',
+                    border: `2px solid ${timerMinutes === preset.minutes ? preset.color : 'var(--border-light)'}`,
                     borderRadius: '12px',
                     cursor: 'pointer',
                     fontWeight: 700,
@@ -458,7 +458,7 @@ const StudentTimer = () => {
               alignItems: 'center',
               marginBottom: '2rem',
               padding: '1.5rem',
-              background: '#f8fafc',
+              background: 'var(--bg-secondary)',
               borderRadius: '16px'
             }}>
               <div style={{ textAlign: 'center' }}>
@@ -466,7 +466,7 @@ const StudentTimer = () => {
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   fontWeight: 700, 
-                  color: '#475569', 
+                  color: 'var(--text-secondary)', 
                   fontSize: '0.8rem',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
@@ -486,7 +486,7 @@ const StudentTimer = () => {
                   style={{
                     padding: '1rem',
                     borderRadius: '12px',
-                    border: '2px solid #e2e8f0',
+                    border: '2px solid var(--border-light)',
                     width: '90px',
                     textAlign: 'center',
                     fontSize: '1.5rem',
@@ -495,7 +495,7 @@ const StudentTimer = () => {
                     transition: 'border-color 0.2s ease'
                   }}
                   onFocus={(e) => e.target.style.borderColor = '#10b981'}
-                  onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+                  onBlur={(e) => e.target.style.borderColor = 'var(--border-light)'}
                 />
               </div>
               <span style={{ 
@@ -509,7 +509,7 @@ const StudentTimer = () => {
                   display: 'block', 
                   marginBottom: '0.5rem', 
                   fontWeight: 700, 
-                  color: '#475569', 
+                  color: 'var(--text-secondary)', 
                   fontSize: '0.8rem',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
@@ -529,7 +529,7 @@ const StudentTimer = () => {
                   style={{
                     padding: '1rem',
                     borderRadius: '12px',
-                    border: '2px solid #e2e8f0',
+                    border: '2px solid var(--border-light)',
                     width: '90px',
                     textAlign: 'center',
                     fontSize: '1.5rem',
@@ -538,7 +538,7 @@ const StudentTimer = () => {
                     transition: 'border-color 0.2s ease'
                   }}
                   onFocus={(e) => e.target.style.borderColor = '#10b981'}
-                  onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+                  onBlur={(e) => e.target.style.borderColor = 'var(--border-light)'}
                 />
               </div>
             </div>
@@ -604,8 +604,8 @@ const StudentTimer = () => {
               style={{
                 padding: '1rem 2rem',
                 background: 'transparent',
-                color: '#64748b',
-                border: '2px solid #e2e8f0',
+                color: 'var(--text-muted)',
+                border: '2px solid var(--border-light)',
                 borderRadius: '14px',
                 cursor: 'pointer',
                 fontWeight: 600,
@@ -617,10 +617,10 @@ const StudentTimer = () => {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = '#94a3b8';
-                e.currentTarget.style.color = '#475569';
+                e.currentTarget.style.color = 'var(--text-secondary)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.borderColor = 'var(--border-light)';
                 e.currentTarget.style.color = '#64748b';
               }}
             >
@@ -634,11 +634,11 @@ const StudentTimer = () => {
       {/* Stopwatch Tab */}
       {activeTab === 'stopwatch' && (
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2.5rem',
           borderRadius: '24px',
           boxShadow: '0 10px 40px rgba(0, 0, 0, 0.08)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           textAlign: 'center'
         }}>
           {/* Stopwatch Display */}
@@ -650,7 +650,7 @@ const StudentTimer = () => {
             background: stopwatchActive
               ? 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)'
               : 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-            border: `4px solid ${stopwatchActive ? '#10b981' : '#e2e8f0'}`,
+            border: `4px solid ${stopwatchActive ? '#10b981' : 'var(--border-light)'}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -674,14 +674,14 @@ const StudentTimer = () => {
             <div style={{
               fontSize: '3rem',
               fontWeight: 800,
-              color: stopwatchActive ? '#10b981' : '#0f172a',
+              color: stopwatchActive ? '#10b981' : 'var(--text-primary)',
               fontFamily: "'JetBrains Mono', monospace",
               letterSpacing: '-0.02em'
             }}>
               {formatTimeDetailed(stopwatchTime)}
             </div>
             <div style={{ 
-              color: stopwatchActive ? '#10b981' : '#64748b', 
+              color: stopwatchActive ? '#10b981' : 'var(--text-muted)', 
               fontSize: '0.95rem', 
               marginTop: '0.5rem',
               fontWeight: 600,
@@ -762,8 +762,8 @@ const StudentTimer = () => {
               style={{
                 padding: '1rem 2rem',
                 background: 'transparent',
-                color: '#64748b',
-                border: '2px solid #e2e8f0',
+                color: 'var(--text-muted)',
+                border: '2px solid var(--border-light)',
                 borderRadius: '14px',
                 cursor: 'pointer',
                 fontWeight: 600,
@@ -775,10 +775,10 @@ const StudentTimer = () => {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = '#94a3b8';
-                e.currentTarget.style.color = '#475569';
+                e.currentTarget.style.color = 'var(--text-secondary)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                e.currentTarget.style.borderColor = 'var(--border-light)';
                 e.currentTarget.style.color = '#64748b';
               }}
             >
@@ -790,7 +790,7 @@ const StudentTimer = () => {
           {/* Laps */}
           {laps.length > 0 && (
             <div style={{
-              background: '#f8fafc',
+              background: 'var(--bg-secondary)',
               borderRadius: '16px',
               padding: '1rem',
               maxHeight: '200px',
@@ -798,7 +798,7 @@ const StudentTimer = () => {
             }}>
               <h4 style={{ 
                 margin: '0 0 0.75rem', 
-                color: '#475569', 
+                color: 'var(--text-secondary)', 
                 fontSize: '0.9rem',
                 fontWeight: 700,
                 display: 'flex',
@@ -814,14 +814,14 @@ const StudentTimer = () => {
                     display: 'flex',
                     justifyContent: 'space-between',
                     padding: '0.5rem 0.75rem',
-                    background: 'white',
+                    background: 'var(--bg-primary)',
                     borderRadius: '8px',
                     marginBottom: '0.5rem',
                     fontSize: '0.9rem'
                   }}
                 >
-                  <span style={{ color: '#64748b', fontWeight: 500 }}>Lap {index + 1}</span>
-                  <span style={{ fontWeight: 700, color: '#0f172a', fontFamily: 'monospace' }}>
+                  <span style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Lap {index + 1}</span>
+                  <span style={{ fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'monospace' }}>
                     {formatTimeDetailed(lap)}
                   </span>
                 </div>
@@ -852,7 +852,7 @@ const StudentTimer = () => {
             display: 'flex',
             width: '36px',
             height: '36px',
-            background: 'white',
+            background: 'var(--bg-primary)',
             borderRadius: '10px',
             alignItems: 'center',
             justifyContent: 'center',
@@ -876,7 +876,7 @@ const StudentTimer = () => {
                 alignItems: 'center',
                 gap: '0.75rem',
                 padding: '0.75rem 1rem',
-                background: 'white',
+                background: 'var(--bg-primary)',
                 borderRadius: '12px',
                 color: '#b45309',
                 fontSize: '0.95rem',

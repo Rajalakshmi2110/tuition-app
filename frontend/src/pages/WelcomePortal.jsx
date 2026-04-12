@@ -69,7 +69,7 @@ const WelcomePortal = () => {
           <h1 style={{
             fontSize: '2.5rem',
             fontWeight: 800,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '0.75rem',
             letterSpacing: '-0.02em'
           }}>
@@ -85,7 +85,7 @@ const WelcomePortal = () => {
           </h1>
           
           <p style={{
-            color: '#64748b',
+            color: 'var(--text-muted)',
             fontSize: '1.1rem',
             marginBottom: '2.5rem',
             lineHeight: 1.6
@@ -129,13 +129,13 @@ const WelcomePortal = () => {
               style={{
                 display: 'block',
                 padding: '1rem 2rem',
-                background: 'white',
-                color: '#0f172a',
+                background: 'var(--bg-primary)',
+                color: 'var(--text-primary)',
                 textDecoration: 'none',
                 borderRadius: '12px',
                 fontWeight: 600,
                 fontSize: '1rem',
-                border: '2px solid #e2e8f0',
+                border: '2px solid var(--border-light)',
                 transition: 'all 0.3s ease'
               }}
               onMouseEnter={(e) => {
@@ -153,7 +153,7 @@ const WelcomePortal = () => {
 
           <p style={{
             marginTop: '2rem',
-            color: '#94a3b8',
+            color: 'var(--text-light)',
             fontSize: '0.9rem'
           }}>
             By continuing, you agree to our Terms of Service

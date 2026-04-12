@@ -169,7 +169,7 @@ const AdminClasses = () => {
                       border: '2px solid var(--border-light)', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.8rem'
                     }}
                       onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = '#94a3b8'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-light)'; }}
                     >Delete</button>
                   </div>
                 </div>

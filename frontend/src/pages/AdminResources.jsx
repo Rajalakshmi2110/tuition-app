@@ -157,7 +157,7 @@ const AdminResources = () => {
                             fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'
                           }}
                             onMouseEnter={e => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.borderColor = '#fecaca'; e.currentTarget.style.color = '#dc2626'; }}
-                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = '#94a3b8'; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-light)'; }}
                           >Delete</button>
                         </div>
                       </td>

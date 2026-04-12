@@ -126,7 +126,7 @@ const StudentPayments = () => {
       verified: { bg: '#dcfce7', color: '#166534', border: '#22c55e' },
       rejected: { bg: '#fee2e2', color: '#991b1b', border: '#ef4444' }
     };
-    return styles[status] || { bg: '#f1f5f9', color: '#475569', border: '#94a3b8' };
+    return styles[status] || { bg: '#f1f5f9', color: 'var(--text-secondary)', border: '#94a3b8' };
   };
 
   const getStatusIcon = (status) => {
@@ -138,7 +138,7 @@ const StudentPayments = () => {
     width: '100%',
     padding: '0.75rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -152,7 +152,7 @@ const StudentPayments = () => {
         <h2 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: 0,
           display: 'flex',
           alignItems: 'center',
@@ -160,22 +160,22 @@ const StudentPayments = () => {
         }}>
           Fee Payments
         </h2>
-        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Submit and track your fee payments
         </p>
       </div>
 
       {/* Payment Instructions */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-primary)',
         padding: '2rem',
         borderRadius: '16px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0',
+        border: '1px solid var(--border-light)',
         marginBottom: '1.5rem'
       }}>
         <h3 style={{
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           marginBottom: '1.5rem',
           display: 'flex',
           alignItems: 'center',
@@ -192,7 +192,7 @@ const StudentPayments = () => {
         }}>
           <div>
             <ol style={{
-              color: '#475569',
+              color: 'var(--text-secondary)',
               lineHeight: '2',
               paddingLeft: '1.5rem',
               margin: 0
@@ -208,7 +208,7 @@ const StudentPayments = () => {
             {qrCode ? (
               <div style={{
                 padding: '1rem',
-                background: 'white',
+                background: 'var(--bg-primary)',
                 borderRadius: '16px',
                 border: '3px solid #10b981',
                 display: 'inline-block',
@@ -224,13 +224,13 @@ const StudentPayments = () => {
               <div style={{
                 width: '200px',
                 height: '200px',
-                backgroundColor: '#f8fafc',
+                backgroundColor: 'var(--bg-secondary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: '16px',
                 border: '2px dashed #e2e8f0',
-                color: '#64748b'
+                color: 'var(--text-muted)'
               }}>
                 Loading QR Code...
               </div>
@@ -266,15 +266,15 @@ const StudentPayments = () => {
       {/* Payment Form */}
       {showPaymentForm && (
         <div style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: '2rem',
           borderRadius: '16px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           marginBottom: '1.5rem'
         }}>
           <h3 style={{
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1.5rem',
             fontWeight: 700
           }}>
@@ -304,7 +304,7 @@ const StudentPayments = () => {
               marginBottom: '1rem'
             }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Amount (₹)</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Amount (₹)</label>
                 <input
                   type="number"
                   name="amount"
@@ -315,7 +315,7 @@ const StudentPayments = () => {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Month</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Month</label>
                 <input
                   type="month"
                   name="month"
@@ -328,7 +328,7 @@ const StudentPayments = () => {
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Transaction ID</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Transaction ID</label>
               <input
                 type="text"
                 name="transactionId"
@@ -340,7 +340,7 @@ const StudentPayments = () => {
             </div>
 
             <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Payment Screenshot</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Payment Screenshot</label>
               <input
                 type="file"
                 accept="image/*"
@@ -349,16 +349,16 @@ const StudentPayments = () => {
                 style={{
                   ...inputStyle,
                   padding: '0.5rem',
-                  background: '#f8fafc'
+                  background: 'var(--bg-secondary)'
                 }}
               />
-              <p style={{ fontSize: '0.8rem', color: '#64748b', marginTop: '0.25rem' }}>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
                 {resubmitPayment ? 'Upload new screenshot (optional)' : 'Upload screenshot of payment confirmation'}
               </p>
             </div>
 
             <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Notes (optional)</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Notes (optional)</label>
               <textarea
                 name="notes"
                 value={formData.notes}
@@ -393,14 +393,14 @@ const StudentPayments = () => {
 
       {/* Payment History */}
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-primary)',
         padding: '2rem',
         borderRadius: '16px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0'
+        border: '1px solid var(--border-light)'
       }}>
         <h3 style={{
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           marginBottom: '1.5rem',
           fontWeight: 700,
           display: 'flex',
@@ -413,10 +413,10 @@ const StudentPayments = () => {
         {payments.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem' }}>
             <div style={{ fontSize: '4rem', marginBottom: '1rem', color: '#10b981' }}>◈</div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>
               No Payments Yet
             </h3>
-            <p style={{ color: '#64748b' }}>Submit your first payment using the form above</p>
+            <p style={{ color: 'var(--text-muted)' }}>Submit your first payment using the form above</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gap: '1rem' }}>
@@ -440,7 +440,7 @@ const StudentPayments = () => {
                     flexWrap: 'wrap',
                     gap: '0.5rem'
                   }}>
-                    <h4 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+                    <h4 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>
                       {getStatusIcon(payment.status)} Payment for {payment.month}
                     </h4>
                     <span style={{
@@ -461,7 +461,7 @@ const StudentPayments = () => {
                     gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
                     gap: '0.75rem',
                     fontSize: '0.9rem',
-                    color: '#475569'
+                    color: 'var(--text-secondary)'
                   }}>
                     <div><strong>Amount:</strong> ₹{payment.amount}</div>
                     <div><strong>Submitted:</strong> {new Date(payment.submittedAt).toLocaleDateString()}</div>
@@ -525,7 +525,7 @@ const StudentPayments = () => {
                         style={{
                           padding: '0.5rem 1rem',
                           background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-                          color: '#0f172a',
+                          color: 'var(--text-primary)',
                           border: 'none',
                           borderRadius: '8px',
                           cursor: 'pointer',

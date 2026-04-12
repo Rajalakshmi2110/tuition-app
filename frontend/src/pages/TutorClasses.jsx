@@ -125,7 +125,7 @@ const TutorClasses = () => {
           borderRadius: '50%',
           animation: 'spin 0.8s linear infinite'
         }} />
-        <p style={{ color: '#64748b', fontWeight: 500 }}>Loading sessions...</p>
+        <p style={{ color: 'var(--text-muted)', fontWeight: 500 }}>Loading sessions...</p>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
@@ -138,7 +138,7 @@ const TutorClasses = () => {
         <h1 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: '0 0 0.25rem 0',
           display: 'flex',
           alignItems: 'center',
@@ -150,7 +150,7 @@ const TutorClasses = () => {
           </svg>
           My Sessions
         </h1>
-        <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
           Manage your assigned teaching sessions
         </p>
       </div>
@@ -163,10 +163,10 @@ const TutorClasses = () => {
       }}>
         <div style={{
           flex: 1,
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '1.25rem',
           borderRadius: '12px',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -186,30 +186,30 @@ const TutorClasses = () => {
               </svg>
             </div>
             <div>
-              <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Total Sessions</p>
-              <p style={{ color: '#0f172a', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{classes.length}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>Total Sessions</p>
+              <p style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{classes.length}</p>
             </div>
           </div>
         </div>
         
         <div style={{
           flex: 1,
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '1.25rem',
           borderRadius: '12px',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <div style={{
               width: '40px',
               height: '40px',
-              background: '#f8fafc',
+              background: 'var(--bg-secondary)',
               borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#64748b'
+              color: 'var(--text-muted)'
             }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -219,8 +219,8 @@ const TutorClasses = () => {
               </svg>
             </div>
             <div>
-              <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Total Students</p>
-              <p style={{ color: '#0f172a', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{totalStudents}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>Total Students</p>
+              <p style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{totalStudents}</p>
             </div>
           </div>
         </div>
@@ -229,11 +229,11 @@ const TutorClasses = () => {
       {/* Sessions List */}
       {classes.length === 0 ? (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '4rem 2rem',
           borderRadius: '16px',
           textAlign: 'center',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <div style={{
             width: '64px',
@@ -251,10 +251,10 @@ const TutorClasses = () => {
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
           </div>
-          <h3 style={{ color: '#0f172a', fontWeight: 600, marginBottom: '0.5rem' }}>
+          <h3 style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '0.5rem' }}>
             No Sessions Assigned
           </h3>
-          <p style={{ color: '#64748b', maxWidth: '360px', margin: '0 auto', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', maxWidth: '360px', margin: '0 auto', fontSize: '0.9rem' }}>
             You haven't been assigned to any sessions yet. Please contact the admin.
           </p>
         </div>
@@ -266,7 +266,7 @@ const TutorClasses = () => {
             gap: '0.5rem',
             marginBottom: '1rem'
           }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
               Assigned Sessions
             </h2>
             <span style={{
@@ -290,9 +290,9 @@ const TutorClasses = () => {
               <div
                 key={cls._id}
                 style={{
-                  background: 'white',
+                  background: 'var(--bg-primary)',
                   borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   overflow: 'hidden',
                   transition: 'all 0.2s ease'
                 }}
@@ -301,7 +301,7 @@ const TutorClasses = () => {
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(16, 185, 129, 0.1)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
@@ -326,7 +326,7 @@ const TutorClasses = () => {
                       <h3 style={{
                         fontSize: '1.05rem',
                         fontWeight: 600,
-                        color: '#0f172a',
+                        color: 'var(--text-primary)',
                         margin: '0 0 0.5rem 0'
                       }}>
                         {cls.name}
@@ -334,8 +334,8 @@ const TutorClasses = () => {
                       
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
                         <span style={{
-                          background: '#f1f5f9',
-                          color: '#475569',
+                          background: 'var(--bg-secondary)',
+                          color: 'var(--text-secondary)',
                           padding: '0.25rem 0.5rem',
                           borderRadius: '4px',
                           fontSize: '0.75rem',
@@ -344,8 +344,8 @@ const TutorClasses = () => {
                           {cls.subject}
                         </span>
                         <span style={{
-                          background: '#f1f5f9',
-                          color: '#475569',
+                          background: 'var(--bg-secondary)',
+                          color: 'var(--text-secondary)',
                           padding: '0.25rem 0.5rem',
                           borderRadius: '4px',
                           fontSize: '0.75rem',
@@ -362,8 +362,8 @@ const TutorClasses = () => {
                         </span>
                         {cls.classLevel && (
                           <span style={{
-                            background: '#f1f5f9',
-                            color: '#475569',
+                            background: 'var(--bg-secondary)',
+                            color: 'var(--text-secondary)',
                             padding: '0.25rem 0.5rem',
                             borderRadius: '4px',
                             fontSize: '0.75rem',
@@ -378,7 +378,7 @@ const TutorClasses = () => {
                   
                   {/* Students Section */}
                   <div style={{
-                    background: '#f8fafc',
+                    background: 'var(--bg-secondary)',
                     padding: '0.875rem',
                     borderRadius: '8px',
                     marginBottom: '1rem'
@@ -386,7 +386,7 @@ const TutorClasses = () => {
                     <p style={{
                       margin: '0 0 0.5rem 0',
                       fontWeight: 600,
-                      color: '#374151',
+                      color: 'var(--text-primary)',
                       fontSize: '0.8rem',
                       display: 'flex',
                       alignItems: 'center',
@@ -423,7 +423,7 @@ const TutorClasses = () => {
                         {cls.students.length > 5 && (
                           <span style={{
                             backgroundColor: '#e2e8f0',
-                            color: '#64748b',
+                            color: 'var(--text-muted)',
                             padding: '0.25rem 0.5rem',
                             borderRadius: '4px',
                             fontSize: '0.75rem',
@@ -434,7 +434,7 @@ const TutorClasses = () => {
                         )}
                       </div>
                     ) : (
-                      <p style={{ color: '#94a3b8', fontSize: '0.8rem', margin: 0 }}>
+                      <p style={{ color: 'var(--text-light)', fontSize: '0.8rem', margin: 0 }}>
                         No students enrolled yet
                       </p>
                     )}
@@ -446,7 +446,7 @@ const TutorClasses = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: 'white',
+                      background: 'var(--bg-primary)',
                       color: '#10b981',
                       border: '2px solid #10b981',
                       borderRadius: '8px',
@@ -464,7 +464,7 @@ const TutorClasses = () => {
                       e.currentTarget.style.color = 'white';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'white';
+                      e.currentTarget.style.background = 'var(--bg-primary)';
                       e.currentTarget.style.color = '#10b981';
                     }}
                   >

@@ -81,7 +81,7 @@ const ClassManagePage = () => {
     width: '100%',
     padding: '0.875rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -106,7 +106,7 @@ const ClassManagePage = () => {
           borderRadius: '50%',
           animation: 'spin 1s linear infinite'
         }} />
-        <p style={{ color: '#64748b', marginTop: '1rem' }}>Loading class details...</p>
+        <p style={{ color: 'var(--text-muted)', marginTop: '1rem' }}>Loading class details...</p>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
     );
@@ -115,7 +115,7 @@ const ClassManagePage = () => {
   if (!classInfo) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem' }}>
-        <p style={{ color: '#64748b' }}>Class not found</p>
+        <p style={{ color: 'var(--text-muted)' }}>Class not found</p>
       </div>
     );
   }
@@ -132,7 +132,7 @@ const ClassManagePage = () => {
             gap: '0.5rem',
             background: 'transparent',
             border: 'none',
-            color: '#64748b',
+            color: 'var(--text-muted)',
             cursor: 'pointer',
             fontSize: '0.9rem',
             fontWeight: 500,
@@ -149,7 +149,7 @@ const ClassManagePage = () => {
         <h1 style={{
           fontSize: '1.75rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: 0,
           display: 'flex',
           alignItems: 'center',
@@ -202,16 +202,16 @@ const ClassManagePage = () => {
 
       {/* Schedule Section */}
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '1.5rem',
         borderRadius: '16px',
         marginBottom: '1rem',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0'
+        border: '1px solid var(--border-light)'
       }}>
         <h3 style={{
           margin: '0 0 1rem',
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',
@@ -278,16 +278,16 @@ const ClassManagePage = () => {
 
       {/* Resource Upload Section */}
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '1.5rem',
         borderRadius: '16px',
         marginBottom: '1rem',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0'
+        border: '1px solid var(--border-light)'
       }}>
         <h3 style={{
           margin: '0 0 1rem',
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',
@@ -354,16 +354,16 @@ const ClassManagePage = () => {
 
       {/* Announcement Section */}
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '1.5rem',
         borderRadius: '16px',
         marginBottom: '1rem',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0'
+        border: '1px solid var(--border-light)'
       }}>
         <h3 style={{
           margin: '0 0 1rem',
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           fontWeight: 700,
           display: 'flex',
           alignItems: 'center',

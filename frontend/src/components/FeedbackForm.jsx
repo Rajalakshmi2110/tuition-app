@@ -31,7 +31,7 @@ const FeedbackForm = ({ onClose }) => {
     width: '100%',
     padding: '0.875rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -54,7 +54,7 @@ const FeedbackForm = ({ onClose }) => {
       padding: '1rem'
     }}>
       <div style={{
-        backgroundColor: 'white',
+        backgroundColor: 'var(--bg-primary)',
         padding: '2rem',
         borderRadius: '20px',
         width: '500px',
@@ -79,20 +79,20 @@ const FeedbackForm = ({ onClose }) => {
           alignItems: 'center',
           marginBottom: '1.5rem'
         }}>
-          <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>
+          <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>
             Share Your Experience
           </h3>
           <button
             onClick={onClose}
             style={{
-              background: '#f1f5f9',
+              background: 'var(--bg-secondary)',
               border: 'none',
               width: '32px',
               height: '32px',
               borderRadius: '8px',
               cursor: 'pointer',
               fontSize: '1.2rem',
-              color: '#64748b',
+              color: 'var(--text-muted)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -108,7 +108,7 @@ const FeedbackForm = ({ onClose }) => {
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: 600,
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontSize: '0.9rem'
             }}>
               Your Name
@@ -128,7 +128,7 @@ const FeedbackForm = ({ onClose }) => {
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: 600,
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontSize: '0.9rem'
             }}>
               I am a
@@ -136,7 +136,7 @@ const FeedbackForm = ({ onClose }) => {
             <select
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              style={{ ...inputStyle, background: 'white' }}
+              style={{ ...inputStyle, background: 'var(--bg-primary)' }}
             >
               <option value="Student">Student</option>
               <option value="Parent">Parent</option>
@@ -149,7 +149,7 @@ const FeedbackForm = ({ onClose }) => {
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: 600,
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontSize: '0.9rem'
             }}>
               Rating
@@ -181,7 +181,7 @@ const FeedbackForm = ({ onClose }) => {
               display: 'block',
               marginBottom: '0.5rem',
               fontWeight: 600,
-              color: '#374151',
+              color: 'var(--text-primary)',
               fontSize: '0.9rem'
             }}>
               Your Message
@@ -204,9 +204,9 @@ const FeedbackForm = ({ onClose }) => {
                 flex: 1,
                 padding: '0.875rem',
                 borderRadius: '10px',
-                border: '2px solid #e2e8f0',
-                background: 'white',
-                color: '#64748b',
+                border: '2px solid var(--border-light)',
+                background: 'var(--bg-primary)',
+                color: 'var(--text-muted)',
                 cursor: 'pointer',
                 fontWeight: 600
               }}

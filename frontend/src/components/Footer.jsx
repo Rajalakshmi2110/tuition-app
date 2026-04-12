@@ -50,7 +50,7 @@ const Footer = () => {
               </span>
             </div>
             <p style={{
-              color: '#94a3b8',
+              color: 'var(--text-light)',
               fontSize: '0.85rem',
               lineHeight: 1.6,
               margin: 0
@@ -70,8 +70,8 @@ const Footer = () => {
               Contact Us
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <a href="https://mail.google.com/mail/?view=cm&to=rajalakshmirathinam7@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: '#94a3b8', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseEnter={(e) => e.target.style.color = '#10b981'} onMouseLeave={(e) => e.target.style.color = '#94a3b8'}>rajalakshmirathinam7@gmail.com</a>
-              <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>+91 8220297989</span>
+              <a href="https://mail.google.com/mail/?view=cm&to=rajalakshmirathinam7@gmail.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-light)', fontSize: '0.85rem', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseEnter={(e) => e.target.style.color = '#10b981'} onMouseLeave={(e) => e.target.style.color = '#94a3b8'}>rajalakshmirathinam7@gmail.com</a>
+              <span style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>+91 8220297989</span>
               <span style={{ color: '#10b981', fontSize: '0.85rem', fontWeight: 500 }}>Mon – Sat, 9 AM – 7 PM</span>
             </div>
           </div>
@@ -86,7 +86,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p style={{
-          color: '#64748b',
+          color: 'var(--text-muted)',
           fontSize: '0.8rem',
           margin: 0,
           textAlign: 'center'

@@ -63,7 +63,7 @@ const PerformancePrediction = () => {
 
   if (Object.keys(predictions).length === 0) {
     return (
-      <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+      <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'var(--bg-primary)', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#10b981' }}>△</div>
         <h3 style={{ color: '#20205c', marginBottom: '1rem' }}>No Performance Data</h3>
         <p style={{ color: '#666' }}>Complete some assignments to see your performance predictions!</p>
@@ -92,7 +92,7 @@ const PerformancePrediction = () => {
               borderRadius: '8px',
               border: '2px solid #3b82f6',
               fontSize: '1rem',
-              backgroundColor: 'white'
+              backgroundColor: 'var(--bg-primary)'
             }}
           >
             {subjects.map(subject => (
@@ -105,7 +105,7 @@ const PerformancePrediction = () => {
       {/* Prediction Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
         {/* Next Score Prediction */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#3b82f6' }}>◎</div>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#3b82f6', margin: '0' }}>
             {currentPrediction?.nextAssignmentScore || 'N/A'}%
@@ -117,7 +117,7 @@ const PerformancePrediction = () => {
         </div>
 
         {/* Performance Trend */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
             {getTrendIcon(currentPrediction?.trend)}
           </div>
@@ -128,7 +128,7 @@ const PerformancePrediction = () => {
         </div>
 
         {/* Risk Level */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>⚠️</div>
           <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: getRiskColor(currentPrediction?.riskLevel), margin: '0', textTransform: 'capitalize' }}>
             {currentPrediction?.riskLevel || 'Unknown'} Risk
@@ -137,7 +137,7 @@ const PerformancePrediction = () => {
         </div>
 
         {/* Average Score */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📊</div>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#10b981', margin: '0' }}>
             {currentPrediction?.historicalData?.overallAverage || 'N/A'}%
@@ -149,7 +149,7 @@ const PerformancePrediction = () => {
         </div>
 
         {/* Achievement Score */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#f59e0b' }}>☆</div>
           <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#f59e0b', margin: '0' }}>
             {currentPrediction?.historicalData?.achievementScore || 0}
@@ -158,7 +158,7 @@ const PerformancePrediction = () => {
         </div>
 
         {/* Motivation Level */}
-        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '1.5rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', textAlign: 'center' }}>
           <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#8b5cf6' }}>◆</div>
           <h3 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#8b5cf6', margin: '0' }}>
             {currentPrediction?.motivationLevel || 'Unknown'}
@@ -168,7 +168,7 @@ const PerformancePrediction = () => {
       </div>
 
       {/* AI Recommendations */}
-      <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem' }}>
+      <div style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: '2rem' }}>
         <h3 style={{ color: '#20205c', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           🤖 AI Recommendations
         </h3>
@@ -178,7 +178,7 @@ const PerformancePrediction = () => {
             {currentPrediction.recommendations.map((recommendation, index) => (
               <div key={index} style={{
                 padding: '1rem',
-                backgroundColor: '#f8fafc',
+                backgroundColor: 'var(--bg-secondary)',
                 borderLeft: '4px solid #3b82f6',
                 borderRadius: '6px'
               }}>
@@ -193,10 +193,10 @@ const PerformancePrediction = () => {
 
       {/* Performance History Chart */}
       {currentPrediction?.historicalData?.recentScores && (
-        <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <div style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
           <h3 style={{ color: '#20205c', marginBottom: '1.5rem' }}>📈 Recent Performance</h3>
           
-          <div style={{ display: 'flex', alignItems: 'end', gap: '0.5rem', height: '200px', padding: '1rem', backgroundColor: '#f8fafc', borderRadius: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'end', gap: '0.5rem', height: '200px', padding: '1rem', backgroundColor: 'var(--bg-secondary)', borderRadius: '8px' }}>
             {currentPrediction.historicalData.recentScores.map((score, index) => (
               <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
                 <div style={{

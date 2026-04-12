@@ -640,7 +640,7 @@ const Home = () => {
                         padding: '0.4rem 0.8rem',
                         borderRadius: '9999px',
                         fontSize: '0.8rem',
-                        color: '#e2e8f0',
+                        color: 'var(--border-light)',
                         fontWeight: 500
                       }}
                     >

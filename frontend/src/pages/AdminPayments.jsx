@@ -451,7 +451,7 @@ const AdminPayments = () => {
                   onClick={() => setSelectedPayment(null)}
                   style={{
                     padding: '0.75rem 1.5rem',
-                    backgroundColor: '#f1f5f9',
+                    backgroundColor: 'var(--bg-secondary)',
                     color: 'var(--text-muted)',
                     border: 'none',
                     borderRadius: '10px',

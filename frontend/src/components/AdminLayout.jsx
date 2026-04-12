@@ -107,9 +107,9 @@ const AdminLayout = ({ children }) => {
           }}
           aria-label="Open menu"
         >
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
         </button>
       )}
 
@@ -158,7 +158,7 @@ const AdminLayout = ({ children }) => {
               <button
                 onClick={() => isMobile ? setMobileOpen(false) : setIsMinimized(!isMinimized)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#94a3b8',
+                  background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: 'var(--text-light)',
                   width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.2s ease', fontSize: '0.9rem'
@@ -188,7 +188,7 @@ const AdminLayout = ({ children }) => {
                   justifyContent: collapsed ? 'center' : 'flex-start'
                 }}
                   onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'white'; } }}
-                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94a3b8'; } }}
+                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-light)'; } }}
                   title={collapsed ? item.label : ''}
                 >
                   <span style={{ width: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{item.icon}</span>
@@ -232,13 +232,13 @@ const AdminLayout = ({ children }) => {
           }}>
             <Link to="/" style={{
               display: 'flex', alignItems: 'center', gap: '0.75rem',
-              padding: '0.75rem', borderRadius: '10px', color: '#94a3b8',
+              padding: '0.75rem', borderRadius: '10px', color: 'var(--text-light)',
               textDecoration: 'none', transition: 'all 0.2s ease',
               justifyContent: (isMinimized && !isMobile) ? 'center' : 'flex-start',
               marginBottom: '0.5rem'
             }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'white'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94a3b8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-light)'; }}
             >
               <span style={{ width: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -359,14 +359,14 @@ const AdminLayout = ({ children }) => {
           zIndex: 1100, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             width: '500px', maxWidth: '90%',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
             animation: 'slideUp 0.3s ease'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700 }}>Post Global Announcement</h3>
-              <button onClick={() => setShowAnnouncementForm(false)} style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f1f5f9', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#64748b' }}>×</button>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>Post Global Announcement</h3>
+              <button onClick={() => setShowAnnouncementForm(false)} style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', fontSize: '1rem', color: 'var(--text-muted)' }}>×</button>
             </div>
             <form onSubmit={async (e) => {
               e.preventDefault();
@@ -379,24 +379,24 @@ const AdminLayout = ({ children }) => {
               } catch (err) {}
             }}>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Title</label>
-                <input type="text" placeholder="Announcement Title" value={announcementTitle} onChange={(e) => setAnnouncementTitle(e.target.value)} required style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' }} />
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Title</label>
+                <input type="text" placeholder="Announcement Title" value={announcementTitle} onChange={(e) => setAnnouncementTitle(e.target.value)} required style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' }} />
               </div>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Type</label>
-                <select value={announcementType} onChange={(e) => setAnnouncementType(e.target.value)} style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', background: 'white' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Type</label>
+                <select value={announcementType} onChange={(e) => setAnnouncementType(e.target.value)} style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', background: 'var(--bg-primary)' }}>
                   <option value="general">General</option>
                   <option value="holiday">Holiday</option>
                   <option value="urgent">Urgent</option>
                 </select>
               </div>
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Message</label>
-                <textarea placeholder="Announcement Message" value={announcementMessage} onChange={(e) => setAnnouncementMessage(e.target.value)} required rows="4" style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }} />
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Message</label>
+                <textarea placeholder="Announcement Message" value={announcementMessage} onChange={(e) => setAnnouncementMessage(e.target.value)} required rows="4" style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }} />
               </div>
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <button type="submit" style={{ flex: 1, padding: '0.875rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Post Announcement</button>
-                <button type="button" onClick={() => setShowAnnouncementForm(false)} style={{ flex: 1, padding: '0.875rem', background: '#f1f5f9', color: '#64748b', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Cancel</button>
+                <button type="button" onClick={() => setShowAnnouncementForm(false)} style={{ flex: 1, padding: '0.875rem', background: 'var(--bg-secondary)', color: 'var(--text-muted)', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Cancel</button>
               </div>
             </form>
           </div>

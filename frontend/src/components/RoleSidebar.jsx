@@ -76,9 +76,9 @@ const RoleSidebar = ({ role, onWidthChange }) => {
           }}
           aria-label="Open menu"
         >
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '18px', height: '2px', background: 'white', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
+          <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--bg-primary)', borderRadius: '2px' }} />
         </button>
       )}
 
@@ -132,7 +132,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
               <button
                 onClick={() => isMobile ? setMobileOpen(false) : setIsCollapsed(!isCollapsed)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#94a3b8',
+                  background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: 'var(--text-light)',
                   width: '32px', height: '32px', borderRadius: '8px', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.2s ease', fontSize: '0.9rem'
@@ -184,7 +184,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
                   onMouseLeave={(e) => {
                     if (!isActive) {
                       e.currentTarget.style.background = 'transparent';
-                      e.currentTarget.style.color = '#94a3b8';
+                      e.currentTarget.style.color = 'var(--text-light)';
                       e.currentTarget.style.transform = 'translateX(0)';
                     }
                   }}
@@ -218,12 +218,12 @@ const RoleSidebar = ({ role, onWidthChange }) => {
           }}>
             <Link to="/" style={{
               display: 'flex', alignItems: 'center', gap: '0.75rem',
-              padding: '0.75rem', borderRadius: '10px', color: '#94a3b8',
+              padding: '0.75rem', borderRadius: '10px', color: 'var(--text-light)',
               textDecoration: 'none', transition: 'all 0.2s ease',
               justifyContent: (isCollapsed && !isMobile) ? 'center' : 'flex-start'
             }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'white'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#94a3b8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-light)'; }}
               title={(isCollapsed && !isMobile) ? 'Back to Home' : ''}
             >
               <span style={{ width: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

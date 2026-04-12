@@ -77,14 +77,14 @@ const StudentPerformance = () => {
       'D': { bg: '#fee2e2', color: '#991b1b' },
       'F': { bg: '#fee2e2', color: '#991b1b' }
     };
-    return colors[grade] || { bg: '#f1f5f9', color: '#475569' };
+    return colors[grade] || { bg: '#f1f5f9', color: 'var(--text-secondary)' };
   };
 
   const inputStyle = {
     width: '100%',
     padding: '0.75rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -110,7 +110,7 @@ const StudentPerformance = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -123,7 +123,7 @@ const StudentPerformance = () => {
             </svg>
             My Performance Records
           </h2>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Track your academic progress
           </p>
         </div>
@@ -168,17 +168,17 @@ const StudentPerformance = () => {
       {/* Form */}
       {showForm && (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '2rem',
           borderRadius: '16px',
           marginBottom: '2rem',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <h3 style={{
             fontSize: '1.1rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             marginBottom: '1.5rem'
           }}>
             Add Performance Record
@@ -284,23 +284,23 @@ const StudentPerformance = () => {
 
       {/* Table */}
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         borderRadius: '16px',
         boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-        border: '1px solid #e2e8f0',
+        border: '1px solid var(--border-light)',
         overflow: 'hidden'
       }}>
         <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '700px' }}>
           <thead>
-            <tr style={{ background: '#f8fafc' }}>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Subject</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Exam</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Marks</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>%</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Grade</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Date</th>
-              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid #e2e8f0' }}>Term</th>
+            <tr style={{ background: 'var(--bg-secondary)' }}>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Subject</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Exam</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Marks</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>%</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Grade</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Date</th>
+              <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', borderBottom: '1px solid var(--border-light)' }}>Term</th>
             </tr>
           </thead>
           <tbody>
@@ -316,15 +316,15 @@ const StudentPerformance = () => {
                   onMouseEnter={(e) => e.currentTarget.style.background = '#f0fdf4'}
                   onMouseLeave={(e) => e.currentTarget.style.background = index % 2 === 0 ? 'white' : '#f8fafc'}
                 >
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>{performance.subject}</td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.examType}</td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>
-                    <span style={{ fontWeight: 600, color: '#0f172a' }}>{performance.obtainedMarks}</span>/{performance.totalMarks}
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>{performance.subject}</td>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{performance.examType}</td>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>
+                    <span style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{performance.obtainedMarks}</span>/{performance.totalMarks}
                   </td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', fontWeight: 600, color: '#0f172a' }}>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', fontWeight: 600, color: 'var(--text-primary)' }}>
                     {performance.percentage.toFixed(1)}%
                   </td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)' }}>
                     <span style={{
                       background: gradeStyle.bg,
                       color: gradeStyle.color,
@@ -336,10 +336,10 @@ const StudentPerformance = () => {
                       {performance.grade}
                     </span>
                   </td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#64748b', fontSize: '0.9rem' }}>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                     {new Date(performance.examDate).toLocaleDateString()}
                   </td>
-                  <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', color: '#475569' }}>{performance.term}</td>
+                  <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}>{performance.term}</td>
                 </tr>
               );
             })}

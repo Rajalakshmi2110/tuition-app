@@ -121,7 +121,7 @@ const TutorPerformanceAnalytics = () => {
         <h2 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: 0,
           display: 'flex',
           alignItems: 'center',
@@ -134,7 +134,7 @@ const TutorPerformanceAnalytics = () => {
           </svg>
           Class Performance Analytics
         </h2>
-        <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
           Monitor student performance across your classes
         </p>
       </div>
@@ -152,11 +152,11 @@ const TutorPerformanceAnalytics = () => {
               <div
                 key={index}
                 style={{
-                  background: 'white',
+                  background: 'var(--bg-primary)',
                   padding: '1.5rem',
                   borderRadius: '16px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   transition: 'all 0.3s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -167,15 +167,15 @@ const TutorPerformanceAnalytics = () => {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
-                    <p style={{ color: '#64748b', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: '0 0 0.5rem 0', fontWeight: 500 }}>
                       {card.label}
                     </p>
-                    <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
+                    <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
                       {card.value}
                     </h3>
                   </div>
@@ -206,11 +206,11 @@ const TutorPerformanceAnalytics = () => {
                 key={classData.classId}
                 onClick={() => fetchClassDetails(classData.classId)}
                 style={{
-                  backgroundColor: 'white',
+                  backgroundColor: 'var(--bg-primary)',
                   padding: '1.5rem',
                   borderRadius: '16px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease'
                 }}
@@ -222,7 +222,7 @@ const TutorPerformanceAnalytics = () => {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -241,12 +241,12 @@ const TutorPerformanceAnalytics = () => {
                         <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                       </svg>
                     </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>{classData.className}</h3>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>{classData.className}</h3>
                   </div>
                   <span style={{
                     fontSize: '0.8rem',
-                    color: '#64748b',
-                    backgroundColor: '#f1f5f9',
+                    color: 'var(--text-muted)',
+                    backgroundColor: 'var(--bg-secondary)',
                     padding: '0.25rem 0.75rem',
                     borderRadius: '20px'
                   }}>
@@ -255,7 +255,7 @@ const TutorPerformanceAnalytics = () => {
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-                  <div style={{ textAlign: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
+                  <div style={{ textAlign: 'center', padding: '0.75rem', background: 'var(--bg-secondary)', borderRadius: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem' }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -265,9 +265,9 @@ const TutorPerformanceAnalytics = () => {
                       </svg>
                       <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#3b82f6' }}>{classData.totalStudents}</span>
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Students</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Students</div>
                   </div>
-                  <div style={{ textAlign: 'center', padding: '0.75rem', background: '#f8fafc', borderRadius: '10px' }}>
+                  <div style={{ textAlign: 'center', padding: '0.75rem', background: 'var(--bg-secondary)', borderRadius: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem' }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -276,13 +276,13 @@ const TutorPerformanceAnalytics = () => {
                       </svg>
                       <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#10b981' }}>{classData.classAverage}%</span>
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Average</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Average</div>
                   </div>
                 </div>
 
                 {/* Performance Distribution */}
                 <div style={{ marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.5rem', color: '#374151' }}>Distribution:</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.5rem', color: 'var(--text-primary)' }}>Distribution:</div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', fontSize: '0.75rem' }}>
                     {[
                       { key: 'excellent', label: 'Excellent' },
@@ -351,8 +351,8 @@ const TutorPerformanceAnalytics = () => {
             style={{
               padding: '0.625rem 1.25rem',
               backgroundColor: 'transparent',
-              color: '#64748b',
-              border: '2px solid #e2e8f0',
+              color: 'var(--text-muted)',
+              border: '2px solid var(--border-light)',
               borderRadius: '10px',
               cursor: 'pointer',
               marginBottom: '2rem',
@@ -367,7 +367,7 @@ const TutorPerformanceAnalytics = () => {
               e.currentTarget.style.color = '#10b981';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.borderColor = 'var(--border-light)';
               e.currentTarget.style.color = '#64748b';
             }}
           >
@@ -382,14 +382,14 @@ const TutorPerformanceAnalytics = () => {
             <>
               {/* Class Header */}
               <div style={{
-                backgroundColor: 'white',
+                backgroundColor: 'var(--bg-primary)',
                 padding: '2rem',
                 borderRadius: '16px',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-light)',
                 marginBottom: '2rem'
               }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: '0 0 1.5rem 0' }}>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 1.5rem 0' }}>
                   {classDetails.classInfo.name} - {classDetails.classInfo.subject}
                 </h3>
 
@@ -403,11 +403,11 @@ const TutorPerformanceAnalytics = () => {
                     <div key={idx} style={{
                       textAlign: 'center',
                       padding: '1rem',
-                      background: '#f8fafc',
+                      background: 'var(--bg-secondary)',
                       borderRadius: '10px'
                     }}>
                       <div style={{ fontSize: '1.5rem', fontWeight: 700, color: item.color }}>{item.value}</div>
-                      <div style={{ color: '#64748b', fontSize: '0.85rem' }}>{item.label}</div>
+                      <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{item.label}</div>
                     </div>
                   ))}
                 </div>
@@ -415,50 +415,50 @@ const TutorPerformanceAnalytics = () => {
 
               {/* Student Table */}
               <div style={{
-                backgroundColor: 'white',
+                backgroundColor: 'var(--bg-primary)',
                 padding: '1.5rem',
                 borderRadius: '16px',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #e2e8f0',
+                border: '1px solid var(--border-light)',
                 overflow: 'hidden'
               }}>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', marginBottom: '1rem' }}>
+                <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem' }}>
                   Individual Student Performance
                 </h4>
 
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
-                      <tr style={{ backgroundColor: '#f8fafc' }}>
-                        <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Student</th>
-                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Average</th>
-                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Exams</th>
-                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Assignments</th>
-                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Trend</th>
-                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: '#64748b', borderBottom: '1px solid #e2e8f0' }}>Status</th>
+                      <tr style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                        <th style={{ padding: '1rem', textAlign: 'left', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Student</th>
+                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Average</th>
+                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Exams</th>
+                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Assignments</th>
+                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Trend</th>
+                        <th style={{ padding: '1rem', textAlign: 'center', fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}>Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {classDetails.studentAnalytics.map((student, index) => (
                         <tr
                           key={index}
-                          style={{ borderBottom: '1px solid #f1f5f9' }}
+                          style={{ borderBottom: '1px solid var(--border-light)' }}
                           onMouseEnter={(e) => e.currentTarget.style.background = '#f0fdf4'}
                           onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                         >
                           <td style={{ padding: '1rem' }}>
-                            <div style={{ fontWeight: 600, color: '#0f172a' }}>{student.name}</div>
-                            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Class {student.className}</div>
+                            <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{student.name}</div>
+                            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Class {student.className}</div>
                           </td>
                           <td style={{ padding: '1rem', textAlign: 'center', fontWeight: 700, color: getStatusColor(student.status) }}>
                             {student.avgScore}%
                           </td>
-                          <td style={{ padding: '1rem', textAlign: 'center', color: '#475569' }}>{student.totalExams}</td>
-                          <td style={{ padding: '1rem', textAlign: 'center', color: '#475569' }}>{student.totalAssignments}</td>
+                          <td style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>{student.totalExams}</td>
+                          <td style={{ padding: '1rem', textAlign: 'center', color: 'var(--text-secondary)' }}>{student.totalAssignments}</td>
                           <td style={{ padding: '1rem', textAlign: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
                               {getTrendIcon(student.trend)}
-                              <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'capitalize' }}>{student.trend}</span>
+                              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'capitalize' }}>{student.trend}</span>
                             </div>
                           </td>
                           <td style={{ padding: '1rem', textAlign: 'center' }}>

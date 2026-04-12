@@ -18,7 +18,7 @@ const LoadingSpinner = ({ message = 'Loading...', fullPage = false }) => {
         borderRadius: '50%',
         animation: 'spin 0.8s linear infinite'
       }} />
-      <p style={{ color: '#64748b', fontSize: '0.95rem', fontWeight: 500, margin: 0 }}>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 500, margin: 0 }}>
         {message}
       </p>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>

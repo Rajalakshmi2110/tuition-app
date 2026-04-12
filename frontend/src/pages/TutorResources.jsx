@@ -103,7 +103,7 @@ const TutorResources = () => {
 
   const inputStyle = {
     width: '100%', padding: '0.75rem 1rem', fontSize: '0.95rem',
-    border: '2px solid #e2e8f0', borderRadius: '10px', outline: 'none',
+    border: '2px solid var(--border-light)', borderRadius: '10px', outline: 'none',
     transition: 'all 0.2s ease', boxSizing: 'border-box'
   };
 
@@ -122,10 +122,10 @@ const TutorResources = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             📖 Study Materials
           </h2>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Upload study materials organized by class, subject & category
           </p>
         </div>
@@ -143,20 +143,20 @@ const TutorResources = () => {
       {resources.length > 0 && (
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <select value={filterLevel} onChange={e => setFilterLevel(e.target.value)} style={{
-            padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+            padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
           }}>
             <option value="all">All Classes</option>
             {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
           </select>
           <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} style={{
-            padding: '0.6rem 1rem', border: '2px solid #e2e8f0', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: '#0f172a', cursor: 'pointer', outline: 'none'
+            padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
           }}>
             <option value="all">All Subjects</option>
             {subjects.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
-          <span style={{ color: '#64748b', fontSize: '0.9rem', fontWeight: 500 }}>
+          <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>
             {filtered.length} resource{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
@@ -164,38 +164,38 @@ const TutorResources = () => {
 
       {/* Content */}
       {resources.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
-          <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
-          <p style={{ color: '#64748b' }}>Upload your first study material to get started</p>
+          <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
+          <p style={{ color: 'var(--text-muted)' }}>Upload your first study material to get started</p>
         </div>
       ) : filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'white', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-          <p style={{ color: '#64748b' }}>No resources match the selected filters</p>
+        <div style={{ textAlign: 'center', padding: '3rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', border: '1px solid var(--border-light)' }}>
+          <p style={{ color: 'var(--text-muted)' }}>No resources match the selected filters</p>
         </div>
       ) : (
         Object.entries(grouped).sort().map(([groupKey, categories]) => (
-          <div key={groupKey} style={{ marginBottom: '2rem', background: 'white', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', overflow: 'hidden' }}>
+          <div key={groupKey} style={{ marginBottom: '2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
             <div style={{ padding: '1rem 1.5rem', background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', borderBottom: '1px solid #bbf7d0' }}>
               <h3 style={{ margin: 0, color: '#166534', fontSize: '1.1rem', fontWeight: 700 }}>{groupKey}</h3>
             </div>
             <div style={{ padding: '1.5rem' }}>
               {CATEGORIES.filter(cat => categories[cat]).map(cat => (
                 <div key={cat} style={{ marginBottom: '1.5rem' }}>
-                  <h4 style={{ margin: '0 0 0.75rem', color: '#374151', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h4 style={{ margin: '0 0 0.75rem', color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     {categoryIcon(cat)} {cat} <span style={{ background: '#dcfce7', color: '#166534', fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '10px', fontWeight: 600, marginLeft: '0.25rem' }}>{categories[cat].length}</span>
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {categories[cat].map(r => (
                       <div key={r._id} style={{
                         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        padding: '0.75rem 1rem', background: '#f8fafc', borderRadius: '10px',
-                        border: '1px solid #e2e8f0', gap: '1rem', flexWrap: 'wrap'
+                        padding: '0.75rem 1rem', background: 'var(--bg-secondary)', borderRadius: '10px',
+                        border: '1px solid var(--border-light)', gap: '1rem', flexWrap: 'wrap'
                       }}>
                         <div style={{ flex: 1, minWidth: '200px' }}>
-                          <span style={{ fontWeight: 600, color: '#0f172a', fontSize: '0.95rem' }}>{r.title}</span>
-                          {r.description && <p style={{ margin: '0.25rem 0 0', color: '#64748b', fontSize: '0.85rem' }}>{r.description}</p>}
-                          <p style={{ margin: '0.25rem 0 0', color: '#94a3b8', fontSize: '0.8rem' }}>
+                          <span style={{ fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.95rem' }}>{r.title}</span>
+                          {r.description && <p style={{ margin: '0.25rem 0 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>{r.description}</p>}
+                          <p style={{ margin: '0.25rem 0 0', color: 'var(--text-light)', fontSize: '0.8rem' }}>
                             {new Date(r.createdAt).toLocaleDateString()}
                           </p>
                         </div>
@@ -234,33 +234,33 @@ const TutorResources = () => {
           display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem'
         }}>
           <div style={{
-            backgroundColor: 'white', padding: '2rem', borderRadius: '20px',
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
             maxWidth: '500px', width: '100%', maxHeight: '85vh', overflow: 'auto',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, fontSize: '1.25rem' }}>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.25rem' }}>
                 {editingResource ? '✏️ Edit Resource' : '📖 Upload Study Material'}
               </h3>
               <button onClick={resetForm} style={{
-                background: '#f1f5f9', border: 'none', width: '32px', height: '32px',
-                borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', color: '#64748b',
+                background: 'var(--bg-secondary)', border: 'none', width: '32px', height: '32px',
+                borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--text-muted)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>×</button>
             </div>
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div>
-                <label htmlFor="res-class" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Class Level *</label>
-                <select id="res-class" value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
+                <label htmlFor="res-class" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Class Level *</label>
+                <select id="res-class" value={formData.classLevel} onChange={e => setFormData({ ...formData, classLevel: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                   <option value="">Select class...</option>
                   {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
                 </select>
               </div>
 
               <div>
-                <label htmlFor="res-subject" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Subject *</label>
-                <select id="res-subject" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required style={{ ...inputStyle, background: 'white' }} disabled={!formData.classLevel}>
+                <label htmlFor="res-subject" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Subject *</label>
+                <select id="res-subject" value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }} disabled={!formData.classLevel}>
                   <option value="">{formData.classLevel ? 'Select subject...' : 'Select class first'}</option>
                   {(SUBJECTS_BY_CLASS[formData.classLevel] || []).map(s => (
                     <option key={s} value={s}>{s}</option>
@@ -269,34 +269,34 @@ const TutorResources = () => {
               </div>
 
               <div>
-                <label htmlFor="res-category" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Category *</label>
-                <select id="res-category" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} required style={{ ...inputStyle, background: 'white' }}>
+                <label htmlFor="res-category" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Category *</label>
+                <select id="res-category" value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                   <option value="">Select category...</option>
                   {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
 
               <div>
-                <label htmlFor="res-title" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Title *</label>
+                <label htmlFor="res-title" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Title *</label>
                 <input id="res-title" type="text" value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Chapter 5 - Light" required style={inputStyle} />
               </div>
 
               <div>
-                <label htmlFor="res-desc" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>Description (Optional)</label>
+                <label htmlFor="res-desc" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Description (Optional)</label>
                 <input id="res-desc" type="text" value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Brief description..." style={inputStyle} />
               </div>
 
               {!editingResource && (
                 <div>
-                  <label htmlFor="res-file" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#374151', fontSize: '0.9rem' }}>File *</label>
-                  <input id="res-file" type="file" onChange={e => setFormData({ ...formData, file: e.target.files[0] })} required style={{ ...inputStyle, padding: '0.5rem', background: '#f8fafc' }} />
+                  <label htmlFor="res-file" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>File *</label>
+                  <input id="res-file" type="file" onChange={e => setFormData({ ...formData, file: e.target.files[0] })} required style={{ ...inputStyle, padding: '0.5rem', background: 'var(--bg-secondary)' }} />
                 </div>
               )}
 
               <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
                 <button type="button" onClick={resetForm} style={{
-                  flex: 1, padding: '0.875rem', borderRadius: '10px', border: '2px solid #e2e8f0',
-                  background: 'white', color: '#64748b', cursor: 'pointer', fontWeight: 600
+                  flex: 1, padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)',
+                  background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600
                 }}>Cancel</button>
                 <button type="submit" disabled={uploading} style={{
                   flex: 1, padding: '0.875rem', borderRadius: '10px', border: 'none',

@@ -24,11 +24,11 @@ const FileItem = ({ file, onDelete }) => {
 
   return (
     <div style={{
-      border: '1px solid #e2e8f0',
+      border: '1px solid var(--border-light)',
       padding: '1.25rem',
       marginBottom: '1rem',
       borderRadius: '12px',
-      backgroundColor: 'white',
+      backgroundColor: 'var(--bg-primary)',
       transition: 'all 0.2s ease'
     }}>
       <div style={{
@@ -62,7 +62,7 @@ const FileItem = ({ file, onDelete }) => {
               margin: 0,
               fontSize: '1rem',
               fontWeight: 600,
-              color: '#0f172a'
+              color: 'var(--text-primary)'
             }}>
               {file.title}
             </h4>
@@ -89,8 +89,8 @@ const FileItem = ({ file, onDelete }) => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.25rem',
-              backgroundColor: '#f1f5f9',
-              color: '#475569',
+              backgroundColor: 'var(--bg-secondary)',
+              color: 'var(--text-secondary)',
               padding: '0.25rem 0.75rem',
               borderRadius: '20px',
               fontSize: '0.8rem',
@@ -177,7 +177,7 @@ const FileItem = ({ file, onDelete }) => {
               padding: '0.5rem 1rem',
               background: 'transparent',
               color: isDeleting ? '#94a3b8' : '#94a3b8',
-              border: '2px solid #e2e8f0',
+              border: '2px solid var(--border-light)',
               borderRadius: '8px',
               cursor: isDeleting ? 'not-allowed' : 'pointer',
               fontWeight: 600,
@@ -196,8 +196,8 @@ const FileItem = ({ file, onDelete }) => {
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.color = '#94a3b8';
-              e.currentTarget.style.borderColor = '#e2e8f0';
+              e.currentTarget.style.color = 'var(--text-light)';
+              e.currentTarget.style.borderColor = 'var(--border-light)';
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

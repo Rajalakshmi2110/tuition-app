@@ -78,7 +78,7 @@ const TutorAssignments = () => {
     width: '100%',
     padding: '0.75rem 1rem',
     fontSize: '0.95rem',
-    border: '2px solid #e2e8f0',
+    border: '2px solid var(--border-light)',
     borderRadius: '10px',
     outline: 'none',
     transition: 'all 0.2s ease',
@@ -104,7 +104,7 @@ const TutorAssignments = () => {
           <h2 style={{
             fontSize: '1.5rem',
             fontWeight: 700,
-            color: '#0f172a',
+            color: 'var(--text-primary)',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -119,7 +119,7 @@ const TutorAssignments = () => {
             </svg>
             My Assignments
           </h2>
-          <p style={{ color: '#64748b', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Create and manage assignments for your students
           </p>
         </div>
@@ -128,7 +128,7 @@ const TutorAssignments = () => {
           style={{
             padding: '0.875rem 1.5rem',
             background: showForm ? '#f1f5f9' : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-            color: showForm ? '#64748b' : 'white',
+            color: showForm ? 'var(--text-muted)' : 'white',
             border: showForm ? '2px solid #e2e8f0' : 'none',
             borderRadius: '10px',
             cursor: 'pointer',
@@ -164,14 +164,14 @@ const TutorAssignments = () => {
       {/* Create Form */}
       {showForm && (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '2rem',
           borderRadius: '16px',
           marginBottom: '2rem',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
-          <h3 style={{ margin: '0 0 1.5rem', color: '#0f172a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <h3 style={{ margin: '0 0 1.5rem', color: 'var(--text-primary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
@@ -201,7 +201,7 @@ const TutorAssignments = () => {
             />
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
-              <select name="className" value={formData.className} onChange={e => setFormData({ ...formData, className: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'white' }}>
+              <select name="className" value={formData.className} onChange={e => setFormData({ ...formData, className: e.target.value, subject: '' })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                 <option value="">Select Class</option>
                 {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
               </select>
@@ -221,7 +221,7 @@ const TutorAssignments = () => {
                 style={inputStyle}
               />
 
-              <select name="difficulty" value={formData.difficulty} onChange={handleChange} style={{ ...inputStyle, background: 'white' }}>
+              <select name="difficulty" value={formData.difficulty} onChange={handleChange} style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                 {difficulties.map(diff => (
                   <option key={diff} value={diff}>{diff}</option>
                 ))}
@@ -277,12 +277,12 @@ const TutorAssignments = () => {
       <div style={{ display: 'grid', gap: '1rem' }}>
         {assignments.length === 0 ? (
           <div style={{
-            background: 'white',
+            background: 'var(--bg-primary)',
             padding: '4rem 2rem',
             borderRadius: '16px',
             textAlign: 'center',
             boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-light)'
           }}>
             <div style={{
               width: '80px',
@@ -301,25 +301,25 @@ const TutorAssignments = () => {
                 <line x1="16" y1="17" x2="8" y2="17"></line>
               </svg>
             </div>
-            <h3 style={{ color: '#0f172a', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments Yet</h3>
-            <p style={{ color: '#64748b' }}>Create your first assignment to get started!</p>
+            <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Assignments Yet</h3>
+            <p style={{ color: 'var(--text-muted)' }}>Create your first assignment to get started!</p>
           </div>
         ) : (
           assignments.map((assignment) => (
             <div
               key={assignment._id}
               style={{
-                background: 'white',
+                background: 'var(--bg-primary)',
                 padding: '1.5rem',
                 borderRadius: '16px',
                 boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
-                border: '1px solid #e2e8f0'
+                border: '1px solid var(--border-light)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '1rem', flexWrap: 'wrap' }}>
                 <div style={{ flex: 1 }}>
-                  <h3 style={{ margin: '0 0 0.5rem 0', color: '#0f172a', fontWeight: 700 }}>{assignment.title}</h3>
-                  <p style={{ color: '#64748b', margin: '0 0 1rem 0', fontSize: '0.9rem' }}>{assignment.description}</p>
+                  <h3 style={{ margin: '0 0 0.5rem 0', color: 'var(--text-primary)', fontWeight: 700 }}>{assignment.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', margin: '0 0 1rem 0', fontSize: '0.9rem' }}>{assignment.description}</p>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                     <span style={{ backgroundColor: '#dbeafe', color: '#1e40af', padding: '0.25rem 0.75rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 500 }}>
                       {assignment.subject}
@@ -381,7 +381,7 @@ const TutorAssignments = () => {
           padding: '1rem'
         }}>
           <div style={{
-            background: 'white',
+            background: 'var(--bg-primary)',
             padding: '2rem',
             borderRadius: '20px',
             maxWidth: '800px',
@@ -391,7 +391,7 @@ const TutorAssignments = () => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: '#0f172a', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                   <polyline points="14 2 14 8 20 8"></polyline>
@@ -403,7 +403,7 @@ const TutorAssignments = () => {
               <button
                 onClick={() => setSelectedAssignment(null)}
                 style={{
-                  background: '#f1f5f9',
+                  background: 'var(--bg-secondary)',
                   border: 'none',
                   width: '32px',
                   height: '32px',
@@ -412,7 +412,7 @@ const TutorAssignments = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#64748b',
+                  color: 'var(--text-muted)',
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
@@ -432,7 +432,7 @@ const TutorAssignments = () => {
             </div>
 
             {submissions.length === 0 ? (
-              <div style={{ padding: '3rem', textAlign: 'center', color: '#64748b' }}>
+              <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
                 <div style={{
                   width: '70px',
                   height: '70px',
@@ -455,17 +455,17 @@ const TutorAssignments = () => {
                 <div
                   key={submission._id}
                   style={{
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--border-light)',
                     borderRadius: '12px',
                     padding: '1.25rem',
                     marginBottom: '1rem',
-                    background: '#f8fafc'
+                    background: 'var(--bg-secondary)'
                   }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '0.75rem' }}>
                     <div>
-                      <strong style={{ color: '#0f172a' }}>{submission.studentId?.name}</strong>
-                      <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                      <strong style={{ color: 'var(--text-primary)' }}>{submission.studentId?.name}</strong>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                         Submitted: {new Date(submission.submittedAt).toLocaleString()}
                         {submission.isLate && <span style={{ color: '#ef4444', marginLeft: '0.5rem', fontWeight: 600 }}>LATE</span>}
                       </div>
@@ -483,14 +483,14 @@ const TutorAssignments = () => {
                   </div>
 
                   <div style={{
-                    background: 'white',
+                    background: 'var(--bg-primary)',
                     padding: '0.75rem',
                     borderRadius: '8px',
                     marginBottom: '0.75rem',
-                    border: '1px solid #e2e8f0'
+                    border: '1px solid var(--border-light)'
                   }}>
-                    <strong style={{ fontSize: '0.85rem', color: '#64748b' }}>Solution:</strong>
-                    <p style={{ margin: '0.25rem 0 0', color: '#374151', fontSize: '0.9rem' }}>{submission.content}</p>
+                    <strong style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Solution:</strong>
+                    <p style={{ margin: '0.25rem 0 0', color: 'var(--text-primary)', fontSize: '0.9rem' }}>{submission.content}</p>
                     {submission.attachments && submission.attachments.length > 0 && (
                       <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                         {submission.attachments.map((att, idx) => (
@@ -525,7 +525,7 @@ const TutorAssignments = () => {
                         style={{
                           padding: '0.5rem 0.75rem',
                           borderRadius: '8px',
-                          border: '2px solid #e2e8f0',
+                          border: '2px solid var(--border-light)',
                           width: '100px'
                         }}
                       />
@@ -537,7 +537,7 @@ const TutorAssignments = () => {
                         style={{
                           padding: '0.5rem 0.75rem',
                           borderRadius: '8px',
-                          border: '2px solid #e2e8f0',
+                          border: '2px solid var(--border-light)',
                           flex: 1,
                           minWidth: '150px'
                         }}

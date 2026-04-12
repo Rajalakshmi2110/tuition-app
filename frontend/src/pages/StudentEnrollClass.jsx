@@ -119,7 +119,7 @@ const StudentEnrollClass = () => {
         <h1 style={{
           fontSize: '1.5rem',
           fontWeight: 700,
-          color: '#0f172a',
+          color: 'var(--text-primary)',
           margin: '0 0 0.25rem 0',
           display: 'flex',
           alignItems: 'center',
@@ -131,7 +131,7 @@ const StudentEnrollClass = () => {
           </svg>
           My Sessions
         </h1>
-        <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '0.9rem' }}>
           View your enrolled classes and available sessions
         </p>
       </div>
@@ -144,10 +144,10 @@ const StudentEnrollClass = () => {
       }}>
         <div style={{
           flex: 1,
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '1.25rem',
           borderRadius: '12px',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -167,30 +167,30 @@ const StudentEnrollClass = () => {
               </svg>
             </div>
             <div>
-              <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Enrolled</p>
-              <p style={{ color: '#0f172a', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{enrolledSessions.length}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>Enrolled</p>
+              <p style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{enrolledSessions.length}</p>
             </div>
           </div>
         </div>
         
         <div style={{
           flex: 1,
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '1.25rem',
           borderRadius: '12px',
-          border: '1px solid #e2e8f0',
+          border: '1px solid var(--border-light)',
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <div style={{
               width: '40px',
               height: '40px',
-              background: '#f8fafc',
+              background: 'var(--bg-secondary)',
               borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#64748b'
+              color: 'var(--text-muted)'
             }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
@@ -198,8 +198,8 @@ const StudentEnrollClass = () => {
               </svg>
             </div>
             <div>
-              <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Available</p>
-              <p style={{ color: '#0f172a', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{availableSessions.length}</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>Available</p>
+              <p style={{ color: 'var(--text-primary)', fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{availableSessions.length}</p>
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ const StudentEnrollClass = () => {
             gap: '0.5rem',
             marginBottom: '1rem'
           }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
               Enrolled Sessions
             </h2>
             <span style={{
@@ -239,7 +239,7 @@ const StudentEnrollClass = () => {
                 key={session._id}
                 onClick={() => setSelectedSession(session)}
                 style={{
-                  background: 'white',
+                  background: 'var(--bg-primary)',
                   borderRadius: '12px',
                   border: '2px solid #10b981',
                   padding: '1.25rem',
@@ -298,7 +298,7 @@ const StudentEnrollClass = () => {
                     <h3 style={{
                       fontSize: '1.05rem',
                       fontWeight: 600,
-                      color: '#0f172a',
+                      color: 'var(--text-primary)',
                       margin: '0 0 0.5rem 0'
                     }}>
                       {session.name}
@@ -306,8 +306,8 @@ const StudentEnrollClass = () => {
                     
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem', marginBottom: '0.75rem' }}>
                       <span style={{
-                        background: '#f1f5f9',
-                        color: '#475569',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
                         padding: '0.25rem 0.5rem',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
@@ -316,8 +316,8 @@ const StudentEnrollClass = () => {
                         {session.subject}
                       </span>
                       <span style={{
-                        background: '#f1f5f9',
-                        color: '#475569',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
                         padding: '0.25rem 0.5rem',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
@@ -334,8 +334,8 @@ const StudentEnrollClass = () => {
                       </span>
                       {session.classLevel && (
                         <span style={{
-                          background: '#f1f5f9',
-                          color: '#475569',
+                          background: 'var(--bg-secondary)',
+                          color: 'var(--text-secondary)',
                           padding: '0.25rem 0.5rem',
                           borderRadius: '4px',
                           fontSize: '0.75rem',
@@ -360,13 +360,13 @@ const StudentEnrollClass = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#64748b',
+                        color: 'var(--text-muted)',
                         fontSize: '0.7rem',
                         fontWeight: 600
                       }}>
                         {session.tutor?.name?.charAt(0) || 'T'}
                       </div>
-                      <span style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                         {session.tutor?.name || 'Tutor'}
                       </span>
                     </div>
@@ -387,12 +387,12 @@ const StudentEnrollClass = () => {
             gap: '0.5rem',
             marginBottom: '1rem'
           }}>
-            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
               Other Sessions
             </h2>
             <span style={{
-              background: '#f1f5f9',
-              color: '#64748b',
+              background: 'var(--bg-secondary)',
+              color: 'var(--text-muted)',
               padding: '0.25rem 0.625rem',
               borderRadius: '6px',
               fontSize: '0.75rem',
@@ -411,9 +411,9 @@ const StudentEnrollClass = () => {
               <div
                 key={session._id}
                 style={{
-                  background: 'white',
+                  background: 'var(--bg-primary)',
                   borderRadius: '12px',
-                  border: '1px solid #e2e8f0',
+                  border: '1px solid var(--border-light)',
                   padding: '1.25rem',
                   transition: 'all 0.2s ease'
                 }}
@@ -422,7 +422,7 @@ const StudentEnrollClass = () => {
                   e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.05)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#e2e8f0';
+                  e.currentTarget.style.borderColor = 'var(--border-light)';
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
@@ -431,12 +431,12 @@ const StudentEnrollClass = () => {
                   <div style={{
                     width: '44px',
                     height: '44px',
-                    background: '#f8fafc',
+                    background: 'var(--bg-secondary)',
                     borderRadius: '10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#94a3b8',
+                    color: 'var(--text-light)',
                     flexShrink: 0
                   }}>
                     <SubjectIcon subject={session.subject} size={22} />
@@ -445,7 +445,7 @@ const StudentEnrollClass = () => {
                     <h3 style={{
                       fontSize: '1.05rem',
                       fontWeight: 600,
-                      color: '#0f172a',
+                      color: 'var(--text-primary)',
                       margin: '0 0 0.5rem 0'
                     }}>
                       {session.name}
@@ -453,8 +453,8 @@ const StudentEnrollClass = () => {
                     
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem', marginBottom: '0.75rem' }}>
                       <span style={{
-                        background: '#f1f5f9',
-                        color: '#475569',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
                         padding: '0.25rem 0.5rem',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
@@ -463,8 +463,8 @@ const StudentEnrollClass = () => {
                         {session.subject}
                       </span>
                       <span style={{
-                        background: '#f1f5f9',
-                        color: '#475569',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
                         padding: '0.25rem 0.5rem',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
@@ -473,8 +473,8 @@ const StudentEnrollClass = () => {
                         Grade {session.classLevel}
                       </span>
                       <span style={{
-                        background: '#f1f5f9',
-                        color: '#475569',
+                        background: 'var(--bg-secondary)',
+                        color: 'var(--text-secondary)',
                         padding: '0.25rem 0.5rem',
                         borderRadius: '4px',
                         fontSize: '0.75rem',
@@ -506,13 +506,13 @@ const StudentEnrollClass = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#64748b',
+                        color: 'var(--text-muted)',
                         fontSize: '0.7rem',
                         fontWeight: 600
                       }}>
                         {session.tutor?.name?.charAt(0) || 'T'}
                       </div>
-                      <span style={{ color: '#64748b', fontSize: '0.8rem' }}>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>
                         {session.tutor?.name || 'Tutor'}
                       </span>
                     </div>
@@ -520,10 +520,10 @@ const StudentEnrollClass = () => {
                     {/* Contact Admin */}
                     <div style={{
                       padding: '0.625rem',
-                      background: '#f8fafc',
+                      background: 'var(--bg-secondary)',
                       borderRadius: '8px',
                       textAlign: 'center',
-                      color: '#64748b',
+                      color: 'var(--text-muted)',
                       fontSize: '0.8rem',
                       fontWeight: 500,
                       display: 'flex',
@@ -548,11 +548,11 @@ const StudentEnrollClass = () => {
       {/* Empty State */}
       {enrolledSessions.length === 0 && availableSessions.length === 0 && (
         <div style={{
-          background: 'white',
+          background: 'var(--bg-primary)',
           padding: '4rem 2rem',
           borderRadius: '16px',
           textAlign: 'center',
-          border: '1px solid #e2e8f0'
+          border: '1px solid var(--border-light)'
         }}>
           <div style={{
             width: '64px',
@@ -570,10 +570,10 @@ const StudentEnrollClass = () => {
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
           </div>
-          <h3 style={{ color: '#0f172a', fontWeight: 600, marginBottom: '0.5rem' }}>
+          <h3 style={{ color: 'var(--text-primary)', fontWeight: 600, marginBottom: '0.5rem' }}>
             No Sessions Available
           </h3>
-          <p style={{ color: '#64748b', maxWidth: '360px', margin: '0 auto', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--text-muted)', maxWidth: '360px', margin: '0 auto', fontSize: '0.9rem' }}>
             There are no sessions available at the moment. Please check back later.
           </p>
         </div>
@@ -600,7 +600,7 @@ const StudentEnrollClass = () => {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: 'white',
+              background: 'var(--bg-primary)',
               borderRadius: '16px',
               width: '100%',
               maxWidth: '440px',
@@ -611,7 +611,7 @@ const StudentEnrollClass = () => {
             {/* Modal Header */}
             <div style={{
               padding: '1.5rem',
-              borderBottom: '1px solid #e2e8f0',
+              borderBottom: '1px solid var(--border-light)',
               display: 'flex',
               alignItems: 'flex-start',
               justifyContent: 'space-between'
@@ -630,10 +630,10 @@ const StudentEnrollClass = () => {
                   <SubjectIcon subject={selectedSession.subject} size={22} />
                 </div>
                 <div>
-                  <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#0f172a', margin: 0 }}>
+                  <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
                     {selectedSession.name}
                   </h2>
-                  <p style={{ color: '#64748b', fontSize: '0.8rem', margin: 0 }}>Session Details</p>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', margin: 0 }}>Session Details</p>
                 </div>
               </div>
               <button
@@ -641,14 +641,14 @@ const StudentEnrollClass = () => {
                 style={{
                   width: '32px',
                   height: '32px',
-                  background: '#f1f5f9',
+                  background: 'var(--bg-secondary)',
                   border: 'none',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#64748b'
+                  color: 'var(--text-muted)'
                 }}
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -667,7 +667,7 @@ const StudentEnrollClass = () => {
                   alignItems: 'center',
                   gap: '0.75rem',
                   padding: '0.875rem',
-                  background: '#f8fafc',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '10px'
                 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -675,8 +675,8 @@ const StudentEnrollClass = () => {
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                   </svg>
                   <div>
-                    <p style={{ color: '#64748b', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Subject</p>
-                    <p style={{ color: '#0f172a', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.subject}</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Subject</p>
+                    <p style={{ color: 'var(--text-primary)', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.subject}</p>
                   </div>
                 </div>
                 
@@ -685,7 +685,7 @@ const StudentEnrollClass = () => {
                   alignItems: 'center',
                   gap: '0.75rem',
                   padding: '0.875rem',
-                  background: '#f8fafc',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '10px'
                 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -693,8 +693,8 @@ const StudentEnrollClass = () => {
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   <div>
-                    <p style={{ color: '#64748b', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Schedule</p>
-                    <p style={{ color: '#0f172a', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.schedule}</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Schedule</p>
+                    <p style={{ color: 'var(--text-primary)', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.schedule}</p>
                   </div>
                 </div>
                 
@@ -703,7 +703,7 @@ const StudentEnrollClass = () => {
                   alignItems: 'center',
                   gap: '0.75rem',
                   padding: '0.875rem',
-                  background: '#f8fafc',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '10px'
                 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -711,8 +711,8 @@ const StudentEnrollClass = () => {
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
                   <div>
-                    <p style={{ color: '#64748b', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Instructor</p>
-                    <p style={{ color: '#0f172a', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.tutor?.name || 'TBA'}</p>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Instructor</p>
+                    <p style={{ color: 'var(--text-primary)', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>{selectedSession.tutor?.name || 'TBA'}</p>
                   </div>
                 </div>
                 
@@ -722,7 +722,7 @@ const StudentEnrollClass = () => {
                     alignItems: 'center',
                     gap: '0.75rem',
                     padding: '0.875rem',
-                    background: '#f8fafc',
+                    background: 'var(--bg-secondary)',
                     borderRadius: '10px'
                   }}>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -730,8 +730,8 @@ const StudentEnrollClass = () => {
                       <line x1="3" y1="9" x2="21" y2="9"></line>
                     </svg>
                     <div>
-                      <p style={{ color: '#64748b', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Grade Level</p>
-                      <p style={{ color: '#0f172a', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>Grade {selectedSession.classLevel}</p>
+                      <p style={{ color: 'var(--text-muted)', fontSize: '0.7rem', margin: 0, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Grade Level</p>
+                      <p style={{ color: 'var(--text-primary)', fontWeight: 600, margin: 0, fontSize: '0.9rem' }}>Grade {selectedSession.classLevel}</p>
                     </div>
                   </div>
                 )}
@@ -743,7 +743,7 @@ const StudentEnrollClass = () => {
                   <h3 style={{
                     fontSize: '0.9rem',
                     fontWeight: 600,
-                    color: '#0f172a',
+                    color: 'var(--text-primary)',
                     margin: '0 0 0.75rem 0',
                     display: 'flex',
                     alignItems: 'center',
@@ -806,7 +806,7 @@ const StudentEnrollClass = () => {
                   <h3 style={{
                     fontSize: '0.9rem',
                     fontWeight: 600,
-                    color: '#0f172a',
+                    color: 'var(--text-primary)',
                     margin: '0 0 0.75rem 0',
                     display: 'flex',
                     alignItems: 'center',
@@ -831,7 +831,7 @@ const StudentEnrollClass = () => {
                       >
                         <p style={{ 
                           margin: '0 0 0.5rem 0', 
-                          color: '#1a1a2e', 
+                          color: 'var(--text-primary)', 
                           fontSize: '0.85rem',
                           lineHeight: 1.5
                         }}>
@@ -868,7 +868,7 @@ const StudentEnrollClass = () => {
                (!selectedSession.announcements || selectedSession.announcements.length === 0) && (
                 <div style={{
                   padding: '1.5rem',
-                  background: '#f8fafc',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '10px',
                   textAlign: 'center'
                 }}>
@@ -877,7 +877,7 @@ const StudentEnrollClass = () => {
                     <line x1="12" y1="16" x2="12" y2="12"></line>
                     <line x1="12" y1="8" x2="12.01" y2="8"></line>
                   </svg>
-                  <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>
                     No resources or announcements yet
                   </p>
                 </div>

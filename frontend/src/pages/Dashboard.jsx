@@ -38,7 +38,7 @@ const Dashboard = () => {
       background: 'linear-gradient(135deg, #064e3b 0%, #0f172a 50%, #1e293b 100%)'
     }}>
       <div style={{
-        background: 'white',
+        background: 'var(--bg-primary)',
         padding: '3rem',
         borderRadius: '24px',
         textAlign: 'center',
@@ -53,7 +53,7 @@ const Dashboard = () => {
           animation: 'spin 1s linear infinite',
           margin: '0 auto 1rem'
         }} />
-        <p style={{ color: '#64748b', margin: 0, fontSize: '1rem' }}>
+        <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '1rem' }}>
           Redirecting to dashboard...
         </p>
       </div>
