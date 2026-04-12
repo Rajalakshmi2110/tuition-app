@@ -3,8 +3,6 @@ const FeeStructure = require('../models/FeeStructure');
 const User = require('../models/User');
 const { sendEmail } = require('../services/emailService');
 const { createNotification, notifyByRole } = require('../services/notificationService');
-const path = require('path');
-const fs = require('fs');
 
 // Get GPay QR Code (Admin uploads this)
 const getPaymentQR = async (req, res) => {
@@ -34,18 +32,7 @@ const submitPayment = async (req, res) => {
       return res.status(400).json({ message: 'Payment screenshot is required' });
     }
 
-    // Create payments directory if it doesn't exist
-    const paymentsDir = path.join(__dirname, '../uploads/payments');
-    if (!fs.existsSync(paymentsDir)) {
-      fs.mkdirSync(paymentsDir, { recursive: true });
-    }
-
-    // Move file to payments directory
-    const fileName = `payment_${Date.now()}_${req.file.originalname}`;
-    const filePath = path.join(paymentsDir, fileName);
-    fs.renameSync(req.file.path, filePath);
-    
-    const fileUrl = `/uploads/payments/${fileName}`;
+    const fileUrl = req.file.path;
 
     // Create payment record
     const payment = new Payment({
@@ -180,11 +167,7 @@ const resubmitPayment = async (req, res) => {
     // Handle new screenshot if provided
     let paymentScreenshot = payment.paymentScreenshot;
     if (req.file) {
-      const paymentsDir = path.join(__dirname, '../uploads/payments');
-      const fileName = `payment_${Date.now()}_${req.file.originalname}`;
-      const filePath = path.join(paymentsDir, fileName);
-      fs.renameSync(req.file.path, filePath);
-      paymentScreenshot = `/uploads/payments/${fileName}`;
+      paymentScreenshot = req.file.path;
     }
 
     payment.status = 'pending';

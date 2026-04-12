@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import AdminLayout from '../components/AdminLayout';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useToast } from '../components/Toast';
@@ -143,7 +143,7 @@ const AdminResources = () => {
                       </td>
                       <td style={{ padding: '1rem', borderBottom: '1px solid #f1f5f9', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                          <a href={`${API_CONFIG.BASE_URL}/${r.url}`} target="_blank" rel="noopener noreferrer" style={{
+                          <a href={fileUrl(r.url)} target="_blank" rel="noopener noreferrer" style={{
                             padding: '0.5rem 1rem', background: '#f0fdf4', color: '#059669',
                             border: '2px solid #bbf7d0', borderRadius: '8px', textDecoration: 'none',
                             fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'

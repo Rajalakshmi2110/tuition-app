@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
 
@@ -208,7 +208,7 @@ const AdminGallery = () => {
                     position: 'relative'
                   }}>
                     <img
-                      src={`${API_CONFIG.BASE_URL}${image.imageUrl}`}
+                      src={fileUrl(image.imageUrl)}
                       alt={image.title}
                       style={{
                         width: '100%',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import { useToast } from '../components/Toast';
 
 const StudentPayments = () => {
@@ -484,7 +484,7 @@ const StudentPayments = () => {
                   <div style={{ marginTop: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     {payment.paymentScreenshot && (
                       <a
-                        href={`${API_CONFIG.BASE_URL}${payment.paymentScreenshot}`}
+                        href={fileUrl(payment.paymentScreenshot)}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

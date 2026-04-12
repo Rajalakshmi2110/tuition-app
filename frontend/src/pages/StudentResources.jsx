@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const CATEGORIES = ['Textbook / Study Material', 'Guides', 'Class Notes', 'Question Papers', 'Other'];
@@ -124,7 +124,7 @@ const StudentResources = () => {
                     {categories[cat].map(r => (
                       <a
                         key={r._id}
-                        href={`${API_CONFIG.BASE_URL}/${r.url}`}
+                        href={fileUrl(r.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

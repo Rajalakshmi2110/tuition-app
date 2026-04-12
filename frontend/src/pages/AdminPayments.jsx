@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import AdminLayout from '../components/AdminLayout';
 import { useToast } from '../components/Toast';
 
@@ -326,7 +326,7 @@ const AdminPayments = () => {
 
                   <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                     <a
-                      href={`${API_CONFIG.BASE_URL}${payment.paymentScreenshot}`}
+                      href={fileUrl(payment.paymentScreenshot)}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

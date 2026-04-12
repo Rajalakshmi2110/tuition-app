@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import API from '../services/api';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 import { useToast } from './Toast';
 
 const FileItem = ({ file, onDelete }) => {
@@ -20,7 +20,7 @@ const FileItem = ({ file, onDelete }) => {
     }
   };
 
-  const fileUrl = `${API_CONFIG.BASE_URL}/${file.url.startsWith('/') ? file.url.slice(1) : file.url}`;
+  const resolvedUrl = fileUrl(file.url);
 
   return (
     <div style={{
@@ -108,7 +108,7 @@ const FileItem = ({ file, onDelete }) => {
         {/* Action Buttons */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button
-            onClick={() => window.open(fileUrl, '_blank', 'noopener,noreferrer')}
+            onClick={() => window.open(resolvedUrl, '_blank', 'noopener,noreferrer')}
             style={{
               padding: '0.5rem 1rem',
               background: 'transparent',
@@ -139,7 +139,7 @@ const FileItem = ({ file, onDelete }) => {
             View
           </button>
           <button
-            onClick={() => window.open(`${fileUrl}?download=true`, '_blank', 'noopener,noreferrer')}
+            onClick={() => window.open(`${resolvedUrl}?download=true`, '_blank', 'noopener,noreferrer')}
             style={{
               padding: '0.5rem 1rem',
               background: 'transparent',

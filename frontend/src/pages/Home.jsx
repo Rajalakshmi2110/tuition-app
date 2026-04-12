@@ -4,7 +4,7 @@ import api from '../services/api';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FeedbackForm from '../components/FeedbackForm';
-import API_CONFIG from '../config/apiConfig';
+import fileUrl from '../config/fileUrl';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -846,7 +846,7 @@ const Home = () => {
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                 >
                   <img
-                    src={`${API_CONFIG.BASE_URL}${image.imageUrl}`}
+                    src={fileUrl(image.imageUrl)}
                     alt={image.title}
                     style={{
                       width: '100%',
