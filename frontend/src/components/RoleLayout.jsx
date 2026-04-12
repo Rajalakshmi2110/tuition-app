@@ -3,12 +3,14 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import RoleSidebar from './RoleSidebar';
 import ThemeToggle from './ThemeToggle';
 import NotificationDropdown from './NotificationDropdown';
+import LogoutModal from './LogoutModal';
 import api from '../services/api';
 
 const RoleLayout = ({ role }) => {
   const [sidebarWidth, setSidebarWidth] = useState(window.innerWidth <= 768 ? 0 : 260);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [userName, setUserName] = useState('');
+  const [showLogout, setShowLogout] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,12 +30,10 @@ const RoleLayout = ({ role }) => {
   }, []);
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('role');
-      localStorage.removeItem('userId');
-      navigate('/');
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
+    navigate('/');
   };
 
   return (
@@ -115,7 +115,7 @@ const RoleLayout = ({ role }) => {
             )}
 
             {/* Logout Button */}
-            <button onClick={handleLogout} style={{
+            <button onClick={() => setShowLogout(true)} style={{
               padding: isMobile ? '0.5rem' : '0.6rem 1rem',
               background: 'white', color: '#ef4444', border: '2px solid #fee2e2',
               borderRadius: '10px', cursor: 'pointer', fontSize: '0.85rem',
@@ -155,6 +155,8 @@ const RoleLayout = ({ role }) => {
           </p>
         </footer>
       </div>
+
+      <LogoutModal show={showLogout} onConfirm={handleLogout} onCancel={() => setShowLogout(false)} />
 
       <style>{`
         @keyframes fadeIn {

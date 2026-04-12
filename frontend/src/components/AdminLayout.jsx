@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import kalviLogo from '../assets/logo.png';
 import ThemeToggle from './ThemeToggle';
+import LogoutModal from './LogoutModal';
 
 import api from '../services/api';
 
@@ -13,6 +14,7 @@ const AdminLayout = ({ children }) => {
   const [announcementTitle, setAnnouncementTitle] = useState('');
   const [announcementMessage, setAnnouncementMessage] = useState('');
   const [announcementType, setAnnouncementType] = useState('general');
+  const [showLogout, setShowLogout] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -246,7 +248,7 @@ const AdminLayout = ({ children }) => {
               {(!isMinimized || isMobile) && <span style={{ fontSize: '0.9rem', fontWeight: 500 }}>Back to Home</span>}
             </Link>
 
-            <button onClick={handleLogout} style={{
+            <button onClick={() => setShowLogout(true)} style={{
               display: 'flex', alignItems: 'center', gap: '0.75rem',
               padding: '0.75rem', borderRadius: '10px', color: '#ef4444',
               background: 'rgba(239, 68, 68, 0.1)', border: 'none', cursor: 'pointer',
@@ -338,6 +340,8 @@ const AdminLayout = ({ children }) => {
           </p>
         </footer>
       </div>
+
+      <LogoutModal show={showLogout} onConfirm={handleLogout} onCancel={() => setShowLogout(false)} />
 
       <style>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
