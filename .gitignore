@@ -30,4 +30,8 @@ logs
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
+yarn-error.log*backend/ai-doubt-system/.env
+backend/ai-doubt-system/__pycache__/
+backend/ai-doubt-system/src/**/__pycache__/
+backend/ai-doubt-system/subjects/
+backend/ai-doubt-system/**/__pycache__/

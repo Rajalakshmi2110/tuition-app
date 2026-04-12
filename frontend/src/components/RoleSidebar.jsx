@@ -39,6 +39,7 @@ const RoleSidebar = ({ role, onWidthChange }) => {
     { path: '/student/resources', icon: '▣', label: 'Study Materials' },
     { path: '/student/enroll', icon: '○', label: 'Enrolled Sessions' },
     { path: '/student/achievements', icon: '☆', label: 'Achievements' },
+    { path: '/student/ask-ai', icon: '◈', label: 'Ask AI Doubt' },
     { path: '/student/timer', icon: '◎', label: 'Timer & Stopwatch' },
     { path: '/student/payments', icon: '◈', label: 'Fee Payments' },
     { path: '/student/profile', icon: '⊙', label: 'My Profile' }

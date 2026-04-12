@@ -50,6 +50,7 @@ const StudentTimer = React.lazy(() => import('./pages/StudentTimer'));
 const StudentPayments = React.lazy(() => import('./pages/StudentPayments'));
 const PerformancePrediction = React.lazy(() => import('./components/PerformancePrediction'));
 const Profile = React.lazy(() => import('./pages/Profile'));
+const AskAI = React.lazy(() => import('./pages/AskAI'));
 
 const App = () => {
   return (
@@ -111,6 +112,7 @@ const App = () => {
           <Route path="timer" element={<StudentTimer />} />
           <Route path="payments" element={<StudentPayments />} />
           <Route path="ai-prediction" element={<PerformancePrediction />} />
+          <Route path="ask-ai" element={<AskAI />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 
