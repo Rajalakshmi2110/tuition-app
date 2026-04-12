@@ -17,7 +17,7 @@ class RAGPipeline:
         if vector_db_path:
             self.vector_db_path = vector_db_path
         else:
-            base_dir = Path(__file__).parent.parent.parent
+            base_dir = Path(os.environ.get('AI_PROJECT_ROOT', Path(__file__).parent.parent.parent))
             self.vector_db_path = str(base_dir / 'subjects' / subject_id / 'vector_db')
         
         self.index = faiss.read_index(f"{self.vector_db_path}/faiss_index.bin")

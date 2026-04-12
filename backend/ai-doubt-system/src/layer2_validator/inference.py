@@ -1,3 +1,4 @@
+import os
 import time
 import sys
 from pathlib import Path
@@ -18,7 +19,7 @@ class TwoLayerPipeline:
         # Load subject name dynamically from syllabus.json
         import json
         from pathlib import Path
-        syllabus_path = Path(__file__).parent.parent.parent.parent / 'subjects' / subject_id / 'syllabus.json'
+        syllabus_path = Path(os.environ.get("AI_PROJECT_ROOT", Path(__file__).parent.parent.parent.parent)) / 'subjects' / subject_id / 'syllabus.json'
         try:
             with open(syllabus_path, 'r') as f:
                 syllabus = json.load(f)
@@ -79,7 +80,7 @@ class TwoLayerPipeline:
         try:
             import json
             from pathlib import Path
-            syllabus_path = Path(__file__).parent.parent.parent.parent / 'subjects' / self.subject_id / 'syllabus.json'
+            syllabus_path = Path(os.environ.get("AI_PROJECT_ROOT", Path(__file__).parent.parent.parent.parent)) / 'subjects' / self.subject_id / 'syllabus.json'
             with open(syllabus_path, 'r') as f:
                 syllabus = json.load(f)
                 for unit in syllabus.get('units', []):

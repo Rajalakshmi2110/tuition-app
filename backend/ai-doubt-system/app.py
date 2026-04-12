@@ -10,6 +10,7 @@ load_dotenv()  # Load GROQ_API_KEY from .env
 
 base_dir = Path(__file__).parent
 os.chdir(base_dir)
+os.environ['AI_PROJECT_ROOT'] = str(base_dir)
 sys.path.insert(0, str(base_dir))
 
 from src.layer2_validator.inference import TwoLayerPipeline
@@ -276,7 +277,7 @@ def metrics():
         subject_id = request.args.get('subject_id', 'data_structures')
         
         if subject_id == 'overall':
-            subjects_file = Path(__file__).parent.parent / 'subjects' / 'subjects.json'
+            subjects_file = base_dir / 'subjects' / 'subjects.json'
             with open(subjects_file, 'r') as f:
                 all_subjects = json.load(f).get('subjects', [])
             subject_ids = [s['id'] for s in all_subjects]
@@ -302,7 +303,7 @@ def metrics():
 def model_metrics():
     try:
         subject_id = request.args.get('subject_id', 'data_structures')
-        metrics_path = Path(__file__).parent.parent / 'subjects' / subject_id / 'models' / 'layer1_distilbert' / 'model_metrics.json'
+        metrics_path = base_dir / 'subjects' / subject_id / 'models' / 'layer1_distilbert' / 'model_metrics.json'
         if metrics_path.exists():
             with open(metrics_path, 'r') as f:
                 return jsonify(json.load(f))

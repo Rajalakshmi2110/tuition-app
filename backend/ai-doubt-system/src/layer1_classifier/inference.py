@@ -1,3 +1,4 @@
+import os
 import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 from pathlib import Path
@@ -11,7 +12,7 @@ class Layer1Classifier:
         if model_path:
             self.model_path = Path(model_path)
         else:
-            base_dir = Path(__file__).parent.parent.parent.parent
+            base_dir = Path(os.environ.get("AI_PROJECT_ROOT", Path(__file__).parent.parent.parent.parent))
             self.model_path = base_dir / 'subjects' / subject_id / 'models' / 'layer1_distilbert'
         
         if not self.model_path.exists():

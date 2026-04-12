@@ -1,3 +1,4 @@
+import os
 """
 Metrics Tracker - Tracks real-time usage metrics for the system
 """
@@ -9,7 +10,7 @@ from collections import defaultdict
 class MetricsTracker:
     def __init__(self, base_path=None):
         if base_path is None:
-            self.base_path = Path(__file__).parent.parent.parent / 'subjects'
+            self.base_path = Path(os.environ.get("AI_PROJECT_ROOT", Path(__file__).parent.parent.parent)) / 'subjects'
         else:
             self.base_path = Path(base_path)
     

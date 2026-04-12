@@ -18,7 +18,7 @@ class MCPValidator:
         self.client = Groq(api_key=api_key)
         
         # Load syllabus from subjects/{subject_id}/syllabus.json
-        base_dir = Path(__file__).parent.parent.parent.parent
+        base_dir = Path(os.environ.get("AI_PROJECT_ROOT", Path(__file__).parent.parent.parent.parent))
         syllabus_path = base_dir / 'subjects' / subject_id / 'syllabus.json'
         
         if not syllabus_path.exists():
