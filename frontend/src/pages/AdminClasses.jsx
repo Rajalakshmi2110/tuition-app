@@ -72,7 +72,8 @@ const AdminClasses = () => {
   const inputStyle = {
     width: '100%', padding: '0.75rem 1rem', fontSize: '0.95rem',
     border: '2px solid var(--border-light)', borderRadius: '10px', outline: 'none',
-    transition: 'all 0.2s ease', boxSizing: 'border-box'
+    transition: 'all 0.2s ease', boxSizing: 'border-box',
+    background: 'var(--bg-primary)', color: 'var(--text-primary)'
   };
 
   const filteredClasses = selectedClass === 'all' ? classes : classes.filter(c => c.classLevel === selectedClass);
@@ -234,7 +235,7 @@ const AdminClasses = () => {
               </div>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Subject *</label>
-                <select value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required disabled={!formData.classLevel} style={{ ...inputStyle, background: formData.classLevel ? 'white' : '#f1f5f9', cursor: formData.classLevel ? 'pointer' : 'not-allowed' }}>
+                <select value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} required disabled={!formData.classLevel} style={{ ...inputStyle, background: formData.classLevel ? 'var(--bg-primary)' : 'var(--bg-secondary)', cursor: formData.classLevel ? 'pointer' : 'not-allowed' }}>
                   <option value="">{formData.classLevel ? 'Select subject...' : 'Select class level first'}</option>
                   {formData.classLevel && SUBJECTS_BY_CLASS[formData.classLevel]?.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>

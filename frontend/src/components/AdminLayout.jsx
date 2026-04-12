@@ -380,7 +380,7 @@ const AdminLayout = ({ children }) => {
             }}>
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Title</label>
-                <input type="text" placeholder="Announcement Title" value={announcementTitle} onChange={(e) => setAnnouncementTitle(e.target.value)} required style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box' }} />
+                <input type="text" placeholder="Announcement Title" value={announcementTitle} onChange={(e) => setAnnouncementTitle(e.target.value)} required style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', background: 'var(--bg-primary)', color: 'var(--text-primary)' }} />
               </div>
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Type</label>
@@ -392,7 +392,7 @@ const AdminLayout = ({ children }) => {
               </div>
               <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Message</label>
-                <textarea placeholder="Announcement Message" value={announcementMessage} onChange={(e) => setAnnouncementMessage(e.target.value)} required rows="4" style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit' }} />
+                <textarea placeholder="Announcement Message" value={announcementMessage} onChange={(e) => setAnnouncementMessage(e.target.value)} required rows="4" style={{ width: '100%', padding: '0.875rem', borderRadius: '10px', border: '2px solid var(--border-light)', fontSize: '1rem', outline: 'none', boxSizing: 'border-box', resize: 'vertical', fontFamily: 'inherit', background: 'var(--bg-primary)', color: 'var(--text-primary)' }} />
               </div>
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <button type="submit" style={{ flex: 1, padding: '0.875rem', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: 600, fontSize: '0.95rem' }}>Post Announcement</button>
