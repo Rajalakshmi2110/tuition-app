@@ -288,7 +288,10 @@ const StudentAssignments = () => {
                         </button>
                       )}
                       {assignment.isOverdue && !assignment.isSubmitted && (
-                        <span style={{ color: '#ef4444', fontSize: '0.8rem', fontWeight: 700 }}>⚠️ OVERDUE</span>
+                        <span style={{ color: '#ef4444', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                          OVERDUE
+                        </span>
                       )}
                     </div>
                   </div>
@@ -408,7 +411,7 @@ const StudentAssignments = () => {
               marginBottom: '1.5rem'
             }}>
               <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700 }}>
-                {selectedAssignment.isSubmitted ? '✏️ Update' : '📤 Submit'}: {selectedAssignment.title}
+                {selectedAssignment.isSubmitted ? 'Update' : 'Submit'}: {selectedAssignment.title}
               </h3>
               <button
                 onClick={() => setSelectedAssignment(null)}

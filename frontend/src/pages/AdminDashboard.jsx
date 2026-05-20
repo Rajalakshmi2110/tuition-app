@@ -305,7 +305,7 @@ const AdminDashboard = () => {
           style={{
             padding: '0.75rem 1.5rem',
             background: activeTab === "tutor" ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : 'transparent',
-            color: activeTab === "tutor" ? '#0f172a' : '#64748b',
+            color: activeTab === "tutor" ? '#0f172a' : 'var(--text-muted)',
             border: 'none',
             borderRadius: '8px',
             fontWeight: 600,
@@ -775,8 +775,10 @@ const AdminDashboard = () => {
             <div style={{
               width: '56px', height: '56px', borderRadius: '50%', background: '#fef2f2',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              margin: '0 auto 1rem', fontSize: '1.5rem'
-            }}>⚠️</div>
+              margin: '0 auto 1rem'
+            }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
             <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.15rem' }}>Delete {deleteTarget.role === 'tutor' ? 'Tutor' : 'Student'}?</h3>
             <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
               Are you sure you want to delete <strong style={{ color: 'var(--text-primary)' }}>{deleteTarget.name}</strong>? This will remove all their data and cannot be undone.

@@ -141,7 +141,11 @@ const AdminClasses = () => {
         {/* Sessions List */}
         {classes.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
-            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📅</div>
+            <div style={{ marginBottom: '1rem' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
             <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Sessions Yet</h3>
             <p style={{ color: 'var(--text-muted)' }}>Click "Create Session" to get started</p>
           </div>
@@ -225,7 +229,10 @@ const AdminClasses = () => {
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.25rem' }}>📅 Create Session</h3>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.25rem' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ verticalAlign: 'middle', marginRight: '0.5rem' }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Create Session
+              </h3>
               <button onClick={() => setShowCreateModal(false)} style={{
                 background: 'var(--bg-secondary)', border: 'none', width: '32px', height: '32px',
                 borderRadius: '8px', cursor: 'pointer', fontSize: '1.2rem', color: 'var(--text-muted)',
@@ -323,7 +330,9 @@ const AdminClasses = () => {
             maxWidth: '400px', width: '100%', textAlign: 'center',
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
           }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--bg-urgent, #fef2f2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', fontSize: '1.5rem' }}>⚠️</div>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--bg-urgent, #fef2f2)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
             <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.15rem' }}>Delete Session?</h3>
             <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: 1.5 }}>
               Are you sure you want to delete <strong style={{ color: 'var(--text-primary)' }}>{deleteTarget.name}</strong>? This will also remove all student enrollments.

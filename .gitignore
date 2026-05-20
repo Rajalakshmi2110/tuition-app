@@ -35,3 +35,4 @@ backend/ai-doubt-system/__pycache__/
 backend/ai-doubt-system/src/**/__pycache__/
 backend/ai-doubt-system/subjects/
 backend/ai-doubt-system/**/__pycache__/
+.DS_Store

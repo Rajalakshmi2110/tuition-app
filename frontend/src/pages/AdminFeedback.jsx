@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const AdminFeedback = () => {
   const [feedback, setFeedback] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const toast = useToast();
 
   useEffect(() => {
@@ -33,15 +34,16 @@ const AdminFeedback = () => {
     }
   };
 
-  const deleteFeedback = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this feedback?')) return;
+  const deleteFeedback = async () => {
+    if (!deleteTarget) return;
     try {
-      await api.delete(`/admin/feedback/${id}`);
+      await api.delete(`/admin/feedback/${deleteTarget}`);
       toast.success('Feedback deleted successfully!');
       fetchFeedback();
     } catch (err) {
       toast.error('Error deleting feedback');
     }
+    setDeleteTarget(null);
   };
 
   if (loading) return (
@@ -237,7 +239,7 @@ const AdminFeedback = () => {
                     </button>
                   )}
                   <button
-                    onClick={() => deleteFeedback(item._id)}
+                    onClick={() => setDeleteTarget(item._id)}
                     style={{
                       background: 'transparent',
                       color: 'var(--text-light)',
@@ -277,6 +279,21 @@ const AdminFeedback = () => {
           </div>
         )}
       </div>
+      {deleteTarget && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15,23,42,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem' }}>
+          <div style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px', maxWidth: '380px', width: '100%', textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Delete Feedback?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>This action cannot be undone.</p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button onClick={() => setDeleteTarget(null)} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)', background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+              <button onClick={deleteFeedback} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', cursor: 'pointer', fontWeight: 600 }}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </AdminLayout>
   );
 };

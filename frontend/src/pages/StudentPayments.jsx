@@ -16,6 +16,7 @@ const StudentPayments = () => {
     paymentScreenshot: null
   });
   const [resubmitPayment, setResubmitPayment] = useState(null);
+  const [cancelTarget, setCancelTarget] = useState(null);
   const toast = useToast();
 
   const fetchQRCode = useCallback(async () => {
@@ -96,16 +97,16 @@ const StudentPayments = () => {
     }
   };
 
-  const handleCancelPayment = async (paymentId) => {
-    if (!window.confirm('Are you sure you want to cancel this payment?')) return;
-
+  const handleCancelPayment = async () => {
+    if (!cancelTarget) return;
     try {
-      await api.delete(`/payments/cancel/${paymentId}`);
+      await api.delete(`/payments/cancel/${cancelTarget}`);
       toast.success('Payment cancelled successfully');
       fetchPayments();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Error cancelling payment');
     }
+    setCancelTarget(null);
   };
 
   const handleResubmitPayment = (payment) => {
@@ -278,7 +279,7 @@ const StudentPayments = () => {
             marginBottom: '1.5rem',
             fontWeight: 700
           }}>
-            {resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment'}
+            {resubmitPayment ? 'Resubmit Payment' : 'Submit Payment'}
           </h3>
           {resubmitPayment && (
             <div style={{
@@ -385,7 +386,7 @@ const StudentPayments = () => {
                 boxShadow: loading ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.3)'
               }}
             >
-              {loading ? 'Submitting...' : (resubmitPayment ? '🔄 Resubmit Payment' : '📤 Submit Payment')}
+              {loading ? 'Submitting...' : (resubmitPayment ? 'Resubmit Payment' : 'Submit Payment')}
             </button>
           </form>
         </div>
@@ -503,7 +504,7 @@ const StudentPayments = () => {
 
                     {payment.status === 'pending' && (
                       <button
-                        onClick={() => handleCancelPayment(payment._id)}
+                        onClick={() => setCancelTarget(payment._id)}
                         style={{
                           padding: '0.5rem 1rem',
                           background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
@@ -533,7 +534,7 @@ const StudentPayments = () => {
                           fontWeight: 500
                         }}
                       >
-                        🔄 Resubmit
+                        Resubmit
                       </button>
                     )}
                   </div>
@@ -543,6 +544,22 @@ const StudentPayments = () => {
           </div>
         )}
       </div>
+
+      {cancelTarget && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15,23,42,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem' }}>
+          <div style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px', maxWidth: '380px', width: '100%', textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#fef2f2', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Cancel Payment?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>This will cancel your pending payment submission.</p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button onClick={() => setCancelTarget(null)} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)', background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Keep</button>
+              <button onClick={handleCancelPayment} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', cursor: 'pointer', fontWeight: 600 }}>Cancel Payment</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

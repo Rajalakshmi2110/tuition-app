@@ -11,6 +11,7 @@ const ClassManagePage = () => {
   const [resourceLink, setResourceLink] = useState('');
   const [announcement, setAnnouncement] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
@@ -66,8 +67,6 @@ const ClassManagePage = () => {
   };
 
   const handleMarkComplete = async () => {
-    if (!window.confirm('Mark this class as completed? It will be removed from active dashboards.')) return;
-    
     try {
       await api.put(`/classes/tutor/class/${id}/complete`, {});
       toast.success('Class marked as completed!');
@@ -75,6 +74,7 @@ const ClassManagePage = () => {
     } catch (err) {
       toast.error('Failed to mark class as completed');
     }
+    setShowCompleteModal(false);
   };
 
   const inputStyle = {
@@ -449,7 +449,7 @@ const ClassManagePage = () => {
           This action will mark the session as completed and archive it.
         </p>
         <button
-          onClick={handleMarkComplete}
+          onClick={() => setShowCompleteModal(true)}
           style={{
             padding: '0.875rem 2rem',
             background: 'transparent',
@@ -480,6 +480,22 @@ const ClassManagePage = () => {
           Mark as Completed
         </button>
       </div>
+
+      {showCompleteModal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15,23,42,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem' }}>
+          <div style={{ backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' }}>
+            <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Mark as Completed?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>This session will be removed from active dashboards.</p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button onClick={() => setShowCompleteModal(false)} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)', background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600 }}>Cancel</button>
+              <button onClick={handleMarkComplete} style={{ flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', color: 'white', cursor: 'pointer', fontWeight: 600 }}>Complete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
