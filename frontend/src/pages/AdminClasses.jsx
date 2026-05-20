@@ -276,7 +276,7 @@ const AdminClasses = () => {
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Date *</label>
-                  <input type="date" value={formData.scheduledDate} onChange={e => setFormData({ ...formData, scheduledDate: e.target.value, tutorId: '' })} required style={inputStyle} />
+                  <input type="date" value={formData.scheduledDate} onChange={e => setFormData({ ...formData, scheduledDate: e.target.value, tutorId: '' })} required style={{ ...inputStyle, colorScheme: 'auto' }} />
                 </div>
               </div>
               <div>

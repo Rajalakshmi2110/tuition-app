@@ -814,3 +814,9 @@ body {
   top: 0;
 }
 
+
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  color-scheme: dark;
+  filter: invert(0);
+}
