@@ -71,8 +71,21 @@ ${imageUrl ? '- The student has attached an image for reference. Answer their qu
       : question;
     messages.push({ role: 'user', content: userMessage });
 
+    const model = imageUrl ? 'llama-3.2-11b-vision-preview' : 'llama-3.1-8b-instant';
+
+    // For vision model, format the last user message with image_url
+    if (imageUrl) {
+      messages[messages.length - 1] = {
+        role: 'user',
+        content: [
+          { type: 'text', text: question },
+          { type: 'image_url', image_url: { url: imageUrl } }
+        ]
+      };
+    }
+
     const completion = await groq.chat.completions.create({
-      model: 'llama-3.1-8b-instant',
+      model,
       messages,
       max_tokens: 600,
       temperature: 0.7
