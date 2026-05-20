@@ -606,7 +606,7 @@ const StudentGamification = () => {
             </div>
           ) : (
             <div style={{ display: 'grid', gap: '1rem' }}>
-              {leaderboard.map((entry, index) => {
+              {leaderboard.filter(entry => entry.user).map((entry, index) => {
                 const isTopThree = index < 3;
                 const podiumColors = [
                   { bg: 'linear-gradient(135deg, #fef3c7, #fde68a)', border: '#f59e0b', text: '#92400e' },

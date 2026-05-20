@@ -113,7 +113,9 @@ const getLeaderboard = async (req, res) => {
       .sort({ [sortField]: -1 })
       .limit(parseInt(limit));
 
-    const formattedLeaderboard = leaderboard.map((stat, index) => ({
+    const formattedLeaderboard = leaderboard
+      .filter(stat => stat.userId != null)
+      .map((stat, index) => ({
       rank: index + 1,
       user: stat.userId,
       points: stat.points,
