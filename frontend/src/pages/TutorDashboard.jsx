@@ -303,8 +303,10 @@ const TutorDashboard = () => {
             textAlign: 'center'
           }}>
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 1rem' }}>
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
             <h3 style={{ color: 'var(--text-muted)', margin: '0 0 0.5rem 0', fontWeight: 600 }}>No Sessions Assigned</h3>
             <p style={{ color: 'var(--text-light)', margin: 0, fontSize: '0.9rem' }}>

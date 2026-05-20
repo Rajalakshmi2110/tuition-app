@@ -8,6 +8,7 @@ const AskAI = () => {
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [showClearModal, setShowClearModal] = useState(false);
   const chatEndRef = useRef(null);
   const fileRef = useRef(null);
 
@@ -81,11 +82,11 @@ const AskAI = () => {
   };
 
   const clearHistory = async () => {
-    if (!window.confirm('Clear all chat history?')) return;
     try {
       await api.delete('/ai-doubt/history');
       setMessages([]);
     } catch (e) {}
+    setShowClearModal(false);
   };
 
   return (
@@ -103,7 +104,7 @@ const AskAI = () => {
             <p style={{ fontSize: '0.9rem', opacity: 0.85, margin: 0 }}>Ask any school subject doubt — Maths, Physics, Chemistry, Biology & more</p>
           </div>
           {messages.length > 0 && (
-            <button onClick={clearHistory} style={{
+            <button onClick={() => setShowClearModal(true)} style={{
               background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white',
               padding: '0.4rem 0.8rem', borderRadius: '10px', cursor: 'pointer',
               fontSize: '0.8rem', fontWeight: 500
@@ -279,6 +280,45 @@ const AskAI = () => {
           {loading ? '...' : 'Ask'}
         </button>
       </div>
+
+      {/* Clear History Modal */}
+      {showClearModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.7)', backdropFilter: 'blur(4px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1100, padding: '1rem'
+        }}>
+          <div style={{
+            backgroundColor: 'var(--bg-primary)', padding: '2rem', borderRadius: '20px',
+            maxWidth: '380px', width: '100%', textAlign: 'center',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+          }}>
+            <div style={{
+              width: '50px', height: '50px', borderRadius: '50%', background: '#fef2f2',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem'
+            }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+            </div>
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Clear Chat History?</h3>
+            <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+              This will permanently delete all your conversation history. This action cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
+              <button onClick={() => setShowClearModal(false)} style={{
+                flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)',
+                background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600
+              }}>Cancel</button>
+              <button onClick={clearHistory} style={{
+                flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none',
+                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white',
+                cursor: 'pointer', fontWeight: 600, boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+              }}>Clear All</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes bounce {
