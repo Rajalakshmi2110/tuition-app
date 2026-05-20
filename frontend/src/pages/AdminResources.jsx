@@ -156,7 +156,7 @@ const AdminResources = () => {
                       </td>
                       <td style={{ padding: '1rem', borderBottom: '1px solid var(--border-light)', textAlign: 'center' }}>
                         <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                          <a href={fileUrl(r.url)} target="_blank" rel="noopener noreferrer" style={{
+                          <a href={fileUrl(r.url, r._id)} target="_blank" rel="noopener noreferrer" style={{
                             padding: '0.5rem 1rem', background: 'var(--bg-success, #f0fdf4)', color: '#059669',
                             border: '2px solid #bbf7d0', borderRadius: '8px', textDecoration: 'none',
                             fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease'

@@ -4,7 +4,37 @@ const Resource = require('../models/Resource');
 const User = require('../models/User');
 const { protect, tutorOnly, adminOnly, authorize } = require('../Middleware/authMiddleware');
 const { notifyMultiple } = require('../services/notificationService');
-const { uploadResource, deleteFromCloudinary } = require('../config/cloudinary');
+const { uploadResource, deleteFromCloudinary, cloudinary } = require('../config/cloudinary');
+
+// View resource file (generates signed URL for Cloudinary files)
+router.get('/view/:id', protect, async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    if (!resource) return res.status(404).json({ message: 'Resource not found' });
+
+    if (resource.url.includes('cloudinary')) {
+      // Extract public_id from URL
+      const parts = resource.url.split('/upload/');
+      if (parts.length < 2) return res.redirect(resource.url);
+      const afterUpload = parts[1].replace(/^v\d+\//, '');
+      const publicId = afterUpload.replace(/\.[^/.]+$/, '');
+      const ext = resource.url.split('.').pop();
+
+      const signedUrl = cloudinary.url(publicId, {
+        resource_type: ext === 'pdf' ? 'image' : 'auto',
+        sign_url: true,
+        type: 'authenticated',
+        format: ext
+      });
+      return res.redirect(signedUrl);
+    }
+
+    // Local file
+    res.redirect(`/${resource.url}`);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get resource' });
+  }
+});
 
 // Tutor: Create resource
 router.post('/', protect, tutorOnly, uploadResource.single('file'), async (req, res) => {

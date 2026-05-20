@@ -15,7 +15,10 @@ const galleryStorage = new CloudinaryStorage({
 
 const resourceStorage = new CloudinaryStorage({
   cloudinary,
-  params: { folder: 'kalviyagam/resources', resource_type: 'auto' }
+  params: {
+    folder: 'kalviyagam/resources',
+    resource_type: 'raw'
+  }
 });
 
 const paymentStorage = new CloudinaryStorage({
