@@ -13,6 +13,7 @@ A full-stack tuition centre management platform with role-based access for admin
 | Database | MongoDB Atlas |
 | Auth | JWT + Google OAuth 2.0 (Passport.js) |
 | File Storage | Cloudinary (images, documents, screenshots) |
+| AI | Groq API (Llama 3.1 text + Llama 3.2 vision) |
 | Email | Nodemailer (Gmail SMTP) |
 | Deployment | Netlify (frontend), Render (backend) |
 
@@ -21,16 +22,18 @@ A full-stack tuition centre management platform with role-based access for admin
 - **Auth** — Email/password registration, Google OAuth, password reset via email, JWT sessions
 - **Roles** — Admin (full control + approval workflow), Tutor (sessions, assignments, grading, study materials), Student (enrollment, submissions, payments)
 - **Profile** — Editable profile page for students (name, email, class, subjects) and tutors (name, email, specialization)
-- **Sessions** — Create, schedule, assign tutors, hierarchical class → subject dropdowns (Class 6–12). Students only see sessions matching their registered class + subjects
+- **Sessions** — Create, schedule, assign tutors with time-slot dropdowns, automatic tutor conflict detection (Class 6–12). Students only see sessions matching their registered class + subjects
 - **Assignments** — Create with class → subject hierarchy, student submissions, grading with feedback
 - **Study Materials** — Upload/manage resources via Cloudinary, organized by class, subject & category. Students see materials matching their registered class + subjects
 - **Payments** — GPay QR screenshot upload (Cloudinary), admin verification workflow, monthly tracking, email reminders
 - **Performance** — Exam records, grade calculation, subject-wise analytics
 - **Gamification** — Badges, points, levels, streaks, leaderboard
-- **Email Notifications** — Registration, approval/decline, password reset, payment status
+- **AI Doubt Clarification** — ChatGPT-style AI tutor powered by Groq (Llama 3.1 for text, Llama 3.2 Vision for image questions). Conversation threads with history persistence, image attachment support
+- **Notifications** — Real-time in-app notification system with bell icon, unread count, auto-polling. Triggered on registrations, approvals, assignments, payments, announcements, resources
+- **Email Notifications** — Branded HTML email templates for registration, approval/decline, password reset, payment status, admin alerts on new registrations
 - **Gallery** — Educational content sharing with Cloudinary-hosted images
 - **Announcements** — Admin can post global announcements from any admin page
-- **Dark Mode** — Full light/dark theme support across all dashboards
+- **Dark Mode** — Full light/dark theme support across all dashboards with CSS variables
 - **Mobile Responsive** — Hamburger menu, drawer sidebar, responsive grids and tables
 
 ## Project Structure
@@ -39,18 +42,18 @@ A full-stack tuition centre management platform with role-based access for admin
 tuition-app/
 ├── backend/
 │   ├── config/          # Passport.js (Google OAuth), Cloudinary config
-│   ├── controllers/     # Route handlers (15 controllers)
+│   ├── controllers/     # Route handlers (16 controllers)
 │   ├── Middleware/       # auth, file upload, ObjectId validation
-│   ├── models/          # Mongoose schemas (17 models)
-│   ├── routes/          # Express routes (21 route files)
+│   ├── models/          # Mongoose schemas (19 models)
+│   ├── routes/          # Express routes (23 route files)
 │   ├── services/        # Email service (Nodemailer), Notification service
 │   ├── seed.js          # Admin user seeder
 │   └── server.js        # App entry point
 ├── frontend/
 │   ├── src/
-│   │   ├── components/  # Reusable UI (Layout, Header, Sidebar, Toast, ScrollToTop, etc.)
+│   │   ├── components/  # Reusable UI (Layout, Header, Sidebar, Toast, NotificationDropdown, etc.)
 │   │   ├── constants/   # Shared data (CLASS_LEVELS, SUBJECTS_BY_CLASS)
-│   │   ├── pages/       # Route pages (30+ pages including Profile)
+│   │   ├── pages/       # Route pages (35+ pages including AI Doubt, Profile)
 │   │   ├── services/    # Axios API client with interceptors
 │   │   ├── config/      # API base URL config, Cloudinary file URL helper
 │   │   ├── contexts/    # Theme context
@@ -106,6 +109,9 @@ GOOGLE_CLIENT_SECRET=your-google-client-secret
 CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
+
+# AI Doubt Clarification (Groq) — see "Groq AI Setup" section below
+GROQ_API_KEY=your-groq-api-key
 
 # Admin seed
 ADMIN_EMAIL=admin@kalviyagam.com
@@ -165,6 +171,8 @@ Files are organized into folders:
 
 > **Note:** If Cloudinary credentials are not set, file uploads will fail. This is a required service for production.
 
+> **Important:** In Cloudinary Dashboard → Settings → Security, ensure **"PDF and ZIP files delivery"** is set to **"Allow delivery of PDF and ZIP files"**. Without this, uploaded PDFs will return 401 errors.
+
 ---
 
 ## Email Setup (Gmail SMTP)
@@ -213,6 +221,25 @@ Google Sign-In allows users to register/login with their Google account.
     ```
 
 > **Note:** If Google OAuth credentials are not set, the app still works — the "Continue with Google" button will show an error message, but email/password login works fine.
+
+---
+
+## Groq AI Setup
+
+The AI Doubt Clarification feature uses Groq's API for fast LLM inference.
+
+1. Go to [console.groq.com](https://console.groq.com) and create a free account
+2. Go to **API Keys** → **Create API Key**
+3. Copy the key and update `backend/.env`:
+   ```env
+   GROQ_API_KEY=gsk_your-groq-api-key
+   ```
+
+**Models used:**
+- `llama-3.1-8b-instant` — Text-based doubt clarification (fast)
+- `llama-3.2-11b-vision-preview` — Image analysis (when student attaches a photo)
+
+> **Note:** If Groq API key is not set, the AI Doubt feature will show an error. All other features work independently.
 
 ---
 
