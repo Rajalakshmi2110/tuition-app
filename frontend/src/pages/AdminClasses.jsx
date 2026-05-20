@@ -49,12 +49,23 @@ const AdminClasses = () => {
       setFormData({ name: '', subject: '', schedule: '', scheduledDate: '', tutorId: '', classLevel: '' });
       setShowCreateModal(false);
       fetchClasses();
-    } catch {
-      toast.error('Failed to create session');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to create session');
     } finally {
       setCreating(false);
     }
   };
+
+  // Filter out tutors who already have a session at the selected date+time
+  const availableTutors = tutors.filter(t => {
+    if (!formData.scheduledDate || !formData.schedule) return true;
+    return !classes.some(cls =>
+      cls.tutor?._id === t._id &&
+      cls.schedule === formData.schedule &&
+      cls.status !== 'cancelled' &&
+      new Date(cls.scheduledDate).toDateString() === new Date(formData.scheduledDate).toDateString()
+    );
+  });
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
@@ -243,19 +254,27 @@ const AdminClasses = () => {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Time *</label>
-                  <input type="text" value={formData.schedule} onChange={e => setFormData({ ...formData, schedule: e.target.value })} placeholder="6:00 PM - 7:00 PM" required style={inputStyle} />
+                  <input type="text" value={formData.schedule} onChange={e => setFormData({ ...formData, schedule: e.target.value, tutorId: '' })} placeholder="6:00 PM - 7:00 PM" required style={inputStyle} />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Date *</label>
-                  <input type="date" value={formData.scheduledDate} onChange={e => setFormData({ ...formData, scheduledDate: e.target.value })} required style={inputStyle} />
+                  <input type="date" value={formData.scheduledDate} onChange={e => setFormData({ ...formData, scheduledDate: e.target.value, tutorId: '' })} required style={inputStyle} />
                 </div>
               </div>
               <div>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem' }}>Assign Tutor *</label>
                 <select value={formData.tutorId} onChange={e => setFormData({ ...formData, tutorId: e.target.value })} required style={{ ...inputStyle, background: 'var(--bg-primary)' }}>
                   <option value="">Select a tutor...</option>
-                  {tutors.map(t => <option key={t._id} value={t._id}>{t.name} ({t.email})</option>)}
+                  {availableTutors.map(t => <option key={t._id} value={t._id}>{t.name} ({t.email})</option>)}
+                  {availableTutors.length === 0 && formData.schedule && formData.scheduledDate && (
+                    <option disabled>No tutors available at this time</option>
+                  )}
                 </select>
+                {formData.schedule && formData.scheduledDate && availableTutors.length < tutors.length && (
+                  <p style={{ margin: '0.35rem 0 0', fontSize: '0.8rem', color: '#f59e0b', fontWeight: 500 }}>
+                    {tutors.length - availableTutors.length} tutor(s) already assigned at this time
+                  </p>
+                )}
               </div>
               <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
                 <button type="button" onClick={() => setShowCreateModal(false)} style={{
