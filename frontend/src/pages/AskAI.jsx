@@ -119,11 +119,12 @@ const AskAI = () => {
     } catch (e) {}
   };
 
-  const clearAllHistory = async () => {
+  const clearCurrentConversation = async () => {
+    if (!activeConversation) return;
     try {
-      await api.delete('/ai-doubt/history');
+      await api.delete(`/ai-doubt/conversations/${activeConversation}`);
+      setConversations(prev => prev.filter(c => c.id !== activeConversation));
       setMessages([]);
-      setConversations([]);
       setActiveConversation(null);
     } catch (e) {}
     setShowClearModal(false);
@@ -186,11 +187,11 @@ const AskAI = () => {
         </div>
         {conversations.length > 0 && (
           <div style={{ padding: '0.75rem', borderTop: '1px solid var(--border-light)' }}>
-            <button onClick={() => setShowClearModal(true)} style={{
+            <button onClick={async () => { try { await api.delete('/ai-doubt/history'); setMessages([]); setConversations([]); setActiveConversation(null); } catch(e){} }} style={{
               width: '100%', padding: '0.6rem', borderRadius: '8px', border: 'none',
-              background: 'transparent', color: '#ef4444', cursor: 'pointer',
+              background: 'transparent', color: 'var(--text-light)', cursor: 'pointer',
               fontSize: '0.8rem', fontWeight: 500
-            }}>Clear All History</button>
+            }}>Clear All</button>
           </div>
         )}
       </div>
@@ -209,14 +210,13 @@ const AskAI = () => {
               <h1 style={{ fontSize: '1.3rem', fontWeight: 700, margin: '0 0 0.2rem 0' }}>AI Doubt Clarification</h1>
               <p style={{ fontSize: '0.85rem', opacity: 0.85, margin: 0 }}>Ask any school subject doubt</p>
             </div>
-            <button onClick={() => setShowSidebar(!showSidebar)} className="ai-sidebar-toggle" style={{
-              display: 'none', background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white',
-              padding: '0.5rem', borderRadius: '8px', cursor: 'pointer'
-            }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>
-              </svg>
-            </button>
+            {messages.length > 0 && (
+              <button onClick={() => setShowClearModal(true)} style={{
+                background: 'rgba(255,255,255,0.15)', border: 'none', color: 'white',
+                padding: '0.4rem 0.8rem', borderRadius: '10px', cursor: 'pointer',
+                fontSize: '0.8rem', fontWeight: 500
+              }}>Clear Chat</button>
+            )}
           </div>
         </div>
 
@@ -397,20 +397,20 @@ const AskAI = () => {
                 <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
               </svg>
             </div>
-            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Clear All History?</h3>
+            <h3 style={{ margin: '0 0 0.5rem', color: 'var(--text-primary)', fontWeight: 700 }}>Delete This Chat?</h3>
             <p style={{ margin: '0 0 1.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-              This will permanently delete all conversations. This cannot be undone.
+              This will permanently delete the current conversation.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button onClick={() => setShowClearModal(false)} style={{
                 flex: 1, padding: '0.75rem', borderRadius: '10px', border: '2px solid var(--border-light)',
                 background: 'var(--bg-primary)', color: 'var(--text-muted)', cursor: 'pointer', fontWeight: 600
               }}>Cancel</button>
-              <button onClick={clearAllHistory} style={{
+              <button onClick={clearCurrentConversation} style={{
                 flex: 1, padding: '0.75rem', borderRadius: '10px', border: 'none',
                 background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white',
                 cursor: 'pointer', fontWeight: 600
-              }}>Clear All</button>
+              }}>Delete</button>
             </div>
           </div>
         </div>
