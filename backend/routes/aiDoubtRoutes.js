@@ -11,6 +11,45 @@ router.get('/health', (req, res) => {
   res.json({ status: process.env.GROQ_API_KEY ? 'ok' : 'no_api_key' });
 });
 
+// Get all conversations (list with titles)
+router.get('/conversations', protect, async (req, res) => {
+  try {
+    const chats = await DoubtChat.aggregate([
+      { $match: { studentId: req.user._id } },
+      { $sort: { createdAt: 1 } },
+      { $group: {
+        _id: '$conversationId',
+        title: { $first: '$question' },
+        lastMessage: { $last: '$createdAt' },
+        messageCount: { $sum: 1 }
+      }},
+      { $sort: { lastMessage: -1 } }
+    ]);
+    res.json(chats.map(c => ({
+      id: c._id,
+      title: c.title.length > 40 ? c.title.substring(0, 40) + '...' : c.title,
+      lastMessage: c.lastMessage,
+      messageCount: c.messageCount
+    })));
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch conversations' });
+  }
+});
+
+// Get messages for a specific conversation
+router.get('/history/:conversationId', protect, async (req, res) => {
+  try {
+    const chats = await DoubtChat.find({
+      studentId: req.user._id,
+      conversationId: req.params.conversationId
+    }).sort({ createdAt: 1 });
+    res.json(chats);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch history' });
+  }
+});
+
+// Legacy: get all history (for backward compat)
 router.get('/history', protect, async (req, res) => {
   try {
     const chats = await DoubtChat.find({ studentId: req.user._id })
@@ -22,6 +61,17 @@ router.get('/history', protect, async (req, res) => {
   }
 });
 
+// Delete a specific conversation
+router.delete('/conversations/:conversationId', protect, async (req, res) => {
+  try {
+    await DoubtChat.deleteMany({ studentId: req.user._id, conversationId: req.params.conversationId });
+    res.json({ message: 'Conversation deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete conversation' });
+  }
+});
+
+// Delete all history
 router.delete('/history', protect, async (req, res) => {
   try {
     await DoubtChat.deleteMany({ studentId: req.user._id });
@@ -34,6 +84,7 @@ router.delete('/history', protect, async (req, res) => {
 router.post('/chat', protect, uploadGallery.single('image'), async (req, res) => {
   try {
     const question = req.body.question;
+    const conversationId = req.body.conversationId || Date.now().toString(36) + Math.random().toString(36).slice(2);
     let history = [];
     try { history = JSON.parse(req.body.history || '[]'); } catch (e) {}
 
@@ -56,7 +107,7 @@ Rules:
 - If the question is not academic (personal, inappropriate, off-topic), politely decline and ask them to ask a school-related question
 - Do NOT use markdown formatting like ** or # or *. Use plain text only.
 - For formulas, use clean notation: use × for multiplication, ² for squared, ³ for cubed. Example: F = G × (m1 × m2) / r². Do NOT use backslashes or LaTeX.
-${imageUrl ? '- The student has attached an image for reference. Answer their question about it based on what they describe.' : ''}`;
+${imageUrl ? '- The student has attached an image for reference. Analyze the image and answer their question about it.' : ''}`;
 
     const messages = [{ role: 'system', content: systemPrompt }];
 
@@ -73,7 +124,6 @@ ${imageUrl ? '- The student has attached an image for reference. Answer their qu
 
     const model = imageUrl ? 'llama-3.2-11b-vision-preview' : 'llama-3.1-8b-instant';
 
-    // For vision model, format the last user message with image_url
     if (imageUrl) {
       messages[messages.length - 1] = {
         role: 'user',
@@ -96,9 +146,9 @@ ${imageUrl ? '- The student has attached an image for reference. Answer their qu
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/^#{1,6}\s/gm, '');
 
-    await DoubtChat.create({ studentId: user._id, question, answer, imageUrl });
+    await DoubtChat.create({ studentId: user._id, conversationId, question, answer, imageUrl });
 
-    res.json({ status: 'success', question, answer, imageUrl, final_status: 'VALID' });
+    res.json({ status: 'success', question, answer, imageUrl, conversationId, final_status: 'VALID' });
   } catch (err) {
     res.status(500).json({ status: 'error', answer: 'AI service error. Please try again.' });
   }
