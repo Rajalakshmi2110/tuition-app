@@ -108,11 +108,21 @@ const TutorResources = () => {
   };
 
   const categoryIcon = (cat) => {
-    const icons = {
-      'Textbook / Study Material': '📚', 'Guides': '📖', 'Class Notes': '📝',
-      'Question Papers': '📄', 'Other': '📎'
-    };
-    return icons[cat] || '📎';
+    if (cat === 'Textbook / Study Material') return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    );
+    if (cat === 'Guides') return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    );
+    if (cat === 'Class Notes') return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    );
+    if (cat === 'Question Papers') return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+    );
+    return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+    );
   };
 
   if (loading) return <LoadingSpinner message="Loading resources..." />;
@@ -123,7 +133,8 @@ const TutorResources = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            📖 Study Materials
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Study Materials
           </h2>
           <p style={{ color: 'var(--text-muted)', margin: '0.25rem 0 0', fontSize: '0.9rem' }}>
             Upload study materials organized by class, subject & category
@@ -144,14 +155,16 @@ const TutorResources = () => {
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
           <select value={filterLevel} onChange={e => setFilterLevel(e.target.value)} style={{
             padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none',
+            background: 'var(--bg-primary)'
           }}>
             <option value="all">All Classes</option>
             {CLASS_LEVELS.map(l => <option key={l} value={l}>Class {l}</option>)}
           </select>
           <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} style={{
             padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
+            fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none',
+            background: 'var(--bg-primary)'
           }}>
             <option value="all">All Subjects</option>
             {subjects.map(s => <option key={s} value={s}>{s}</option>)}
@@ -165,7 +178,9 @@ const TutorResources = () => {
       {/* Content */}
       {resources.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📖</div>
+          <div style={{ marginBottom: '1rem' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
           <h3 style={{ color: 'var(--text-primary)', fontWeight: 700, marginBottom: '0.5rem' }}>No Resources Yet</h3>
           <p style={{ color: 'var(--text-muted)' }}>Upload your first study material to get started</p>
         </div>
@@ -177,13 +192,13 @@ const TutorResources = () => {
         Object.entries(grouped).sort().map(([groupKey, categories]) => (
           <div key={groupKey} style={{ marginBottom: '2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
             <div style={{ padding: '1rem 1.5rem', background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', borderBottom: '1px solid #bbf7d0' }}>
-              <h3 style={{ margin: 0, color: '#166534', fontSize: '1.1rem', fontWeight: 700 }}>{groupKey}</h3>
+              <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '1.1rem', fontWeight: 700 }}>{groupKey}</h3>
             </div>
             <div style={{ padding: '1.5rem' }}>
               {CATEGORIES.filter(cat => categories[cat]).map(cat => (
                 <div key={cat} style={{ marginBottom: '1.5rem' }}>
                   <h4 style={{ margin: '0 0 0.75rem', color: 'var(--text-primary)', fontSize: '0.95rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {categoryIcon(cat)} {cat} <span style={{ background: '#dcfce7', color: '#166534', fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '10px', fontWeight: 600, marginLeft: '0.25rem' }}>{categories[cat].length}</span>
+                    {categoryIcon(cat)} {cat} <span style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', fontSize: '0.75rem', padding: '0.1rem 0.5rem', borderRadius: '10px', fontWeight: 600, marginLeft: '0.25rem' }}>{categories[cat].length}</span>
                   </h4>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     {categories[cat].map(r => (
@@ -240,7 +255,7 @@ const TutorResources = () => {
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <h3 style={{ margin: 0, color: 'var(--text-primary)', fontWeight: 700, fontSize: '1.25rem' }}>
-                {editingResource ? '✏️ Edit Resource' : '📖 Upload Study Material'}
+                {editingResource ? 'Edit Resource' : 'Upload Study Material'}
               </h3>
               <button onClick={resetForm} style={{
                 background: 'var(--bg-secondary)', border: 'none', width: '32px', height: '32px',
