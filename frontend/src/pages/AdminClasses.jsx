@@ -120,7 +120,8 @@ const AdminClasses = () => {
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
             <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} style={{
               padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none'
+              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none',
+              background: 'var(--bg-primary)'
             }}>
               <option value="all">All Classes · {classes.length}</option>
               {classLevels.map(l => {
