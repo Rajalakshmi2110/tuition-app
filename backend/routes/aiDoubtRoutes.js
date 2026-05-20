@@ -14,6 +14,16 @@ router.get('/health', (req, res) => {
 // Get all conversations (list with titles)
 router.get('/conversations', protect, async (req, res) => {
   try {
+    // First, fix any orphan chats without conversationId
+    const orphans = await DoubtChat.find({ studentId: req.user._id, $or: [{ conversationId: { $exists: false } }, { conversationId: null }] });
+    if (orphans.length > 0) {
+      const convId = 'legacy_' + req.user._id.toString().slice(-8);
+      await DoubtChat.updateMany(
+        { _id: { $in: orphans.map(o => o._id) } },
+        { conversationId: convId }
+      );
+    }
+
     const chats = await DoubtChat.aggregate([
       { $match: { studentId: req.user._id } },
       { $sort: { createdAt: 1 } },
