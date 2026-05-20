@@ -215,7 +215,7 @@ const TutorResources = () => {
                           </p>
                         </div>
                         <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
-                          <a href={fileUrl(r.url, r._id)} target="_blank" rel="noopener noreferrer" style={{
+                          <a href={fileUrl(r.url)} target="_blank" rel="noopener noreferrer" style={{
                             padding: '0.4rem 0.75rem', background: '#f0fdf4', color: '#059669',
                             border: '1px solid #bbf7d0', borderRadius: '6px', textDecoration: 'none',
                             fontWeight: 600, fontSize: '0.8rem'

@@ -139,7 +139,7 @@ const StudentResources = () => {
                     {categories[cat].map(r => (
                       <a
                         key={r._id}
-                        href={fileUrl(r.url, r._id)}
+                        href={fileUrl(r.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

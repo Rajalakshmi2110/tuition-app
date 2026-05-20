@@ -1,59 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 const Resource = require('../models/Resource');
 const User = require('../models/User');
 const { protect, tutorOnly, adminOnly, authorize } = require('../Middleware/authMiddleware');
 const { notifyMultiple } = require('../services/notificationService');
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = 'uploads/resources';
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, 'resource-' + Date.now() + ext);
-  }
-});
-
-const allowedTypes = [
-  'application/pdf', 'image/jpeg', 'image/png', 'image/gif', 'text/plain',
-  'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-];
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    if (allowedTypes.includes(file.mimetype)) cb(null, true);
-    else cb(new Error('File type not allowed'), false);
-  }
-});
-
-// View resource file
-router.get('/view/:id', protect, async (req, res) => {
-  try {
-    const resource = await Resource.findById(req.params.id);
-    if (!resource) return res.status(404).json({ message: 'Resource not found' });
-    // For local files, redirect to the static file route
-    if (resource.url.startsWith('uploads/')) {
-      return res.redirect(`/${resource.url}`);
-    }
-    // For any external URL, redirect directly
-    res.redirect(resource.url);
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to get resource' });
-  }
-});
+const { uploadResource, deleteFromCloudinary } = require('../config/cloudinary');
 
 // Tutor: Create resource
-router.post('/', protect, tutorOnly, upload.single('file'), async (req, res) => {
+router.post('/', protect, tutorOnly, uploadResource.single('file'), async (req, res) => {
   try {
     const { title, description, classLevel, subject, category } = req.body;
     if (!title || !classLevel || !subject || !category) {
@@ -115,7 +69,7 @@ router.put('/:id', protect, tutorOnly, async (req, res) => {
   }
 });
 
-// Tutor: Delete own resource
+// Tutor/Admin: Delete resource
 router.delete('/:id', protect, authorize('tutor', 'admin'), async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
@@ -125,10 +79,8 @@ router.delete('/:id', protect, authorize('tutor', 'admin'), async (req, res) => 
       return res.status(403).json({ message: 'Not authorized' });
     }
 
-    // Delete file
-    if (resource.url.startsWith('uploads/') && fs.existsSync(resource.url)) {
-      fs.unlinkSync(resource.url);
-    }
+    // Delete file from Cloudinary
+    await deleteFromCloudinary(resource.url);
 
     await Resource.findByIdAndDelete(req.params.id);
     res.json({ message: 'Resource deleted' });
