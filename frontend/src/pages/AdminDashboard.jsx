@@ -712,6 +712,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
               {[{ label: 'Role', value: viewUser.role?.charAt(0).toUpperCase() + viewUser.role?.slice(1) },
+                ...(viewUser.phone ? [{ label: 'Phone', value: viewUser.phone }] : []),
                 ...(viewUser.role === 'student' ? [{ label: 'Class', value: viewUser.className ? `Class ${viewUser.className}` : '—' }] : []),
                 ...(viewUser.role === 'student' && viewUser.subjects?.length ? [{ label: 'Subjects', value: viewUser.subjects.join(', ') }] : []),
                 ...(viewUser.role === 'tutor' ? [{ label: 'Specialization', value: viewUser.specialization || '—' }] : []),

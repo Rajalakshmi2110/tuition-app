@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
   subjects: [{
     type: String
   }],
+  phone: {
+    type: String,
+    default: ''
+  },
   googleId: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date

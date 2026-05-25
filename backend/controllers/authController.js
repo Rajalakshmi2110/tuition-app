@@ -10,7 +10,7 @@ const passport = require('passport');
 // REGISTER
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, specialization, className, subjects } = req.body;
+    const { name, email, password, role, specialization, className, subjects, phone } = req.body;
 
     // Prevent self-registration of admins
     if (role === 'admin') {
@@ -46,6 +46,7 @@ const registerUser = async (req, res) => {
       specialization: role === 'tutor' ? specialization : undefined,
       className: role === 'student' ? className : undefined,
       subjects: role === 'student' && subjects ? subjects : undefined,
+      phone: phone || '',
       status: 'pending'
     });
 
