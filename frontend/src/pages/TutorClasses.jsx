@@ -8,7 +8,45 @@ const TutorClasses = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Subject Icon Component
+  const fetchTutorClasses = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const decoded = jwtDecode(token);
+      const userId = decoded.id || decoded._id;
+
+      let tutorClasses = [];
+
+      try {
+        const res = await api.get(`/classes/tutor/${userId}`);
+        tutorClasses = res.data || [];
+      } catch (tutorErr) {}
+
+      if (tutorClasses.length === 0) {
+        const allRes = await api.get(`/classes`);
+        tutorClasses = allRes.data.filter(cls => {
+          const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
+          return clsTutorId === userId && cls.status !== 'completed' && cls.status !== 'cancelled';
+        });
+      }
+
+      setClasses(tutorClasses);
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { fetchTutorClasses(); }, []);
+
+  const markComplete = async (classId) => {
+    if (!window.confirm('Mark this session as completed?')) return;
+    try {
+      await api.put(`/classes/tutor/class/${classId}/complete`);
+      setClasses(prev => prev.filter(c => c._id !== classId));
+    } catch (err) {}
+  };
   const SubjectIcon = ({ subject, size = 22 }) => {
     const subjectLower = subject?.toLowerCase() || '';
     
@@ -64,46 +102,6 @@ const TutorClasses = () => {
       </svg>
     );
   };
-
-  useEffect(() => {
-    const fetchTutorClasses = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        const decoded = jwtDecode(token);
-        const userId = decoded.id || decoded._id;
-
-        let tutorClasses = [];
-
-        try {
-          const res = await api.get(
-            `/classes/tutor/${userId}`
-          );
-          tutorClasses = res.data || [];
-        } catch (tutorErr) {
-        }
-
-        if (tutorClasses.length === 0) {
-          const allRes = await api.get(
-            `/classes`
-          );
-          
-          tutorClasses = allRes.data.filter(cls => {
-            const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
-            return clsTutorId === userId;
-          });
-        }
-
-        setClasses(tutorClasses);
-      } catch (err) {
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTutorClasses();
-  }, []);
 
   const totalStudents = classes.reduce((acc, cls) => acc + (cls.students?.length || 0), 0);
 
@@ -440,40 +438,67 @@ const TutorClasses = () => {
                     )}
                   </div>
 
-                  {/* Manage Button */}
-                  <button
-                    onClick={() => navigate(`/tutor/session/${cls._id}`)}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      background: 'var(--bg-primary)',
-                      color: '#10b981',
-                      border: '2px solid #10b981',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      fontWeight: 600,
-                      fontSize: '0.85rem',
-                      transition: 'all 0.2s ease',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '0.5rem'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = '#10b981';
-                      e.currentTarget.style.color = 'white';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'var(--bg-primary)';
-                      e.currentTarget.style.color = '#10b981';
-                    }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    Manage Session
-                  </button>
+                  {/* Action Buttons */}
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button
+                      onClick={() => navigate(`/tutor/session/${cls._id}`)}
+                      style={{
+                        flex: 1,
+                        padding: '0.75rem',
+                        background: 'var(--bg-primary)',
+                        color: '#10b981',
+                        border: '2px solid #10b981',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#10b981';
+                        e.currentTarget.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'var(--bg-primary)';
+                        e.currentTarget.style.color = '#10b981';
+                      }}
+                    >
+                      Manage
+                    </button>
+                    <button
+                      onClick={() => markComplete(cls._id)}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        background: 'var(--bg-primary)',
+                        color: '#f59e0b',
+                        border: '2px solid #f59e0b',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontWeight: 600,
+                        fontSize: '0.85rem',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.35rem'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = '#f59e0b';
+                        e.currentTarget.style.color = 'white';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'var(--bg-primary)';
+                        e.currentTarget.style.color = '#f59e0b';
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      Done
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
