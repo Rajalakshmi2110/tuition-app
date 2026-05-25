@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const ExamSchedule = require('../models/ExamSchedule');
 const { createNotification, notifyByRole } = require('./notificationService');
 
 const checkBirthdays = async () => {
@@ -53,4 +54,32 @@ const checkBirthdays = async () => {
   }
 };
 
-module.exports = { checkBirthdays };
+const checkExamReminders = async () => {
+  try {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const startOfTomorrow = new Date(tomorrow.setHours(0, 0, 0, 0));
+    const endOfTomorrow = new Date(tomorrow.setHours(23, 59, 59, 999));
+
+    const exams = await ExamSchedule.find({
+      examDate: { $gte: startOfTomorrow, $lte: endOfTomorrow },
+      reminded: false
+    }).populate('studentId', 'name className');
+
+    for (const exam of exams) {
+      await createNotification(
+        exam.studentId._id,
+        'exam_reminder',
+        '📝 Exam Tomorrow!',
+        `You have ${exam.examType} for ${exam.subject} tomorrow at ${exam.examTime}. All the best!`,
+        '/student'
+      );
+      exam.reminded = true;
+      await exam.save();
+    }
+  } catch (err) {
+    console.error('Exam reminder check failed:', err.message);
+  }
+};
+
+module.exports = { checkBirthdays, checkExamReminders };

@@ -270,6 +270,9 @@ app.use("/api/notifications", notificationRoutes);
 const aiDoubtRoutes = require("./routes/aiDoubtRoutes");
 app.use("/api/ai-doubt", aiDoubtRoutes);
 
+const examScheduleRoutes = require("./routes/examScheduleRoutes");
+app.use("/api/exam-schedule", examScheduleRoutes);
+
 // Catch-all for OAuth redirects
 app.get('/login', (req, res) => {
   res.redirect(`${process.env.FRONTEND_URL}/login?error=oauth_cancelled`);
@@ -291,9 +294,10 @@ app.use((err, req, res, next) => {
 mongoose.connect(process.env.MONGO_URI)
 .then(async () => {
   console.log("MongoDB connected!");
-  const { checkBirthdays } = require('./services/birthdayService');
+  const { checkBirthdays, checkExamReminders } = require('./services/birthdayService');
   checkBirthdays();
-  setInterval(checkBirthdays, 24 * 60 * 60 * 1000);
+  checkExamReminders();
+  setInterval(() => { checkBirthdays(); checkExamReminders(); }, 24 * 60 * 60 * 1000);
   const { initializeBadges } = require('./controllers/gamificationController');
   await initializeBadges();
   console.log('Badges initialized');

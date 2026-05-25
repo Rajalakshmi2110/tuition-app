@@ -6,7 +6,7 @@ const typeIcons = {
   resource_uploaded: '📚', fee_reminder: '💰', payment_submitted: '💳', payment_verified: '✅',
   payment_rejected: '❌', session_assigned: '📅', session_updated: '🔄', account_approved: '🎉',
   account_declined: '⚠️', student_enrolled: '👤', new_registration: '🆕', feedback_submitted: '💬',
-  badge_earned: '🏆', performance_added: '📊', birthday: '🎂'
+  badge_earned: '🏆', performance_added: '📊', birthday: '🎂', exam_scheduled: '📅', exam_reminder: '📝'
 };
 
 const NotificationDropdown = () => {
