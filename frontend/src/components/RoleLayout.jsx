@@ -82,11 +82,17 @@ const RoleLayout = ({ role }) => {
 
             {/* User Profile - hide on very small screens */}
             {!isMobile && (
-              <div style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem',
-                padding: '0.5rem 1rem', background: 'var(--bg-secondary)',
-                borderRadius: '12px', border: '1px solid var(--border-light)'
-              }}>
+              <div
+                onClick={() => navigate(`/${role}/profile`)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '0.75rem',
+                  padding: '0.5rem 1rem', background: 'var(--bg-secondary)',
+                  borderRadius: '12px', border: '1px solid var(--border-light)',
+                  cursor: 'pointer', transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#10b981'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-light)'; }}
+              >
                 <div style={{
                   width: '36px', height: '36px',
                   background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
