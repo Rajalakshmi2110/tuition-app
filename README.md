@@ -303,6 +303,16 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 | `npm start` | frontend | Start dev server |
 | `npm run build` | frontend | Production build |
 
+## Keeping Backend Awake (Free Tier)
+
+Render's free tier sleeps the server after 15 minutes of inactivity. To prevent cold starts for students:
+
+1. Sign up at [cron-job.org](https://cron-job.org) (free)
+2. Create a cronjob:
+   - **URL:** `https://tuitionapp-yq06.onrender.com/api/health`
+   - **Interval:** Every 14 minutes
+3. Done — backend stays awake 24/7 at no cost
+
 ## License
 
 MIT
