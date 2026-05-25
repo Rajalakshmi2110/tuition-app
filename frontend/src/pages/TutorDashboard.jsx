@@ -46,7 +46,7 @@ const TutorDashboard = () => {
         
         tutorSessions = allRes.data.filter(cls => {
           const clsTutorId = cls.tutor?._id?.toString() || cls.tutor?.toString() || '';
-          return clsTutorId === decoded.id;
+          return clsTutorId === decoded.id && cls.status !== 'completed' && cls.status !== 'cancelled';
         });
       }
       
