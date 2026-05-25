@@ -23,7 +23,7 @@ router.get('/profile', protect, (req, res)=>{
 
 router.put('/profile', protect, async (req, res) => {
   try {
-    const { name, email, className, subjects, specialization } = req.body;
+    const { name, email, phone, dateOfBirth, className, subjects, specialization } = req.body;
     const user = await require('../models/User').findById(req.user._id);
     if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -33,6 +33,8 @@ router.put('/profile', protect, async (req, res) => {
       user.email = email;
     }
     if (name) user.name = name;
+    if (phone !== undefined) user.phone = phone;
+    if (dateOfBirth !== undefined) user.dateOfBirth = dateOfBirth || null;
     if (user.role === 'student') {
       if (className) user.className = className;
       if (subjects) user.subjects = subjects;

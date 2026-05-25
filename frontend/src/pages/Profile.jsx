@@ -4,7 +4,7 @@ import { SUBJECTS_BY_CLASS, CLASS_LEVELS } from '../constants/academic';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [form, setForm] = useState({ name: '', email: '', className: '', subjects: [], specialization: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', dateOfBirth: '', className: '', subjects: [], specialization: '' });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
@@ -19,6 +19,8 @@ const Profile = () => {
         setForm({
           name: u.name || '',
           email: u.email || '',
+          phone: u.phone || '',
+          dateOfBirth: u.dateOfBirth ? u.dateOfBirth.split('T')[0] : '',
           className: u.className || '',
           subjects: u.subjects || [],
           specialization: u.specialization || ''
@@ -175,6 +177,7 @@ const Profile = () => {
                   setEditing(false);
                   setForm({
                     name: user.name || '', email: user.email || '',
+                    phone: user.phone || '', dateOfBirth: user.dateOfBirth ? user.dateOfBirth.split('T')[0] : '',
                     className: user.className || '', subjects: user.subjects || [],
                     specialization: user.specialization || ''
                   });
@@ -225,6 +228,31 @@ const Profile = () => {
               type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
+              disabled={!editing}
+              style={inputStyle}
+            />
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label style={labelStyle}>Contact Number</label>
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              disabled={!editing}
+              style={inputStyle}
+              placeholder="+91 9876543210"
+            />
+          </div>
+
+          {/* Date of Birth */}
+          <div>
+            <label style={labelStyle}>Date of Birth (Optional)</label>
+            <input
+              type="date"
+              value={form.dateOfBirth}
+              onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })}
               disabled={!editing}
               style={inputStyle}
             />

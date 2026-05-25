@@ -33,7 +33,11 @@ const userSchema = new mongoose.Schema({
   }],
   phone: {
     type: String,
-    default: ''
+    required: true
+  },
+  dateOfBirth: {
+    type: Date,
+    default: null
   },
   googleId: String,
   resetPasswordToken: String,

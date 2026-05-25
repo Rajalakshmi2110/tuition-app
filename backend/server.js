@@ -289,7 +289,12 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB connected!"))
+.then(() => {
+  console.log("MongoDB connected!");
+  const { checkBirthdays } = require('./services/birthdayService');
+  checkBirthdays();
+  setInterval(checkBirthdays, 24 * 60 * 60 * 1000);
+})
 .catch(err => console.error('MongoDB connection error:', err.message));
 
 const port =  process.env.PORT || 5000;
