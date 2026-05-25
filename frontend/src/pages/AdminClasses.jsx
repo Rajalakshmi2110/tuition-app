@@ -9,6 +9,7 @@ const AdminClasses = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedClass, setSelectedClass] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('scheduled');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [creating, setCreating] = useState(false);
   const [tutors, setTutors] = useState([]);
@@ -87,7 +88,11 @@ const AdminClasses = () => {
     background: 'var(--bg-primary)', color: 'var(--text-primary)'
   };
 
-  const filteredClasses = selectedClass === 'all' ? classes : classes.filter(c => c.classLevel === selectedClass);
+  const filteredClasses = classes.filter(c => {
+    const classMatch = selectedClass === 'all' || c.classLevel === selectedClass;
+    const statusMatch = statusFilter === 'all' || (c.status || 'scheduled') === statusFilter;
+    return classMatch && statusMatch;
+  });
 
   if (loading) return <AdminLayout><LoadingSpinner message="Loading sessions..." fullPage /></AdminLayout>;
 
@@ -115,26 +120,43 @@ const AdminClasses = () => {
           </button>
         </div>
 
-        {/* Filter */}
+        {/* Filters */}
         {classes.length > 0 && (
-          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-            <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} style={{
-              padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
-              fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none',
-              background: 'var(--bg-primary)'
-            }}>
-              <option value="all">All Classes · {classes.length}</option>
-              {classLevels.map(l => {
-                const count = classes.filter(c => c.classLevel === l).length;
-                return count > 0 ? <option key={l} value={l}>Class {l} · {count}</option> : null;
-              })}
-            </select>
-            {selectedClass !== 'all' && (
-              <button onClick={() => setSelectedClass('all')} style={{
-                padding: '0.5rem 1rem', background: 'var(--bg-urgent, #fef2f2)', color: '#dc2626',
-                border: '2px solid #fecaca', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
+          <div style={{ marginBottom: '1.5rem' }}>
+            {/* Status Tabs */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', background: 'var(--bg-secondary)', padding: '0.4rem', borderRadius: '10px', width: 'fit-content' }}>
+              {[{ id: 'scheduled', label: 'Scheduled' }, { id: 'completed', label: 'Completed' }, { id: 'all', label: 'All' }].map(tab => (
+                <button key={tab.id} onClick={() => setStatusFilter(tab.id)} style={{
+                  padding: '0.5rem 1.25rem', borderRadius: '8px', border: 'none', cursor: 'pointer',
+                  fontWeight: 600, fontSize: '0.85rem', transition: 'all 0.2s ease',
+                  background: statusFilter === tab.id ? '#10b981' : 'transparent',
+                  color: statusFilter === tab.id ? 'white' : 'var(--text-muted)'
+                }}>
+                  {tab.label} ({classes.filter(c => tab.id === 'all' ? true : (c.status || 'scheduled') === tab.id).length})
+                </button>
+              ))}
+            </div>
+
+            {/* Class Filter */}
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <select value={selectedClass} onChange={e => setSelectedClass(e.target.value)} style={{
+                padding: '0.6rem 1rem', border: '2px solid var(--border-light)', borderRadius: '8px',
+                fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)', cursor: 'pointer', outline: 'none',
+                background: 'var(--bg-primary)'
+              }}>
+                <option value="all">All Classes · {classes.length}</option>
+                {classLevels.map(l => {
+                  const count = classes.filter(c => c.classLevel === l).length;
+                  return count > 0 ? <option key={l} value={l}>Class {l} · {count}</option> : null;
+                })}
+              </select>
+              {selectedClass !== 'all' && (
+                <button onClick={() => setSelectedClass('all')} style={{
+                  padding: '0.5rem 1rem', background: 'var(--bg-urgent, #fef2f2)', color: '#dc2626',
+                  border: '2px solid #fecaca', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem'
               }}>✕ Clear</button>
             )}
+            </div>
           </div>
         )}
 

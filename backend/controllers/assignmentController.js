@@ -2,6 +2,8 @@ const Assignment = require('../models/Assignment');
 const AssignmentSubmission = require('../models/AssignmentSubmission');
 const User = require('../models/User');
 const { createNotification, notifyMultiple } = require('../services/notificationService');
+const { awardPoints, checkBadgeEligibility } = require('./gamificationController');
+const UserStats = require('../models/UserStats');
 
 // Create assignment (Tutor only)
 const createAssignment = async (req, res) => {
@@ -227,6 +229,27 @@ const gradeAssignment = async (req, res) => {
     // Notify student
     try {
       await createNotification(submission.studentId, 'assignment_graded', 'Assignment Graded', `Your submission for "${submission.assignmentId.title}" has been graded. Score: ${pointsEarned}/${submission.assignmentId.totalPoints}`, '/student/assignments');
+    } catch (e) {}
+
+    // Update gamification stats
+    try {
+      let stats = await UserStats.findOne({ userId: submission.studentId });
+      if (!stats) stats = await UserStats.create({ userId: submission.studentId });
+
+      stats.achievements.assignmentsCompleted += 1;
+
+      // Recalculate average score
+      const allGraded = await AssignmentSubmission.find({ studentId: submission.studentId, status: 'Graded' }).populate('assignmentId', 'totalPoints');
+      const totalPercent = allGraded.reduce((sum, s) => sum + (s.pointsEarned / s.assignmentId.totalPoints) * 100, 0);
+      stats.achievements.averageScore = Math.round(totalPercent / allGraded.length);
+
+      await stats.save();
+
+      // Award points for being graded (bonus for high scores)
+      const scorePercent = (pointsEarned / submission.assignmentId.totalPoints) * 100;
+      const points = scorePercent >= 90 ? 20 : scorePercent >= 70 ? 10 : 5;
+      await awardPoints(submission.studentId, points, 'Assignment graded');
+      await checkBadgeEligibility(submission.studentId);
     } catch (e) {}
 
     res.json({ message: 'Assignment graded successfully', submission });

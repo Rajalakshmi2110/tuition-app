@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 const { sendStudentPendingEmail, sendTutorPendingEmail, sendAdminNewRegistrationEmail } = require('../services/emailService');
 const { createNotification, notifyByRole } = require('../services/notificationService');
 const passport = require('passport');
+const { updateStreak } = require('./gamificationController');
 
 // REGISTER
 const registerUser = async (req, res) => {
@@ -104,6 +105,9 @@ const loginUser = async (req, res) => {
     if (user.status === 'declined') {
       return res.status(403).json({ message: 'Your account application was declined. Please contact support for more details.' });
     }
+
+    // Update gamification streak on login
+    try { await updateStreak(user._id); } catch (e) {}
 
     const token = jwt.sign(
       { id: user._id, role: user.role, className: user.className },
@@ -240,6 +244,9 @@ const googleAuthSuccess = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
+
+    // Update gamification streak on Google login
+    try { await updateStreak(req.user._id); } catch (e) {}
 
     res.redirect(`${process.env.FRONTEND_URL}/auth/success?token=${googleToken}&role=${req.user.role}`);
   } catch (err) {

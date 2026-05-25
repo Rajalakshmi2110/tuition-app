@@ -289,11 +289,14 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => {
+.then(async () => {
   console.log("MongoDB connected!");
   const { checkBirthdays } = require('./services/birthdayService');
   checkBirthdays();
   setInterval(checkBirthdays, 24 * 60 * 60 * 1000);
+  const { initializeBadges } = require('./controllers/gamificationController');
+  await initializeBadges();
+  console.log('Badges initialized');
 })
 .catch(err => console.error('MongoDB connection error:', err.message));
 
