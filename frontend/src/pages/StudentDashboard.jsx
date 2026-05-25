@@ -150,6 +150,58 @@ const StudentDashboard = () => {
         </div>
       </div>
 
+      {/* Daily Motivational Quote */}
+      <div style={{
+        padding: '1.25rem 1.5rem',
+        background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%)',
+        borderRadius: '16px',
+        border: '1px solid var(--border-light)',
+        marginBottom: '2rem',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '1rem'
+      }}>
+        <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>💡</span>
+        <div>
+          <p style={{ margin: 0, color: 'var(--text-primary)', fontStyle: 'italic', lineHeight: 1.6, fontWeight: 500 }}>
+            {[
+              "Education is the most powerful weapon which you can use to change the world.",
+              "The beautiful thing about learning is that no one can take it away from you.",
+              "Success is the sum of small efforts, repeated day in and day out.",
+              "Don't let what you cannot do interfere with what you can do.",
+              "The expert in anything was once a beginner.",
+              "Learning is not attained by chance, it must be sought for with ardor.",
+              "The more that you read, the more things you will know. The more that you learn, the more places you'll go.",
+              "Education is not preparation for life; education is life itself.",
+              "Believe you can and you're halfway there.",
+              "The only way to do great work is to love what you are learning.",
+              "A person who never made a mistake never tried anything new.",
+              "It does not matter how slowly you go as long as you do not stop.",
+              "The secret of getting ahead is getting started.",
+              "You don't have to be great to start, but you have to start to be great.",
+              "Every accomplishment starts with the decision to try.",
+              "Knowledge is power. Information is liberating. Education is the premise of progress.",
+              "The roots of education are bitter, but the fruit is sweet.",
+              "An investment in knowledge pays the best interest.",
+              "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+              "The mind is not a vessel to be filled, but a fire to be kindled.",
+              "Study hard, for the well is deep, and our brains are shallow.",
+              "Push yourself, because no one else is going to do it for you.",
+              "Great things never come from comfort zones.",
+              "Dream big. Work hard. Stay focused.",
+              "The future belongs to those who believe in the beauty of their dreams.",
+              "Don't watch the clock; do what it does. Keep going.",
+              "Hardships often prepare ordinary people for an extraordinary destiny.",
+              "Your limitation—it's only your imagination.",
+              "Wake up with determination. Go to bed with satisfaction.",
+              "Little things make big days.",
+              "It's going to be hard, but hard does not mean impossible."
+            ][Math.floor((new Date().getFullYear() * 366 + new Date().getMonth() * 31 + new Date().getDate()) % 31)]}
+          </p>
+          <p style={{ margin: '0.5rem 0 0', color: 'var(--text-muted)', fontSize: '0.8rem' }}>Quote of the Day</p>
+        </div>
+      </div>
+
       {/* Announcements */}
       {announcements.length > 0 && (
         <div style={{ marginBottom: '2rem' }}>
