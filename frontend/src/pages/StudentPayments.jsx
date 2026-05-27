@@ -4,7 +4,6 @@ import fileUrl from '../config/fileUrl';
 import { useToast } from '../components/Toast';
 
 const StudentPayments = () => {
-  const [qrCode, setQrCode] = useState('');
   const [payments, setPayments] = useState([]);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -19,14 +18,6 @@ const StudentPayments = () => {
   const [cancelTarget, setCancelTarget] = useState(null);
   const toast = useToast();
 
-  const fetchQRCode = useCallback(async () => {
-    try {
-      const response = await api.get(`/payments/qr-code`);
-      setQrCode(response.data.qrCodeUrl);
-    } catch (error) {
-    }
-  }, []);
-
   const fetchPayments = useCallback(async () => {
     try {
       const response = await api.get(`/payments/my-payments`);
@@ -36,9 +27,8 @@ const StudentPayments = () => {
   }, []);
 
   useEffect(() => {
-    fetchQRCode();
     fetchPayments();
-  }, [fetchQRCode, fetchPayments]);
+  }, [fetchPayments]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
