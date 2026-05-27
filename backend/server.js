@@ -37,7 +37,8 @@ app.use(mongoSanitize());
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   'https://rajituitionapp.netlify.app',
-  'https://tuition-app-cyan.vercel.app'
+  'https://tuition-app-cyan.vercel.app',
+  'https://kalviyagam.vercel.app'
 ].filter(Boolean);
 
 app.use(cors({
