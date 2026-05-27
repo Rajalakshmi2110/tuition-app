@@ -36,7 +36,8 @@ app.use(mongoSanitize());
 // CORS - only allow known origins
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  'https://rajituitionapp.netlify.app'
+  'https://rajituitionapp.netlify.app',
+  'https://tuition-app-cyan.vercel.app'
 ].filter(Boolean);
 
 app.use(cors({
