@@ -191,7 +191,7 @@ const TutorResources = () => {
       ) : (
         Object.entries(grouped).sort().map(([groupKey, categories]) => (
           <div key={groupKey} style={{ marginBottom: '2rem', background: 'var(--bg-primary)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid var(--border-light)', overflow: 'hidden' }}>
-            <div style={{ padding: '1rem 1.5rem', background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', borderBottom: '1px solid #bbf7d0' }}>
+            <div style={{ padding: '1rem 1.5rem', background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-light)' }}>
               <h3 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '1.1rem', fontWeight: 700 }}>{groupKey}</h3>
             </div>
             <div style={{ padding: '1.5rem' }}>

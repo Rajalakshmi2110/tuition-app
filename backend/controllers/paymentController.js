@@ -48,9 +48,29 @@ const submitPayment = async (req, res) => {
     await payment.save();
 
     // Send confirmation email to student
-    await sendPaymentSubmissionEmail(req.user.email, req.user.name, month, amount);
+    try {
+      await sendPaymentSubmissionEmail(req.user.email, req.user.name, month, amount);
+    } catch (e) {}
 
-    // Notify admins
+    // Send email to admin about new payment
+    try {
+      const admins = await User.find({ role: 'admin' }).select('email');
+      for (const admin of admins) {
+        await sendEmail(admin.email, `New Payment Submitted - ${req.user.name}`, `
+          <h2>New Payment Received</h2>
+          <p>A student has submitted a fee payment:</p>
+          <ul>
+            <li><strong>Student:</strong> ${req.user.name}</li>
+            <li><strong>Amount:</strong> ₹${amount}</li>
+            <li><strong>Month:</strong> ${month}</li>
+            <li><strong>Transaction ID:</strong> ${transactionId || 'Not provided'}</li>
+          </ul>
+          <p>Please log in to the admin panel to verify this payment.</p>
+        `);
+      }
+    } catch (e) {}
+
+    // Notify admins (in-app)
     try {
       await notifyByRole('admin', 'payment_submitted', 'Payment Submitted', `${req.user.name} submitted ₹${amount} for ${month}. Needs verification.`, '/admin/payments');
     } catch (e) {}

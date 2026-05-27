@@ -123,11 +123,11 @@ const StudentPayments = () => {
 
   const getStatusStyle = (status) => {
     const styles = {
-      pending: { bg: '#fef3c7', color: '#92400e', border: '#fbbf24' },
-      verified: { bg: '#dcfce7', color: '#166534', border: '#22c55e' },
-      rejected: { bg: '#fee2e2', color: '#991b1b', border: '#ef4444' }
+      pending: { bg: 'var(--bg-secondary)', color: '#fbbf24', border: '#fbbf24' },
+      verified: { bg: 'var(--bg-secondary)', color: '#22c55e', border: '#22c55e' },
+      rejected: { bg: 'var(--bg-secondary)', color: '#ef4444', border: '#ef4444' }
     };
-    return styles[status] || { bg: '#f1f5f9', color: 'var(--text-secondary)', border: '#94a3b8' };
+    return styles[status] || { bg: 'var(--bg-secondary)', color: 'var(--text-secondary)', border: '#94a3b8' };
   };
 
   const getStatusIcon = (status) => {
@@ -206,38 +206,25 @@ const StudentPayments = () => {
             </ol>
           </div>
           <div style={{ textAlign: 'center' }}>
-            {qrCode ? (
-              <div style={{
-                padding: '1rem',
-                background: 'var(--bg-primary)',
-                borderRadius: '16px',
-                border: '3px solid #10b981',
-                display: 'inline-block',
-                boxShadow: '0 8px 20px rgba(16, 185, 129, 0.2)'
-              }}>
-                <img
-                  src={qrCode}
-                  alt="GPay QR Code"
-                  style={{ maxWidth: '180px', display: 'block' }}
-                />
-              </div>
-            ) : (
-              <div style={{
-                width: '200px',
-                height: '200px',
-                backgroundColor: 'var(--bg-secondary)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '16px',
-                border: '2px dashed #e2e8f0',
-                color: 'var(--text-muted)'
-              }}>
-                Loading QR Code...
-              </div>
-            )}
+            <div style={{
+              padding: '1rem',
+              background: 'var(--bg-primary)',
+              borderRadius: '16px',
+              border: '3px solid #10b981',
+              display: 'inline-block',
+              boxShadow: '0 8px 20px rgba(16, 185, 129, 0.2)'
+            }}>
+              <img
+                src={'/qr.png'}
+                alt="GPay QR Code"
+                style={{ maxWidth: '180px', display: 'block' }}
+              />
+            </div>
             <p style={{ marginTop: '0.75rem', fontSize: '0.9rem', color: '#10b981', fontWeight: 600 }}>
               Scan with GPay
+            </p>
+            <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+              UPI: <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>rajalakshmirathinam7-1@okaxis</span>
             </p>
           </div>
         </div>

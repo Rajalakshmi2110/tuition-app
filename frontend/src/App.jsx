@@ -53,6 +53,7 @@ const PerformancePrediction = React.lazy(() => import('./components/PerformanceP
 const Profile = React.lazy(() => import('./pages/Profile'));
 const AskAI = React.lazy(() => import('./pages/AskAI'));
 const ExamSchedule = React.lazy(() => import('./pages/ExamSchedule'));
+const ExamScheduleAll = React.lazy(() => import('./pages/ExamScheduleAll'));
 
 const App = () => {
   return (
@@ -86,6 +87,7 @@ const App = () => {
             <Route path="resources" element={<AdminResources />} />
             <Route path="payments" element={<AdminPayments />} />
             <Route path="reports" element={<AdminReports />} />
+            <Route path="exam-schedule" element={<ExamScheduleAll useAdmin />} />
           </Route>
         </Route>
 
@@ -99,6 +101,7 @@ const App = () => {
           <Route path="resources" element={<TutorResources />} />
           <Route path="student-progress" element={<TutorStudentProgress />} />
           <Route path="analytics" element={<TutorPerformanceAnalytics />} />
+          <Route path="exam-schedule" element={<ExamScheduleAll />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 
