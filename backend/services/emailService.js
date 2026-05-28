@@ -1,5 +1,10 @@
 const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const User = require('../models/User');
+
+// Use Resend in production (HTTP-based, works on Render)
+// Fallback to nodemailer SMTP for local dev
+const useResend = () => !!process.env.RESEND_API_KEY;
 
 const createTransporter = () => {
   return nodemailer.createTransport({
@@ -12,6 +17,7 @@ const createTransporter = () => {
 };
 
 const isEmailConfigured = () => {
+  if (useResend()) return true;
   return process.env.EMAIL_USER && 
     process.env.EMAIL_PASS && 
     process.env.EMAIL_PASS !== 'your-16-char-app-password' &&
@@ -24,13 +30,24 @@ const sendEmail = async (to, subject, html) => {
       console.warn('Email not configured - skipping send to:', to);
       return;
     }
-    const transporter = createTransporter();
-    await transporter.sendMail({
-      from: `"Kalviyagam" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html
-    });
+
+    if (useResend()) {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      await resend.emails.send({
+        from: `Kalviyagam <${process.env.RESEND_FROM || 'onboarding@resend.dev'}>`,
+        to,
+        subject,
+        html
+      });
+    } else {
+      const transporter = createTransporter();
+      await transporter.sendMail({
+        from: `"Kalviyagam" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        html
+      });
+    }
     console.log(`Email sent to ${to}: ${subject}`);
   } catch (error) {
     console.error('Email sending failed to', to, ':', error.message);
