@@ -53,16 +53,18 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    // Send email notifications (don't let email failures break registration)
-    try {
-      if (role === 'tutor') {
-        await sendTutorPendingEmail(user.email, user.name);
-      } else if (role === 'student') {
-        await sendStudentPendingEmail(user.email, user.name);
+    // Send email notifications in background (don't block response)
+    (async () => {
+      try {
+        if (role === 'tutor') {
+          await sendTutorPendingEmail(user.email, user.name);
+        } else if (role === 'student') {
+          await sendStudentPendingEmail(user.email, user.name);
+        }
+        await sendAdminNewRegistrationEmail(user.name, role, user.email);
+      } catch (emailError) {
       }
-      await sendAdminNewRegistrationEmail(user.name, role, user.email);
-    } catch (emailError) {
-    }
+    })();
 
     // Notify admins about new registration
     try {
@@ -291,16 +293,18 @@ const completeGoogleRegistration = async (req, res) => {
 
     await user.save();
 
-    // Send email notifications
-    try {
-      if (role === 'tutor') {
-        await sendTutorPendingEmail(user.email, user.name);
-      } else if (role === 'student') {
-        await sendStudentPendingEmail(user.email, user.name);
+    // Send email notifications in background (don't block response)
+    (async () => {
+      try {
+        if (role === 'tutor') {
+          await sendTutorPendingEmail(user.email, user.name);
+        } else if (role === 'student') {
+          await sendStudentPendingEmail(user.email, user.name);
+        }
+        await sendAdminNewRegistrationEmail(user.name, role, user.email);
+      } catch (emailError) {
       }
-      await sendAdminNewRegistrationEmail(user.name, role, user.email);
-    } catch (emailError) {
-    }
+    })();
 
     // Notify admins about Google OAuth registration
     try {
