@@ -282,7 +282,7 @@ app.get('/login', (req, res) => {
 
 app.get("/", (req,res) => res.json({ message: "Tuition Management API is running!", status: "success" }));
 
-app.get("/api/health", (req,res) => res.json({ status: "healthy", timestamp: new Date() }));
+app.get("/api/health", (req,res) => res.json({ status: "healthy", timestamp: new Date(), emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS), frontendUrl: process.env.FRONTEND_URL || 'NOT SET' }));
 
 // Global error handler - no stack traces in production
 app.use((err, req, res, next) => {
