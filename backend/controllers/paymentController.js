@@ -47,28 +47,26 @@ const submitPayment = async (req, res) => {
 
     await payment.save();
 
-    // Send emails in background (don't block response)
-    (async () => {
-      try {
-        await sendPaymentSubmissionEmail(req.user.email, req.user.name, month, amount);
-      } catch (e) {}
-      try {
-        const admins = await User.find({ role: 'admin' }).select('email');
-        for (const admin of admins) {
-          await sendEmail(admin.email, `New Payment Submitted - ${req.user.name}`, `
-            <h2>New Payment Received</h2>
-            <p>A student has submitted a fee payment:</p>
-            <ul>
-              <li><strong>Student:</strong> ${req.user.name}</li>
-              <li><strong>Amount:</strong> ₹${amount}</li>
-              <li><strong>Month:</strong> ${month}</li>
-              <li><strong>Transaction ID:</strong> ${transactionId || 'Not provided'}</li>
-            </ul>
-            <p>Please log in to the admin panel to verify this payment.</p>
-          `);
-        }
-      } catch (e) {}
-    })();
+    // Send emails
+    try {
+      await sendPaymentSubmissionEmail(req.user.email, req.user.name, month, amount);
+    } catch (e) { console.error('Payment student email error:', e.message); }
+    try {
+      const admins = await User.find({ role: 'admin' }).select('email');
+      for (const admin of admins) {
+        await sendEmail(admin.email, `New Payment Submitted - ${req.user.name}`, `
+          <h2>New Payment Received</h2>
+          <p>A student has submitted a fee payment:</p>
+          <ul>
+            <li><strong>Student:</strong> ${req.user.name}</li>
+            <li><strong>Amount:</strong> ₹${amount}</li>
+            <li><strong>Month:</strong> ${month}</li>
+            <li><strong>Transaction ID:</strong> ${transactionId || 'Not provided'}</li>
+          </ul>
+          <p>Please log in to the admin panel to verify this payment.</p>
+        `);
+      }
+    } catch (e) { console.error('Payment admin email error:', e.message); }
 
     // Notify admins (in-app)
     try {

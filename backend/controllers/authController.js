@@ -53,18 +53,17 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    // Send email notifications in background (don't block response)
-    (async () => {
-      try {
-        if (role === 'tutor') {
-          await sendTutorPendingEmail(user.email, user.name);
-        } else if (role === 'student') {
-          await sendStudentPendingEmail(user.email, user.name);
-        }
-        await sendAdminNewRegistrationEmail(user.name, role, user.email);
-      } catch (emailError) {
+    // Send email notifications (awaited to ensure delivery on free tier)
+    try {
+      if (role === 'tutor') {
+        await sendTutorPendingEmail(user.email, user.name);
+      } else if (role === 'student') {
+        await sendStudentPendingEmail(user.email, user.name);
       }
-    })();
+      await sendAdminNewRegistrationEmail(user.name, role, user.email);
+    } catch (emailError) {
+      console.error('Reg email error:', emailError.message);
+    }
 
     // Notify admins about new registration
     try {
@@ -293,18 +292,17 @@ const completeGoogleRegistration = async (req, res) => {
 
     await user.save();
 
-    // Send email notifications in background (don't block response)
-    (async () => {
-      try {
-        if (role === 'tutor') {
-          await sendTutorPendingEmail(user.email, user.name);
-        } else if (role === 'student') {
-          await sendStudentPendingEmail(user.email, user.name);
-        }
-        await sendAdminNewRegistrationEmail(user.name, role, user.email);
-      } catch (emailError) {
+    // Send email notifications
+    try {
+      if (role === 'tutor') {
+        await sendTutorPendingEmail(user.email, user.name);
+      } else if (role === 'student') {
+        await sendStudentPendingEmail(user.email, user.name);
       }
-    })();
+      await sendAdminNewRegistrationEmail(user.name, role, user.email);
+    } catch (emailError) {
+      console.error('Google reg email error:', emailError.message);
+    }
 
     // Notify admins about Google OAuth registration
     try {
