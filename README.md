@@ -2,7 +2,7 @@
 
 A full-stack tuition centre management platform with role-based access for admins, tutors, and students. Handles class scheduling, assignments, study materials, payments, performance tracking, and gamification.
 
-**Live:** [rajituitionapp.netlify.app](https://rajituitionapp.netlify.app)
+**Live:** [kalviyagam.vercel.app](https://kalviyagam.vercel.app)
 
 ## Tech Stack
 
@@ -15,7 +15,7 @@ A full-stack tuition centre management platform with role-based access for admin
 | File Storage | Cloudinary (images, documents, screenshots) |
 | AI | Groq API (Llama 3.1 text + Llama 3.2 vision) |
 | Email | Nodemailer (Gmail SMTP) |
-| Deployment | Netlify (frontend), Render (backend) |
+| Deployment | Vercel (frontend), Render (backend) |
 
 ## Features
 
@@ -33,6 +33,7 @@ A full-stack tuition centre management platform with role-based access for admin
 - **Email Notifications** — Branded HTML email templates for registration, approval/decline, password reset, payment status, admin alerts on new registrations
 - **Gallery** — Educational content sharing with Cloudinary-hosted images
 - **Announcements** — Admin can post global announcements from any admin page
+- **Exam Schedule** — Students add upcoming exam timetables, visible to admin and tutors with filters
 - **Dark Mode** — Full light/dark theme support across all dashboards with CSS variables
 - **Mobile Responsive** — Hamburger menu, drawer sidebar, responsive grids and tables
 
@@ -290,7 +291,7 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 - Global ObjectId validation on all route params
 - File upload limits (10 MB) with MIME type whitelist
 - Cloudinary for secure file storage (no local file serving in production)
-- CORS whitelist (Netlify + localhost)
+- CORS whitelist (Vercel + localhost)
 - No stack traces in production error responses
 
 ## Scripts
@@ -302,6 +303,16 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 | `npm run seed` | backend | Seed admin user |
 | `npm start` | frontend | Start dev server |
 | `npm run build` | frontend | Production build |
+
+## Deployment
+
+| Service | Purpose | URL |
+|---------|---------|-----|
+| Vercel | Frontend hosting | [kalviyagam.vercel.app](https://kalviyagam.vercel.app) |
+| Render | Backend API | [tuitionapp-yq06.onrender.com](https://tuitionapp-yq06.onrender.com) |
+| MongoDB Atlas | Database | Cloud-hosted (M0 free tier) |
+| Cloudinary | File storage | Images, PDFs, screenshots |
+| cron-job.org | Keep backend awake | Pings every 14 minutes |
 
 ## Keeping Backend Awake (Free Tier)
 
