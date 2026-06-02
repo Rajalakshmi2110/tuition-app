@@ -2,7 +2,7 @@
 
 A full-stack tuition centre management platform with role-based access for admins, tutors, and students. Handles class scheduling, assignments, study materials, payments, performance tracking, and gamification.
 
-**Live:** [kalviyagam.vercel.app](https://kalviyagam.vercel.app)
+**Live:** [kalviyagam.me](https://kalviyagam.me)
 
 ## Tech Stack
 
@@ -47,7 +47,7 @@ tuition-app/
 │   ├── Middleware/       # auth, file upload, ObjectId validation
 │   ├── models/          # Mongoose schemas (19 models)
 │   ├── routes/          # Express routes (23 route files)
-│   ├── services/        # Email service (Nodemailer), Notification service
+│   ├── services/        # Email service (Resend + Nodemailer), Notification service
 │   ├── seed.js          # Admin user seeder
 │   └── server.js        # App entry point
 ├── frontend/
@@ -188,14 +188,21 @@ The app supports two email providers:
 
 1. Go to [resend.com](https://resend.com) and create a free account
 2. Go to **API Keys** → Create an API key
-3. Copy the key and add to Render environment:
+3. Add a **verified domain** in Resend (required to send to any email address):
+   - Go to **Domains** → **Add Domain** → add your domain
+   - Add the DNS records (DKIM TXT, SPF MX/TXT) in your domain registrar
+   - Wait for verification
+4. Add to Render environment:
    ```env
    RESEND_API_KEY=re_your-api-key
+   RESEND_FROM=noreply@yourdomain.me
    ```
 
-**Free tier:** 100 emails/day, 3000 emails/month. Sends from `onboarding@resend.dev` by default.
+**Free tier:** 100 emails/day, 3000 emails/month.
 
 > **Note:** Render's free tier blocks SMTP (port 465/587), so Gmail SMTP won't work in production. Resend uses HTTP API which bypasses this.
+
+> **Important:** Without a verified domain, Resend can only send to the account owner's email. A verified domain is required to send to all users.
 
 ### Local Development: Gmail SMTP
 
@@ -311,7 +318,7 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 - Global ObjectId validation on all route params
 - File upload limits (10 MB) with MIME type whitelist
 - Cloudinary for secure file storage (no local file serving in production)
-- CORS whitelist (Vercel + localhost)
+- CORS whitelist (Vercel + custom domain + localhost)
 - No stack traces in production error responses
 
 ## Scripts
@@ -328,10 +335,11 @@ This mapping is defined in `frontend/src/constants/academic.js` and used across 
 
 | Service | Purpose | URL |
 |---------|---------|-----|
-| Vercel | Frontend hosting | [kalviyagam.vercel.app](https://kalviyagam.vercel.app) |
+| Vercel | Frontend hosting | [kalviyagam.me](https://kalviyagam.me) |
 | Render | Backend API | [tuitionapp-yq06.onrender.com](https://tuitionapp-yq06.onrender.com) |
 | MongoDB Atlas | Database | Cloud-hosted (M0 free tier) |
 | Cloudinary | File storage | Images, PDFs, screenshots |
+| Resend | Email delivery | HTTP API (100 emails/day free) |
 | cron-job.org | Keep backend awake | Pings every 14 minutes |
 
 ## Keeping Backend Awake (Free Tier)
