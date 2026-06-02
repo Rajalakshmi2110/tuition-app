@@ -39,7 +39,9 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   'https://rajituitionapp.netlify.app',
   'https://tuition-app-cyan.vercel.app',
-  'https://kalviyagam.vercel.app'
+  'https://kalviyagam.vercel.app',
+  'https://kalviyagam.me',
+  'https://www.kalviyagam.me'
 ].filter(Boolean);
 
 app.use(cors({

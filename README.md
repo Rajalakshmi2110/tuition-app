@@ -14,7 +14,7 @@ A full-stack tuition centre management platform with role-based access for admin
 | Auth | JWT + Google OAuth 2.0 (Passport.js) |
 | File Storage | Cloudinary (images, documents, screenshots) |
 | AI | Groq API (Llama 3.1 text + Llama 3.2 vision) |
-| Email | Nodemailer (Gmail SMTP) |
+| Email | Resend (HTTP API) with Nodemailer (local dev) |
 | Deployment | Vercel (frontend), Render (backend) |
 
 ## Features
@@ -176,9 +176,28 @@ Files are organized into folders:
 
 ---
 
-## Email Setup (Gmail SMTP)
+## Email Setup
 
 Email notifications are used for registration confirmations, admin approvals, password resets, and payment updates.
+
+The app supports two email providers:
+- **Resend** (HTTP API) — used in production (works on Render free tier)
+- **Gmail SMTP** (Nodemailer) — used for local development
+
+### Production: Resend (Recommended)
+
+1. Go to [resend.com](https://resend.com) and create a free account
+2. Go to **API Keys** → Create an API key
+3. Copy the key and add to Render environment:
+   ```env
+   RESEND_API_KEY=re_your-api-key
+   ```
+
+**Free tier:** 100 emails/day, 3000 emails/month. Sends from `onboarding@resend.dev` by default.
+
+> **Note:** Render's free tier blocks SMTP (port 465/587), so Gmail SMTP won't work in production. Resend uses HTTP API which bypasses this.
+
+### Local Development: Gmail SMTP
 
 1. Go to [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
 2. **2-Step Verification** must be enabled on your Google account first
@@ -190,7 +209,7 @@ Email notifications are used for registration confirmations, admin approvals, pa
    EMAIL_PASS=abcdefghijklmnop
    ```
 
-> **Note:** Remove spaces from the app password. If you don't configure email, the app still works — emails are skipped gracefully.
+> **Note:** Remove spaces from the app password. If neither Resend nor Gmail is configured, emails are skipped gracefully.
 
 ---
 
@@ -211,9 +230,10 @@ Google Sign-In allows users to register/login with their Google account.
 7. Name: `Kalviyagam`
 8. Add **Authorized JavaScript origins**:
    - `http://localhost:5000`
+   - `https://tuitionapp-yq06.onrender.com`
 9. Add **Authorized redirect URIs**:
    - `http://localhost:5000/api/auth/google/callback` (local dev)
-   - `https://your-backend-url.onrender.com/api/auth/google/callback` (production — add later)
+   - `https://tuitionapp-yq06.onrender.com/api/auth/google/callback` (production)
 10. Click **Create** — copy the Client ID and Client Secret
 11. Update `backend/.env`:
     ```env

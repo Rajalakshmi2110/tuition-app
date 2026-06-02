@@ -315,7 +315,7 @@ const completeGoogleRegistration = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error("Google reg error:", err); res.status(500).json({ message: "Server error" });
   }
 };
 
