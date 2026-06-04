@@ -38,7 +38,8 @@ router.post('/', protect, tutorOnly, uploadResource.single('file'), async (req, 
 // Tutor: Get own resources
 router.get('/my', protect, tutorOnly, async (req, res) => {
   try {
-    const resources = await Resource.find({ uploadedBy: req.user._id })
+    const resources = await Resource.find()
+      .populate('uploadedBy', 'name')
       .sort({ createdAt: -1 });
     res.json(resources);
   } catch (err) {
