@@ -27,7 +27,7 @@ const paymentStorage = new CloudinaryStorage({
 });
 
 const uploadGallery = multer({ storage: galleryStorage });
-const uploadResource = multer({ storage: resourceStorage, limits: { fileSize: 10 * 1024 * 1024 } });
+const uploadResource = multer({ storage: resourceStorage, limits: { fileSize: 100 * 1024 * 1024 } });
 const uploadPayment = multer({ storage: paymentStorage });
 
 const deleteFromCloudinary = async (url) => {

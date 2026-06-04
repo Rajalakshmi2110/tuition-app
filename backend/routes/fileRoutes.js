@@ -19,7 +19,7 @@ const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif',
   'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'];
 const upload = multer({
   storage,
-  limits: { fileSize: 10 * 1024 * 1024 },
+  limits: { fileSize: 100 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     if (allowedTypes.includes(file.mimetype)) cb(null, true);
     else cb(new Error('File type not allowed'), false);

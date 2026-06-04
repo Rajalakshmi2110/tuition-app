@@ -13,13 +13,13 @@ const {
 // Dashboard stats for tutor
 router.get('/stats', protect, async (req, res) => {
   try {
-    const tutorClasses = await Class.find({ tutor: req.user._id }).select('_id');
-    const classIds = tutorClasses.map(c => c._id);
-    const [totalStudents, totalAnnouncements] = await Promise.all([
-      StudentClass.distinct('studentId', { classId: { $in: classIds } }).then(ids => ids.length),
-      Announcement.countDocuments()
+    const User = require('../models/User');
+    const [totalStudents, totalAnnouncements, totalSessions] = await Promise.all([
+      User.countDocuments({ role: 'student', status: 'approved' }),
+      Announcement.countDocuments(),
+      Class.countDocuments({ tutor: req.user._id })
     ]);
-    res.json({ totalStudents, totalAnnouncements });
+    res.json({ totalStudents, totalAnnouncements, totalSessions });
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }
